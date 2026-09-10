@@ -1,0 +1,16 @@
+# Temporary helper & generator scripts
+build_clean_swimlane.js
+sync_drawio_with_md.js
+verify_diagrams.js
+inspect_original.js
+*.ps1
+
+# Logs & temp
+*.log
+*.tmp
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
