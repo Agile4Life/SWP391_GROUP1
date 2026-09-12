@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="antigravity" pages="7">
   <diagram name="Master Swimlane - Quy Trình Tổng Thể" id="master-vertical">
-    <mxGraphModel dx="1339" dy="980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -89,7 +89,7 @@
           <mxGeometry height="80" width="120" x="50" y="960" as="geometry" />
         </mxCell>
         <mxCell id="m_conf" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=11;" value="Xác nhận giữ chỗ &amp;&lt;br&gt;Gửi lịch vào App HV" vertex="1">
-          <mxGeometry height="50" width="170" x="25" y="1100" as="geometry" />
+          <mxGeometry height="50" width="170" x="40" y="1090" as="geometry" />
         </mxCell>
         <mxCell id="m_sys_cancel" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=11;" value="Hủy giữ chỗ &amp;&lt;br&gt;Hoàn lại lượt đăng ký" vertex="1">
           <mxGeometry height="50" width="170" x="25" y="1210" as="geometry" />
@@ -369,6 +369,15 @@
         </mxCell>
         <mxCell id="dluJi6BTc-TbdnoiA5ee-55" edge="1" parent="1" source="dluJi6BTc-TbdnoiA5ee-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dluJi6BTc-TbdnoiA5ee-24">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ivs5Lef067fKL5rJ2HOD-2" edge="1" parent="1" source="m_sys_cancel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="dluJi6BTc-TbdnoiA5ee-24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="1190" />
+              <mxPoint x="280" y="1190" />
+              <mxPoint x="280" y="740" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
