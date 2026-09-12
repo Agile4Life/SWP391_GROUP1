@@ -21,7 +21,7 @@
 -- CREATE DATABASE phải nằm trong batch riêng (trước GO đầu tiên), không được
 -- gộp chung batch với các câu lệnh khác. Đổi tên "SportsCenterDB" nếu muốn.
 
-IF DB_ID(N'SportsCenterDB') IS NULL
+IF DB_ID(N'SportCenterDB') IS NULL
 BEGIN
     CREATE DATABASE SportsCenterDB;
 END
