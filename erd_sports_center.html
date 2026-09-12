@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>ERD - Sports Center Management System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; overflow: auto; }
+        h1 { text-align: center; padding: 16px; background: #1a1a2e; color: #fff; font-size: 20px; position: sticky; top: 0; z-index: 100; }
+        .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 10px 20px; background: #fff; border-bottom: 1px solid #ddd; position: sticky; top: 52px; z-index: 99; }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 3px; border: 1px solid #999; }
+        #canvas-container { width: 100%; overflow: auto; padding: 20px; }
+        canvas { display: block; margin: 0 auto; border: 1px solid #ccc; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>ERD - Sports Center Management System (SportsCenterDB)</h1>
+    <div class="legend">
+        <div class="legend-item"><div class="legend-color" style="background:#dae8fc"></div>A: Định danh & Phân quyền</div>
+        <div class="legend-item"><div class="legend-color" style="background:#d5e8d4"></div>B: Danh mục / CSVC</div>
+        <div class="legend-item"><div class="legend-color" style="background:#fff2cc"></div>C: Gói thành viên</div>
+        <div class="legend-item"><div class="legend-color" style="background:#ffe6cc"></div>D: Lớp học & Lịch</div>
+        <div class="legend-item"><div class="legend-color" style="background:#f8cecc"></div>E: Check-in & Điểm danh</div>
+        <div class="legend-item"><div class="legend-color" style="background:#e6d0de"></div>F: Thanh toán & Báo cáo</div>
+        <div class="legend-item"><div class="legend-color" style="background:#d5e8d4"></div>G: Huấn luyện & Đánh giá</div>
+        <div class="legend-item"><div class="legend-color" style="background:#cce5ff"></div>H: AI Engine</div>
+        <div class="legend-item"><div class="legend-color" style="background:#fce4ec"></div>I: Thông báo & Hỗ trợ</div>
+        <div class="legend-item"><div class="legend-color" style="background:#e8eaf6"></div>J: Hệ thống</div>
+        <div class="legend-item" style="margin-left:20px;">🔑 = PK &nbsp; 🔗 = FK</div>
+    </div>
+    <div id="canvas-container">
+        <canvas id="erd"></canvas>
+    </div>
+
+    <script>
+    const canvas = document.getElementById('erd');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    const MODULE_COLORS = {
+        A: '#dae8fc', B: '#d5e8d4', C: '#fff2cc', D: '#ffe6cc',
+        E: '#f8cecc', F: '#e6d0de', G: '#d4edda', H: '#cce5ff',
+        I: '#fce4ec', J: '#e8eaf6'
+    };
+    const HEADER_COLORS = {
+        A: '#6c8ebf', B: '#82b366', C: '#d6b656', D: '#d79b00',
+        E: '#b85450', F: '#9673a6', G: '#28a745', H: '#0d6efd',
+        I: '#c62828', J: '#3f51b5'
+    };
+
+    const tables = [
+        // Module A
+        { name: 'roles', module: 'A', x: 50, y: 50, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'code', t: 'NVARCHAR(50)', u: true },
+            { n: 'name', t: 'NVARCHAR(100)' },
+            { n: 'description', t: 'NVARCHAR(255)', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'permissions', module: 'A', x: 50, y: 250, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'code', t: 'NVARCHAR(100)', u: true },
+            { n: 'name', t: 'NVARCHAR(150)' },
+            { n: 'module', t: 'NVARCHAR(50)' },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'role_permissions', module: 'A', x: 50, y: 460, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'role_id', t: 'BIGINT', fk: 'roles' },
+            { n: 'permission_id', t: 'BIGINT', fk: 'permissions' }
+        ]},
+        { name: 'users', module: 'A', x: 310, y: 50, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'role_id', t: 'BIGINT', fk: 'roles' },
+            { n: 'full_name', t: 'NVARCHAR(150)' },
+            { n: 'email', t: 'NVARCHAR(150)', u: true },
+            { n: 'phone', t: 'NVARCHAR(20)', null: true },
+            { n: 'password_hash', t: 'NVARCHAR(255)' },
+            { n: 'dob', t: 'DATE', null: true },
+            { n: 'gender', t: 'NVARCHAR(10)', null: true },
+            { n: 'avatar_url', t: 'NVARCHAR(255)', null: true },
+            { n: 'address', t: 'NVARCHAR(255)', null: true },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'last_login_at', t: 'DATETIME2', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' },
+            { n: 'deleted_at', t: 'DATETIME2', null: true }
+        ]},
+        { name: 'members', module: 'A', x: 310, y: 480, cols: [
+            { n: 'user_id', t: 'BIGINT', pk: true, fk: 'users' },
+            { n: 'membership_code', t: 'NVARCHAR(30)', u: true },
+            { n: 'join_date', t: 'DATE' },
+            { n: 'health_notes', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'fitness_goal', t: 'NVARCHAR(255)', null: true },
+            { n: 'fitness_level', t: 'NVARCHAR(20)' },
+            { n: 'emergency_contact_name', t: 'NVARCHAR(150)', null: true },
+            { n: 'emergency_contact_phone', t: 'NVARCHAR(20)', null: true }
+        ]},
+        { name: 'coaches', module: 'A', x: 590, y: 50, cols: [
+            { n: 'user_id', t: 'BIGINT', pk: true, fk: 'users' },
+            { n: 'specialization', t: 'NVARCHAR(150)', null: true },
+            { n: 'bio', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'certification', t: 'NVARCHAR(255)', null: true },
+            { n: 'hire_date', t: 'DATE', null: true },
+            { n: 'employment_status', t: 'NVARCHAR(20)' }
+        ]},
+        { name: 'receptionists', module: 'A', x: 590, y: 290, cols: [
+            { n: 'user_id', t: 'BIGINT', pk: true, fk: 'users' },
+            { n: 'hire_date', t: 'DATE', null: true },
+            { n: 'shift', t: 'NVARCHAR(50)', null: true },
+            { n: 'employment_status', t: 'NVARCHAR(20)' }
+        ]},
+        { name: 'center_managers', module: 'A', x: 590, y: 470, cols: [
+            { n: 'user_id', t: 'BIGINT', pk: true, fk: 'users' },
+            { n: 'hire_date', t: 'DATE', null: true }
+        ]},
+
+        // Module B
+        { name: 'disciplines', module: 'B', x: 870, y: 50, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'name', t: 'NVARCHAR(100)', u: true },
+            { n: 'description', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'rooms', module: 'B', x: 870, y: 230, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'name', t: 'NVARCHAR(100)' },
+            { n: 'location', t: 'NVARCHAR(150)', null: true },
+            { n: 'capacity', t: 'INT' },
+            { n: 'status', t: 'NVARCHAR(20)' }
+        ]},
+        { name: 'membership_packages', module: 'B', x: 870, y: 440, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'name', t: 'NVARCHAR(150)' },
+            { n: 'description', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'price', t: 'DECIMAL(12,2)' },
+            { n: 'duration_days', t: 'INT' },
+            { n: 'class_credit_limit', t: 'INT', null: true },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'created_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' }
+        ]},
+
+        // Module C
+        { name: 'membership_subscriptions', module: 'C', x: 870, y: 760, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'package_id', t: 'BIGINT', fk: 'membership_packages' },
+            { n: 'previous_subscription_id', t: 'BIGINT', fk: 'membership_subscriptions', null: true },
+            { n: 'start_date', t: 'DATE' },
+            { n: 'end_date', t: 'DATE' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'qr_code', t: 'NVARCHAR(255)', null: true, u: true },
+            { n: 'created_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' }
+        ]},
+
+        // Module D
+        { name: 'classes', module: 'D', x: 1180, y: 50, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'name', t: 'NVARCHAR(150)' },
+            { n: 'discipline_id', t: 'BIGINT', fk: 'disciplines' },
+            { n: 'coach_id', t: 'BIGINT', fk: 'coaches' },
+            { n: 'room_id', t: 'BIGINT', fk: 'rooms' },
+            { n: 'capacity', t: 'INT' },
+            { n: 'level', t: 'NVARCHAR(20)' },
+            { n: 'description', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'created_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' }
+        ]},
+        { name: 'class_sessions', module: 'D', x: 1180, y: 430, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'class_id', t: 'BIGINT', fk: 'classes' },
+            { n: 'session_date', t: 'DATE' },
+            { n: 'start_time', t: 'TIME' },
+            { n: 'end_time', t: 'TIME' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'cancel_reason', t: 'NVARCHAR(255)', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' }
+        ]},
+        { name: 'class_enrollments', module: 'D', x: 1180, y: 760, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'class_id', t: 'BIGINT', fk: 'classes' },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'enrolled_at', t: 'DATETIME2' },
+            { n: 'cancelled_at', t: 'DATETIME2', null: true },
+            { n: 'cancelled_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'cancel_reason', t: 'NVARCHAR(255)', null: true }
+        ]},
+        { name: 'class_waitlists', module: 'D', x: 1460, y: 760, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'class_id', t: 'BIGINT', fk: 'classes' },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'requested_at', t: 'DATETIME2' },
+            { n: 'status', t: 'NVARCHAR(20)' }
+        ]},
+
+        // Module E
+        { name: 'center_checkins', module: 'E', x: 310, y: 800, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'check_in_time', t: 'DATETIME2' },
+            { n: 'check_out_time', t: 'DATETIME2', null: true },
+            { n: 'method', t: 'NVARCHAR(10)' },
+            { n: 'recorded_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'gate', t: 'NVARCHAR(50)', null: true }
+        ]},
+        { name: 'session_attendance', module: 'E', x: 1460, y: 430, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'session_id', t: 'BIGINT', fk: 'class_sessions' },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'checked_in_at', t: 'DATETIME2', null: true },
+            { n: 'recorded_by', t: 'BIGINT', fk: 'coaches' },
+            { n: 'notes', t: 'NVARCHAR(255)', null: true }
+        ]},
+
+        // Module F
+        { name: 'payments', module: 'F', x: 50, y: 800, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'subscription_id', t: 'BIGINT', fk: 'membership_subscriptions', null: true },
+            { n: 'class_enrollment_id', t: 'BIGINT', fk: 'class_enrollments', null: true },
+            { n: 'amount', t: 'DECIMAL(12,2)' },
+            { n: 'method', t: 'NVARCHAR(20)' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'paid_at', t: 'DATETIME2', null: true },
+            { n: 'received_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'note', t: 'NVARCHAR(255)', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'invoices', module: 'F', x: 50, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'payment_id', t: 'BIGINT', fk: 'payments', u: true },
+            { n: 'invoice_number', t: 'NVARCHAR(50)', u: true },
+            { n: 'issued_at', t: 'DATETIME2' },
+            { n: 'subtotal_amount', t: 'DECIMAL(12,2)' },
+            { n: 'tax_amount', t: 'DECIMAL(12,2)' },
+            { n: 'total_amount', t: 'COMPUTED' },
+            { n: 'pdf_url', t: 'NVARCHAR(255)', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'invoice_items', module: 'F', x: 310, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'invoice_id', t: 'BIGINT', fk: 'invoices' },
+            { n: 'description', t: 'NVARCHAR(255)' },
+            { n: 'quantity', t: 'INT' },
+            { n: 'unit_price', t: 'DECIMAL(12,2)' },
+            { n: 'amount', t: 'COMPUTED' }
+        ]},
+        { name: 'report_snapshots', module: 'F', x: 50, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'report_type', t: 'NVARCHAR(30)' },
+            { n: 'period_start', t: 'DATE' },
+            { n: 'period_end', t: 'DATE' },
+            { n: 'data', t: 'JSON' },
+            { n: 'generated_by', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'generated_at', t: 'DATETIME2' }
+        ]},
+
+        // Module G
+        { name: 'training_plans', module: 'G', x: 590, y: 760, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'coach_id', t: 'BIGINT', fk: 'coaches' },
+            { n: 'class_id', t: 'BIGINT', fk: 'classes', null: true },
+            { n: 'goal', t: 'NVARCHAR(255)', null: true },
+            { n: 'start_date', t: 'DATE' },
+            { n: 'end_date', t: 'DATE' },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'is_ai_generated', t: 'BIT' },
+            { n: 'ai_recommendation_id', t: 'BIGINT', fk: 'ai_recommendation_logs', null: true },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'updated_at', t: 'DATETIME2' }
+        ]},
+        { name: 'training_plan_items', module: 'G', x: 590, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'training_plan_id', t: 'BIGINT', fk: 'training_plans' },
+            { n: 'day_of_week', t: 'TINYINT', null: true },
+            { n: 'exercise_name', t: 'NVARCHAR(150)' },
+            { n: 'description', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'sets', t: 'INT', null: true },
+            { n: 'reps', t: 'INT', null: true },
+            { n: 'duration_minutes', t: 'INT', null: true },
+            { n: 'order_index', t: 'INT' }
+        ]},
+        { name: 'session_evaluations', module: 'G', x: 1460, y: 50, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'session_id', t: 'BIGINT', fk: 'class_sessions', null: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'coach_id', t: 'BIGINT', fk: 'coaches' },
+            { n: 'performance_notes', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'progress_score', t: 'DECIMAL(4,1)', null: true },
+            { n: 'feedback', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'evaluated_at', t: 'DATETIME2' },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'member_progress_logs', module: 'G', x: 590, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'metric_name', t: 'NVARCHAR(100)' },
+            { n: 'metric_value', t: 'DECIMAL(10,2)' },
+            { n: 'unit', t: 'NVARCHAR(20)', null: true },
+            { n: 'recorded_by', t: 'BIGINT', fk: 'users' },
+            { n: 'recorded_at', t: 'DATETIME2' }
+        ]},
+
+        // Module H
+        { name: 'ai_recommendation_logs', module: 'H', x: 870, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'coach_id', t: 'BIGINT', fk: 'coaches', null: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'input_context', t: 'JSON' },
+            { n: 'recommended_content', t: 'JSON' },
+            { n: 'model_name', t: 'NVARCHAR(100)', null: true },
+            { n: 'is_applied', t: 'BIT' },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'ai_chat_sessions', module: 'H', x: 870, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'topic', t: 'NVARCHAR(150)', null: true },
+            { n: 'started_at', t: 'DATETIME2' },
+            { n: 'ended_at', t: 'DATETIME2', null: true }
+        ]},
+        { name: 'ai_chat_messages', module: 'H', x: 1180, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'session_id', t: 'BIGINT', fk: 'ai_chat_sessions' },
+            { n: 'sender', t: 'NVARCHAR(10)' },
+            { n: 'message', t: 'NVARCHAR(MAX)' },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+
+        // Module I
+        { name: 'notifications', module: 'I', x: 1180, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'user_id', t: 'BIGINT', fk: 'users' },
+            { n: 'type', t: 'NVARCHAR(30)' },
+            { n: 'title', t: 'NVARCHAR(150)' },
+            { n: 'message', t: 'NVARCHAR(MAX)' },
+            { n: 'is_read', t: 'BIT' },
+            { n: 'related_entity_type', t: 'NVARCHAR(50)', null: true },
+            { n: 'related_entity_id', t: 'BIGINT', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+        { name: 'support_requests', module: 'I', x: 1460, y: 1170, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'member_id', t: 'BIGINT', fk: 'members' },
+            { n: 'assigned_to', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'subject', t: 'NVARCHAR(150)' },
+            { n: 'description', t: 'NVARCHAR(MAX)', null: true },
+            { n: 'status', t: 'NVARCHAR(20)' },
+            { n: 'created_at', t: 'DATETIME2' },
+            { n: 'resolved_at', t: 'DATETIME2', null: true }
+        ]},
+        { name: 'support_request_messages', module: 'I', x: 1460, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'support_request_id', t: 'BIGINT', fk: 'support_requests' },
+            { n: 'sender_user_id', t: 'BIGINT', fk: 'users' },
+            { n: 'message', t: 'NVARCHAR(MAX)' },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]},
+
+        // Module J
+        { name: 'audit_logs', module: 'J', x: 310, y: 1480, cols: [
+            { n: 'id', t: 'BIGINT', pk: true },
+            { n: 'user_id', t: 'BIGINT', fk: 'users', null: true },
+            { n: 'action', t: 'NVARCHAR(100)' },
+            { n: 'entity_type', t: 'NVARCHAR(100)' },
+            { n: 'entity_id', t: 'BIGINT', null: true },
+            { n: 'old_value', t: 'JSON', null: true },
+            { n: 'new_value', t: 'JSON', null: true },
+            { n: 'ip_address', t: 'NVARCHAR(45)', null: true },
+            { n: 'created_at', t: 'DATETIME2' }
+        ]}
+    ];
+
+    // Calculate dimensions
+    const ROW_H = 18;
+    const HEADER_H = 28;
+    const COL_W = 250;
+    const PAD = 8;
+
+    function getTableHeight(t) { return HEADER_H + t.cols.length * ROW_H + PAD; }
+    function getTableCenter(t) {
+        const h = getTableHeight(t);
+        return { x: t.x + COL_W / 2, y: t.y + h / 2 };
+    }
+
+    // Canvas size
+    let maxX = 0, maxY = 0;
+    tables.forEach(t => {
+        maxX = Math.max(maxX, t.x + COL_W + 40);
+        maxY = Math.max(maxY, t.y + getTableHeight(t) + 40);
+    });
+    canvas.width = maxX * dpr;
+    canvas.height = maxY * dpr;
+    canvas.style.width = maxX + 'px';
+    canvas.style.height = maxY + 'px';
+    ctx.scale(dpr, dpr);
+
+    // Draw relationships first (behind tables)
+    function drawRelationships() {
+        const tableMap = {};
+        tables.forEach(t => tableMap[t.name] = t);
+
+        tables.forEach(t => {
+            t.cols.forEach((col, ci) => {
+                if (col.fk && tableMap[col.fk]) {
+                    const target = tableMap[col.fk];
+                    const fromY = t.y + HEADER_H + ci * ROW_H + ROW_H / 2;
+                    const fromX = t.x;
+                    const toC = getTableCenter(target);
+
+                    // Determine connection points
+                    let sx, sy, ex, ey;
+                    sx = t.x + COL_W / 2;
+                    sy = fromY;
+
+                    // Find closest edge of target
+                    const th = getTableHeight(target);
+                    const tCx = target.x + COL_W / 2;
+                    const tCy = target.y + th / 2;
+
+                    // Connect to nearest edge
+                    if (Math.abs(sx - tCx) > Math.abs(sy - tCy)) {
+                        // Horizontal connection
+                        if (sx > tCx) {
+                            sx = t.x; ex = target.x + COL_W;
+                        } else {
+                            sx = t.x + COL_W; ex = target.x;
+                        }
+                        ey = Math.max(target.y + 10, Math.min(target.y + th - 10, sy));
+                    } else {
+                        // Vertical connection
+                        if (sy > tCy) {
+                            sy = t.y; ey = target.y + th;
+                        } else {
+                            sy = t.y + getTableHeight(t); ey = target.y;
+                        }
+                        ex = Math.max(target.x + 10, Math.min(target.x + COL_W - 10, sx));
+                    }
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#999';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([]);
+
+                    // Draw line with a bend
+                    if (Math.abs(sx - ex) > 20 && Math.abs(sy - ey) > 20) {
+                        const mx = (sx + ex) / 2;
+                        ctx.moveTo(sx, sy);
+                        ctx.lineTo(mx, sy);
+                        ctx.lineTo(mx, ey);
+                        ctx.lineTo(ex, ey);
+                    } else {
+                        ctx.moveTo(sx, sy);
+                        ctx.lineTo(ex, ey);
+                    }
+                    ctx.stroke();
+
+                    // Draw diamond (many side)
+                    ctx.beginPath();
+                    ctx.fillStyle = '#666';
+                    const dx = ex - sx, dy = ey - sy;
+                    const len = Math.sqrt(dx*dx + dy*dy);
+                    if (len > 0) {
+                        ctx.arc(ex, ey, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            });
+        });
+    }
+
+    function drawTable(t) {
+        const h = getTableHeight(t);
+        const color = MODULE_COLORS[t.module] || '#fff';
+        const headerColor = HEADER_COLORS[t.module] || '#333';
+
+        // Shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.15)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        // Body
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(t.x, t.y, COL_W, h);
+        ctx.shadowColor = 'transparent';
+
+        // Header
+        ctx.fillStyle = headerColor;
+        ctx.fillRect(t.x, t.y, COL_W, HEADER_H);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 12px Segoe UI, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(t.name, t.x + COL_W / 2, t.y + 18);
+
+        // Columns
+        ctx.textAlign = 'left';
+        t.cols.forEach((col, i) => {
+            const cy = t.y + HEADER_H + i * ROW_H;
+
+            // Alternate row bg
+            ctx.fillStyle = i % 2 === 0 ? color : '#fff';
+            ctx.fillRect(t.x, cy, COL_W, ROW_H);
+
+            // Icons
+            let prefix = '  ';
+            if (col.pk && col.fk) prefix = '🔑🔗';
+            else if (col.pk) prefix = '🔑';
+            else if (col.fk) prefix = '  🔗';
+
+            ctx.fillStyle = '#333';
+            ctx.font = '11px Segoe UI, sans-serif';
+            ctx.fillText(prefix, t.x + 2, cy + 13);
+
+            // Column name
+            ctx.font = col.pk ? 'bold 11px Segoe UI, sans-serif' : '11px Segoe UI, sans-serif';
+            ctx.fillStyle = col.fk ? '#0d47a1' : '#333';
+            ctx.fillText(col.n, t.x + 30, cy + 13);
+
+            // Type
+            ctx.fillStyle = '#888';
+            ctx.font = '10px Consolas, monospace';
+            ctx.textAlign = 'right';
+            let typeStr = col.t;
+            if (col.null) typeStr += '?';
+            if (col.u) typeStr += ' UQ';
+            ctx.fillText(typeStr, t.x + COL_W - 4, cy + 13);
+            ctx.textAlign = 'left';
+        });
+
+        // Border
+        ctx.strokeStyle = headerColor;
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(t.x, t.y, COL_W, h);
+    }
+
+    // Render
+    ctx.clearRect(0, 0, maxX, maxY);
+    drawRelationships();
+    tables.forEach(drawTable);
+    </script>
+</body>
+</html>
