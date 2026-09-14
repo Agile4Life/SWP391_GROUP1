@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="antigravity" pages="7">
   <diagram name="Master Swimlane - Quy Trình Tổng Thể" id="master-vertical">
-    <mxGraphModel dx="1028" dy="735" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
+    <mxGraphModel dx="934" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -103,7 +103,7 @@
           <mxGeometry height="50" width="170" x="25" y="1210" as="geometry" />
         </mxCell>
         <mxCell id="m_sys_save" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=11;" value="Lưu kết quả tập &amp;&lt;br&gt;Cập nhật hồ sơ HV" vertex="1">
-          <mxGeometry height="50" width="170" x="25" y="2010" as="geometry" />
+          <mxGeometry height="50" width="170" x="29" y="2010" as="geometry" />
         </mxCell>
         <mxCell id="m_invoice" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=11;" value="Xuất hóa đơn &amp;&lt;br&gt;Cập nhật công nợ" vertex="1">
           <mxGeometry height="50" width="170" x="25" y="830" as="geometry" />
@@ -235,8 +235,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e3_yes" edge="1" parent="1" source="m_auth_chk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="m_update" value="Đúng">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e3_yes" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" value="Đúng">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="385" as="sourcePoint" />
+            <mxPoint x="220" y="385" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="e4" edge="1" parent="1" source="m_update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="m_buy" value="Xem gói">
           <mxGeometry relative="1" as="geometry" />
@@ -386,6 +389,9 @@
               <mxPoint x="280" y="740" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="crJwfpzawIichHHjJU39-1" edge="1" parent="1" source="m_audit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="m_end">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
