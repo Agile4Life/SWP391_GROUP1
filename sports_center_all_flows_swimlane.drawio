@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="antigravity" pages="7">
   <diagram name="Master Swimlane - Quy Trình Tổng Thể" id="master-vertical">
-    <mxGraphModel dx="1245" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
+    <mxGraphModel dx="1868" dy="1126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -53,6 +53,15 @@
         </mxCell>
         <mxCell id="zcEG3S1uiKACQMK7KJyP-1" parent="lane_mem" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#4C8ABD;" value="&lt;span style=&quot;color: rgb(255, 249, 254);&quot;&gt;&amp;nbsp;câu hỏi cho hệ thống AI về lịch tập, bài tập&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="70" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="crJwfpzawIichHHjJU39-2" edge="1" parent="lane_mem" source="dluJi6BTc-TbdnoiA5ee-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="m_end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint y="720" />
+              <mxPoint y="2220" />
+            </Array>
+            <mxPoint x="85" y="2230" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="dluJi6BTc-TbdnoiA5ee-24" parent="lane_mem" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#4C8ABD;" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;Nhận thông báo&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="25" y="690" as="geometry" />
@@ -166,7 +175,7 @@
           <mxGeometry height="50" width="170" x="20" y="1640" as="geometry" />
         </mxCell>
         <mxCell id="dluJi6BTc-TbdnoiA5ee-17" parent="lane_mgr" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#4C8ABD;" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;Phân công HLV phụ trách lớp học&lt;/span&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="60" y="1450" as="geometry" />
+          <mxGeometry height="60" width="120" x="60" y="1505" as="geometry" />
         </mxCell>
         <mxCell id="dluJi6BTc-TbdnoiA5ee-21" parent="lane_mgr" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#4C8ABD;" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;Xem lịch sử thao tác (Audit Log)&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="45" y="2190" as="geometry" />
@@ -214,7 +223,7 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="210.1" y="1790" />
-              <mxPoint x="210.1" y="1480" />
+              <mxPoint x="210.1" y="1535" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -335,7 +344,12 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e23" edge="1" parent="1" source="m_invoice" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="m_mgr_rpt" value="Dữ liệu tài chính">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="875" />
+              <mxPoint x="1020" y="1685" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="dluJi6BTc-TbdnoiA5ee-58" connectable="0" parent="e23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Text" vertex="1">
           <mxGeometry relative="1" x="0.8386" y="5" as="geometry">
