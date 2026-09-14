@@ -961,7 +961,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Flow 6 - AI Assistant Notification" id="flow6-vertical">
-    <mxGraphModel dx="1245" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1300" math="0" shadow="0">
+    <mxGraphModel dx="934" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1010,14 +1010,25 @@
         <mxCell id="label_branch2" parent="lane_sys" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#e65100;" value="NHÁNH 2: THÔNG BÁO TỰ ĐỘNG" vertex="1">
           <mxGeometry height="20" width="220" x="30" y="100" as="geometry" />
         </mxCell>
+        <mxCell id="oDKphF4DCRi-LtWqR2kK-4" edge="1" parent="lane_sys" source="f6_monitor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oDKphF4DCRi-LtWqR2kK-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="f6_monitor" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=12;" value="Hệ thống giám sát&lt;br&gt;sự kiện thời gian thực nền" vertex="1">
           <mxGeometry height="50" width="170" x="55" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="f6_chk" parent="lane_sys" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#b36200;fontColor=#000000;fontSize=11;fontStyle=1;" value="Phát hiện:&lt;br&gt;Đổi lịch, Hạn gói,&lt;br&gt;Nhắc giờ?" vertex="1">
-          <mxGeometry height="100" width="170" x="55" y="260" as="geometry" />
-        </mxCell>
         <mxCell id="f6_push" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=12;" value="Tự động gửi thông báo&lt;br&gt;chủ động (Push/SMS/App)" vertex="1">
           <mxGeometry height="50" width="170" x="55" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="oDKphF4DCRi-LtWqR2kK-5" edge="1" parent="lane_sys" source="oDKphF4DCRi-LtWqR2kK-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="f6_push">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDKphF4DCRi-LtWqR2kK-6" connectable="0" parent="oDKphF4DCRi-LtWqR2kK-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;font-size: 10px;&quot;&gt;Có sự kiện mới&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0286" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDKphF4DCRi-LtWqR2kK-3" parent="lane_sys" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4682B4;fontColor=#FFFFFF;strokeColor=#2b506e;fontSize=12;" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;font-size: 11px; font-weight: 700;&quot;&gt;Phát hiện:&lt;/span&gt;&lt;br style=&quot;font-size: 11px; font-weight: 700;&quot;&gt;&lt;span style=&quot;font-size: 11px; font-weight: 700;&quot;&gt;Đổi lịch, Hạn gói,&lt;/span&gt;&lt;br style=&quot;font-size: 11px; font-weight: 700;&quot;&gt;&lt;span style=&quot;font-size: 11px; font-weight: 700;&quot;&gt;Nhắc giờ?&lt;/span&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="55" y="310" as="geometry" />
         </mxCell>
         <mxCell id="e1" edge="1" parent="1" source="f6_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;" target="f6_open">
           <mxGeometry relative="1" as="geometry" />
@@ -1032,12 +1043,6 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e5" edge="1" parent="1" source="f6_ai_resp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="f6_rate" value="Hiển thị câu trả lời">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e6" edge="1" parent="1" source="f6_monitor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;" target="f6_chk">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e7" edge="1" parent="1" source="f6_chk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="f6_push" value="Có sự kiện mới">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e8" edge="1" parent="1" source="f6_push" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333;fontSize=10;" target="f6_noti" value="Đẩy thông báo">
