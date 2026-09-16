@@ -1,0 +1,192 @@
+<mxfile host="Electron" agent="ChatGPT">
+  <diagram id="logical_model" name="Sports Center Logical Model - Crow Foot">
+    <mxGraphModel dx="5003" dy="2063" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;fontColor=#1e293b;" value="Sports Center Logical Data Model (Crow&#39;s Foot)" vertex="1">
+          <mxGeometry height="40" width="1300" x="30" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_role" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Role (Vai Trò)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Role ID&lt;/div&gt;&lt;div&gt;Role Name&lt;/div&gt;&lt;div&gt;Description&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="116" width="230" x="1420" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_center" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Sports Center (Trung Tâm)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Center ID&lt;/div&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;Hotline&lt;/div&gt;&lt;div&gt;Website&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="164" width="230" x="330" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_discipline" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Discipline (Bộ Môn)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Discipline ID&lt;/div&gt;&lt;div&gt;Description&lt;/div&gt;&lt;div&gt;FK  Center ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="116" width="230" x="2040" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_package" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Membership Package (Gói Tập)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Package ID&lt;/div&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Price&lt;/div&gt;&lt;div&gt;Duration Days&lt;/div&gt;&lt;div&gt;Credit Limit&lt;/div&gt;&lt;div&gt;FK  Center ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="-280" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_user" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;User (Người Dùng)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  User ID&lt;/div&gt;&lt;div&gt;Full Name&lt;/div&gt;&lt;div&gt;Email&lt;/div&gt;&lt;div&gt;Phone&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;FK  Role ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="920" y="1278" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_room" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Room (Phòng Tập)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Room ID&lt;/div&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Location&lt;/div&gt;&lt;div&gt;Capacity&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="230" x="2520" y="1564" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_subscription" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Subscription (Đăng Ký Gói)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Sub ID&lt;/div&gt;&lt;div&gt;Start Date&lt;/div&gt;&lt;div&gt;End Date&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;QR Code&lt;/div&gt;&lt;div&gt;FK  Package ID&lt;/div&gt;&lt;div&gt;FK  Member ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="212" width="230" x="-280" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_member" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Member (Hội Viên)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Member ID&lt;/div&gt;&lt;div&gt;Member Code&lt;/div&gt;&lt;div&gt;Join Date&lt;/div&gt;&lt;div&gt;Fitness Goal&lt;/div&gt;&lt;div&gt;Health Notes&lt;/div&gt;&lt;div&gt;FK  User ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="320" y="572" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_class" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Class (Lớp Học)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Class ID&lt;/div&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;Capacity&lt;/div&gt;&lt;div&gt;Level&lt;/div&gt;&lt;div&gt;FK  Coach ID&lt;/div&gt;&lt;div&gt;FK  Discipline ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="212" width="230" x="2040" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_payment" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Payment (Thanh Toán)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Payment ID&lt;/div&gt;&lt;div&gt;Amount&lt;/div&gt;&lt;div&gt;Method&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;Paid At&lt;/div&gt;&lt;div&gt;FK  Sub ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="-280" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_support" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Support Request (Hỗ Trợ)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Request ID&lt;/div&gt;&lt;div&gt;Subject&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;Created At&lt;/div&gt;&lt;div&gt;FK  Member ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="164" width="230" x="310" y="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_plan" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Training Plan (Kế Hoạch Tập)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Plan ID&lt;/div&gt;&lt;div&gt;Goal&lt;/div&gt;&lt;div&gt;Start Date&lt;/div&gt;&lt;div&gt;End Date&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;FK  Coach ID&lt;/div&gt;&lt;div&gt;FK  AI Log ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="212" width="230" x="1220" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_ai" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;AI Engine (Trợ Lý AI)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Log ID&lt;/div&gt;&lt;div&gt;Model Name&lt;/div&gt;&lt;div&gt;Input Context&lt;/div&gt;&lt;div&gt;Recommendation&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="230" x="1550" y="596" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_notif" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Notification (Thông Báo)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Notif ID&lt;/div&gt;&lt;div&gt;Title&lt;/div&gt;&lt;div&gt;Message&lt;/div&gt;&lt;div&gt;Is Read&lt;/div&gt;&lt;div&gt;FK  User ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="164" width="230" x="1420" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_wFup58vhgs9fEnlrH2Ju-73" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Class Session (Buổi Học)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;Session ID&lt;/div&gt;&lt;div&gt;Start Time&lt;/div&gt;&lt;div&gt;End Time&lt;/div&gt;&lt;div&gt;Session Date&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;FK  Room ID&lt;/div&gt;&lt;div&gt;FK  Class ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="212" width="230" x="2040" y="1528" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_wFup58vhgs9fEnlrH2Ju-74" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Attendance (Điểm Danh)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;Att ID&lt;/div&gt;&lt;div&gt;Checked At&lt;/div&gt;&lt;div&gt;Status&lt;/div&gt;&lt;div&gt;Notes&lt;/div&gt;&lt;div&gt;FK  Session ID&lt;/div&gt;&lt;div&gt;FK  Member ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="620" y="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_wFup58vhgs9fEnlrH2Ju-75" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Invoice (Hóa Đơn)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;Invoice ID&lt;/div&gt;&lt;div&gt;Invoice No&lt;/div&gt;&lt;div&gt;Total Amount&lt;/div&gt;&lt;div&gt;Issued At&lt;/div&gt;&lt;div&gt;FK  Payment ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="164" width="230" x="-280" y="1640" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_wFup58vhgs9fEnlrH2Ju-76" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Center Check-in (Vào Cổng)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;Checkin ID&lt;/div&gt;&lt;div&gt;Checkin Time&lt;/div&gt;&lt;div&gt;Method&lt;/div&gt;&lt;div&gt;Gate&lt;/div&gt;&lt;div&gt;FK  Member ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="164" width="230" x="80" y="1278" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_0" edge="1" parent="1" source="tbl_ent_center" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_package" value="Offer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_1" edge="1" parent="1" source="tbl_ent_center" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_discipline" value="Provide">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_2" edge="1" parent="1" source="tbl_ent_role" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_user" value="Has">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1390" y="1278" />
+              <mxPoint x="1390" y="1350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_3" edge="1" parent="1" source="tbl_ent_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;" target="tbl_ent_member" value="Is-A">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="1372" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_4" edge="1" parent="1" source="tbl_ent_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;" target="tbl_ent_coach" value="Is-A">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="1004" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_5" edge="1" parent="1" source="tbl_ent_package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_subscription" value="Include">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_6" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_subscription" value="Purchase">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_7" edge="1" parent="1" source="tbl_ent_subscription" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_payment" value="Make">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_8" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_support" value="Submit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="960" />
+              <mxPoint x="425" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_9" edge="1" parent="1" source="tbl_ent_coach" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_class" value="Teach">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2140" y="1004" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_10" edge="1" parent="1" source="tbl_ent_discipline" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_class" value="Belong">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2180" y="380" />
+              <mxPoint x="2180" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_11" edge="1" parent="1" source="tbl_ent_room" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-73" value="Locate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_12" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_plan" value="Train">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_13" edge="1" parent="1" source="tbl_ent_coach" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_plan" value="Design">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_14" edge="1" parent="1" source="tbl_ent_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_plan" value="Suggest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_15" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERmany;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_class" value="Enroll">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="435" y="450" />
+              <mxPoint x="2155" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_16" edge="1" parent="1" source="tbl_ent_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_ent_notif" value="Receive">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1390" y="1372" />
+              <mxPoint x="1390" y="1472" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_17" edge="1" parent="1" source="tbl_ent_class" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-73" value="Schedule">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2160" y="772" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_18" edge="1" parent="1" source="tbl_wFup58vhgs9fEnlrH2Ju-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-74" value="Track">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_19" edge="1" parent="1" source="tbl_ent_payment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-75" value="Issue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_20" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-76" value="Scan">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="1360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_21" edge="1" parent="1" source="tbl_ent_member" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-74" value="Records">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="1440" />
+              <mxPoint x="735" y="1440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_22" edge="1" parent="1" source="tbl_ent_payment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;" target="tbl_wFup58vhgs9fEnlrH2Ju-75" value="Issue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;fontSize=11;align=left;verticalAlign=top;spacing=8;" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br/&gt;PK = Primary Key&lt;br/&gt;FK = Foreign Key&lt;br/&gt;Crow&#39;s Foot: 1 = one, many = N&lt;br/&gt;&lt;i&gt;Attributes from the original Chen ERD are preserved; FK fields are added where implied by relationships.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="120" width="280" x="2780" y="1750" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ent_coach" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#334155;fillColor=#ffffff;strokeWidth=1.5;align=left;verticalAlign=top;overflow=fill;" value="&lt;div style=&quot;font-weight:bold;color:#ffffff;text-align:center;padding:7px 4px;background:#334155;&quot;&gt;Coach (HLV)&lt;/div&gt;&lt;div style=&quot;padding:5px 8px;font-size:11px;line-height:18px;&quot;&gt;&lt;div&gt;PK  Coach ID&lt;/div&gt;&lt;div&gt;Specialization&lt;/div&gt;&lt;div&gt;Bio&lt;/div&gt;&lt;div&gt;Certification&lt;/div&gt;&lt;div&gt;Hire Date&lt;/div&gt;&lt;div&gt;FK  User ID&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="188" width="230" x="1220" y="910" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
