@@ -14,3 +14,17 @@ inspect_original.js
 Thumbs.db
 .vscode/
 .idea/
+
+# Application dependencies, builds and secrets
+node_modules/
+dist/
+target/
+.env
+!.env.example
+
+# Application dependencies, builds and secrets
+node_modules/
+dist/
+target/
+.env
+!.env.example
