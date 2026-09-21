@@ -1,16 +1,74 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1';
-
-export class ApiClientError extends Error {
-  constructor(public readonly status: number, message: string) { super(message); }
+export interface UserSession {
+  id: string;
+  name: string;
+  identifier: string;
+  role: 'MEMBER' | 'STAFF' | 'COACH' | 'MANAGER';
 }
 
-export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init, headers: { Accept: 'application/json', ...init.headers },
-  });
-  if (!response.ok) {
-    const body = await response.json().catch(() => null) as { message?: string } | null;
-    throw new ApiClientError(response.status, body?.message ?? 'Không thể kết nối máy chủ.');
+export interface LoginResponse {
+  token: string;
+  user: UserSession;
+}
+
+export const AUTH_STORAGE_KEY = 'fitcenter_auth_session';
+
+// Lấy thông tin user hiện tại
+export function getCurrentUser(): UserSession | null {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as UserSession) : null;
+  } catch {
+    return null;
   }
-  return response.json() as Promise<T>;
+}
+
+// Xóa session (Logout hoặc khi gặp 401)
+export function clearAuthSession(): void {
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+  localStorage.removeItem('fitcenter_token');
+}
+
+// Mock API Contract cho US01 (Khi BE xong chỉ cần đổi logic bên trong thành fetch/axios)
+export async function loginApi(identifier: string, password: string): Promise<LoginResponse> {
+  // Giả lập độ trễ mạng 600ms
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
+  const cleanId = identifier.trim().toLowerCase();
+
+  // Validate nghiệp vụ mẫu
+  if (password === 'wrongpass') {
+    const error: any = new Error('Tài khoản hoặc mật khẩu không chính xác.');
+    error.status = 401;
+    throw error;
+  }
+
+  // Tự động phân vai trò dựa vào thông tin nhập để bạn test luồng (US01-F03)
+  let role: UserSession['role'] = 'MEMBER';
+  let name = 'Nguyễn Văn An';
+
+  if (cleanId.includes('admin') || cleanId.includes('manager')) {
+    role = 'MANAGER';
+    name = 'Quản lý Hệ thống';
+  } else if (cleanId.includes('coach')) {
+    role = 'COACH';
+    name = 'HLV Trần Hùng';
+  } else if (cleanId.includes('staff') || cleanId.includes('letan')) {
+    role = 'STAFF';
+    name = 'Lễ tân Minh Thư';
+  }
+
+  const responseData: LoginResponse = {
+    token: `mock_jwt_token_${Date.now()}`,
+    user: {
+      id: 'USR_001',
+      name,
+      identifier: cleanId,
+      role,
+    },
+  };
+
+  localStorage.setItem('fitcenter_token', responseData.token);
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(responseData.user));
+
+  return responseData;
 }
