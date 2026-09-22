@@ -9,7 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     private final String webOrigin;
 
-    public WebConfig(@Value("${app.web-origin}") String webOrigin) { this.webOrigin = webOrigin; }
+    public WebConfig(@Value("${app.web-origin:http://localhost:5173}") String webOrigin) { 
+        this.webOrigin = webOrigin; 
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
