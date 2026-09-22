@@ -5,6 +5,68 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/v1/Auth/send-otp": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Auth/verify-otp": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/Auth/register": {
       "post": {
         "tags": [
@@ -188,6 +250,20 @@
         },
         "additionalProperties": false
       },
+      "OtpRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterRequest": {
         "required": [
           "email",
@@ -212,6 +288,25 @@
           "role": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VerifyOtpRequest": {
+        "required": [
+          "otpCode",
+          "target"
+        ],
+        "type": "object",
+        "properties": {
+          "target": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "otpCode": {
+            "maxLength": 6,
+            "minLength": 6,
+            "type": "string"
           }
         },
         "additionalProperties": false

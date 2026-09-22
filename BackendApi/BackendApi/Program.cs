@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Đăng ký JwtService vào hệ thống
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddSingleton<OtpService>(); 
 
 // Đọc danh sách origin từ file appsettings.json
 var allowedOrigins = builder.Configuration.GetSection("FrontendOrigins").Get<string[]>() ?? Array.Empty<string>();

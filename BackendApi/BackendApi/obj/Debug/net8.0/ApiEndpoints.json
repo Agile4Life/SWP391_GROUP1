@@ -69,6 +69,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendApi.Controllers.AuthController",
+    "Method": "SendOtp",
+    "RelativePath": "api/v1/Auth/send-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BackendApi.Models.OtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendApi.Controllers.AuthController",
+    "Method": "VerifyOtp",
+    "RelativePath": "api/v1/Auth/verify-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BackendApi.Models.VerifyOtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendApi.Controllers.HealthController",
     "Method": "GetHealth",
     "RelativePath": "api/v1/Health",
