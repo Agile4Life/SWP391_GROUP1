@@ -1,6 +1,43 @@
 [
   {
     "ContainingType": "BackendApi.Controllers.AuthController",
+    "Method": "CheckAccountStatus",
+    "RelativePath": "api/v1/Auth/account-status",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identifier",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendApi.Controllers.AuthController",
+    "Method": "CheckExistence",
+    "RelativePath": "api/v1/Auth/check-existence",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "phone",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendApi.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/v1/Auth/login",
     "HttpMethod": "POST",
