@@ -33,3 +33,10 @@ C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\obj\Debug\net8.
 C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\obj\Debug\net8.0\BackendApi.pdb
 C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\obj\Debug\net8.0\BackendApi.genruntimeconfig.cache
 C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\obj\Debug\net8.0\ref\BackendApi.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\System.Formats.Asn1.dll
+C:\Users\gkgam\OneDrive\Tài liệu\SWP391\BackendApi\BackendApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

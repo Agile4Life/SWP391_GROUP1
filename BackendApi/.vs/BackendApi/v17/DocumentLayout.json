@@ -7,16 +7,36 @@
       "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\models\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\models\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\models\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\models\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\models\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\models\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|solutionrelative:backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B804B7C0-04B8-4DAA-B0B5-D7187A863417}|BackendApi\\BackendApi.csproj|c:\\users\\gkgam\\onedrive\\t\u00E0i li\u1EC7u\\swp391\\backendapi\\backendapi\\controllers\\healthcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,33 +62,92 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "BackendApi\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "BackendApi\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowCEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-22T07:45:55.899Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Services\\JwtService.cs",
+              "RelativeDocumentMoniker": "BackendApi\\Services\\JwtService.cs",
+              "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Services\\JwtService.cs",
+              "RelativeToolTip": "BackendApi\\Services\\JwtService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-22T07:44:12.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserModel.cs",
+              "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\UserModel.cs",
+              "RelativeDocumentMoniker": "BackendApi\\Models\\UserModel.cs",
+              "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\UserModel.cs",
+              "RelativeToolTip": "BackendApi\\Models\\UserModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-22T07:43:29.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginResponse.cs",
+              "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\LoginResponse.cs",
+              "RelativeDocumentMoniker": "BackendApi\\Models\\LoginResponse.cs",
+              "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\LoginResponse.cs",
+              "RelativeToolTip": "BackendApi\\Models\\LoginResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-22T07:43:07.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "BackendApi\\Models\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\LoginRequest.cs",
+              "RelativeToolTip": "BackendApi\\Models\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-22T07:42:36.565Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Program.cs",
               "RelativeDocumentMoniker": "BackendApi\\Program.cs",
               "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Program.cs",
               "RelativeToolTip": "BackendApi\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAABsAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-18T14:00:30.843Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "ExceptionHandlingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Middlewares\\ExceptionHandlingMiddleware.cs",
               "RelativeDocumentMoniker": "BackendApi\\Middlewares\\ExceptionHandlingMiddleware.cs",
               "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Middlewares\\ExceptionHandlingMiddleware.cs",
               "RelativeToolTip": "BackendApi\\Middlewares\\ExceptionHandlingMiddleware.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAACkAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAIBJwCkAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:00:09.577Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T14:00:09.577Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "ErrorResponse.cs",
               "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Models\\ErrorResponse.cs",
               "RelativeDocumentMoniker": "BackendApi\\Models\\ErrorResponse.cs",
@@ -76,12 +155,11 @@
               "RelativeToolTip": "BackendApi\\Models\\ErrorResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:59:26.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T13:59:26.311Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "HealthController.cs",
               "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\Controllers\\HealthController.cs",
               "RelativeDocumentMoniker": "BackendApi\\Controllers\\HealthController.cs",
@@ -89,21 +167,19 @@
               "RelativeToolTip": "BackendApi\\Controllers\\HealthController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:09:41.741Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T13:09:41.741Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\appsettings.json",
               "RelativeDocumentMoniker": "BackendApi\\appsettings.json",
               "ToolTip": "C:\\Users\\gkgam\\OneDrive\\T\u00E0i li\u1EC7u\\SWP391\\BackendApi\\BackendApi\\appsettings.json",
               "RelativeToolTip": "BackendApi\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-09-18T13:08:17.16Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T13:08:17.16Z"
             }
           ]
         },
