@@ -1,18 +1,35 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: scms-api
+    
+  # Cấu hình kết nối SQL Server
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:sqlserver://localhost:1433;databaseName=SportsCenterDB;encrypt=true;trustServerCertificate=true}
-    username: ${SPRING_DATASOURCE_USERNAME:sa}
-    password: ${SPRING_DATASOURCE_PASSWORD:ChangeThis_123!}
+    url: jdbc:sqlserver://localhost:1433;databaseName=SCMS_DB;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 12345
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    
+  # Cấu hình Hibernate / JPA (Tự động tạo và cập nhật bảng)
   jpa:
-    open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
+        format_sql: true
         dialect: org.hibernate.dialect.SQLServerDialect
-server:
-  port: ${SERVER_PORT:8080}
+
+# Cấu hình tùy chỉnh cho dự án (Đã gọi trong JwtService và SecurityConfig)
 app:
-  web-origin: ${WEB_ORIGIN:http://localhost:5173}
+  jwt:
+    # Chuỗi bí mật để mã hóa Token (phải đủ dài và phức tạp)
+    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    # Thời gian sống của Token: 86400000 ms = 24 giờ
+    expiration-ms: 86400000
+  cors:
+    # Cho phép Frontend React (cổng 5173 hoặc 3000) gọi API
+    allowed-origins: http://localhost:5173,http://localhost:3000
+    web-origin: http://localhost:5173

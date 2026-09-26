@@ -1,10 +1,173 @@
-:root { font-family: Inter, system-ui, sans-serif; color: #172033; background: #f5f7fb; }
-* { box-sizing: border-box; } body { margin: 0; } a { color: inherit; text-decoration: none; }
-.app-shell { min-height: 100vh; display: grid; grid-template-columns: 230px 1fr; }
-aside { padding: 28px 18px; color: white; background: #0f172a; } aside strong { font-size: 1.5rem; }
-nav { display: grid; gap: 5px; margin-top: 28px; } nav a { padding: 9px 11px; border-radius: 7px; color: #cbd5e1; } nav a.active, nav a:hover { background: #1e293b; color: white; }
-main header { display: flex; justify-content: space-between; padding: 20px 34px; background: white; border-bottom: 1px solid #e2e8f0; }
-.page { margin: 34px; padding: 32px; max-width: 780px; border-radius: 12px; background: white; box-shadow: 0 1px 3px #0f172a14; }
-.eyebrow { color: #2563eb; font-size: .75rem; font-weight: 700; letter-spacing: .12em; }
-.login-page { display: grid; min-height: 100vh; place-items: center; background: #0f172a; }.login-card { display: grid; gap: 14px; width: min(400px, calc(100vw - 32px)); padding: 34px; border-radius: 14px; background: white; }.login-card h1 { margin: 0; }.login-card label { display: grid; gap: 6px; font-weight: 600; }.login-card input { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; }.login-card button { cursor: pointer; padding: 11px; border: 0; border-radius: 6px; color: white; background: #2563eb; font-weight: 700; }
-@media (max-width: 720px) { .app-shell { grid-template-columns: 1fr; } aside { padding: 15px; } nav { grid-template-columns: repeat(3, 1fr); margin-top: 12px; font-size: .8rem; } main header { padding: 16px; } .page { margin: 16px; padding: 22px; } }
+:root {
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --color-bg-base: #FAF8F5;
+  --color-bg-warm: #F4EFEA;
+  --color-bg-card: #FFFFFF;
+  --color-text-main: #211C18;
+  --color-text-muted: #7E7771;
+  --color-text-light: #ABA49D;
+  --color-accent-sand: #D6C7B8;
+  --color-accent-gold: #C2A684;
+  --color-border-subtle: rgba(33, 28, 24, 0.08);
+  --color-border-medium: rgba(33, 28, 24, 0.16);
+  --color-border-dark: rgba(33, 28, 24, 0.4);
+
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+
+  font-family: var(--font-sans);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--color-bg-base);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Completely hide scrollbars across all browsers while maintaining smooth scrolling */
+html,
+body,
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* App shell for Portal (Back-office & member dashboard) */
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+}
+
+.app-shell aside {
+  padding: 28px 18px;
+  color: #FAF8F5;
+  background: #1A1614;
+}
+.app-shell aside strong {
+  font-size: 1.5rem;
+}
+
+.app-shell nav {
+  display: grid;
+  gap: 5px;
+  margin-top: 28px;
+}
+.app-shell nav a {
+  padding: 9px 11px;
+  border-radius: 7px;
+  color: #B8AFA6;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.app-shell nav a.active,
+.app-shell nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FAF8F5;
+}
+
+main header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 34px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page {
+  margin: 34px;
+  padding: 32px;
+  max-width: 780px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 1px 3px #0f172a14;
+}
+
+.eyebrow {
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: #13100e;
+}
+.login-card {
+  display: grid;
+  gap: 14px;
+  width: min(400px, calc(100vw - 32px));
+  padding: 34px;
+  border-radius: 14px;
+  background: white;
+}
+.login-card h1 {
+  margin: 0;
+}
+.login-card label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+.login-card input {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+.login-card button {
+  cursor: pointer;
+  padding: 11px;
+  border: 0;
+  border-radius: 6px;
+  color: white;
+  background: #2563eb;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    padding: 15px;
+  }
+  nav {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 12px;
+    font-size: 0.8rem;
+  }
+  main header {
+    padding: 16px;
+  }
+  .page {
+    margin: 16px;
+    padding: 22px;
+  }
+}

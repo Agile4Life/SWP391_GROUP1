@@ -1,0 +1,553 @@
+/* ==========================================================================
+   LIQUID GLASS UI - APPLE-INSPIRED VISIONOS WEBGL GLASS SYSTEM
+   Ported directly from dashersw/liquid-glass-js for Söl Wellness Sanctuary
+   ========================================================================== */
+
+.glass-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px 18px;
+  box-sizing: border-box;
+  background: transparent;
+  isolation: isolate;
+  z-index: 10;
+}
+
+.glass-container-circle {
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding: 0;
+}
+
+.glass-container-pill {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.glass-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28), 0 0 1px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Glass Button Styles */
+.glass-button {
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  pointer-events: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  outline: none;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  text-decoration: none;
+}
+
+.glass-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32), 0 0 20px rgba(194, 166, 132, 0.25);
+}
+
+.glass-button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.glass-button-circle {
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.glass-button canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.glass-button-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FAF8F5;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LIQUID GLASS AI CHATBOT SYSTEM (APPLE VISIONOS OPTICS)
+   High-Contrast Luxury Obsidian & Champagne Gold Theme
+   Guarantees 100% text readability across pure white and dark backgrounds
+   ========================================================================== */
+
+/* Floating Corner Chat Trigger */
+.liquid-glass-chat-trigger {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.liquid-glass-chat-trigger .glass-button {
+  background: rgba(26, 22, 20, 0.92) !important;
+  border: 1.5px solid rgba(194, 166, 132, 0.75) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.25), 0 0 20px rgba(194, 166, 132, 0.35) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.liquid-glass-chat-trigger .glass-button:hover {
+  transform: translateY(-3px) scale(1.06) !important;
+  border-color: #E2CFB8 !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 25px rgba(194, 166, 132, 0.5) !important;
+}
+
+.liquid-glass-chat-trigger .glass-button-content {
+  color: var(--color-accent-gold) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.liquid-glass-beacon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid #1A1614;
+  box-shadow: 0 0 10px #10B981;
+  pointer-events: none;
+  animation: beaconPulse 2s infinite;
+}
+
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Floating Expandable Chatbot Window */
+.liquid-glass-chat-window {
+  position: fixed;
+  bottom: 104px;
+  right: 28px;
+  width: 410px;
+  height: 590px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 130px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  animation: chatWindowPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 25px 65px rgba(0, 0, 0, 0.6));
+}
+
+@keyframes chatWindowPop {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container override to stretch all children cleanly with solid dark glass foundation */
+.liquid-glass-chat-container {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border-radius: 24px !important;
+  border: 1.2px solid rgba(194, 166, 132, 0.5) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  background: rgba(22, 18, 16, 0.92) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  box-sizing: border-box !important;
+}
+
+.liquid-glass-chat-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-shadow: none !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Chat Header */
+.liquid-glass-chat-header {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(194, 166, 132, 0.25) !important;
+  background: rgba(26, 22, 20, 0.95) !important;
+  flex-shrink: 0 !important;
+}
+
+.liquid-glass-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3C322C 0%, #1A1614 100%);
+  border: 1.5px solid var(--color-accent-gold);
+  color: var(--color-accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.liquid-glass-bot-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.liquid-glass-bot-status {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  color: #D6C7B8 !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.online-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.liquid-glass-close-btn {
+  background: none;
+  border: none;
+  color: #D6C7B8 !important;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.liquid-glass-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF !important;
+}
+
+/* Chat Body */
+.liquid-glass-chat-body {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  flex: 1 1 0% !important;
+  overflow-y: auto !important;
+  padding: 18px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  min-height: 0 !important;
+  background: rgba(20, 16, 14, 0.85) !important;
+}
+
+.chat-bubble-row {
+  display: flex !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.user-row {
+  justify-content: flex-end !important;
+}
+
+.bot-row {
+  justify-content: flex-start !important;
+}
+
+.chat-bubble {
+  max-width: 86% !important;
+  padding: 13px 17px !important;
+  border-radius: 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.85rem !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+  word-break: break-word !important;
+}
+
+.chat-bubble-text {
+  font-size: 0.85rem !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* User Message: Rich Warm Champagne Gold Medallion with Deep Espresso Text */
+.user-bubble {
+  background: linear-gradient(135deg, #D4B896 0%, #B89B77 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #1A1614 !important;
+  border-bottom-right-radius: 4px !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
+}
+
+.user-bubble .chat-bubble-text {
+  color: #1A1614 !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
+.user-bubble .chat-bubble-meta {
+  color: rgba(26, 22, 20, 0.75) !important;
+  font-weight: 500 !important;
+}
+
+/* Bot Message: Deep Smoked Obsidian Glass Card with Pure White Text */
+.bot-bubble {
+  background: rgba(36, 30, 26, 0.95) !important;
+  border: 1px solid rgba(194, 166, 132, 0.35) !important;
+  color: #FFFFFF !important;
+  border-bottom-left-radius: 4px !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+}
+
+.bot-bubble .chat-bubble-text {
+  color: #FFFFFF !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em;
+}
+
+.chat-bubble-meta {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 8px !important;
+  font-size: 0.7rem !important;
+  color: #C2A684 !important;
+  gap: 12px !important;
+}
+
+.chat-rating-stars {
+  display: flex !important;
+  gap: 2px !important;
+}
+
+.star-btn {
+  background: none !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 0.88rem !important;
+  cursor: pointer !important;
+  padding: 0 2px !important;
+  transition: all 0.2s ease !important;
+  line-height: 1 !important;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  color: #F59E0B !important;
+  transform: scale(1.15) !important;
+}
+
+/* Typing Dots */
+.typing-bubble {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 12px 18px !important;
+  width: fit-content !important;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-gold);
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Suggestions chips */
+.liquid-glass-suggestions {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  overflow-x: auto !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(16, 13, 11, 0.92) !important;
+  flex-shrink: 0 !important;
+  scrollbar-width: none !important;
+}
+
+.liquid-glass-suggestions::-webkit-scrollbar {
+  display: none !important;
+}
+
+.suggestion-chip {
+  background: rgba(45, 38, 33, 0.9) !important;
+  border: 1px solid rgba(194, 166, 132, 0.35) !important;
+  color: #FAF8F5 !important;
+  padding: 7px 13px !important;
+  border-radius: 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.suggestion-chip .chip-icon {
+  font-size: 0.85rem !important;
+  line-height: 1 !important;
+}
+
+.suggestion-chip:hover {
+  background: rgba(194, 166, 132, 0.3) !important;
+  border-color: #C2A684 !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Input Bar */
+.liquid-glass-chat-input-bar {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 14px 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(14, 11, 10, 0.96) !important;
+  flex-shrink: 0 !important;
+}
+
+.liquid-glass-input {
+  flex: 1 !important;
+  background: rgba(36, 30, 26, 0.95) !important;
+  border: 1px solid rgba(194, 166, 132, 0.35) !important;
+  border-radius: 20px !important;
+  padding: 10px 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.84rem !important;
+  color: #FFFFFF !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+.liquid-glass-input:focus {
+  border-color: var(--color-accent-gold) !important;
+  background: rgba(45, 38, 33, 0.98) !important;
+  box-shadow: 0 0 0 2px rgba(194, 166, 132, 0.35) !important;
+}
+
+.liquid-glass-input::placeholder {
+  color: rgba(250, 248, 245, 0.6) !important;
+}
+
+.liquid-glass-send-btn {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background: var(--color-accent-gold) !important;
+  border: none !important;
+  color: #1A1614 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.liquid-glass-send-btn:hover:not(:disabled) {
+  background: #D8BD9B !important;
+  transform: scale(1.05) !important;
+}
+
+.liquid-glass-send-btn:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+}
+
