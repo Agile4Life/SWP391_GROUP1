@@ -74,8 +74,9 @@ export function LoginPage() {
           navigate('/member/dashboard');
           break;
       }
-    } catch (err: any) {
-      setFormError(err.message || 'Đăng nhập không thành công. Vui lòng thử lại.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Đăng nhập không thành công. Vui lòng thử lại.';
+      setFormError(message);
     } finally {
       setIsLoading(false);
     }

@@ -37,7 +37,7 @@ export async function loginApi(identifier: string, password: string): Promise<Lo
 
   // Validate nghiệp vụ mẫu
   if (password === 'wrongpass') {
-    const error: any = new Error('Tài khoản hoặc mật khẩu không chính xác.');
+    const error = new Error('Tài khoản hoặc mật khẩu không chính xác.') as Error & { status?: number };
     error.status = 401;
     throw error;
   }

@@ -1,21 +1,9 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { LoginPage } from '../features/auth/LoginPage';
 import { AppLayout } from '../shared/ui/AppLayout';
 import { PlaceholderPage } from '../shared/ui/PlaceholderPage';
-import { getCurrentUser } from '../shared/api/client';
 
-// Component bảo vệ Route theo Role (US01-F03)
-function RoleGuard({ allowedRoles }: { allowedRoles: string[] }) {
-  const user = getCurrentUser();
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  if (!allowedRoles.includes(user.role)) {
-    // Không đủ quyền -> Trả về màn hình tương ứng quyền của họ
-    return <Navigate to="/login" replace />;
-  }
-  return <Outlet />;
-}
+import { RoleGuard } from '../shared/ui/RoleGuard';
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
