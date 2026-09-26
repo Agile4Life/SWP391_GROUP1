@@ -61,7 +61,7 @@ export function Navbar({ theme = 'light', onNavigateSlide }: NavbarProps) {
       </nav>
 
       <Link to="/login" className="aura-portal-btn" title="Đăng nhập cổng quản trị SCMS">
-        PORTAL LOGIN
+        LOGIN
       </Link>
     </header>
   );
