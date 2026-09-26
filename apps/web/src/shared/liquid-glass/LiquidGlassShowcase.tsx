@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { LiquidGlassContainer } from './LiquidGlassContainer';
 import { LiquidGlassButton } from './LiquidGlassButton';
-import { LiquidGlassControls } from './LiquidGlassControls';
 import './liquid-glass.css';
 
 export function LiquidGlassShowcase() {
-  const [showControls, setShowControls] = useState(false);
   const [activeMessage, setActiveMessage] = useState<string>('Bấm vào các nút thủy tinh lỏng để trải nghiệm');
 
   return (
@@ -191,42 +189,7 @@ export function LiquidGlassShowcase() {
         >
           {activeMessage}
         </div>
-
-        {/* Open Live Shader Controls */}
-        <button
-          type="button"
-          onClick={() => setShowControls(true)}
-          style={{
-            background: 'none',
-            border: '1px solid rgba(194, 166, 132, 0.4)',
-            color: '#FAF8F5',
-            padding: '9px 20px',
-            borderRadius: '24px',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.78rem',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginTop: '12px',
-            transition: 'all 0.25s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(194, 166, 132, 0.2)';
-            e.currentTarget.style.borderColor = '#C2A684';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'none';
-            e.currentTarget.style.borderColor = 'rgba(194, 166, 132, 0.4)';
-          }}
-        >
-          <span>⚙️</span> MỞ BẢNG ĐIỀU CHỈNH SHADER PARAMS LIVE
-        </button>
       </div>
-
-      <LiquidGlassControls isOpen={showControls} onClose={() => setShowControls(false)} />
     </div>
   );
 }
