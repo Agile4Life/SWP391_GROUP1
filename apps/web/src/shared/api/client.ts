@@ -22,6 +22,11 @@ export function getCurrentUser(): UserSession | null {
   }
 }
 
+// Lưu session
+export function setCurrentUser(user: UserSession): void {
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+}
+
 // Xóa session (Logout hoặc khi gặp 401)
 export function clearAuthSession(): void {
   localStorage.removeItem(AUTH_STORAGE_KEY);

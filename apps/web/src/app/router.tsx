@@ -2,11 +2,27 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { LandingPage } from '../features/landing/LandingPage';
 import { LoginPage } from '../features/auth/LoginPage';
 import { AppLayout } from '../shared/ui/AppLayout';
-import { PlaceholderPage } from '../shared/ui/PlaceholderPage';
 import { RoleGuard } from '../shared/ui/RoleGuard';
 
+// Member Feature Pages
+import { MemberDashboardPage } from '../features/member/MemberDashboardPage';
+import { MemberProfilePage } from '../features/member/MemberProfilePage';
+import { MemberClassesPage } from '../features/member/MemberClassesPage';
+import { MemberCardPage } from '../features/member/MemberCardPage';
+
+// Staff & Coach Feature Pages
+import { StaffReceptionPage } from '../features/reception/StaffReceptionPage';
+import { StaffCheckInPage } from '../features/reception/StaffCheckInPage';
+import { StaffClassesPage } from '../features/classes/StaffClassesPage';
+import { CoachAttendancePage } from '../features/coaching/CoachAttendancePage';
+
+// Manager Feature Pages
+import { ManagerCatalogsPage } from '../features/manager/ManagerCatalogsPage';
+import { ManagerUsersPage } from '../features/manager/ManagerUsersPage';
+import { ManagerReportsPage } from '../features/manager/ManagerReportsPage';
+
 export const router = createBrowserRouter([
-  // Public Quiet Luxury Editorial Landing Page
+  // Public Quiet Luxury Single-Page Landing Experience
   { path: '/', element: <LandingPage /> },
 
   // Public Auth Route
@@ -18,35 +34,35 @@ export const router = createBrowserRouter([
     children: [
       { path: '/portal', element: <Navigate to="/member/dashboard" replace /> },
 
-      // Group Member Routes
+      // Group Member Routes (US01, US03, US04, US05)
       {
-        element: <RoleGuard allowedRoles={['MEMBER']} />,
+        element: <RoleGuard allowedRoles={['MEMBER', 'MANAGER']} />,
         children: [
-          { path: '/member/dashboard', element: <PlaceholderPage title="Member dashboard" owner="FE-1" /> },
-          { path: '/member/profile', element: <PlaceholderPage title="Hồ sơ của tôi" owner="FE-1 + BE-1" /> },
-          { path: '/member/classes', element: <PlaceholderPage title="Lịch lớp & đặt chỗ" owner="FE-1 + BE-2" /> },
-          { path: '/member/card', element: <PlaceholderPage title="Gói tập & thẻ QR" owner="FE-1 + BE-3" /> },
+          { path: '/member/dashboard', element: <MemberDashboardPage /> },
+          { path: '/member/profile', element: <MemberProfilePage /> },
+          { path: '/member/classes', element: <MemberClassesPage /> },
+          { path: '/member/card', element: <MemberCardPage /> },
         ],
       },
 
-      // Group Staff / Coach Routes
+      // Group Staff / Coach Routes (US02, US04, US05)
       {
-        element: <RoleGuard allowedRoles={['STAFF', 'COACH']} />,
+        element: <RoleGuard allowedRoles={['STAFF', 'COACH', 'MANAGER']} />,
         children: [
-          { path: '/staff/reception', element: <PlaceholderPage title="Lễ tân & thanh toán" owner="FE-2 + BE-3" /> },
-          { path: '/staff/check-in', element: <PlaceholderPage title="Check-in" owner="FE-2 + BE-3" /> },
-          { path: '/staff/classes', element: <PlaceholderPage title="Quản lý lớp" owner="FE-2 + BE-2" /> },
-          { path: '/staff/attendance', element: <PlaceholderPage title="Điểm danh Coach" owner="FE-2 + BE-2" /> },
+          { path: '/staff/reception', element: <StaffReceptionPage /> },
+          { path: '/staff/check-in', element: <StaffCheckInPage /> },
+          { path: '/staff/classes', element: <StaffClassesPage /> },
+          { path: '/staff/attendance', element: <CoachAttendancePage /> },
         ],
       },
 
-      // Group Manager Routes
+      // Group Manager Routes (US06, US07, US08)
       {
         element: <RoleGuard allowedRoles={['MANAGER']} />,
         children: [
-          { path: '/manager/catalogs', element: <PlaceholderPage title="Danh mục vận hành" owner="FE-2 + BE-3" /> },
-          { path: '/manager/users', element: <PlaceholderPage title="Quản lý tài khoản" owner="FE-2 + BE-1" /> },
-          { path: '/manager/reports', element: <PlaceholderPage title="Báo cáo" owner="FE-2 + BE-3" /> },
+          { path: '/manager/catalogs', element: <ManagerCatalogsPage /> },
+          { path: '/manager/users', element: <ManagerUsersPage /> },
+          { path: '/manager/reports', element: <ManagerReportsPage /> },
         ],
       },
     ],
