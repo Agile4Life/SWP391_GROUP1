@@ -231,58 +231,102 @@ html {
 .aura-nav-links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 28px;
 }
 
 .aura-nav-link {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 500;
   color: inherit;
-  opacity: 0.75;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0.78;
+  padding: 6px 0;
+  transition: color 0.3s var(--ease-luxury), opacity 0.3s var(--ease-luxury), transform 0.3s var(--ease-luxury);
   position: relative;
-  padding: 4px 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .aura-nav-link:hover {
   opacity: 1;
+  color: var(--color-accent-gold);
   transform: translateY(-1px);
+}
+
+.sol-fixed-navbar.scrolled .aura-nav-link:hover {
+  color: #8F7250;
 }
 
 .aura-nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
   width: 0;
-  height: 1px;
-  background-color: currentColor;
-  transition: width 0.3s var(--ease-luxury);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.35s var(--ease-luxury);
 }
 
 .aura-nav-link:hover::after {
   width: 100%;
 }
 
+/* Luxury Portal Login Pill Button */
 .aura-portal-btn {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
-  padding: 8px 18px;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  transition: all 0.3s var(--ease-luxury);
+  padding: 9px 24px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FAF8F5;
+  transition: all 0.35s var(--ease-luxury);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .aura-portal-btn:hover {
-  background-color: currentColor;
-  color: #1a1614 !important;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 16px rgba(255, 255, 255, 0.18);
+}
+
+.aura-portal-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Scrolled state for Navbar portal button */
+.sol-fixed-navbar.scrolled .aura-portal-btn {
+  border-color: #1A1614;
+  background: #1A1614;
+  color: #FAF8F5;
+  box-shadow: 0 2px 8px rgba(26, 22, 20, 0.12);
+}
+
+.sol-fixed-navbar.scrolled .aura-portal-btn:hover {
+  background: #2D2521;
+  border-color: var(--color-accent-gold);
+  color: #FAF8F5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(26, 22, 20, 0.22), 0 0 14px rgba(194, 166, 132, 0.22);
 }
 
 /* Typography Classes */
@@ -328,41 +372,46 @@ html {
   align-items: center;
   gap: 12px;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--color-text-main);
+  color: inherit;
   cursor: pointer;
   background: none;
   border: none;
-  padding: 6px 0;
+  padding: 8px 0;
   outline: none;
-  transition: opacity 0.25s ease;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-luxury);
 }
 
 .arrow-action-link:hover {
-  opacity: 0.8;
+  color: var(--color-accent-gold) !important;
+  transform: translateY(-1px);
 }
 
 .arrow-action-link .arrow-line {
-  width: 22px;
-  height: 1px;
+  width: 24px;
+  height: 1.5px;
   background-color: currentColor;
-  transition: width 0.35s var(--ease-luxury);
+  transition: width 0.35s var(--ease-luxury), background-color 0.3s var(--ease-luxury);
 }
 
 .arrow-action-link:hover .arrow-line {
-  width: 42px;
+  width: 46px;
+  background-color: var(--color-accent-gold);
 }
 
 .arrow-action-link .arrow-icon {
-  display: inline-block;
-  transition: transform 0.35s var(--ease-luxury);
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.35s var(--ease-luxury), color 0.3s var(--ease-luxury);
 }
 
 .arrow-action-link:hover .arrow-icon {
-  transform: translateX(4px);
+  transform: translateX(6px);
+  color: var(--color-accent-gold);
 }
 
 .arrow-action-link:active {
@@ -381,28 +430,32 @@ html {
   height: 46px;
   border-radius: 50%;
   border: 1px solid var(--color-border-medium);
-  background: transparent;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s var(--ease-luxury);
   color: var(--color-text-main);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .carousel-btn:hover {
-  background-color: var(--color-accent-sand);
-  border-color: var(--color-accent-sand);
-  transform: scale(1.05);
+  background-color: #1A1614;
+  border-color: #1A1614;
+  color: #FAF8F5;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 20px rgba(26, 22, 20, 0.16);
 }
 
 .carousel-btn:active {
-  transform: scale(0.95);
+  transform: translateY(0) scale(0.96);
 }
 
 .carousel-btn.active {
-  background-color: var(--color-accent-sand);
-  border-color: var(--color-accent-sand);
+  background-color: #1A1614;
+  border-color: #1A1614;
+  color: #FAF8F5;
 }
 
 /* Asymmetric Image Card Layout */

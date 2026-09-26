@@ -18,21 +18,21 @@ export function LoginPage() {
           padding: '0 56px',
         }}
       >
-        <Link to="/" className="aura-brand-mark" style={{ color: '#1A1614' }}>
+        <Link to="/" className="aura-brand-mark">
           SÖL WELLNESS SANCTUARY
         </Link>
 
         <nav className="aura-nav-links" aria-label="Portal Header Navigation">
-          <Link to="/#about" className="aura-nav-link" style={{ color: '#1A1614' }}>
+          <Link to="/#about" className="aura-nav-link">
             PHILOSOPHY
           </Link>
-          <Link to="/#disciplines" className="aura-nav-link" style={{ color: '#1A1614' }}>
+          <Link to="/#disciplines" className="aura-nav-link">
             DISCIPLINES
           </Link>
-          <Link to="/#packages" className="aura-nav-link" style={{ color: '#1A1614' }}>
+          <Link to="/#packages" className="aura-nav-link">
             MEMBERSHIP
           </Link>
-          <Link to="/#contact" className="aura-nav-link" style={{ color: '#1A1614' }}>
+          <Link to="/#contact" className="aura-nav-link">
             CONTACT
           </Link>
         </nav>
@@ -40,12 +40,6 @@ export function LoginPage() {
         <Link
           to="/"
           className="aura-portal-btn"
-          style={{
-            color: '#1A1614',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
         >
           ← VỀ TRANG CHỦ
         </Link>

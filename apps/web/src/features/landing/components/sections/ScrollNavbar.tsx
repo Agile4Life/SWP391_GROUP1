@@ -45,8 +45,7 @@ export function ScrollNavbar() {
       <Link
         to="/login"
         className="aura-portal-btn"
-        title="Đăng nhập Cổng Quản Trị &amp; Hội Viên SCMS"
-        style={{ color: 'inherit' }}
+        title="Đăng nhập Cổng Quản Trị & Hội Viên SCMS"
       >
         PORTAL LOGIN
       </Link>

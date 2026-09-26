@@ -108,51 +108,55 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
         </p>
       </div>
 
-      {/* Quick Demo Pre-fill Buttons */}
+      {/* Quick Demo Pre-fill Cards */}
       <div
         style={{
           background: '#FAF8F5',
           border: '1px solid rgba(33, 28, 24, 0.08)',
-          borderRadius: '6px',
-          padding: '14px',
+          borderRadius: '8px',
+          padding: '16px',
           marginBottom: '24px',
         }}
       >
-        <div style={{ fontSize: '0.72rem', color: '#8C847C', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '8px' }}>
-          ⚡ CHỌN TÀI KHOẢN TEST NHANH (DEMO ACCOUNTS):
+        <div style={{ fontSize: '0.7rem', color: '#8C847C', letterSpacing: '0.12em', fontWeight: 600, marginBottom: '10px' }}>
+          ⚡ CHỌN TÀI KHOẢN TRẢI NGHIỆM NHANH (DEMO ACCOUNTS):
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <button
             type="button"
-            className="btn-secondary btn-sm"
+            className={`demo-role-card ${identifier === 'an.member@sol-wellness.vn' ? 'selected' : ''}`}
             onClick={() => quickFill('an.member@sol-wellness.vn')}
-            style={{ fontSize: '0.74rem', padding: '6px 8px', justifyContent: 'flex-start' }}
           >
-            👤 Hội Viên (Member)
+            <span className="demo-role-badge">MEMBER</span>
+            <span className="demo-role-name">👤 Nguyễn Văn An</span>
+            <span className="demo-role-email">Hội viên • Đặt lớp &amp; Thẻ QR</span>
           </button>
           <button
             type="button"
-            className="btn-secondary btn-sm"
+            className={`demo-role-card ${identifier === 'thinh.reception@sol-wellness.vn' ? 'selected' : ''}`}
             onClick={() => quickFill('thinh.reception@sol-wellness.vn')}
-            style={{ fontSize: '0.74rem', padding: '6px 8px', justifyContent: 'flex-start' }}
           >
-            💁 Lễ Tân (Staff)
+            <span className="demo-role-badge">STAFF</span>
+            <span className="demo-role-name">💁 Lễ Tân Thịnh</span>
+            <span className="demo-role-email">Check-in sảnh &amp; Thu POS</span>
           </button>
           <button
             type="button"
-            className="btn-secondary btn-sm"
+            className={`demo-role-card ${identifier === 'elena.vu@sol-wellness.vn' ? 'selected' : ''}`}
             onClick={() => quickFill('elena.vu@sol-wellness.vn')}
-            style={{ fontSize: '0.74rem', padding: '6px 8px', justifyContent: 'flex-start' }}
           >
-            🏋️ Huấn Luyện Viên
+            <span className="demo-role-badge">COACH</span>
+            <span className="demo-role-name">🏋️ Elena Vũ</span>
+            <span className="demo-role-email">HLV • Điểm danh &amp; AI</span>
           </button>
           <button
             type="button"
-            className="btn-secondary btn-sm"
+            className={`demo-role-card ${identifier === 'admin.manager@sol-wellness.vn' ? 'selected' : ''}`}
             onClick={() => quickFill('admin.manager@sol-wellness.vn')}
-            style={{ fontSize: '0.74rem', padding: '6px 8px', justifyContent: 'flex-start' }}
           >
-            👔 Quản Lý Trung Tâm
+            <span className="demo-role-badge">MANAGER</span>
+            <span className="demo-role-name">👔 Ban Quản Lý</span>
+            <span className="demo-role-email">Báo cáo &amp; Doanh thu</span>
           </button>
         </div>
       </div>
@@ -216,17 +220,11 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
         <button
           type="submit"
-          className="btn-primary"
+          className="luxury-login-submit-btn"
           disabled={isLoading}
-          style={{
-            width: '100%',
-            justifyContent: 'center',
-            padding: '13px',
-            fontSize: '0.86rem',
-            marginTop: '10px',
-          }}
         >
-          {isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL →'}
+          <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL'}</span>
+          <span className="submit-arrow" aria-hidden="true">→</span>
         </button>
       </form>
     </div>
