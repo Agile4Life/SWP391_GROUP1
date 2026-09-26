@@ -38,7 +38,7 @@ let msgCounter = 100;
 function createMessage(sender_type: 'USER' | 'BOT', message_text: string): ChatMessage {
   msgCounter += 1;
   return {
-    id: `${sender_type.toLowerCase()}-${msgCounter}`,
+    id: `${sender_type.toLowerCase()}-${Date.now()}-${msgCounter}`,
     sender_type,
     message_text,
     created_at: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
