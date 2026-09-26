@@ -107,33 +107,6 @@ export function HeroSection() {
           />
         </div>
       </div>
-
-      {/* Floating Scroll Indicator */}
-      <a
-        href="#about"
-        style={{
-          position: 'absolute',
-          bottom: '28px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-          color: 'rgba(250, 248, 245, 0.65)',
-          fontFamily: 'var(--font-sans)',
-          fontSize: '0.65rem',
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          zIndex: 10,
-          transition: 'color 0.25s ease',
-        }}
-      >
-        <span>SCROLL DOWN</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M19 14l-7 7m0 0l-7-7m7 7V3" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </a>
     </section>
   );
 }
