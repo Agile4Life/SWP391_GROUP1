@@ -48,18 +48,21 @@ export async function loginApi(identifier: string, password: string): Promise<Lo
   }
 
   // Tự động phân vai trò dựa vào thông tin nhập để bạn test luồng (US01-F03)
-  let role: UserSession['role'] = 'MEMBER';
-  let name = 'Nguyễn Văn An';
+  let role: UserSession['role'];
+  let name: string;
 
-  if (cleanId.includes('admin') || cleanId.includes('manager')) {
+  if (cleanId.includes('admin') || cleanId.includes('manager') || cleanId.includes('tuananh')) {
     role = 'MANAGER';
-    name = 'Quản lý Hệ thống';
-  } else if (cleanId.includes('coach')) {
+    name = 'Trần Công Tuấn Anh (Manager)';
+  } else if (cleanId.includes('coach') || cleanId.includes('elena') || cleanId.includes('hung')) {
     role = 'COACH';
-    name = 'HLV Trần Hùng';
-  } else if (cleanId.includes('staff') || cleanId.includes('letan')) {
+    name = 'Master Elena Vũ (Coach)';
+  } else if (cleanId.includes('staff') || cleanId.includes('letan') || cleanId.includes('thinh')) {
     role = 'STAFF';
-    name = 'Lễ tân Minh Thư';
+    name = 'Lễ Tân Thịnh (Receptionist)';
+  } else {
+    role = 'MEMBER';
+    name = 'Nguyễn Văn An (Member)';
   }
 
   const responseData: LoginResponse = {
