@@ -47,7 +47,7 @@ export function ScrollNavbar() {
         className="aura-portal-btn"
         title="Đăng nhập Cổng Quản Trị & Hội Viên SCMS"
       >
-        PORTAL LOGIN
+        LOGIN
       </Link>
     </header>
   );
