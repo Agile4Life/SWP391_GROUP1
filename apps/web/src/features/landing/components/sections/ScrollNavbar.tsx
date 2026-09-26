@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 
 export function ScrollNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,14 +42,14 @@ export function ScrollNavbar() {
         </a>
       </nav>
 
-      <a
-        href="#portal-login"
+      <Link
+        to="/login"
         className="aura-portal-btn"
         title="Đăng nhập Cổng Quản Trị &amp; Hội Viên SCMS"
         style={{ color: 'inherit' }}
       >
         PORTAL LOGIN
-      </a>
+      </Link>
     </header>
   );
 }

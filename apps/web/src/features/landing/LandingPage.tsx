@@ -6,7 +6,6 @@ import { PhilosophySection } from './components/sections/PhilosophySection';
 import { DisciplinesSection } from './components/sections/DisciplinesSection';
 import { IntelligenceSection } from './components/sections/IntelligenceSection';
 import { PackagesSection } from './components/sections/PackagesSection';
-import { PortalLoginSection } from './components/sections/PortalLoginSection';
 import { ContactSection } from './components/sections/ContactSection';
 
 export function LandingPage() {
@@ -32,7 +31,6 @@ export function LandingPage() {
         <DisciplinesSection />
         <IntelligenceSection />
         <PackagesSection onSelectPlan={handleSelectPlan} />
-        <PortalLoginSection />
         <ContactSection key={selectedPlan} initialPlan={selectedPlan} />
       </main>
     </div>
