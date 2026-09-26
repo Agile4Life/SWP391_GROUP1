@@ -96,7 +96,7 @@ export function ContactSlide() {
                   Yêu Cầu Đã Được Tiếp Nhận
                 </div>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>
-                  Cảm ơn <strong>{formData.name}</strong>. Bộ phận lễ tân của Aura Athletics sẽ liên hệ qua số điện thoại{' '}
+                  Cảm ơn <strong>{formData.name}</strong>. Bộ phận lễ tân của Söl Wellness Sanctuary sẽ liên hệ qua số điện thoại{' '}
                   <strong>{formData.phone}</strong> trong vòng 30 phút để kích hoạt thẻ trải nghiệm.
                 </p>
                 <button
@@ -187,7 +187,7 @@ export function ContactSlide() {
                 marginBottom: '10px',
               }}
             >
-              AURA ATHLETICS
+              SÖL WELLNESS SANCTUARY
             </div>
             <p
               style={{
@@ -244,7 +244,7 @@ export function ContactSlide() {
             >
               <div>Tòa nhà Landmark Sports, 120 Hai Bà Trưng, Q.1, TP. Hồ Chí Minh</div>
               <div style={{ marginTop: '6px' }}><strong>Hotline:</strong> 1900 6868</div>
-              <div><strong>Email:</strong> concierge@aura-athletics.vn</div>
+              <div><strong>Email:</strong> concierge@sol-wellness.vn</div>
               <div style={{ fontSize: '0.72rem', marginTop: '6px', color: '#9E958C' }}>
                 Giờ hoạt động: 06:00 – 22:00 hàng ngày
               </div>

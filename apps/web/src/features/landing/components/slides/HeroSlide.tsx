@@ -43,7 +43,7 @@ export function HeroSlide({ onExplore }: HeroSlideProps) {
           zIndex: 1,
         }}
       >
-        AURA ATHLETICS
+        SÖL WELLNESS SANCTUARY
       </div>
 
       {/* Main Editorial Hero Content */}
@@ -81,8 +81,8 @@ export function HeroSlide({ onExplore }: HeroSlideProps) {
             fontWeight: 300,
           }}
         >
-          Aura Athletics is an elite multi-disciplinary sports sanctuary integrating precision AI biometric coaching with
-          mindful physical mastery. Creating light-filled spaces designed for profound athletic elevation.
+          Söl Wellness Sanctuary is an elite multi-disciplinary sports sanctuary integrating precision AI biometric
+          coaching with mindful physical mastery. Creating light-filled spaces designed for profound athletic elevation.
         </p>
 
         <div className="stagger-4" style={{ display: 'flex', justifyContent: 'center' }}>

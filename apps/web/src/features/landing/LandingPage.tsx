@@ -11,7 +11,7 @@ import { ContactSlide } from './components/slides/ContactSlide';
 import { useSlideController } from './hooks/useSlideController';
 
 const SLIDES_METADATA: SlideItem[] = [
-  { id: 'hero', index: 0, title: 'Hero Cover', category: 'Aura', thumbnailLabel: 'Cover' },
+  { id: 'hero', index: 0, title: 'Hero Cover', category: 'Söl', thumbnailLabel: 'Cover' },
   { id: 'about', index: 1, title: 'About Us', category: 'Philosophy', thumbnailLabel: 'About' },
   { id: 'disciplines-1', index: 2, title: 'Zenith Pilates', category: 'Studio 01', thumbnailLabel: 'Pilates' },
   { id: 'disciplines-2', index: 3, title: 'Olympus Strength', category: 'Arena 02', thumbnailLabel: 'Boxing' },

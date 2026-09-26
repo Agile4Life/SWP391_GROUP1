@@ -22,7 +22,7 @@ export function Navbar({ theme = 'light', onNavigateSlide }: NavbarProps) {
         className="aura-brand-mark"
         style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
       >
-        AURA ATHLETICS
+        SÖL WELLNESS SANCTUARY
       </button>
 
       <nav className="aura-nav-links" aria-label="Main Navigation">

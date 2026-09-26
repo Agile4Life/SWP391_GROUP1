@@ -51,7 +51,7 @@ export function AboutSlide({ onLearnMore }: AboutSlideProps) {
           </h2>
 
           <p className="editorial-body stagger-3">
-            At Aura Athletics, we believe that athletic conditioning is not just about raw exertion — it&apos;s about how
+            At Söl Wellness Sanctuary, we believe that athletic conditioning is not just about raw exertion — it&apos;s about how
             every movement calibrates your body and mind. We approach athletic longevity as a layered composition of
             breath, biomechanics, and intelligent recovery, where discipline meets quiet clarity.
           </p>
