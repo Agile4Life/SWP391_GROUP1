@@ -7,7 +7,7 @@ import { DisciplinesSection } from './components/sections/DisciplinesSection';
 import { IntelligenceSection } from './components/sections/IntelligenceSection';
 import { PackagesSection } from './components/sections/PackagesSection';
 import { ContactSection } from './components/sections/ContactSection';
-import { LiquidGlassDock } from '../../shared/liquid-glass';
+import { LiquidGlassChatbot } from '../../shared/liquid-glass';
 
 export function LandingPage() {
   const [selectedPlan, setSelectedPlan] = useState<string>('THE SANCTUARY');
@@ -35,8 +35,8 @@ export function LandingPage() {
         <ContactSection key={selectedPlan} initialPlan={selectedPlan} />
       </main>
 
-      {/* VisionOS Floating Apple Liquid Glass Quick Action Dock */}
-      <LiquidGlassDock />
+      {/* VisionOS Floating Apple Liquid Glass AI Chatbot Concierge */}
+      <LiquidGlassChatbot />
     </div>
   );
 }
