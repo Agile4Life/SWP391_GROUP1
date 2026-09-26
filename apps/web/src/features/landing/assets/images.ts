@@ -1,7 +1,7 @@
 // Curated high-resolution imagery tailored for Quiet Luxury / Organic Modernism Sports Sanctuary
 export const LANDING_IMAGES = {
-  // Hero slide background - Architectural warm minimalist sanctuary
-  heroBg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85',
+  // Hero slide background - Architectural athletic & sports performance sanctuary
+  heroBg: '/images/hero-sports-sanctuary.jpg',
   
   // About slide - Organic curved wood studio & recovery fireplace lounge
   aboutPrimary: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85',

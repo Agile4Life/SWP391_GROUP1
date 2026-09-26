@@ -40,20 +40,20 @@ a {
   text-decoration: none;
 }
 
-/* Custom quiet luxury scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Completely hide scrollbars across all browsers while maintaining smooth scrolling */
+html,
+body,
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
 }
-::-webkit-scrollbar-track {
-  background: var(--color-bg-warm);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-accent-sand);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* App shell for Portal (Back-office & member dashboard) */
