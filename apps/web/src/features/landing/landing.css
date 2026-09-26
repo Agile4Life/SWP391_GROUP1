@@ -1,49 +1,136 @@
 /* ==========================================================================
-   AURA ATHLETICS - QUIET LUXURY EDITORIAL STYLES
+   SÖL WELLNESS SANCTUARY - QUIET LUXURY SINGLE-PAGE WEBSITE
    ========================================================================== */
 
-/* Main Presentation Layout */
-.aura-deck-wrapper {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #EDE8E1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+html {
+  scroll-behavior: smooth;
 }
 
-.aura-scroll-wrapper {
+/* Full-bleed Continuous Luxury Website Canvas */
+.sol-page-root {
   position: relative;
   width: 100%;
   min-height: 100vh;
   background-color: var(--color-bg-base);
+  color: var(--color-text-main);
   overflow-x: hidden;
 }
 
-/* Stage Frame (Presentational Card matching the Reference Window) */
-.aura-stage-card {
-  position: relative;
-  width: min(92vw, 1380px);
-  height: min(88vh, 820px);
-  background-color: var(--color-bg-card);
-  box-shadow: 0 25px 60px -15px rgba(28, 23, 20, 0.18), 0 0 0 1px rgba(28, 23, 20, 0.06);
-  border-radius: 4px;
-  overflow: hidden;
+/* Fixed Glassmorphic Navbar for Scroll Experience */
+.sol-fixed-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 76px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+  z-index: 100;
+  transition: all 0.35s var(--ease-luxury);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.aura-scroll-wrapper .aura-stage-card {
-  width: 100%;
-  max-width: 1380px;
-  min-height: 90vh;
-  height: auto;
-  margin: 40px auto;
-  box-shadow: none;
-  border-radius: 0;
+.sol-fixed-navbar.scrolled {
+  background: rgba(250, 248, 245, 0.92);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-main) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Full Width Luxury Sections */
+.sol-section {
+  position: relative;
+  width: 100%;
+  padding: 130px 64px;
+  box-sizing: border-box;
+}
+
+.sol-section-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Membership Tiers Cards */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.pricing-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-medium);
+  border-radius: 3px;
+  padding: 44px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.4s var(--ease-luxury);
+  position: relative;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px -10px rgba(33, 28, 24, 0.1);
+  border-color: var(--color-accent-sand);
+}
+
+.pricing-card.featured {
+  background: #F4EFEA;
+  border-color: var(--color-accent-gold);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background: var(--color-text-main);
+  color: #FAF8F5;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+/* Feature Spotlight / Intelligence Grid */
+.intelligence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  margin-top: 48px;
+}
+
+.intelligence-card {
+  padding: 36px 30px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 2px;
+  transition: all 0.35s var(--ease-luxury);
+}
+
+.intelligence-card:hover {
+  background: #FFFFFF;
+  border-color: var(--color-accent-sand);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Pillar Stats Row */
+.pillar-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 /* Slide Content Canvas */
