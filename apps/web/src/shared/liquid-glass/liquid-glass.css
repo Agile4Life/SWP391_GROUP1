@@ -150,50 +150,73 @@
   position: fixed;
   bottom: 104px;
   right: 28px;
-  width: 400px;
+  width: 410px;
   height: 590px;
   max-width: calc(100vw - 40px);
   max-height: calc(100vh - 130px);
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  animation: chatWindowPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.45));
+  animation: chatWindowPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.55));
 }
 
 @keyframes chatWindowPop {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.96);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
+/* Container override to stretch all children cleanly */
 .liquid-glass-chat-container {
+  position: relative !important;
   width: 100% !important;
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
   padding: 0 !important;
-  overflow: hidden;
-  border: 1px solid rgba(194, 166, 132, 0.35);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  background: rgba(26, 22, 20, 0.65) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  margin: 0 !important;
+  overflow: hidden !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(194, 166, 132, 0.35) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+  background: rgba(24, 20, 18, 0.72) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  box-sizing: border-box !important;
+}
+
+.liquid-glass-chat-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-shadow: none !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
 }
 
 /* Chat Header */
 .liquid-glass-chat-header {
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  flex-shrink: 0 !important;
 }
 
 .liquid-glass-avatar {
@@ -208,14 +231,16 @@
   justify-content: center;
   font-size: 1.1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 .liquid-glass-bot-name {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 1.02rem;
   letter-spacing: 0.08em;
   font-weight: 600;
   color: #FAF8F5;
+  line-height: 1.2;
 }
 
 .liquid-glass-bot-status {
@@ -225,7 +250,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .online-dot {
@@ -241,9 +266,10 @@
   color: #B8AFA6;
   font-size: 1.1rem;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
   transition: all 0.2s ease;
+  line-height: 1;
 }
 
 .liquid-glass-close-btn:hover {
@@ -253,92 +279,119 @@
 
 /* Chat Body */
 .liquid-glass-chat-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  flex: 1 1 0% !important;
+  overflow-y: auto !important;
+  padding: 18px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  min-height: 0 !important;
 }
 
 .chat-bubble-row {
-  display: flex;
-  width: 100%;
+  display: flex !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .user-row {
-  justify-content: flex-end;
+  justify-content: flex-end !important;
 }
 
 .bot-row {
-  justify-content: flex-start;
+  justify-content: flex-start !important;
 }
 
 .chat-bubble {
-  max-width: 84%;
-  padding: 12px 16px;
-  border-radius: 14px;
-  font-family: var(--font-sans);
-  font-size: 0.84rem;
-  line-height: 1.6;
+  max-width: 86% !important;
+  padding: 12px 16px !important;
+  border-radius: 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.84rem !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+  word-break: break-word !important;
 }
 
+.chat-bubble-text {
+  font-size: 0.84rem !important;
+  line-height: 1.55 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* User Message: Quiet Luxury Translucent Gold Pill */
 .user-bubble {
-  background: #FAF8F5;
-  color: #1A1614;
-  border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, rgba(194, 166, 132, 0.35) 0%, rgba(194, 166, 132, 0.2) 100%) !important;
+  border: 1px solid rgba(194, 166, 132, 0.5) !important;
+  color: #FAF8F5 !important;
+  border-bottom-right-radius: 4px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
 }
 
-.bot-bubble {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(194, 166, 132, 0.3);
-  color: #FAF8F5;
-  border-bottom-left-radius: 4px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.chat-bubble-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-  font-size: 0.68rem;
-  color: rgba(250, 248, 245, 0.55);
+.user-bubble .chat-bubble-text {
+  color: #FAF8F5 !important;
+  font-weight: 500 !important;
 }
 
 .user-bubble .chat-bubble-meta {
-  color: rgba(26, 22, 20, 0.5);
+  color: rgba(250, 248, 245, 0.65) !important;
+}
+
+/* Bot Message: Translucent Neutral Dark Glass */
+.bot-bubble {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #FAF8F5 !important;
+  border-bottom-left-radius: 4px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+.bot-bubble .chat-bubble-text {
+  color: #F5F2EB !important;
+}
+
+.chat-bubble-meta {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 8px !important;
+  font-size: 0.68rem !important;
+  color: rgba(250, 248, 245, 0.55) !important;
+  gap: 12px !important;
 }
 
 .chat-rating-stars {
-  display: flex;
-  gap: 2px;
+  display: flex !important;
+  gap: 2px !important;
 }
 
 .star-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 0.85rem;
-  cursor: pointer;
-  padding: 0 2px;
-  transition: all 0.2s ease;
+  background: none !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 0.85rem !important;
+  cursor: pointer !important;
+  padding: 0 2px !important;
+  transition: all 0.2s ease !important;
+  line-height: 1 !important;
 }
 
 .star-btn:hover,
 .star-btn.active {
-  color: #F59E0B;
-  transform: scale(1.15);
+  color: #F59E0B !important;
+  transform: scale(1.15) !important;
 }
 
 /* Typing Dots */
 .typing-bubble {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 18px;
-  width: fit-content;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 12px 18px !important;
+  width: fit-content !important;
 }
 
 .typing-dot {
@@ -359,95 +412,110 @@
 
 /* Suggestions chips */
 .liquid-glass-suggestions {
-  display: flex;
-  overflow-x: auto;
-  gap: 8px;
-  padding: 8px 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.15);
-  scrollbar-width: none;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  overflow-x: auto !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  flex-shrink: 0 !important;
+  scrollbar-width: none !important;
 }
 
 .liquid-glass-suggestions::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 .suggestion-chip {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(194, 166, 132, 0.25);
-  color: #FAF8F5;
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(194, 166, 132, 0.28) !important;
+  color: #FAF8F5 !important;
+  padding: 6px 12px !important;
+  border-radius: 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.74rem !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.suggestion-chip .chip-icon {
+  font-size: 0.85rem !important;
+  line-height: 1 !important;
 }
 
 .suggestion-chip:hover {
-  background: rgba(194, 166, 132, 0.22);
-  border-color: var(--color-accent-gold);
-  transform: translateY(-1px);
+  background: rgba(194, 166, 132, 0.25) !important;
+  border-color: var(--color-accent-gold) !important;
+  transform: translateY(-1px) !important;
 }
 
 /* Input Bar */
 .liquid-glass-chat-input-bar {
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(26, 22, 20, 0.4);
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 14px 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(18, 15, 13, 0.65) !important;
+  flex-shrink: 0 !important;
 }
 
 .liquid-glass-input {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  color: #FAF8F5;
-  outline: none;
-  transition: all 0.25s ease;
+  flex: 1 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 20px !important;
+  padding: 10px 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.84rem !important;
+  color: #FAF8F5 !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
 }
 
 .liquid-glass-input:focus {
-  border-color: var(--color-accent-gold);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 0 2px rgba(194, 166, 132, 0.25);
+  border-color: var(--color-accent-gold) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 0 0 2px rgba(194, 166, 132, 0.25) !important;
 }
 
 .liquid-glass-input::placeholder {
-  color: rgba(250, 248, 245, 0.45);
+  color: rgba(250, 248, 245, 0.45) !important;
 }
 
 .liquid-glass-send-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3C322C 0%, #1A1614 100%);
-  border: 1px solid var(--color-accent-gold);
-  color: var(--color-accent-gold);
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-  flex-shrink: 0;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background: var(--color-accent-gold) !important;
+  border: none !important;
+  color: #1A1614 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
 }
 
 .liquid-glass-send-btn:hover:not(:disabled) {
-  background: var(--color-accent-gold);
-  color: #1A1614;
-  transform: scale(1.08);
+  background: #D8BD9B !important;
+  transform: scale(1.05) !important;
 }
 
 .liquid-glass-send-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
 }

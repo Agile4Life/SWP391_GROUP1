@@ -2,7 +2,6 @@ import React, {
   useCallback,
   useEffect,
   useRef,
-  useState,
 } from 'react';
 import { LiquidGlassShape } from './types';
 import { glassEngine, GLProgramRefs } from './LiquidGlassEngine';
@@ -29,9 +28,10 @@ export function LiquidGlassContainer({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glRefs = useRef<GLProgramRefs | null>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0, radius: borderRadius });
+  const radiusRef = useRef(borderRadius);
 
   useEffect(() => {
+    radiusRef.current = borderRadius;
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
@@ -44,9 +44,8 @@ export function LiquidGlassContainer({
     glassEngine.captureSnapshot();
 
     const updateSize = () => {
-      const rect = container.getBoundingClientRect();
-      let w = Math.ceil(rect.width);
-      let h = Math.ceil(rect.height);
+      let w = container.offsetWidth || Math.ceil(container.getBoundingClientRect().width);
+      let h = container.offsetHeight || Math.ceil(container.getBoundingClientRect().height);
       let r = borderRadius;
 
       if (shape === 'circle') {
@@ -58,12 +57,14 @@ export function LiquidGlassContainer({
         r = h / 2;
       }
 
+      radiusRef.current = r;
+
       if (w > 0 && h > 0) {
         if (canvas.width !== w || canvas.height !== h) {
           canvas.width = w;
           canvas.height = h;
-          canvas.style.width = `${w}px`;
-          canvas.style.height = `${h}px`;
+          canvas.style.width = '100%';
+          canvas.style.height = '100%';
           canvas.style.borderRadius = `${r}px`;
           container.style.borderRadius = `${r}px`;
 
@@ -71,7 +72,6 @@ export function LiquidGlassContainer({
             refs.gl.viewport(0, 0, w, h);
           }
         }
-        setDimensions({ width: w, height: h, radius: r });
       }
     };
 
@@ -105,7 +105,7 @@ export function LiquidGlassContainer({
       gl.uniform1f(refs.scrollYLoc, scrollY);
       gl.uniform1f(refs.pageHeightLoc, pageHeight);
       gl.uniform1f(refs.viewportHeightLoc, viewportHeight);
-      gl.uniform1f(refs.borderRadiusLoc, dimensions.radius);
+      gl.uniform1f(refs.borderRadiusLoc, radiusRef.current);
       gl.uniform2f(refs.containerPositionLoc, posX, posY);
 
       const p = glassEngine.params;
@@ -138,7 +138,7 @@ export function LiquidGlassContainer({
       unregister();
       resizeObserver.disconnect();
     };
-  }, [shape, borderRadius, tintOpacity, dimensions.radius]);
+  }, [shape, borderRadius, tintOpacity]);
 
   const getCanvas = useCallback(() => {
     return canvasRef.current;

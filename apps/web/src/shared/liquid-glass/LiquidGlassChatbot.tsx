@@ -21,11 +21,17 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   },
 ];
 
-const SUGGESTIONS = [
-  '💎 Tư vấn gói thẻ phù hợp',
-  '🧘 Lịch lớp Reformer Pilates hôm nay',
-  '📱 Cách lấy mã QR check-in qua cổng',
-  '🥗 Gợi ý dinh dưỡng sau tập',
+interface SuggestionItem {
+  icon: string;
+  label: string;
+  prompt: string;
+}
+
+const SUGGESTIONS: SuggestionItem[] = [
+  { icon: '💎', label: 'Tư vấn gói thẻ', prompt: 'Tư vấn bảng giá và các gói thẻ thành viên Söl' },
+  { icon: '🧘', label: 'Lịch lớp Pilates', prompt: 'Xem lịch lớp Reformer Pilates hôm nay' },
+  { icon: '📱', label: 'Mã QR Turnstile', prompt: 'Cách lấy mã QR check-in qua cổng Turnstile' },
+  { icon: '🥗', label: 'Gợi ý dinh dưỡng', prompt: 'Gợi ý chế độ dinh dưỡng phục hồi sau tập' },
 ];
 
 let msgCounter = 100;
@@ -230,9 +236,10 @@ export function LiquidGlassChatbot() {
                   key={idx}
                   type="button"
                   className="suggestion-chip"
-                  onClick={() => handleSend(item.replace(/^[^\s]+\s/, ''))}
+                  onClick={() => handleSend(item.prompt)}
                 >
-                  {item}
+                  <span className="chip-icon">{item.icon}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
