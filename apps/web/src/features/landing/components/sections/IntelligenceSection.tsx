@@ -1,3 +1,5 @@
+import { LiquidGlassShowcase } from '../../../../shared/liquid-glass';
+
 export function IntelligenceSection() {
   const features = [
     {
@@ -101,6 +103,8 @@ export function IntelligenceSection() {
             </div>
           ))}
         </div>
+
+        <LiquidGlassShowcase />
       </div>
     </section>
   );
