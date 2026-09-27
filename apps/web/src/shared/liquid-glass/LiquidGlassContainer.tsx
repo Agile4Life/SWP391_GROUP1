@@ -95,9 +95,12 @@ export function LiquidGlassContainer({
 
       gl.useProgram(refs.program);
 
-      // Upload or update snapshot texture
+      // Upload snapshot texture ONLY if it changed or newly initialized
       gl.bindTexture(gl.TEXTURE_2D, refs.texture);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, snapshot);
+      if (refs.lastSnapshot !== snapshot) {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, snapshot);
+        refs.lastSnapshot = snapshot;
+      }
 
       // Set uniforms
       gl.uniform2f(refs.resolutionLoc, canvas.width, canvas.height);

@@ -127,14 +127,7 @@ export function RunovaMatchDashboard() {
       </div>
 
       {/* Main 3-Column Match Hub Layout (Matching Image 1) */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '320px 1.45fr 360px',
-          gap: '24px',
-          alignItems: 'start',
-        }}
-      >
+      <div className="runova-dashboard-grid">
         {/* Column 1: Player Profile Card & Upgrade Promo (Left) */}
         <div style={{ display: 'grid', gap: '20px' }}>
           {/* Main Athlete Photo Card with Glass Info Overlay */}
