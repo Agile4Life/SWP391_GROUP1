@@ -519,3 +519,50 @@
     padding: 20px;
   }
 }
+
+/* ==========================================================================
+   RUNOVA ATHLETIC PORTAL OVERRIDES
+   ========================================================================== */
+[data-theme="runova"] .app-shell nav a.active {
+  background: rgba(212, 233, 92, 0.18) !important;
+  color: #D4E95C !important;
+  font-weight: 700;
+  border-left: 3px solid #D4E95C;
+}
+
+[data-theme="runova"] .app-shell nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+[data-theme="runova"] .portal-card {
+  border-radius: 20px;
+  border: 1px solid rgba(22, 56, 44, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="runova"] .btn-primary {
+  background: #16382C;
+  color: #D4E95C;
+  border-radius: 9999px;
+  font-weight: 700;
+  border: none;
+}
+
+[data-theme="runova"] .btn-primary:hover {
+  background: #102B21;
+}
+
+[data-theme="runova"] .btn-secondary {
+  border-radius: 9999px;
+  border: 1px solid rgba(22, 56, 44, 0.2);
+  color: #111A14;
+}
+
+[data-theme="runova"] .badge-success {
+  background-color: #E8F5E9;
+  color: #16382C;
+  border: 1px solid rgba(22, 56, 44, 0.15);
+  border-radius: 9999px;
+}
+

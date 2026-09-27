@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../shared/context/ThemeContext';
+import { RunovaMatchDashboard } from './components/RunovaMatchDashboard';
 
 export function MemberDashboardPage() {
+  const { theme } = useTheme();
+
+  if (theme === 'runova') {
+    return <RunovaMatchDashboard />;
+  }
+
   const upcomingClasses = [
     {
       id: 1,
