@@ -75,7 +75,10 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       }}
       onClick={onClose}
     >
-      <div
+      <LiquidGlassContainer
+        shape="rounded"
+        borderRadius={24}
+        tintOpacity={0.2}
         style={{
           width: '100%',
           maxWidth: '680px',
@@ -85,8 +88,8 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           overflow: 'hidden',
           border: '1px solid rgba(0, 0, 0, 0.08)',
         }}
-        onClick={(e) => e.stopPropagation()}
       >
+        <div onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div
           style={{
@@ -344,7 +347,8 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             Đóng &amp; Trải Nghiệm
           </button>
         </div>
-      </div>
+        </div>
+      </LiquidGlassContainer>
     </div>
   );
 }
