@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useTheme } from '../../../../shared/context/ThemeContext';
 import { LANDING_IMAGES } from '../../assets/images';
 import { SlideControls } from '../SlideControls';
+import { LiquidGlassContainer } from '../../../../shared/liquid-glass/LiquidGlassContainer';
 
 const DISCIPLINES_LIST = [
   {
@@ -56,8 +58,186 @@ const DISCIPLINES_LIST = [
   },
 ];
 
+const RUNOVA_FACILITIES = [
+  {
+    id: 'stretch',
+    title: 'Outdoor Mobility Arena',
+    tag: 'Strengthen and stretch outdoors',
+    image: LANDING_IMAGES.runovaFacilityStretch,
+  },
+  {
+    id: 'track',
+    title: 'Morning Lake Track',
+    tag: 'Hit the pavement and power through your daily run',
+    image: LANDING_IMAGES.runovaFacilityTrack,
+    featured: true,
+  },
+  {
+    id: 'conditioning',
+    title: 'Athletic Conditioning Ground',
+    tag: 'Strengthen and stretch outdoors',
+    image: LANDING_IMAGES.runovaFacilityOutdoor,
+  },
+  {
+    id: 'court',
+    title: 'Championship Racket Court',
+    tag: 'Professional hard court & padel arena',
+    image: LANDING_IMAGES.runovaFacilityCourt,
+  },
+];
+
 export function DisciplinesSection() {
+  const { theme } = useTheme();
   const [activeIdx, setActiveIdx] = useState(0);
+
+  if (theme === 'runova') {
+    return (
+      <section id="disciplines" className="sol-section" style={{ backgroundColor: '#FAF8F5', padding: '100px 48px' }}>
+        <div className="sol-section-inner" style={{ maxWidth: '1240px' }}>
+          {/* Header Row (Matching Reference Image 4) */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              marginBottom: '48px',
+              gap: '32px',
+              flexWrap: 'wrap',
+            }}
+          >
+            <div>
+              <h2
+                style={{
+                  fontFamily: 'Barlow Condensed',
+                  fontSize: 'clamp(3rem, 6vw, 5rem)',
+                  fontWeight: 900,
+                  textTransform: 'uppercase',
+                  color: '#111A14',
+                  lineHeight: 0.95,
+                  letterSpacing: '0.01em',
+                  margin: 0,
+                }}
+              >
+                EXPLORE <span style={{ color: '#16382C' }}>FACILITIES</span>
+              </h2>
+            </div>
+
+            <div style={{ maxWidth: '420px' }}>
+              <p
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.9rem',
+                  color: '#4F5E54',
+                  lineHeight: 1.65,
+                  margin: 0,
+                }}
+              >
+                Whether you&apos;re training for your first race or your next championship, Runova keeps you motivated,
+                equipped, and connected.
+              </p>
+            </div>
+          </div>
+
+          {/* 4-Card Vertical Facility Grid (Matching Reference Image 4) */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '24px',
+            }}
+          >
+            {RUNOVA_FACILITIES.map((facility) => (
+              <div
+                key={facility.id}
+                className="runova-squircle-card"
+                style={{
+                  position: 'relative',
+                  height: '420px',
+                  borderRadius: '24px',
+                }}
+              >
+                <img
+                  src={facility.image}
+                  alt={facility.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.5s ease',
+                  }}
+                />
+
+                {/* Bottom glassmorphic overlay badge */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    left: '16px',
+                    right: '16px',
+                  }}
+                >
+                  {facility.featured ? (
+                    <LiquidGlassContainer
+                      shape="pill"
+                      borderRadius={24}
+                      tintOpacity={0.35}
+                      style={{
+                        padding: '10px 16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        border: '1px solid rgba(255, 255, 255, 0.35)',
+                      }}
+                    >
+                      <div style={{ color: '#FFFFFF', fontSize: '0.72rem', lineHeight: 1.35, paddingRight: '8px' }}>
+                        <div style={{ fontWeight: 700, textTransform: 'uppercase', marginBottom: '2px', color: '#D4E95C' }}>
+                          {facility.title}
+                        </div>
+                        <div>{facility.tag}</div>
+                      </div>
+                      <div
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          borderRadius: '50%',
+                          backgroundColor: '#FFFFFF',
+                          color: '#111A14',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.85rem',
+                          fontWeight: 700,
+                          flexShrink: 0,
+                        }}
+                      >
+                        ↗
+                      </div>
+                    </LiquidGlassContainer>
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: 'rgba(17, 26, 20, 0.72)',
+                        backdropFilter: 'blur(8px)',
+                        padding: '8px 14px',
+                        borderRadius: '9999px',
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        fontSize: '0.72rem',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                      }}
+                    >
+                      {facility.tag}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   const item = DISCIPLINES_LIST[activeIdx];
 
   const handlePrev = () => {
