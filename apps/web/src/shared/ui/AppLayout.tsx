@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { getCurrentUser, setCurrentUser, UserSession } from '../api/client';
+import { useTheme } from '../context/ThemeContext';
+import { SettingsModal } from './SettingsModal';
 import './portal.css';
 
 export function AppLayout() {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const currentUser: UserSession = getCurrentUser() || {
     id: '1',
     name: 'Nguyễn Văn An',
@@ -34,16 +39,17 @@ export function AppLayout() {
   };
 
   return (
-    <div className="app-shell" style={{ backgroundColor: '#F8F6F2' }}>
+    <div className="app-shell" style={{ backgroundColor: theme === 'runova' ? '#EFECE6' : '#F8F6F2' }}>
       {/* Sidebar */}
       <aside
         style={{
-          background: '#1A1614',
+          background: theme === 'runova' ? '#16382C' : '#1A1614',
           color: '#FAF8F5',
           padding: '28px 20px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          transition: 'background 0.3s ease',
         }}
       >
         <div>
@@ -52,12 +58,13 @@ export function AppLayout() {
               <div
                 style={{
                   fontFamily: 'var(--font-serif)',
-                  fontSize: '1.2rem',
-                  letterSpacing: '0.15em',
-                  fontWeight: 600,
+                  fontSize: theme === 'runova' ? '1.35rem' : '1.2rem',
+                  letterSpacing: theme === 'runova' ? '0.05em' : '0.15em',
+                  fontWeight: 700,
+                  color: theme === 'runova' ? '#D4E95C' : '#FAF8F5',
                 }}
               >
-                SÖL SANCTUARY
+                {theme === 'runova' ? 'RUNOVA ATHLETIC' : 'SÖL SANCTUARY'}
               </div>
               <div style={{ fontSize: '0.65rem', color: '#9E958C', letterSpacing: '0.12em' }}>
                 SCMS MANAGEMENT PORTAL
@@ -170,13 +177,37 @@ export function AppLayout() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600 }}>
-              SÖL WELLNESS SANCTUARY PORTAL
+            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 700 }}>
+              {theme === 'runova' ? 'RUNOVA ATHLETIC SPORTVERSE PORTAL' : 'SÖL WELLNESS SANCTUARY PORTAL'}
             </span>
             <span className="badge badge-success">HỆ THỐNG ONLINE</span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+            {/* Quick Theme Switcher Button */}
+            <button
+              type="button"
+              onClick={() => setIsSettingsOpen(true)}
+              style={{
+                background: theme === 'runova' ? '#16382C' : '#F4EFEA',
+                color: theme === 'runova' ? '#D4E95C' : '#211C18',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                transition: 'all 0.2s ease',
+              }}
+              title="Cài đặt giao diện (Theme Settings)"
+            >
+              <span>⚙️</span>
+              <span>{theme === 'runova' ? 'Runova Theme' : 'Söl Theme'}</span>
+            </button>
+
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>{currentUser.name}</div>
               <div style={{ fontSize: '0.72rem', color: '#8C847C' }}>{currentUser.identifier}</div>
@@ -203,6 +234,9 @@ export function AppLayout() {
           <Outlet />
         </div>
       </main>
+
+      {/* Settings Modal */}
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }
