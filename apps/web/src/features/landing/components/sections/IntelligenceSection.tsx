@@ -13,22 +13,22 @@ const RUNOVA_PRODUCTS = [
     id: 2,
     name: 'Runova Court Aero Pro',
     price: '$149 USD',
-    category: 'Badminton Championship',
-    image: LANDING_IMAGES.runovaRacketCourt,
+    category: 'Tennis Carbon Line',
+    image: LANDING_IMAGES.runovaProduct2,
   },
   {
     id: 3,
     name: 'Sportverse Spin Master',
     price: '$179 USD',
-    category: 'Tennis Carbon Fiber',
-    image: LANDING_IMAGES.runovaProduct2,
+    category: 'Badminton Championship',
+    image: LANDING_IMAGES.runovaProduct3,
   },
   {
     id: 4,
     name: 'Runova Match Hybrid',
     price: '$139 USD',
-    category: 'Padel Power Frame',
-    image: LANDING_IMAGES.runovaAboutClay,
+    category: 'Vintage Wooden Classic',
+    image: LANDING_IMAGES.runovaProduct4,
   },
 ];
 

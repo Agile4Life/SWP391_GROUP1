@@ -60,17 +60,17 @@ export function HeroSection() {
               {/* Avatar Stack */}
               <div style={{ display: 'flex', marginLeft: '4px' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80"
+                  src={LANDING_IMAGES.runovaPlayerSasha}
                   alt="Athlete"
                   style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #16382C', objectFit: 'cover' }}
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80"
+                  src={LANDING_IMAGES.runovaStatAthlete}
                   alt="Athlete"
                   style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #16382C', marginLeft: '-10px', objectFit: 'cover' }}
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80"
+                  src={LANDING_IMAGES.runovaPlayerNaomi}
                   alt="Athlete"
                   style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #16382C', marginLeft: '-10px', objectFit: 'cover' }}
                 />

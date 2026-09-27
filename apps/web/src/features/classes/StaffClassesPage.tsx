@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTheme } from '../../shared/context/ThemeContext';
 
 interface ClassItem {
   id: number;
@@ -12,68 +13,126 @@ interface ClassItem {
   status: 'ACTIVE' | 'ARCHIVED';
 }
 
+const SOL_CLASSES: ClassItem[] = [
+  {
+    id: 1,
+    name: 'Reformer Core Architecture',
+    discipline: 'Pilates',
+    coach: 'Master Elena Vũ',
+    room: 'Studio 01 (Level 2)',
+    schedule: 'T2, T4, T6 (17:30 - 18:30)',
+    capacity: 12,
+    activeSessions: 36,
+    status: 'ACTIVE',
+  },
+  {
+    id: 2,
+    name: 'Olympic Barbell & Plyometrics',
+    discipline: 'Strength',
+    coach: 'Coach Minh Trí',
+    room: 'Arena 02 (Level 1)',
+    schedule: 'T3, T5, T7 (08:00 - 09:30)',
+    capacity: 16,
+    activeSessions: 24,
+    status: 'ACTIVE',
+  },
+  {
+    id: 3,
+    name: 'Yin Yoga & Sound Healing',
+    discipline: 'Yoga',
+    coach: 'Master An Nhiên',
+    room: 'Zen Garden Studio',
+    schedule: 'T4, CN (19:00 - 20:15)',
+    capacity: 15,
+    activeSessions: 18,
+    status: 'ACTIVE',
+  },
+  {
+    id: 4,
+    name: 'Tactile Boxing Padwork',
+    discipline: 'Boxing',
+    coach: 'Coach Alex Dương',
+    room: 'Ring Arena 01',
+    schedule: 'T3, T5 (18:00 - 19:15)',
+    capacity: 12,
+    activeSessions: 20,
+    status: 'ACTIVE',
+  },
+];
+
+const RUNOVA_CLASSES: ClassItem[] = [
+  {
+    id: 1,
+    name: 'Tennis Pro Serve & Volley Clinic',
+    discipline: 'Tennis',
+    coach: 'Coach Rafael Lâm',
+    room: 'Center Tennis Arena 01',
+    schedule: 'T2, T4, T6 (17:30 - 19:00)',
+    capacity: 4,
+    activeSessions: 36,
+    status: 'ACTIVE',
+  },
+  {
+    id: 2,
+    name: 'Badminton Tactical Doubles Drill',
+    discipline: 'Badminton',
+    coach: 'Master Tuấn Kiệt',
+    room: 'Cụm Sân Cầu Lông Đôi 03',
+    schedule: 'T3, T5, T7 (08:00 - 09:30)',
+    capacity: 8,
+    activeSessions: 24,
+    status: 'ACTIVE',
+  },
+  {
+    id: 3,
+    name: 'Padel Glass Wall & Bandeja Mastery',
+    discipline: 'Padel',
+    coach: 'Coach Marco Nguyễn',
+    room: 'Sân Padel Kính VIP 02',
+    schedule: 'T4, CN (19:00 - 20:30)',
+    capacity: 4,
+    activeSessions: 18,
+    status: 'ACTIVE',
+  },
+  {
+    id: 4,
+    name: 'Squash Dynamic Footwork & Reflex',
+    discipline: 'Squash',
+    coach: 'Coach David Vũ',
+    room: 'Sân Squash Tốc Độ 01',
+    schedule: 'T3, T5 (18:00 - 19:15)',
+    capacity: 2,
+    activeSessions: 20,
+    status: 'ACTIVE',
+  },
+];
+
 export function StaffClassesPage() {
-  const [classes, setClasses] = useState<ClassItem[]>([
-    {
-      id: 1,
-      name: 'Reformer Core Architecture',
-      discipline: 'Pilates',
-      coach: 'Master Elena Vũ',
-      room: 'Studio 01 (Level 2)',
-      schedule: 'T2, T4, T6 (17:30 - 18:30)',
-      capacity: 12,
-      activeSessions: 36,
-      status: 'ACTIVE',
-    },
-    {
-      id: 2,
-      name: 'Olympic Barbell & Plyometrics',
-      discipline: 'Strength',
-      coach: 'Coach Minh Trí',
-      room: 'Arena 02 (Level 1)',
-      schedule: 'T3, T5, T7 (08:00 - 09:30)',
-      capacity: 16,
-      activeSessions: 24,
-      status: 'ACTIVE',
-    },
-    {
-      id: 3,
-      name: 'Yin Yoga & Sound Healing',
-      discipline: 'Yoga',
-      coach: 'Master An Nhiên',
-      room: 'Zen Garden Studio',
-      schedule: 'T4, CN (19:00 - 20:15)',
-      capacity: 15,
-      activeSessions: 18,
-      status: 'ACTIVE',
-    },
-    {
-      id: 4,
-      name: 'Tactile Boxing Padwork',
-      discipline: 'Boxing',
-      coach: 'Coach Alex Dương',
-      room: 'Ring Arena 01',
-      schedule: 'T3, T5 (18:00 - 19:15)',
-      capacity: 12,
-      activeSessions: 20,
-      status: 'ACTIVE',
-    },
-  ]);
+  const { theme } = useTheme();
+  const isRunova = theme === 'runova';
+
+  const [classes, setClasses] = useState<ClassItem[]>(() =>
+    isRunova ? RUNOVA_CLASSES : SOL_CLASSES
+  );
+
+  useEffect(() => {
+    setClasses(isRunova ? RUNOVA_CLASSES : SOL_CLASSES);
+  }, [isRunova]);
 
   const [showModal, setShowModal] = useState(false);
   const [newClass, setNewClass] = useState({
     name: '',
-    discipline: 'Pilates',
-    coach: 'Master Elena Vũ',
-    room: 'Studio 01 (Level 2)',
+    discipline: isRunova ? 'Tennis' : 'Pilates',
+    coach: isRunova ? 'Coach Rafael Lâm' : 'Master Elena Vũ',
+    room: isRunova ? 'Center Tennis Arena 01' : 'Studio 01 (Level 2)',
     schedule: 'T2, T4, T6 (09:00 - 10:00)',
-    capacity: 12,
+    capacity: isRunova ? 4 : 12,
   });
 
   const handleCreateClass = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newClass.name.trim()) {
-      alert('Vui lòng nhập tên lớp học');
+      alert(isRunova ? 'Vui lòng nhập tên buổi tập / khung giờ sân' : 'Vui lòng nhập tên lớp học');
       return;
     }
 
@@ -93,26 +152,34 @@ export function StaffClassesPage() {
     setShowModal(false);
     setNewClass({
       name: '',
-      discipline: 'Pilates',
-      coach: 'Master Elena Vũ',
-      room: 'Studio 01 (Level 2)',
+      discipline: isRunova ? 'Tennis' : 'Pilates',
+      coach: isRunova ? 'Coach Rafael Lâm' : 'Master Elena Vũ',
+      room: isRunova ? 'Center Tennis Arena 01' : 'Studio 01 (Level 2)',
       schedule: 'T2, T4, T6 (09:00 - 10:00)',
-      capacity: 12,
+      capacity: isRunova ? 4 : 12,
     });
-    alert('Tạo lớp học thành công! Database trigger đã xác nhận phòng không bị trùng lịch.');
+    alert(
+      isRunova
+        ? 'Tạo khung giờ sân / lớp thi đấu thành công! Database trigger đã xác nhận sân không bị trùng lịch.'
+        : 'Tạo lớp học thành công! Database trigger đã xác nhận phòng không bị trùng lịch.'
+    );
   };
 
   return (
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Quản Lý Lớp Học &amp; Thời Khóa Biểu</h1>
+          <h1 className="portal-title">
+            {isRunova ? 'Quản Lý Sân & Lịch Huấn Luyện Thể Thao' : 'Quản Lý Lớp Học & Thời Khóa Biểu'}
+          </h1>
           <p className="portal-subtitle">
-            Điều phối phòng tập, phân công HLV và kiểm soát công suất lớp (SCMS Module D: Classes &amp; Scheduling)
+            {isRunova
+              ? 'Điều phối cụm sân thi đấu, phân công Coach và kiểm soát công suất (SCMS Module D: Classes & Scheduling)'
+              : 'Điều phối phòng tập, phân công HLV và kiểm soát công suất lớp (SCMS Module D: Classes & Scheduling)'}
           </p>
         </div>
         <button type="button" className="btn-primary" onClick={() => setShowModal(true)}>
-          + Tạo Lớp Học Mới
+          {isRunova ? '+ Mở Khung Giờ Sân / Lớp Mới' : '+ Tạo Lớp Học Mới'}
         </button>
       </div>
 
@@ -122,10 +189,10 @@ export function StaffClassesPage() {
           <table className="portal-table">
             <thead>
               <tr>
-                <th>Tên Lớp Học</th>
+                <th>{isRunova ? 'Tên Lớp / Buổi Đấu' : 'Tên Lớp Học'}</th>
                 <th>Bộ Môn</th>
                 <th>Huấn Luyện Viên</th>
-                <th>Phòng Tập</th>
+                <th>{isRunova ? 'Sân Thi Đấu' : 'Phòng Tập'}</th>
                 <th>Lịch Định Kỳ</th>
                 <th>Sức Chứa</th>
                 <th>Trạng Thái</th>
@@ -146,7 +213,7 @@ export function StaffClassesPage() {
                   <td>{cls.room}</td>
                   <td>{cls.schedule}</td>
                   <td>
-                    <strong>{cls.capacity} học viên</strong>
+                    <strong>{cls.capacity} {isRunova ? 'VĐV' : 'học viên'}</strong>
                   </td>
                   <td>
                     <span className="badge badge-success">{cls.status}</span>
@@ -155,9 +222,15 @@ export function StaffClassesPage() {
                     <button
                       type="button"
                       className="btn-secondary btn-sm"
-                      onClick={() => alert(`Xem danh sách 12 học viên đã đăng ký lớp ${cls.name}`)}
+                      onClick={() =>
+                        alert(
+                          isRunova
+                            ? `Xem danh sách vận động viên đã đặt sân ${cls.name}`
+                            : `Xem danh sách 12 học viên đã đăng ký lớp ${cls.name}`
+                        )
+                      }
                     >
-                      Danh Sách Học Viên
+                      {isRunova ? 'Danh Sách VĐV' : 'Danh Sách Học Viên'}
                     </button>
                   </td>
                 </tr>
@@ -183,14 +256,17 @@ export function StaffClassesPage() {
           <div
             style={{
               backgroundColor: '#FFFFFF',
-              borderRadius: '8px',
+              borderRadius: isRunova ? '20px' : '8px',
               padding: '32px',
               width: 'min(520px, 92vw)',
               boxShadow: '0 20px 50px rgba(0, 0, 0, 0.25)',
+              border: isRunova ? '1px solid rgba(22, 56, 44, 0.15)' : 'none',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', margin: 0 }}>Tạo Lớp Học Mới</h2>
+              <h2 style={{ fontFamily: isRunova ? 'var(--font-heading)' : 'var(--font-serif)', fontSize: '1.4rem', margin: 0 }}>
+                {isRunova ? 'Mở Khung Giờ Sân / Lớp Đấu Mới' : 'Tạo Lớp Học Mới'}
+              </h2>
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
@@ -202,11 +278,13 @@ export function StaffClassesPage() {
 
             <form onSubmit={handleCreateClass}>
               <div className="portal-form-group">
-                <label className="portal-label">Tên Lớp Học *</label>
+                <label className="portal-label">
+                  {isRunova ? 'Tên Lớp / Buổi Huấn Luyện *' : 'Tên Lớp Học *'}
+                </label>
                 <input
                   type="text"
                   required
-                  placeholder="Ví dụ: Reformer Pilates Level 2..."
+                  placeholder={isRunova ? 'Ví dụ: Tennis Master Serve Clinic...' : 'Ví dụ: Reformer Pilates Level 2...'}
                   className="portal-input"
                   value={newClass.name}
                   onChange={(e) => setNewClass({ ...newClass, name: e.target.value })}
@@ -221,11 +299,23 @@ export function StaffClassesPage() {
                     value={newClass.discipline}
                     onChange={(e) => setNewClass({ ...newClass, discipline: e.target.value })}
                   >
-                    <option value="Pilates">Pilates</option>
-                    <option value="Strength">Strength &amp; Conditioning</option>
-                    <option value="Yoga">Yoga</option>
-                    <option value="Boxing">Boxing</option>
-                    <option value="Aquatics">Aquatics</option>
+                    {isRunova ? (
+                      <>
+                        <option value="Tennis">Tennis (Quần Vợt)</option>
+                        <option value="Badminton">Cầu Lông (Badminton)</option>
+                        <option value="Padel">Padel Court</option>
+                        <option value="Squash">Squash Tốc Độ</option>
+                        <option value="Fitness">Athletic Conditioning</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="Pilates">Pilates</option>
+                        <option value="Strength">Strength &amp; Conditioning</option>
+                        <option value="Yoga">Yoga</option>
+                        <option value="Boxing">Boxing</option>
+                        <option value="Aquatics">Aquatics</option>
+                      </>
+                    )}
                   </select>
                 </div>
 
@@ -249,24 +339,46 @@ export function StaffClassesPage() {
                   value={newClass.coach}
                   onChange={(e) => setNewClass({ ...newClass, coach: e.target.value })}
                 >
-                  <option value="Master Elena Vũ">Master Elena Vũ (Head Pilates Coach)</option>
-                  <option value="Coach Minh Trí">Coach Minh Trí (CSCS Strength Coach)</option>
-                  <option value="Master An Nhiên">Master An Nhiên (Senior Yoga Teacher)</option>
-                  <option value="Coach Alex Dương">Coach Alex Dương (Boxing Specialist)</option>
+                  {isRunova ? (
+                    <>
+                      <option value="Coach Rafael Lâm">Coach Rafael Lâm (Head Tennis Coach)</option>
+                      <option value="Master Tuấn Kiệt">Master Tuấn Kiệt (Badminton Master)</option>
+                      <option value="Coach Marco Nguyễn">Coach Marco Nguyễn (Padel Specialist)</option>
+                      <option value="Coach David Vũ">Coach David Vũ (Squash Pro)</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Master Elena Vũ">Master Elena Vũ (Head Pilates Coach)</option>
+                      <option value="Coach Minh Trí">Coach Minh Trí (CSCS Strength Coach)</option>
+                      <option value="Master An Nhiên">Master An Nhiên (Senior Yoga Teacher)</option>
+                      <option value="Coach Alex Dương">Coach Alex Dương (Boxing Specialist)</option>
+                    </>
+                  )}
                 </select>
               </div>
 
               <div className="portal-form-group">
-                <label className="portal-label">Phòng Tập</label>
+                <label className="portal-label">{isRunova ? 'Sân Thi Đấu' : 'Phòng Tập'}</label>
                 <select
                   className="portal-select"
                   value={newClass.room}
                   onChange={(e) => setNewClass({ ...newClass, room: e.target.value })}
                 >
-                  <option value="Studio 01 (Level 2)">Studio 01 (Level 2 - Reformer)</option>
-                  <option value="Arena 02 (Level 1)">Arena 02 (Level 1 - Barbell Rack)</option>
-                  <option value="Zen Garden Studio">Zen Garden Studio (Tầng Thượng)</option>
-                  <option value="Ring Arena 01">Ring Arena 01 (Khu Boxing)</option>
+                  {isRunova ? (
+                    <>
+                      <option value="Center Tennis Arena 01">Center Tennis Arena 01 (Sân cứng)</option>
+                      <option value="Sân Padel Kính VIP 02">Sân Padel Kính VIP 02 (Panorama)</option>
+                      <option value="Cụm Sân Cầu Lông Đôi 03">Cụm Sân Cầu Lông Đôi 03 (Yonex PVC)</option>
+                      <option value="Sân Squash Tốc Độ 01">Sân Squash Tốc Độ 01 (Phòng Kính)</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Studio 01 (Level 2)">Studio 01 (Level 2 - Reformer)</option>
+                      <option value="Arena 02 (Level 1)">Arena 02 (Level 1 - Barbell Rack)</option>
+                      <option value="Zen Garden Studio">Zen Garden Studio (Tầng Thượng)</option>
+                      <option value="Ring Arena 01">Ring Arena 01 (Khu Boxing)</option>
+                    </>
+                  )}
                 </select>
               </div>
 
@@ -286,7 +398,7 @@ export function StaffClassesPage() {
                   Hủy Bỏ
                 </button>
                 <button type="submit" className="btn-primary">
-                  Lưu &amp; Lên Lịch Buổi
+                  {isRunova ? 'Lưu & Lên Lịch Sân' : 'Lưu & Lên Lịch Buổi'}
                 </button>
               </div>
             </form>

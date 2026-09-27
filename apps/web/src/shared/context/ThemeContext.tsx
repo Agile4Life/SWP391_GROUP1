@@ -38,6 +38,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+    if (theme === 'runova') {
+      document.title = 'RUNOVA ATHLETIC CLUB • High-Performance Court & Sportverse';
+    } else {
+      document.title = 'SÖL WELLNESS SANCTUARY • Quiet Luxury Movement & Architecture';
+    }
   }, [theme]);
 
   return (

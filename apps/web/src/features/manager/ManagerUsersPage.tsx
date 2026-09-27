@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useTheme } from '../../shared/context/ThemeContext';
 
 interface UserRecord {
   id: number;
@@ -11,62 +12,126 @@ interface UserRecord {
   deletedAt: string | null;
 }
 
+const SOL_USERS: UserRecord[] = [
+  {
+    id: 1,
+    fullName: 'Nguyễn Văn An',
+    email: 'an.member@sol-wellness.vn',
+    phone: '0908 123 456',
+    role: 'MEMBER',
+    status: 'ACTIVE',
+    joinedDate: '15/09/2026',
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    fullName: 'Master Elena Vũ',
+    email: 'elena.vu@sol-wellness.vn',
+    phone: '0912 345 678',
+    role: 'COACH',
+    status: 'ACTIVE',
+    joinedDate: '01/08/2026',
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    fullName: 'Lễ Tân Thịnh',
+    email: 'thinh.reception@sol-wellness.vn',
+    phone: '0933 888 999',
+    role: 'RECEPTIONIST',
+    status: 'ACTIVE',
+    joinedDate: '10/09/2026',
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    fullName: 'Trần Công Tuấn Anh',
+    email: 'admin.manager@sol-wellness.vn',
+    phone: '0909 000 111',
+    role: 'CENTER_MANAGER',
+    status: 'ACTIVE',
+    joinedDate: '01/07/2026',
+    deletedAt: null,
+  },
+  {
+    id: 5,
+    fullName: 'Lê Hoàng Minh',
+    email: 'minh.lh@gmail.com',
+    phone: '0944 555 666',
+    role: 'MEMBER',
+    status: 'LOCKED',
+    joinedDate: '12/08/2026',
+    deletedAt: null,
+  },
+];
+
+const RUNOVA_USERS: UserRecord[] = [
+  {
+    id: 1,
+    fullName: 'Nguyễn Văn An',
+    email: 'an.member@runova-sports.vn',
+    phone: '0908 123 456',
+    role: 'MEMBER',
+    status: 'ACTIVE',
+    joinedDate: '15/09/2026',
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    fullName: 'Coach Rafael Lâm',
+    email: 'rafael.lam@runova-sports.vn',
+    phone: '0912 345 678',
+    role: 'COACH',
+    status: 'ACTIVE',
+    joinedDate: '01/08/2026',
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    fullName: 'Lễ Tân Thịnh (Court Host)',
+    email: 'thinh.reception@runova-sports.vn',
+    phone: '0933 888 999',
+    role: 'RECEPTIONIST',
+    status: 'ACTIVE',
+    joinedDate: '10/09/2026',
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    fullName: 'Trần Công Tuấn Anh (Director)',
+    email: 'admin.manager@runova-sports.vn',
+    phone: '0909 000 111',
+    role: 'CENTER_MANAGER',
+    status: 'ACTIVE',
+    joinedDate: '01/07/2026',
+    deletedAt: null,
+  },
+  {
+    id: 5,
+    fullName: 'Lê Hoàng Minh',
+    email: 'minh.lh@gmail.com',
+    phone: '0944 555 666',
+    role: 'MEMBER',
+    status: 'LOCKED',
+    joinedDate: '12/08/2026',
+    deletedAt: null,
+  },
+];
+
 export function ManagerUsersPage() {
+  const { theme } = useTheme();
+  const isRunova = theme === 'runova';
+
   const [roleFilter, setRoleFilter] = useState('ALL');
   const [search, setSearch] = useState('');
 
-  const [users, setUsers] = useState<UserRecord[]>([
-    {
-      id: 1,
-      fullName: 'Nguyễn Văn An',
-      email: 'an.member@sol-wellness.vn',
-      phone: '0908 123 456',
-      role: 'MEMBER',
-      status: 'ACTIVE',
-      joinedDate: '15/09/2026',
-      deletedAt: null,
-    },
-    {
-      id: 2,
-      fullName: 'Master Elena Vũ',
-      email: 'elena.vu@sol-wellness.vn',
-      phone: '0912 345 678',
-      role: 'COACH',
-      status: 'ACTIVE',
-      joinedDate: '01/08/2026',
-      deletedAt: null,
-    },
-    {
-      id: 3,
-      fullName: 'Lễ Tân Thịnh',
-      email: 'thinh.reception@sol-wellness.vn',
-      phone: '0933 888 999',
-      role: 'RECEPTIONIST',
-      status: 'ACTIVE',
-      joinedDate: '10/09/2026',
-      deletedAt: null,
-    },
-    {
-      id: 4,
-      fullName: 'Trần Công Tuấn Anh',
-      email: 'admin.manager@sol-wellness.vn',
-      phone: '0909 000 111',
-      role: 'CENTER_MANAGER',
-      status: 'ACTIVE',
-      joinedDate: '01/07/2026',
-      deletedAt: null,
-    },
-    {
-      id: 5,
-      fullName: 'Lê Hoàng Minh',
-      email: 'minh.lh@gmail.com',
-      phone: '0944 555 666',
-      role: 'MEMBER',
-      status: 'LOCKED',
-      joinedDate: '12/08/2026',
-      deletedAt: null,
-    },
-  ]);
+  const [users, setUsers] = useState<UserRecord[]>(() =>
+    isRunova ? RUNOVA_USERS : SOL_USERS
+  );
+
+  useEffect(() => {
+    setUsers(isRunova ? RUNOVA_USERS : SOL_USERS);
+  }, [isRunova]);
 
   const toggleLock = (id: number) => {
     setUsers((prev) =>
@@ -102,9 +167,13 @@ export function ManagerUsersPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Quản Lý Người Dùng &amp; Phân Quyền (RBAC)</h1>
+          <h1 className="portal-title">
+            {isRunova ? 'Quản Lý Tài Khoản Vận Động Viên & Nhân Viên' : 'Quản Lý Người Dùng & Phân Quyền (RBAC)'}
+          </h1>
           <p className="portal-subtitle">
-            Quản trị tài khoản 4 vai trò, kiểm soát trạng thái khóa và bảo mật quyền hạn (SCMS Module A: Identity)
+            {isRunova
+              ? 'Quản trị tài khoản 4 vai trò, kiểm soát trạng thái khóa và bảo mật cụm sân (SCMS Module A: Identity)'
+              : 'Quản trị tài khoản 4 vai trò, kiểm soát trạng thái khóa và bảo mật quyền hạn (SCMS Module A: Identity)'}
           </p>
         </div>
         <button
@@ -112,7 +181,7 @@ export function ManagerUsersPage() {
           className="btn-primary"
           onClick={() => alert('Mở hộp thoại tạo tài khoản mới')}
         >
-          + Thêm Tài Khoản Mới
+          {isRunova ? '+ Cấp Tài Khoản VĐV / Nhân Viên' : '+ Thêm Tài Khoản Mới'}
         </button>
       </div>
 
@@ -120,33 +189,38 @@ export function ManagerUsersPage() {
       <div className="portal-card" style={{ marginBottom: '24px', padding: '20px 28px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           {/* Role Filter Tabs */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {['ALL', 'MEMBER', 'COACH', 'RECEPTIONIST', 'CENTER_MANAGER'].map((r) => (
               <button
                 key={r}
                 type="button"
                 onClick={() => setRoleFilter(r)}
                 style={{
-                  background: roleFilter === r ? '#1A1614' : '#FFFFFF',
-                  color: roleFilter === r ? '#FAF8F5' : '#7E7771',
-                  border: '1px solid rgba(33, 28, 24, 0.15)',
+                  background: roleFilter === r ? (isRunova ? '#16382C' : '#1A1614') : '#FFFFFF',
+                  color: roleFilter === r ? (isRunova ? '#D4E95C' : '#FAF8F5') : '#7E7771',
+                  border: isRunova
+                    ? roleFilter === r
+                      ? '1px solid #16382C'
+                      : '1px solid rgba(22, 56, 44, 0.2)'
+                    : '1px solid rgba(33, 28, 24, 0.15)',
                   padding: '6px 14px',
-                  borderRadius: '4px',
+                  borderRadius: isRunova ? '9999px' : '4px',
                   fontFamily: 'var(--font-sans)',
                   fontSize: '0.74rem',
                   cursor: 'pointer',
-                  fontWeight: 500,
+                  fontWeight: roleFilter === r ? 700 : 500,
+                  transition: 'all 0.2s ease',
                 }}
               >
                 {r === 'ALL'
                   ? 'Tất Cả'
                   : r === 'MEMBER'
-                  ? 'Hội Viên'
+                  ? (isRunova ? 'Vận Động Viên' : 'Hội Viên')
                   : r === 'COACH'
-                  ? 'HLV'
+                  ? (isRunova ? 'HLV Sân Đấu' : 'HLV')
                   : r === 'RECEPTIONIST'
-                  ? 'Lễ Tân'
-                  : 'Quản Lý'}
+                  ? (isRunova ? 'Lễ Tân Cụm Sân' : 'Lễ Tân')
+                  : (isRunova ? 'Ban Quản Trị' : 'Quản Lý')}
               </button>
             ))}
           </div>

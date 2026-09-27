@@ -25,8 +25,8 @@ export function PhilosophySection() {
             }}
           >
             <img
-              src={LANDING_IMAGES.runovaAboutClay}
-              alt="Clay Tennis Court"
+              src={LANDING_IMAGES.runovaAboutBanner}
+              alt="Clay Tennis Court Net"
               style={{
                 width: '180px',
                 height: '84px',
@@ -128,7 +128,7 @@ export function PhilosophySection() {
                 }}
               >
                 <img
-                  src={LANDING_IMAGES.runovaAboutClay}
+                  src={LANDING_IMAGES.runovaAboutPlayer}
                   alt="Athlete ready on court"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
@@ -146,7 +146,7 @@ export function PhilosophySection() {
                 }}
               >
                 <img
-                  src={LANDING_IMAGES.runovaRacketCourt}
+                  src={LANDING_IMAGES.runovaAboutRacket}
                   alt="Racket on hard court"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />

@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LANDING_IMAGES } from '../../landing/assets/images';
 import { LiquidGlassContainer } from '../../../shared/liquid-glass/LiquidGlassContainer';
+import { getCurrentUser } from '../../../shared/api/client';
 
 export function RunovaMatchDashboard() {
   const [matchType, setMatchType] = useState<'singles' | 'doubles' | 'mixed'>('singles');
+  const currentUser = getCurrentUser() || { name: 'Nguyễn Văn An' };
 
   return (
     <div
@@ -38,7 +40,7 @@ export function RunovaMatchDashboard() {
               textTransform: 'uppercase',
             }}
           >
-            Welcome Sasha!
+            Welcome {currentUser.name}!
           </h1>
           <div
             style={{
@@ -165,7 +167,7 @@ export function RunovaMatchDashboard() {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
                   <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=60&q=80"
+                    src={LANDING_IMAGES.runovaPlayerSasha}
                     alt="Avatar"
                     style={{ width: '38px', height: '38px', borderRadius: '10px', objectFit: 'cover' }}
                   />
@@ -338,7 +340,7 @@ export function RunovaMatchDashboard() {
                 }}
               >
                 <img
-                  src={LANDING_IMAGES.runovaPlayerSasha}
+                  src={LANDING_IMAGES.runovaPlayerSashaMatch}
                   alt="Sasha Indigo"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
@@ -435,7 +437,7 @@ export function RunovaMatchDashboard() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+                  src={LANDING_IMAGES.runovaPlayerSasha}
                   alt="Player set"
                   style={{ width: '80px', height: '90px', borderRadius: '14px', objectFit: 'cover' }}
                 />
@@ -449,7 +451,7 @@ export function RunovaMatchDashboard() {
                   }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80"
+                    src={LANDING_IMAGES.runovaPlayerNaomi}
                     alt="Player set"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
@@ -498,7 +500,7 @@ export function RunovaMatchDashboard() {
               }}
             >
               <img
-                src={LANDING_IMAGES.runovaRacketCourt}
+                src={LANDING_IMAGES.runovaAboutRacket}
                 alt="Singles"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -568,7 +570,7 @@ export function RunovaMatchDashboard() {
               }}
             >
               <img
-                src={LANDING_IMAGES.runovaAboutClay}
+                src={LANDING_IMAGES.runovaAboutBanner}
                 alt="Mixed Doubles"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -608,7 +610,7 @@ export function RunovaMatchDashboard() {
             }}
           >
             <img
-              src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=800&q=80"
+              src={LANDING_IMAGES.runovaStatAthlete}
               alt="Tennis court win"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />

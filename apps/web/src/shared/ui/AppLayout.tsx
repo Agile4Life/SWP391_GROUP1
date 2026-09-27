@@ -17,17 +17,18 @@ export function AppLayout() {
   };
 
   const switchRole = (newRole: UserSession['role']) => {
+    const isRunova = theme === 'runova';
     const updatedUser: UserSession = {
       ...currentUser,
       role: newRole,
       name:
         newRole === 'MANAGER'
-          ? 'Trần Công Tuấn Anh (Manager)'
+          ? (isRunova ? 'Trần Công Tuấn Anh (Director)' : 'Trần Công Tuấn Anh (Manager)')
           : newRole === 'COACH'
-          ? 'HLV Master Khoa (Coach)'
+          ? (isRunova ? 'Coach Rafael Lâm (Coach)' : 'HLV Master Khoa (Coach)')
           : newRole === 'STAFF'
-          ? 'Lễ Tân Thịnh (Receptionist)'
-          : 'Nguyễn Văn An (Member)',
+          ? (isRunova ? 'Lễ Tân Thịnh (Court Host)' : 'Lễ Tân Thịnh (Receptionist)')
+          : (isRunova ? 'Nguyễn Văn An (Athlete)' : 'Nguyễn Văn An (Member)'),
     };
     setCurrentUser(updatedUser);
 
@@ -38,6 +39,11 @@ export function AppLayout() {
     else navigate('/member/dashboard');
   };
 
+  const displayIdentifier =
+    theme === 'runova'
+      ? currentUser.identifier.replace('@sol-wellness.vn', '@runova-sports.vn')
+      : currentUser.identifier;
+
   return (
     <div className="app-shell" style={{ backgroundColor: theme === 'runova' ? '#EFECE6' : '#F8F6F2' }}>
       {/* Sidebar */}
@@ -45,7 +51,7 @@ export function AppLayout() {
         style={{
           background: theme === 'runova' ? '#16382C' : '#1A1614',
           color: '#FAF8F5',
-          padding: '28px 20px',
+          padding: '24px 18px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -53,21 +59,25 @@ export function AppLayout() {
         }}
       >
         <div>
-          <div style={{ marginBottom: '24px' }}>
+          <div style={{ marginBottom: '22px' }}>
             <NavLink to="/" style={{ color: 'inherit' }}>
               <div
                 style={{
-                  fontFamily: 'var(--font-serif)',
+                  fontFamily: theme === 'runova' ? 'var(--font-heading)' : 'var(--font-serif)',
                   fontSize: theme === 'runova' ? '1.35rem' : '1.2rem',
-                  letterSpacing: theme === 'runova' ? '0.05em' : '0.15em',
-                  fontWeight: 700,
+                  letterSpacing: theme === 'runova' ? '0.04em' : '0.15em',
+                  fontWeight: 800,
                   color: theme === 'runova' ? '#D4E95C' : '#FAF8F5',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
                 }}
               >
-                {theme === 'runova' ? 'RUNOVA ATHLETIC' : 'SÖL SANCTUARY'}
+                {theme === 'runova' && <span>🎾</span>}
+                <span>{theme === 'runova' ? 'RUNOVA ATHLETIC' : 'SÖL SANCTUARY'}</span>
               </div>
-              <div style={{ fontSize: '0.65rem', color: '#9E958C', letterSpacing: '0.12em' }}>
-                SCMS MANAGEMENT PORTAL
+              <div style={{ fontSize: '0.65rem', color: theme === 'runova' ? '#A3C2B4' : '#9E958C', letterSpacing: '0.12em' }}>
+                {theme === 'runova' ? 'SPORTVERSE COURT MANAGEMENT' : 'SCMS MANAGEMENT PORTAL'}
               </div>
             </NavLink>
           </div>
@@ -75,13 +85,14 @@ export function AppLayout() {
           {/* Quick Role Switcher (For easy demo / review) */}
           <div
             style={{
-              background: 'rgba(255, 255, 255, 0.06)',
-              borderRadius: '6px',
+              background: theme === 'runova' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)',
+              borderRadius: theme === 'runova' ? '12px' : '6px',
               padding: '12px',
-              marginBottom: '28px',
+              marginBottom: '22px',
+              border: theme === 'runova' ? '1px solid rgba(212, 233, 92, 0.2)' : 'none',
             }}
           >
-            <div style={{ fontSize: '0.65rem', color: '#B8AFA6', letterSpacing: '0.1em', marginBottom: '8px' }}>
+            <div style={{ fontSize: '0.65rem', color: theme === 'runova' ? '#D4E95C' : '#B8AFA6', letterSpacing: '0.1em', marginBottom: '8px', fontWeight: 700 }}>
               VAI TRÒ HIỆN TẠI:
             </div>
             <select
@@ -89,78 +100,114 @@ export function AppLayout() {
               onChange={(e) => switchRole(e.target.value as UserSession['role'])}
               style={{
                 width: '100%',
-                background: '#2B2420',
+                background: theme === 'runova' ? '#0F261E' : '#2B2420',
                 color: '#FAF8F5',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
+                border: theme === 'runova' ? '1px solid rgba(212, 233, 92, 0.3)' : '1px solid rgba(255, 255, 255, 0.15)',
                 padding: '6px 10px',
-                borderRadius: '4px',
+                borderRadius: '6px',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.78rem',
                 outline: 'none',
                 cursor: 'pointer',
               }}
             >
-              <option value="MEMBER">👤 Hội Viên (Member)</option>
-              <option value="STAFF">💁 Lễ Tân (Receptionist)</option>
-              <option value="COACH">🏋️ Huấn Luyện Viên (Coach)</option>
-              <option value="MANAGER">👔 Quản Lý Trung Tâm (Manager)</option>
+              {theme === 'runova' ? (
+                <>
+                  <option value="MEMBER">👤 Vận Động Viên (Member)</option>
+                  <option value="STAFF">💁 Lễ Tân Cụm Sân (Receptionist)</option>
+                  <option value="COACH">🎾 HLV Tennis / Padel (Coach)</option>
+                  <option value="MANAGER">👔 Quản Lý Cụm Sân (Manager)</option>
+                </>
+              ) : (
+                <>
+                  <option value="MEMBER">👤 Hội Viên (Member)</option>
+                  <option value="STAFF">💁 Lễ Tân (Receptionist)</option>
+                  <option value="COACH">🏋️ Huấn Luyện Viên (Coach)</option>
+                  <option value="MANAGER">👔 Quản Lý Trung Tâm (Manager)</option>
+                </>
+              )}
             </select>
           </div>
 
           {/* Navigation by Role */}
-          <nav style={{ display: 'grid', gap: '6px' }}>
-            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: '#8A827B', padding: '6px 10px' }}>
-              PHÂN HỆ HỘI VIÊN
+          <nav style={{ display: 'grid', gap: '5px' }}>
+            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: theme === 'runova' ? '#8FAD9F' : '#8A827B', padding: '6px 10px', fontWeight: 700 }}>
+              {theme === 'runova' ? 'PHÂN HỆ VẬN ĐỘNG VIÊN' : 'PHÂN HỆ HỘI VIÊN'}
             </div>
             <NavLink to="/member/dashboard" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Dashboard Hội Viên
+              {theme === 'runova' ? '📊 Dashboard Thi Đấu' : 'Dashboard Hội Viên'}
             </NavLink>
             <NavLink to="/member/classes" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Lịch Lớp &amp; Đặt Chỗ
+              {theme === 'runova' ? '🎾 Lịch Sân & Thi Đấu' : 'Lịch Lớp & Đặt Chỗ'}
             </NavLink>
             <NavLink to="/member/card" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Gói Tập &amp; Mã QR
+              {theme === 'runova' ? '🎟️ Thẻ Court Pass & QR' : 'Gói Tập & Mã QR'}
             </NavLink>
             <NavLink to="/member/profile" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Hồ Sơ &amp; Thể Chất
+              {theme === 'runova' ? '👤 Hồ Sơ & Chỉ Số ELO' : 'Hồ Sơ & Thể Chất'}
             </NavLink>
 
-            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: '#8A827B', padding: '12px 10px 6px 10px' }}>
-              VẬN HÀNH &amp; HUẤN LUYỆN
+            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: theme === 'runova' ? '#8FAD9F' : '#8A827B', padding: '10px 10px 4px 10px', fontWeight: 700 }}>
+              {theme === 'runova' ? 'VẬN HÀNH SÂN & COACH' : 'VẬN HÀNH & HUẤN LUYỆN'}
             </div>
             <NavLink to="/staff/reception" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Lễ Tân &amp; Thu Phí POS
+              {theme === 'runova' ? '💁 Lễ Tân & Gói Court Pass' : 'Lễ Tân & Thu Phí POS'}
             </NavLink>
             <NavLink to="/staff/check-in" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Cổng Check-in Sảnh
+              {theme === 'runova' ? '🚧 Cổng Check-in Sân Bãi' : 'Cổng Check-in Sảnh'}
             </NavLink>
             <NavLink to="/staff/classes" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Quản Lý Lớp &amp; Buổi
+              {theme === 'runova' ? '📋 Quản Lý Sân & Lịch Tập' : 'Quản Lý Lớp & Buổi'}
             </NavLink>
             <NavLink to="/staff/attendance" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Điểm Danh &amp; AI Coach
+              {theme === 'runova' ? '🎯 Điểm Danh & AI Coach' : 'Điểm Danh & AI Coach'}
             </NavLink>
 
-            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: '#8A827B', padding: '12px 10px 6px 10px' }}>
-              QUẢN TRỊ TRUNG TÂM
+            <div style={{ fontSize: '0.68rem', letterSpacing: '0.15em', color: theme === 'runova' ? '#8FAD9F' : '#8A827B', padding: '10px 10px 4px 10px', fontWeight: 700 }}>
+              {theme === 'runova' ? 'QUẢN TRỊ CỤM SÂN' : 'QUẢN TRỊ TRUNG TÂM'}
             </div>
             <NavLink to="/manager/reports" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Báo Cáo Doanh Thu
+              {theme === 'runova' ? '📈 Báo Cáo Doanh Thu & Sân' : 'Báo Cáo Doanh Thu'}
             </NavLink>
             <NavLink to="/manager/catalogs" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Danh Mục Vận Hành
+              {theme === 'runova' ? '⚙️ Danh Mục Sân & Môn Đấu' : 'Danh Mục Vận Hành'}
             </NavLink>
             <NavLink to="/manager/users" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Tài Khoản &amp; Phân Quyền
+              {theme === 'runova' ? '👥 Tài Khoản VĐV & Quyền' : 'Tài Khoản & Phân Quyền'}
             </NavLink>
           </nav>
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '16px', fontSize: '0.75rem' }}>
-          <NavLink to="/" style={{ color: '#B8AFA6', display: 'block', marginBottom: '8px' }}>
-            ← Quay lại Trang Chủ
-          </NavLink>
-          <div style={{ color: '#6A635D' }}>SCMS Version 1.0.0 (Master)</div>
+        {/* Bottom Sidebar: Upgrade Promo Widget in Runova (Matching Reference Image 1) */}
+        <div>
+          {theme === 'runova' && (
+            <div
+              style={{
+                background: 'radial-gradient(circle at top left, #235443, #0F261E)',
+                border: '1px solid rgba(212, 233, 92, 0.35)',
+                borderRadius: '16px',
+                padding: '14px',
+                marginBottom: '16px',
+                textAlign: 'center',
+                boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+              }}
+            >
+              <div style={{ fontSize: '1.4rem', marginBottom: '4px' }}>🎾</div>
+              <div style={{ fontSize: '0.74rem', fontWeight: 800, color: '#D4E95C', letterSpacing: '0.06em' }}>
+                UPGRADE TO PRO
+              </div>
+              <div style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '3px', lineHeight: 1.35 }}>
+                Cảm biến AI đo lực &amp; Giờ vàng
+              </div>
+            </div>
+          )}
+
+          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '14px', fontSize: '0.75rem' }}>
+            <NavLink to="/" style={{ color: theme === 'runova' ? '#D4E95C' : '#B8AFA6', display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+              ← Quay lại Trang Chủ
+            </NavLink>
+            <div style={{ color: theme === 'runova' ? '#8FAD9F' : '#6A635D' }}>SCMS Version 1.0.0 (Master)</div>
+          </div>
         </div>
       </aside>
 
@@ -171,16 +218,34 @@ export function AppLayout() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '16px 40px',
+            padding: '16px 36px',
             background: '#FFFFFF',
             borderBottom: '1px solid rgba(33, 28, 24, 0.08)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 700 }}>
+            <span
+              style={{
+                fontFamily: theme === 'runova' ? 'var(--font-heading)' : 'var(--font-serif)',
+                fontSize: '1.15rem',
+                fontWeight: 800,
+                color: theme === 'runova' ? '#16382C' : '#1A1614',
+                letterSpacing: theme === 'runova' ? '0.04em' : 'normal',
+              }}
+            >
               {theme === 'runova' ? 'RUNOVA ATHLETIC SPORTVERSE PORTAL' : 'SÖL WELLNESS SANCTUARY PORTAL'}
             </span>
-            <span className="badge badge-success">HỆ THỐNG ONLINE</span>
+            <span
+              className="badge badge-success"
+              style={{
+                background: theme === 'runova' ? 'rgba(212, 233, 92, 0.2)' : undefined,
+                color: theme === 'runova' ? '#16382C' : undefined,
+                borderColor: theme === 'runova' ? 'rgba(22, 56, 44, 0.2)' : undefined,
+                fontWeight: 700,
+              }}
+            >
+              HỆ THỐNG ONLINE
+            </span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
@@ -199,7 +264,7 @@ export function AppLayout() {
                 alignItems: 'center',
                 gap: '6px',
                 fontSize: '0.8rem',
-                fontWeight: 600,
+                fontWeight: 700,
                 transition: 'all 0.2s ease',
               }}
               title="Cài đặt giao diện (Theme Settings)"
@@ -210,7 +275,7 @@ export function AppLayout() {
 
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>{currentUser.name}</div>
-              <div style={{ fontSize: '0.72rem', color: '#8C847C' }}>{currentUser.identifier}</div>
+              <div style={{ fontSize: '0.72rem', color: '#8C847C' }}>{displayIdentifier}</div>
             </div>
 
             <NavLink
@@ -221,7 +286,7 @@ export function AppLayout() {
                 fontWeight: 600,
                 border: '1px solid #fecaca',
                 padding: '6px 12px',
-                borderRadius: '4px',
+                borderRadius: theme === 'runova' ? '9999px' : '4px',
                 background: '#fff5f5',
               }}
             >

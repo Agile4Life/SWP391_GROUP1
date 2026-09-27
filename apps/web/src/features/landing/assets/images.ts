@@ -22,17 +22,24 @@ export const LANDING_IMAGES = {
   // Background textures
   paperTexture: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1800&q=80',
 
-  // Runova Athletic High-Performance Theme Assets (Matching Reference Mockups)
-  runovaHeroBg: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1800&q=85',
-  runovaAboutClay: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=1000&q=85',
-  runovaRacketCourt: 'https://images.unsplash.com/photo-1617083934555-563d7e5d8366?auto=format&fit=crop&w=800&q=85',
-  runovaFacilityStretch: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=85',
-  runovaFacilityTrack: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=85',
-  runovaFacilityOutdoor: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=85',
-  runovaFacilityCourt: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=85',
-  runovaProduct1: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=85',
-  runovaProduct2: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=85',
-  runovaPlayerSasha: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=85',
-  runovaPlayerNaomi: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=85',
+  // Runova Athletic High-Performance Theme Assets (Local High-Resolution Assets matching Reference Mockups)
+  runovaHeroBg: '/images/runova/hero-bg.jpg',
+  runovaAboutBanner: '/images/runova/about-banner.jpg',
+  runovaAboutPlayer: '/images/runova/about-player.jpg',
+  runovaAboutRacket: '/images/runova/about-racket.jpg',
+  runovaAboutClay: '/images/runova/about-banner.jpg',
+  runovaRacketCourt: '/images/runova/about-racket.jpg',
+  runovaFacilityStretch: '/images/runova/facility-stretch.jpg',
+  runovaFacilityTrack: '/images/runova/facility-track.jpg',
+  runovaFacilityOutdoor: '/images/runova/facility-outdoor.jpg',
+  runovaFacilityCourt: '/images/runova/facility-court.jpg',
+  runovaProduct1: '/images/runova/product-1.jpg',
+  runovaProduct2: '/images/runova/product-2.jpg',
+  runovaProduct3: '/images/runova/product-3.jpg',
+  runovaProduct4: '/images/runova/product-4.jpg',
+  runovaPlayerSasha: '/images/runova/sasha-portrait.jpg',
+  runovaPlayerSashaMatch: '/images/runova/sasha-match.jpg',
+  runovaPlayerNaomi: '/images/runova/naomi-match.jpg',
+  runovaStatAthlete: '/images/runova/stat-athlete.jpg',
 };
 

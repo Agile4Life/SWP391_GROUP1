@@ -178,6 +178,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   border: tier.featured ? '2px solid #16382C' : '1px solid rgba(22, 56, 44, 0.1)',
                   backgroundColor: tier.featured ? '#FFFFFF' : '#FAF8F5',
                   position: 'relative',
+                  overflow: 'visible',
                   transform: tier.featured ? 'scale(1.02)' : 'none',
                   boxShadow: tier.featured
                     ? '0 20px 40px -10px rgba(22, 56, 44, 0.15)'
@@ -188,18 +189,23 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   <div
                     style={{
                       position: 'absolute',
-                      top: '-14px',
+                      top: '-13px',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       backgroundColor: '#D4E95C',
                       color: '#111A14',
-                      padding: '4px 16px',
+                      padding: '6px 18px',
                       borderRadius: '9999px',
                       fontSize: '0.72rem',
                       fontWeight: 800,
                       letterSpacing: '0.08em',
                       textTransform: 'uppercase',
-                      boxShadow: '0 4px 12px rgba(212, 233, 92, 0.4)',
+                      whiteSpace: 'nowrap',
+                      zIndex: 5,
+                      boxShadow: '0 4px 14px rgba(22, 56, 44, 0.22)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      lineHeight: 1,
                     }}
                   >
                     MOST POPULAR • KHUYÊN DÙNG
