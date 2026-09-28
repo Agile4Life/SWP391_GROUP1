@@ -1,0 +1,62 @@
+### 1. Lấy Token Đăng nhập
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "member1",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### 2. Xem Profile (US05-F03)
+GET http://localhost:8080/api/v1/profile
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+
+### 3. Cập nhật Profile (US05-F03)
+PUT http://localhost:8080/api/v1/profile
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Content-Type: application/json
+
+{
+  "fullName": "Nguyễn Văn Member",
+  "email": "member1@example.com",
+  "phone": "0912345678",
+  "dob": "1995-05-15",
+  "gender": "male",
+  "fitnessGoal": "Giảm cân",
+  "fitnessLevel": "intermediate",
+  "healthNotes": "Khỏe mạnh"
+}
+
+### 4. Thêm dữ liệu sức khỏe (US05-F04)
+POST http://localhost:8080/api/v1/members/2/health-metrics
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Content-Type: application/json
+
+{
+  "metricName": "weight",
+  "metricValue": 72.5,
+  "unit": "kg"
+}
+
+### 5. Thử Lỗi Validation (US05-F04)
+POST http://localhost:8080/api/v1/members/2/health-metrics
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Content-Type: application/json
+
+{
+  "metricName": "blood_pressure",
+  "metricValue": -5,
+  "unit": "mmHg"
+}
+
+### 6. Xem Lịch sử Sức Khỏe
+GET http://localhost:8080/api/v1/members/2/health-metrics
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+
+### 7. Thử Quyền Truy Cập Sai (Forbidden)
+GET http://localhost:8080/api/v1/members/3/health-metrics
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
