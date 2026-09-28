@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../shared/context/ThemeContext';
 import { loginApi } from '../../shared/api/client';
 
 interface LuxuryLoginFormProps {
@@ -9,12 +8,8 @@ interface LuxuryLoginFormProps {
 
 export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isRunova = theme === 'runova';
 
-  const defaultEmail = isRunova ? 'an.member@runova-sports.vn' : 'an.member@sol-wellness.vn';
-
-  const [identifier, setIdentifier] = useState(defaultEmail);
+  const [identifier, setIdentifier] = useState('an.member@sol-wellness.vn');
   const [password, setPassword] = useState('123456');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,11 +66,9 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
     <div
       style={{
         background: '#FFFFFF',
-        borderRadius: isRunova ? '24px' : '8px',
+        borderRadius: '8px',
         padding: '44px 40px',
-        boxShadow: isRunova
-          ? '0 20px 50px rgba(22, 56, 44, 0.12), 0 0 0 1px rgba(22, 56, 44, 0.1)'
-          : '0 20px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(33, 28, 24, 0.06)',
+        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(33, 28, 24, 0.06)',
         maxWidth: '520px',
         width: '100%',
         margin: '0 auto',
@@ -89,28 +82,28 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
             fontSize: '0.72rem',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
-            color: isRunova ? '#16382C' : 'var(--color-text-muted)',
+            color: 'var(--color-text-muted)',
             marginBottom: '8px',
-            fontWeight: 700,
+            fontWeight: 600,
           }}
         >
-          {isRunova ? 'SPORTVERSE AUTHENTICATION GATEWAY' : 'CỔNG XÁC THỰC TẬP TRUNG'}
+          CỔNG XÁC THỰC TẬP TRUNG
         </div>
 
         <h3
           style={{
-            fontFamily: isRunova ? 'var(--font-heading)' : 'var(--font-serif)',
-            fontSize: isRunova ? '2.2rem' : '2rem',
-            fontWeight: isRunova ? 800 : 600,
+            fontFamily: 'var(--font-serif)',
+            fontSize: '2rem',
+            fontWeight: 600,
             margin: '0 0 10px 0',
-            color: isRunova ? '#16382C' : '#1A1614',
-            letterSpacing: isRunova ? '0.04em' : '0.02em',
+            color: '#1A1614',
+            letterSpacing: '0.02em',
           }}
         >
-          {isRunova ? 'Đăng Nhập Sportverse' : 'Đăng Nhập Portal'}
+          Đăng Nhập Portal
         </h3>
 
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: isRunova ? '#526357' : '#7E7771', margin: 0, lineHeight: 1.6 }}>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: '#7E7771', margin: 0, lineHeight: 1.6 }}>
           Hệ thống xác thực đa vai trò hỗ trợ Hội viên, Lễ tân, Huấn luyện viên và Ban quản lý.
         </p>
       </div>
@@ -118,68 +111,52 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
       {/* Quick Demo Pre-fill Cards */}
       <div
         style={{
-          background: isRunova ? '#F4F7F4' : '#FAF8F5',
-          border: isRunova ? '1px solid rgba(22, 56, 44, 0.15)' : '1px solid rgba(33, 28, 24, 0.08)',
-          borderRadius: isRunova ? '16px' : '8px',
+          background: '#FAF8F5',
+          border: '1px solid rgba(33, 28, 24, 0.08)',
+          borderRadius: '8px',
           padding: '16px',
           marginBottom: '24px',
         }}
       >
-        <div
-          style={{
-            fontSize: '0.7rem',
-            color: isRunova ? '#16382C' : '#8C847C',
-            letterSpacing: '0.12em',
-            fontWeight: 700,
-            marginBottom: '10px',
-          }}
-        >
+        <div style={{ fontSize: '0.7rem', color: '#8C847C', letterSpacing: '0.12em', fontWeight: 600, marginBottom: '10px' }}>
           ⚡ CHỌN TÀI KHOẢN TRẢI NGHIỆM NHANH (DEMO ACCOUNTS):
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <button
             type="button"
-            className={`demo-role-card ${identifier.includes('member') ? 'selected' : ''}`}
-            onClick={() => quickFill(isRunova ? 'an.member@runova-sports.vn' : 'an.member@sol-wellness.vn')}
+            className={`demo-role-card ${identifier === 'an.member@sol-wellness.vn' ? 'selected' : ''}`}
+            onClick={() => quickFill('an.member@sol-wellness.vn')}
           >
             <span className="demo-role-badge">MEMBER</span>
             <span className="demo-role-name">👤 Nguyễn Văn An</span>
-            <span className="demo-role-email">
-              {isRunova ? 'Hội viên • Đặt sân & Court Pass' : 'Hội viên • Đặt lớp & Thẻ QR'}
-            </span>
+            <span className="demo-role-email">Hội viên • Đặt lớp &amp; Thẻ QR</span>
           </button>
           <button
             type="button"
-            className={`demo-role-card ${identifier.includes('reception') ? 'selected' : ''}`}
-            onClick={() => quickFill(isRunova ? 'thinh.reception@runova-sports.vn' : 'thinh.reception@sol-wellness.vn')}
+            className={`demo-role-card ${identifier === 'thinh.reception@sol-wellness.vn' ? 'selected' : ''}`}
+            onClick={() => quickFill('thinh.reception@sol-wellness.vn')}
           >
             <span className="demo-role-badge">STAFF</span>
             <span className="demo-role-name">💁 Lễ Tân Thịnh</span>
-            <span className="demo-role-email">
-              {isRunova ? 'Check-in sân & Thu POS' : 'Check-in sảnh & Thu POS'}
-            </span>
+            <span className="demo-role-email">Check-in sảnh &amp; Thu POS</span>
           </button>
           <button
             type="button"
-            className={`demo-role-card ${identifier.includes('elena') ? 'selected' : ''}`}
-            onClick={() => quickFill(isRunova ? 'elena.vu@runova-sports.vn' : 'elena.vu@sol-wellness.vn')}
+            className={`demo-role-card ${identifier === 'elena.vu@sol-wellness.vn' ? 'selected' : ''}`}
+            onClick={() => quickFill('elena.vu@sol-wellness.vn')}
           >
             <span className="demo-role-badge">COACH</span>
-            <span className="demo-role-name">🎾 Elena Vũ</span>
-            <span className="demo-role-email">
-              {isRunova ? 'HLV • Sân đấu & Phân tích AI' : 'HLV • Điểm danh & AI'}
-            </span>
+            <span className="demo-role-name">🏋️ Elena Vũ</span>
+            <span className="demo-role-email">HLV • Điểm danh &amp; AI</span>
           </button>
           <button
             type="button"
-            className={`demo-role-card ${identifier.includes('manager') ? 'selected' : ''}`}
-            onClick={() => quickFill(isRunova ? 'admin.manager@runova-sports.vn' : 'admin.manager@sol-wellness.vn')}
+            className={`demo-role-card ${identifier === 'admin.manager@sol-wellness.vn' ? 'selected' : ''}`}
+            onClick={() => quickFill('admin.manager@sol-wellness.vn')}
           >
             <span className="demo-role-badge">MANAGER</span>
             <span className="demo-role-name">👔 Ban Quản Lý</span>
-            <span className="demo-role-email">
-              {isRunova ? 'Điều phối cụm sân & Doanh thu' : 'Báo cáo & Doanh thu'}
-            </span>
+            <span className="demo-role-email">Báo cáo &amp; Doanh thu</span>
           </button>
         </div>
       </div>
@@ -206,11 +183,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
           <input
             type="text"
             className="portal-input"
-            placeholder={
-              isRunova
-                ? 'example@runova-sports.vn hoặc 0908123456'
-                : 'example@sol-wellness.vn hoặc 0908123456'
-            }
+            placeholder="example@sol-wellness.vn hoặc 0908123456"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
           />
@@ -228,10 +201,9 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
                 background: 'none',
                 border: 'none',
                 fontSize: '0.72rem',
-                color: isRunova ? '#16382C' : '#8C847C',
+                color: '#8C847C',
                 cursor: 'pointer',
                 padding: 0,
-                fontWeight: 600,
               }}
             >
               {showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
@@ -250,28 +222,11 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
           type="submit"
           className="luxury-login-submit-btn"
           disabled={isLoading}
-          style={{
-            backgroundColor: isRunova ? '#16382C' : undefined,
-            color: isRunova ? '#D4E95C' : undefined,
-            borderRadius: isRunova ? '9999px' : undefined,
-            fontFamily: isRunova ? 'var(--font-heading)' : undefined,
-            letterSpacing: isRunova ? '0.08em' : undefined,
-            fontWeight: 700,
-          }}
         >
-          <span>
-            {isLoading
-              ? 'ĐANG XÁC THỰC...'
-              : isRunova
-              ? 'TRUY CẬP CỔNG RUNOVA SPORTVERSE'
-              : 'TRUY CẬP HỆ THỐNG PORTAL'}
-          </span>
-          <span className="submit-arrow" aria-hidden="true">
-            →
-          </span>
+          <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL'}</span>
+          <span className="submit-arrow" aria-hidden="true">→</span>
         </button>
       </form>
     </div>
   );
 }
-

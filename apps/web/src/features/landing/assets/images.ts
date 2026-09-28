@@ -21,25 +21,4 @@ export const LANDING_IMAGES = {
 
   // Background textures
   paperTexture: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1800&q=80',
-
-  // Runova Athletic High-Performance Theme Assets (Local High-Resolution Assets matching Reference Mockups)
-  runovaHeroBg: '/images/runova/hero-bg.jpg',
-  runovaAboutBanner: '/images/runova/about-banner.jpg',
-  runovaAboutPlayer: '/images/runova/about-player.jpg',
-  runovaAboutRacket: '/images/runova/about-racket.jpg',
-  runovaAboutClay: '/images/runova/about-banner.jpg',
-  runovaRacketCourt: '/images/runova/about-racket.jpg',
-  runovaFacilityStretch: '/images/runova/facility-stretch.jpg',
-  runovaFacilityTrack: '/images/runova/facility-track.jpg',
-  runovaFacilityOutdoor: '/images/runova/facility-outdoor.jpg',
-  runovaFacilityCourt: '/images/runova/facility-court.jpg',
-  runovaProduct1: '/images/runova/product-1.jpg',
-  runovaProduct2: '/images/runova/product-2.jpg',
-  runovaProduct3: '/images/runova/product-3.jpg',
-  runovaProduct4: '/images/runova/product-4.jpg',
-  runovaPlayerSasha: '/images/runova/sasha-portrait.jpg',
-  runovaPlayerSashaMatch: '/images/runova/sasha-match.jpg',
-  runovaPlayerNaomi: '/images/runova/naomi-match.jpg',
-  runovaStatAthlete: '/images/runova/stat-athlete.jpg',
 };
-

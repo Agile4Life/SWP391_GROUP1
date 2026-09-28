@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useTheme } from '../../shared/context/ThemeContext';
+import React, { useState } from 'react';
 
 interface CheckInRecord {
   id: string;
@@ -12,83 +11,40 @@ interface CheckInRecord {
   reason?: string;
 }
 
-const SOL_RECORDS: CheckInRecord[] = [
-  {
-    id: 'CK-901',
-    memberCode: 'MB-2026-089',
-    name: 'Nguyễn Văn An',
-    packageName: 'The Sanctuary (3 Tháng)',
-    time: '07:15:20',
-    gate: 'Turnstile A1 - Sảnh Chính',
-    status: 'GRANTED',
-  },
-  {
-    id: 'CK-900',
-    memberCode: 'MB-2026-104',
-    name: 'Lê Hoàng Minh',
-    packageName: 'The Essential (1 Tháng)',
-    time: '07:08:44',
-    gate: 'Turnstile A2 - Sảnh Chính',
-    status: 'DENIED',
-    reason: 'Gói tập đã hết hạn từ ngày 20/09/2026',
-  },
-  {
-    id: 'CK-899',
-    memberCode: 'MB-2026-042',
-    name: 'Phạm Thu Thảo',
-    packageName: 'The Sovereign (1 Năm VIP)',
-    time: '06:55:12',
-    gate: 'Turnstile B1 - Tầng Mezzanine',
-    status: 'GRANTED',
-  },
-];
-
-const RUNOVA_RECORDS: CheckInRecord[] = [
-  {
-    id: 'CK-901',
-    memberCode: 'MB-2026-089',
-    name: 'Nguyễn Văn An',
-    packageName: 'Championship Pro (3 Tháng)',
-    time: '07:15:20',
-    gate: 'Turnstile A1 - Sảnh Tennis Arena',
-    status: 'GRANTED',
-  },
-  {
-    id: 'CK-900',
-    memberCode: 'MB-2026-104',
-    name: 'Lê Hoàng Minh',
-    packageName: 'Club Player (1 Tháng)',
-    time: '07:08:44',
-    gate: 'Turnstile A2 - Sân Padel Kính',
-    status: 'DENIED',
-    reason: 'Thẻ Court Pass đã hết hạn từ ngày 20/09/2026',
-  },
-  {
-    id: 'CK-899',
-    memberCode: 'MB-2026-042',
-    name: 'Phạm Thu Thảo',
-    packageName: 'Tournament Master (1 Năm VIP)',
-    time: '06:55:12',
-    gate: 'Turnstile B1 - Cụm Sân Cầu Lông',
-    status: 'GRANTED',
-  },
-];
-
 export function StaffCheckInPage() {
-  const { theme } = useTheme();
-  const isRunova = theme === 'runova';
-
   const [scanCode, setScanCode] = useState('');
   const [currentResult, setCurrentResult] = useState<CheckInRecord | null>(null);
 
-  const [recentCheckins, setRecentCheckins] = useState<CheckInRecord[]>(() =>
-    isRunova ? RUNOVA_RECORDS : SOL_RECORDS
-  );
-
-  useEffect(() => {
-    setRecentCheckins(isRunova ? RUNOVA_RECORDS : SOL_RECORDS);
-    setCurrentResult(null);
-  }, [isRunova]);
+  const [recentCheckins, setRecentCheckins] = useState<CheckInRecord[]>([
+    {
+      id: 'CK-901',
+      memberCode: 'MB-2026-089',
+      name: 'Nguyễn Văn An',
+      packageName: 'The Sanctuary (3 Tháng)',
+      time: '07:15:20',
+      gate: 'Turnstile A1 - Sảnh Chính',
+      status: 'GRANTED',
+    },
+    {
+      id: 'CK-900',
+      memberCode: 'MB-2026-104',
+      name: 'Lê Hoàng Minh',
+      packageName: 'The Essential (1 Tháng)',
+      time: '07:08:44',
+      gate: 'Turnstile A2 - Sảnh Chính',
+      status: 'DENIED',
+      reason: 'Gói tập đã hết hạn từ ngày 20/09/2026',
+    },
+    {
+      id: 'CK-899',
+      memberCode: 'MB-2026-042',
+      name: 'Phạm Thu Thảo',
+      packageName: 'The Sovereign (1 Năm VIP)',
+      time: '06:55:12',
+      gate: 'Turnstile B1 - Tầng Mezzanine',
+      status: 'GRANTED',
+    },
+  ]);
 
   const handleSimulateScan = (codeToScan: string) => {
     const isExpired = codeToScan.includes('EXPIRED') || codeToScan.includes('104');
@@ -99,21 +55,11 @@ export function StaffCheckInPage() {
       id: `CK-${Math.floor(1000 + Math.random() * 9000)}`,
       memberCode: isExpired ? 'MB-2026-104' : 'MB-2026-089',
       name: isExpired ? 'Lê Hoàng Minh' : 'Nguyễn Văn An',
-      packageName: isExpired
-        ? isRunova
-          ? 'Club Player (Hết hạn)'
-          : 'The Essential (Hết hạn)'
-        : isRunova
-        ? 'Championship Pro'
-        : 'The Sanctuary VIP',
+      packageName: isExpired ? 'The Essential (Hết hạn)' : 'The Sanctuary VIP',
       time: timeStr,
-      gate: isRunova ? 'Turnstile A1 - Sảnh Tennis Arena' : 'Turnstile A1 - Sảnh Chính',
+      gate: 'Turnstile A1 - Sảnh Chính',
       status: isExpired ? 'DENIED' : 'GRANTED',
-      reason: isExpired
-        ? isRunova
-          ? 'Thẻ Court Pass đã hết hạn. Yêu cầu chuyển quầy Lễ tân để gia hạn.'
-          : 'Gói tập đã hết hạn. Yêu cầu chuyển quầy Lễ tân gia hạn.'
-        : undefined,
+      reason: isExpired ? 'Gói tập đã hết hạn. Yêu cầu chuyển quầy Lễ tân gia hạn.' : undefined,
     };
 
     setCurrentResult(result);

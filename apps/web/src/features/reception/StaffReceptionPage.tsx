@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../shared/context/ThemeContext';
 
 export function StaffReceptionPage() {
-  const { theme } = useTheme();
-  const isRunova = theme === 'runova';
-
   const [searchQuery, setSearchQuery] = useState('');
   const [foundMember, setFoundMember] = useState<{
     id: number;
@@ -19,18 +15,16 @@ export function StaffReceptionPage() {
     name: 'Nguyễn Văn An',
     code: 'MB-2026-089',
     phone: '0908 123 456',
-    currentPackage: isRunova ? 'Championship Pro (3 Tháng)' : 'The Sanctuary (3 Tháng)',
+    currentPackage: 'The Sanctuary (3 Tháng)',
     status: 'ACTIVE',
     endDate: '26/12/2026',
   });
 
   const [paymentForm, setPaymentForm] = useState({
-    packageId: isRunova ? 'pro' : 'sanctuary',
-    amount: isRunova ? '4.900.000' : '7.500.000',
+    packageId: 'sanctuary',
+    amount: '7.500.000',
     method: 'POS_CARD',
-    notes: isRunova
-      ? 'Thanh toán gia hạn tại quầy Lễ tân sảnh Court A'
-      : 'Thanh toán gia hạn tại quầy Lễ tân sảnh A',
+    notes: 'Thanh toán gia hạn tại quầy Lễ tân sảnh A',
   });
 
   const [invoiceIssued, setInvoiceIssued] = useState<string | null>(null);
@@ -47,7 +41,7 @@ export function StaffReceptionPage() {
       name: 'Lê Hoàng Minh',
       code: 'MB-2026-104',
       phone: searchQuery,
-      currentPackage: isRunova ? 'Club Player (1 Tháng)' : 'The Essential (1 Tháng)',
+      currentPackage: 'The Essential (1 Tháng)',
       status: 'EXPIRED',
       endDate: '20/09/2026',
     });
@@ -191,41 +185,19 @@ export function StaffReceptionPage() {
           ) : (
             <form onSubmit={handlePayment}>
               <div className="portal-form-group">
-                <label className="portal-label">
-                  {isRunova ? 'Chọn Thẻ Court Pass Mua / Gia Hạn' : 'Chọn Gói Dịch Vụ Mua / Gia Hạn'}
-                </label>
+                <label className="portal-label">Chọn Gói Dịch Vụ Mua / Gia Hạn</label>
                 <select
                   className="portal-select"
                   value={paymentForm.packageId}
                   onChange={(e) => {
                     const pkg = e.target.value;
-                    const amount = isRunova
-                      ? pkg === 'club'
-                        ? '1.800.000'
-                        : pkg === 'pro'
-                        ? '4.900.000'
-                        : '16.500.000'
-                      : pkg === 'essential'
-                      ? '2.800.000'
-                      : pkg === 'sanctuary'
-                      ? '7.500.000'
-                      : '26.000.000';
+                    const amount = pkg === 'essential' ? '2.800.000' : pkg === 'sanctuary' ? '7.500.000' : '26.000.000';
                     setPaymentForm({ ...paymentForm, packageId: pkg, amount });
                   }}
                 >
-                  {isRunova ? (
-                    <>
-                      <option value="club">Club Player (1 Tháng — 1.800.000 VNĐ)</option>
-                      <option value="pro">Championship Pro (3 Tháng — 4.900.000 VNĐ)</option>
-                      <option value="tournament">Tournament Master (1 Năm VIP — 16.500.000 VNĐ)</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="essential">The Essential (1 Tháng — 2.800.000 VNĐ)</option>
-                      <option value="sanctuary">The Sanctuary (3 Tháng — 7.500.000 VNĐ)</option>
-                      <option value="sovereign">The Sovereign (1 Năm VIP — 26.000.000 VNĐ)</option>
-                    </>
-                  )}
+                  <option value="essential">The Essential (1 Tháng — 2.800.000 VNĐ)</option>
+                  <option value="sanctuary">The Sanctuary (3 Tháng — 7.500.000 VNĐ)</option>
+                  <option value="sovereign">The Sovereign (1 Năm VIP — 26.000.000 VNĐ)</option>
                 </select>
               </div>
 
