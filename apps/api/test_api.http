@@ -13,11 +13,11 @@ Content-Type: application/json
 
 ### 2. Xem Profile (US05-F03)
 GET http://localhost:8080/api/v1/profile
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
 
 ### 3. Cập nhật Profile (US05-F03)
 PUT http://localhost:8080/api/v1/profile
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ### 4. Thêm dữ liệu sức khỏe (US05-F04)
 POST http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### 5. Thử Lỗi Validation (US05-F04)
 POST http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
 Content-Type: application/json
 
 {
@@ -55,8 +55,50 @@ Content-Type: application/json
 
 ### 6. Xem Lịch sử Sức Khỏe
 GET http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
 
 ### 7. Thử Quyền Truy Cập Sai (Forbidden)
 GET http://localhost:8080/api/v1/members/3/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNDM3NjM3LCJleHAiOjE3OTA1MjQwMzd9.sO1ItP7ZX01yX1Ma3EtwWyHVpJUdNlqReILD8jQ2VpNvf80Zs2zyW_iHWrEFs3gErkH6DIQ-Q5AniKb-RYUkNQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+
+### =========================================
+### TICKET [US04-F02] & [US04-F04] - QUẢN LÝ USER & ROLE (MANAGER)
+### =========================================
+
+### 8. Lấy danh sách Roles
+GET http://localhost:8080/api/v1/roles
+
+### 9. Lấy danh sách Permissions của Role Manager (role_id = 1)
+GET http://localhost:8080/api/v1/roles/1/permissions
+
+### 10. Lấy danh sách Users (Chỉ hiện active/locked, không hiện deleted)
+GET http://localhost:8080/api/v1/users
+
+### 11. Tạo User mới (Ví dụ tạo một Lễ Tân)
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "fullName": "Nhân viên Lễ Tân 1",
+  "email": "letan1@example.com",
+  "phone": "0988888888",
+  "password": "password123",
+  "roleId": 4
+}
+
+### 12. Cập nhật User vừa tạo (Giả sử ID = 3)
+PUT http://localhost:8080/api/v1/users/3
+Content-Type: application/json
+
+{
+  "fullName": "Nhân viên Lễ Tân 1 (Đã sửa)"
+}
+
+### 13. Khóa tài khoản User 3
+PATCH http://localhost:8080/api/v1/users/3/lock
+
+### 14. Mở khóa tài khoản User 3
+PATCH http://localhost:8080/api/v1/users/3/unlock
+
+### 15. Xóa mềm (Soft-delete) User 3
+DELETE http://localhost:8080/api/v1/users/3
