@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { LANDING_IMAGES } from '../../assets/images';
 import { SlideControls } from '../SlideControls';
+import { RevealImage } from '../RevealImage';
 
 const DISCIPLINES_LIST = [
   {
@@ -56,7 +57,11 @@ const DISCIPLINES_LIST = [
   },
 ];
 
-export function DisciplinesSection() {
+interface DisciplinesSectionProps {
+  isActive?: boolean;
+}
+
+export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const item = DISCIPLINES_LIST[activeIdx];
 
@@ -69,13 +74,28 @@ export function DisciplinesSection() {
   };
 
   return (
-    <section id="disciplines" className="sol-section" style={{ backgroundColor: '#F6F2EC' }}>
+    <section
+      id="disciplines"
+      className="sol-section sol-fullscreen-card"
+      style={{ backgroundColor: '#F6F2EC' }}
+    >
       <div className="sol-section-inner">
         {/* Header Row */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', flexWrap: 'wrap', gap: '20px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            marginBottom: 'clamp(18px, 3vh, 32px)',
+            flexWrap: 'wrap',
+            gap: '16px',
+          }}
+        >
           <div>
-            <div className="editorial-category">DISCIPLINES / 02</div>
-            <h2 className="editorial-headline" style={{ margin: 0 }}>
+            <div className="editorial-category" style={{ marginBottom: '8px' }}>
+              DISCIPLINES / 02
+            </div>
+            <h2 className="editorial-headline" style={{ margin: 0, fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)' }}>
               DISCIPLINES OF{' '}
               <span className="editorial-flourish" style={{ fontStyle: 'italic', fontWeight: 300 }}>
                 Distinction
@@ -95,10 +115,10 @@ export function DisciplinesSection() {
                   color: activeIdx === idx ? '#FAF8F5' : 'var(--color-text-muted)',
                   border: '1px solid',
                   borderColor: activeIdx === idx ? 'var(--color-text-main)' : 'var(--color-border-medium)',
-                  padding: '8px 18px',
+                  padding: '6px 14px',
                   borderRadius: '2px',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.75rem',
+                  fontSize: '0.72rem',
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   cursor: 'pointer',
@@ -112,41 +132,35 @@ export function DisciplinesSection() {
           </div>
         </div>
 
-        {/* 3-Column Showcase matching Reference Slide 3 & 4 */}
-        <div
-          key={item.id}
-          className="slide-entering"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.25fr 1fr 0.85fr',
-            gap: '40px',
-            alignItems: 'center',
-            backgroundColor: '#FAF8F5',
-            padding: '48px 40px',
-            borderRadius: '4px',
-            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.04)',
-          }}
-        >
-          {/* Main Hero Photo */}
-          <div
-            className="image-card-wrapper"
-            style={{
-              height: '440px',
-              boxShadow: '0 16px 36px rgba(0, 0, 0, 0.07)',
-            }}
-          >
-            <img src={item.primaryImg} alt={item.name} loading="lazy" />
+        {/* 3-Column Showcase matching Reference Slide */}
+        <div key={item.id} className="disciplines-showcase-grid slide-entering">
+          {/* Main Hero Photo with Reveal Animation */}
+          <div className="disciplines-col">
+            <RevealImage
+              key={`primary-${item.id}`}
+              src={item.primaryImg}
+              alt={item.name}
+              direction="right"
+              delay={0.08}
+              isActive={isActive}
+              wrapperStyle={{
+                width: '100%',
+                height: 'clamp(160px, 25vh, 250px)',
+                boxShadow: '0 12px 28px rgba(0, 0, 0, 0.07)',
+                borderRadius: '2px',
+              }}
+            />
           </div>
 
           {/* Details & Specs */}
-          <div>
+          <div className="disciplines-col">
             <div
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.78rem',
+                fontSize: '0.72rem',
                 color: 'var(--color-text-muted)',
                 letterSpacing: '0.12em',
-                marginBottom: '16px',
+                marginBottom: '8px',
               }}
             >
               {item.location}
@@ -155,10 +169,10 @@ export function DisciplinesSection() {
             <h3
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: '2rem',
+                fontSize: 'clamp(1.3rem, 2vw, 1.7rem)',
                 fontWeight: 500,
-                letterSpacing: '0.04em',
-                margin: '0 0 16px 0',
+                letterSpacing: '0.03em',
+                margin: '0 0 8px 0',
                 color: 'var(--color-text-main)',
               }}
             >
@@ -168,10 +182,10 @@ export function DisciplinesSection() {
             <p
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.92rem',
-                lineHeight: 1.75,
+                fontSize: 'clamp(0.78rem, 0.95vw, 0.85rem)',
+                lineHeight: 1.55,
                 color: 'var(--color-text-muted)',
-                margin: '0 0 24px 0',
+                margin: '0 0 12px 0',
                 fontWeight: 300,
               }}
             >
@@ -181,11 +195,11 @@ export function DisciplinesSection() {
             <div
               style={{
                 borderTop: '1px solid var(--color-border-subtle)',
-                paddingTop: '18px',
+                paddingTop: '10px',
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.8rem',
+                fontSize: '0.74rem',
                 color: 'var(--color-text-muted)',
-                lineHeight: 1.8,
+                lineHeight: 1.5,
               }}
             >
               {item.specs.map((spec, i) => (
@@ -195,41 +209,45 @@ export function DisciplinesSection() {
           </div>
 
           {/* Secondary Photo & Carousel Nav */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <div className="disciplines-col disciplines-col-secondary" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div
               style={{
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'flex-end',
                 fontFamily: 'var(--font-serif)',
-                fontSize: '1rem',
+                fontSize: '0.88rem',
                 letterSpacing: '0.15em',
                 color: 'var(--color-text-muted)',
-                marginBottom: '14px',
+                marginBottom: '8px',
               }}
             >
               {item.number}
             </div>
 
-            <div
-              className="image-card-wrapper"
-              style={{
+            <RevealImage
+              key={`secondary-${item.id}`}
+              src={item.secondaryImg}
+              alt={`${item.name} detail`}
+              direction="down"
+              delay={0.2}
+              isActive={isActive}
+              wrapperStyle={{
                 width: '100%',
-                height: '240px',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.06)',
-                marginBottom: '16px',
+                height: 'clamp(95px, 14vh, 140px)',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
+                marginBottom: '10px',
+                borderRadius: '2px',
               }}
-            >
-              <img src={item.secondaryImg} alt={`${item.name} detail`} loading="lazy" />
-            </div>
+            />
 
             <div
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.74rem',
+                fontSize: '0.7rem',
                 color: 'var(--color-text-muted)',
-                lineHeight: 1.5,
-                marginBottom: '24px',
+                lineHeight: 1.35,
+                marginBottom: '12px',
                 fontStyle: 'italic',
               }}
             >
