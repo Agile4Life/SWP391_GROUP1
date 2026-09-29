@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './landing.css';
 import { ScrollNavbar } from './components/sections/ScrollNavbar';
 import { HeroSection } from './components/sections/HeroSection';
@@ -10,9 +10,38 @@ import { ContactSection } from './components/sections/ContactSection';
 import { FullpageScrollManager } from './components/FullpageScrollManager';
 import { LiquidGlassChatbot } from '../../shared/liquid-glass';
 
+const HASH_TO_SCREEN: Record<string, number> = {
+  '#hero': 0,
+  '#about': 1,
+  '#disciplines': 2,
+  '#intelligence': 3,
+  '#packages': 4,
+  '#contact': 5,
+};
+
 export function LandingPage() {
-  const [activeScreen, setActiveScreen] = useState<number>(0);
+  const [activeScreen, setActiveScreen] = useState<number>(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return HASH_TO_SCREEN[window.location.hash] ?? 0;
+    }
+    return 0;
+  });
   const [selectedPlan, setSelectedPlan] = useState<string>('THE SANCTUARY');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const handleHashChange = () => {
+      window.scrollTo(0, 0);
+      const hash = window.location.hash;
+      if (hash && hash in HASH_TO_SCREEN) {
+        setActiveScreen(HASH_TO_SCREEN[hash]);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleSelectPlan = (plan: string) => {
     setSelectedPlan(plan);

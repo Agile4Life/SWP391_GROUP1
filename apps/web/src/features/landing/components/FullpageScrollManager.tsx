@@ -43,6 +43,10 @@ export function FullpageScrollManager({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeScreen]);
+
   const goToScreen = useCallback(
     (newIndex: number) => {
       if (newIndex < 0 || newIndex > 5 || isAnimatingRef.current) return;

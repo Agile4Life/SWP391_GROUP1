@@ -21,16 +21,23 @@ export function ArrowButton({ label, onClick, href, className = '', style }: Arr
     </>
   );
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   if (href) {
     return (
-      <a href={href} className={`arrow-action-link ${className}`} style={style}>
+      <a href={href} onClick={handleClick} className={`arrow-action-link ${className}`} style={style}>
         {content}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className={`arrow-action-link ${className}`} style={style}>
+    <button type="button" onClick={handleClick} className={`arrow-action-link ${className}`} style={style}>
       {content}
     </button>
   );
