@@ -1,0 +1,59 @@
+package com.swp391.scms.finance;
+
+import com.swp391.scms.common.ApiResponse;
+import com.swp391.scms.finance.dto.PaymentCreateDto;
+import com.swp391.scms.finance.dto.PaymentDto;
+import com.swp391.scms.finance.service.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@Tag(name = "Payments & Invoices", description = "Quản lý giao dịch thu tiền, xuất hóa đơn điện tử và công nợ")
+@RestController
+@RequestMapping("/api/v1/payments")
+public class PaymentController {
+
+    private final PaymentService paymentService;
+
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    @Operation(summary = "Tạo mới giao dịch thanh toán", description = "Tạo phiếu thu tiền học phí, gói tập qua POS, Tiền mặt, Chuyển khoản")
+    @PostMapping
+    public ResponseEntity<ApiResponse<PaymentDto>> createPayment(@Valid @RequestBody PaymentCreateDto dto) {
+        PaymentDto created = paymentService.createPayment(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.created("Tạo giao dịch thanh toán thành công", created));
+    }
+
+    @Operation(summary = "Xem chi tiết giao dịch thanh toán", description = "Tra cứu giao dịch theo Payment ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PaymentDto>> getPaymentById(@PathVariable Long id) {
+        PaymentDto payment = paymentService.getPaymentById(id);
+        return ResponseEntity.ok(ApiResponse.ok("Lấy chi tiết giao dịch thành công", payment));
+    }
+
+    @Operation(summary = "Lịch sử thanh toán của hội viên", description = "Lấy tất cả giao dịch thanh toán của một hội viên")
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<ApiResponse<List<PaymentDto>>> getPaymentsByMemberId(@PathVariable Long memberId) {
+        List<PaymentDto> payments = paymentService.getPaymentsByMemberId(memberId);
+        return ResponseEntity.ok(ApiResponse.ok("Lấy danh sách giao dịch thành công", payments));
+    }
+
+    @Operation(summary = "Cập nhật trạng thái thanh toán", description = "Chuyển trạng thái giao dịch sang success, pending, failed, refunded")
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<ApiResponse<PaymentDto>> updatePaymentStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+        String status = body.get("status");
+        PaymentDto updated = paymentService.updatePaymentStatus(id, status);
+        return ResponseEntity.ok(ApiResponse.ok("Cập nhật trạng thái thanh toán thành công", updated));
+    }
+}

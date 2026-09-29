@@ -24,7 +24,9 @@ public class SecurityConfig {
                     "/api/v1/profile", "/api/v1/profile/**", 
                     "/api/v1/members", "/api/v1/members/**", 
                     "/api/v1/users", "/api/v1/users/**", 
-                    "/api/v1/roles", "/api/v1/roles/**"
+                    "/api/v1/roles", "/api/v1/roles/**",
+                    "/api/v1/payments", "/api/v1/payments/**",
+                    "/api/v1/invoices", "/api/v1/invoices/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             );
