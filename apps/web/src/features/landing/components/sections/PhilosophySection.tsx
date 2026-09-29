@@ -1,5 +1,6 @@
 import { LANDING_IMAGES } from '../../assets/images';
 import { ArrowButton } from '../ArrowButton';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 export function PhilosophySection() {
   return (
@@ -15,31 +16,37 @@ export function PhilosophySection() {
         >
           {/* Narrative Column */}
           <div>
-            <div className="editorial-category">PHILOSOPHY / 01</div>
+            <Reveal index={0} className="editorial-category">PHILOSOPHY / 01</Reveal>
 
-            <h2
-              className="editorial-headline"
-              style={{
-                fontSize: 'clamp(2.6rem, 4.8vw, 4rem)',
-                lineHeight: 1.08,
-                marginBottom: '26px',
-              }}
-            >
-              <span className="editorial-flourish" style={{ fontStyle: 'italic', marginRight: '6px' }}>
-                Train
-              </span>{' '}
-              WITH
-              <br />
-              INTENTION
-            </h2>
+            <Reveal index={1}>
+              <h2
+                className="editorial-headline"
+                style={{
+                  fontSize: 'clamp(2.6rem, 4.8vw, 4rem)',
+                  lineHeight: 1.08,
+                  marginBottom: '26px',
+                }}
+              >
+                <span className="editorial-flourish" style={{ fontStyle: 'italic', marginRight: '6px' }}>
+                  Train
+                </span>{' '}
+                WITH
+                <br />
+                INTENTION
+              </h2>
+            </Reveal>
 
-            <p className="editorial-body" style={{ maxWidth: '480px', marginBottom: '32px' }}>
-              At Söl Wellness Sanctuary, we believe that physical conditioning is not just about raw exertion — it&apos;s
-              about how every movement calibrates your body and mind. We approach athletic longevity as a layered
-              composition of breath, biomechanics, and intelligent recovery, where discipline meets quiet clarity.
-            </p>
+            <Reveal index={2}>
+              <p className="editorial-body" style={{ maxWidth: '480px', marginBottom: '32px' }}>
+                At Söl Wellness Sanctuary, we believe that physical conditioning is not just about raw exertion — it&apos;s
+                about how every movement calibrates your body and mind. We approach athletic longevity as a layered
+                composition of breath, biomechanics, and intelligent recovery, where discipline meets quiet clarity.
+              </p>
+            </Reveal>
 
-            <ArrowButton label="EXPLORE OUR DISCIPLINES" href="#disciplines" />
+            <Reveal index={3}>
+              <ArrowButton label="EXPLORE OUR DISCIPLINES" href="#disciplines" />
+            </Reveal>
           </div>
 
           {/* Asymmetric Gallery */}
@@ -51,7 +58,8 @@ export function PhilosophySection() {
               alignItems: 'start',
             }}
           >
-            <div
+            <Reveal
+              index={2}
               className="image-card-wrapper"
               style={{
                 height: '480px',
@@ -63,9 +71,10 @@ export function PhilosophySection() {
                 alt="Organic wood movement sanctuary studio"
                 loading="lazy"
               />
-            </div>
+            </Reveal>
 
-            <div
+            <Reveal
+              index={3}
               className="image-card-wrapper"
               style={{
                 height: '340px',
@@ -78,13 +87,13 @@ export function PhilosophySection() {
                 alt="Thermal recovery lounge and fireplace"
                 loading="lazy"
               />
-            </div>
+            </Reveal>
           </div>
         </div>
 
         {/* 3 Pillar Stats */}
         <div className="pillar-stats-grid">
-          <div>
+          <Reveal index={0}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -101,9 +110,9 @@ export function PhilosophySection() {
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', color: 'var(--color-text-muted)', lineHeight: 1.6, margin: 0 }}>
               Corrective posture restoration, mobility expansion, and spine decompression guided by master coaches.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal index={1}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -120,9 +129,9 @@ export function PhilosophySection() {
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', color: 'var(--color-text-muted)', lineHeight: 1.6, margin: 0 }}>
               AI Engine parses InBody biomarkers, HRV recovery metrics, and workout histories to calibrate adaptive training regimens.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal index={2}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -139,7 +148,7 @@ export function PhilosophySection() {
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', color: 'var(--color-text-muted)', lineHeight: 1.6, margin: 0 }}>
               Contrast therapy pools, Himalayan salt stone saunas, and pneumatic compression lounges for expedited cellular renewal.
             </p>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

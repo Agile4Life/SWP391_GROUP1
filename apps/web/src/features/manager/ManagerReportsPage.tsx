@@ -1,4 +1,9 @@
+import { CountUp } from '../../shared/ui/CountUp';
+import { useInView } from '../../hooks/useInView';
+
 export function ManagerReportsPage() {
+  const [revenueRef, revenueInView] = useInView<HTMLDivElement>(0.2);
+
   const auditLogs = [
     { id: 1045, action: 'UPDATE_SUBSCRIPTION', actor: 'thinh.reception@sol-wellness.vn', target: 'MB-2026-089', ip: '192.168.1.15', time: '10:45:12' },
     { id: 1044, action: 'CHECKIN_GRANTED', actor: 'system_turnstile_a1', target: 'MB-2026-089', ip: '10.0.1.20', time: '07:15:20' },
@@ -20,29 +25,37 @@ export function ManagerReportsPage() {
         </button>
       </div>
 
-      {/* KPI Metrics */}
+      {/* KPI Metrics with CountUp */}
       <div className="metrics-grid">
         <div className="metric-card">
           <div className="metric-label">TỔNG DOANH THU THÁNG 09</div>
-          <div className="metric-value">1.845.000.000 đ</div>
+          <div className="metric-value">
+            <CountUp value={1845000000} format={(v) => Math.round(v).toLocaleString('vi-VN') + ' đ'} />
+          </div>
           <div className="metric-trend">↑ +14.2% so với tháng trước</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">HỘI VIÊN MỚI TRONG THÁNG</div>
-          <div className="metric-value">128</div>
+          <div className="metric-value">
+            <CountUp value={128} />
+          </div>
           <div className="metric-trend">↑ +22 hội viên đăng ký mới</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">TỶ LỆ LẤP ĐẦY PHÒNG TẬP</div>
-          <div className="metric-value">86.4%</div>
+          <div className="metric-value">
+            <CountUp value={86.4} format={(v) => v.toFixed(1) + '%'} />
+          </div>
           <div className="metric-trend">↑ Tối ưu hóa năng lực phục vụ</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">LƯỢT QUÉT CHECK-IN TRUNG TÂM</div>
-          <div className="metric-value">4,920</div>
+          <div className="metric-value">
+            <CountUp value={4920} format={(v) => Math.round(v).toLocaleString('vi-VN')} />
+          </div>
           <div className="metric-trend">Trung bình 180 lượt / ngày</div>
         </div>
       </div>
@@ -55,14 +68,23 @@ export function ManagerReportsPage() {
             <span className="badge badge-success">MONTHLY SNAPSHOT</span>
           </div>
 
-          <div style={{ display: 'grid', gap: '16px' }}>
+          <div ref={revenueRef} style={{ display: 'grid', gap: '16px' }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '6px' }}>
                 <span><strong>The Sanctuary VIP (3 Tháng)</strong></span>
                 <span><strong>1.125.000.000 đ (61%)</strong></span>
               </div>
               <div style={{ width: '100%', height: '8px', background: '#F0ECE6', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: '61%', height: '100%', background: '#1A1614' }} />
+                <div
+                  className={`progress-fill ${revenueInView ? 'is-visible' : ''}`}
+                  style={{
+                    ['--value' as string]: '61%',
+                    width: '61%',
+                    height: '100%',
+                    background: '#1A1614',
+                    borderRadius: '4px',
+                  } as React.CSSProperties}
+                />
               </div>
             </div>
 
@@ -72,7 +94,16 @@ export function ManagerReportsPage() {
                 <span><strong>468.000.000 đ (25%)</strong></span>
               </div>
               <div style={{ width: '100%', height: '8px', background: '#F0ECE6', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: '25%', height: '100%', background: '#C2A684' }} />
+                <div
+                  className={`progress-fill ${revenueInView ? 'is-visible' : ''}`}
+                  style={{
+                    ['--value' as string]: '25%',
+                    width: '25%',
+                    height: '100%',
+                    background: '#C2A684',
+                    borderRadius: '4px',
+                  } as React.CSSProperties}
+                />
               </div>
             </div>
 
@@ -82,7 +113,16 @@ export function ManagerReportsPage() {
                 <span><strong>252.000.000 đ (14%)</strong></span>
               </div>
               <div style={{ width: '100%', height: '8px', background: '#F0ECE6', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: '14%', height: '100%', background: '#8C847C' }} />
+                <div
+                  className={`progress-fill ${revenueInView ? 'is-visible' : ''}`}
+                  style={{
+                    ['--value' as string]: '14%',
+                    width: '14%',
+                    height: '100%',
+                    background: '#8C847C',
+                    borderRadius: '4px',
+                  } as React.CSSProperties}
+                />
               </div>
             </div>
           </div>
@@ -115,8 +155,12 @@ export function ManagerReportsPage() {
                 </tr>
               </thead>
               <tbody>
-                {auditLogs.map((log) => (
-                  <tr key={log.id}>
+                {auditLogs.map((log, index) => (
+                  <tr
+                    key={log.id}
+                    className="row-in"
+                    style={{ ['--i' as string]: index } as React.CSSProperties}
+                  >
                     <td>
                       <span className="badge badge-neutral" style={{ fontFamily: 'monospace' }}>
                         {log.action}

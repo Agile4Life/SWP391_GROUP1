@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { LANDING_IMAGES } from '../../assets/images';
 import { SlideControls } from '../SlideControls';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 const DISCIPLINES_LIST = [
   {
@@ -73,7 +74,7 @@ export function DisciplinesSection() {
       <div className="sol-section-inner">
         {/* Header Row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', flexWrap: 'wrap', gap: '20px' }}>
-          <div>
+          <Reveal index={0}>
             <div className="editorial-category">DISCIPLINES / 02</div>
             <h2 className="editorial-headline" style={{ margin: 0 }}>
               DISCIPLINES OF{' '}
@@ -81,10 +82,10 @@ export function DisciplinesSection() {
                 Distinction
               </span>
             </h2>
-          </div>
+          </Reveal>
 
           {/* Tab Selector Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <Reveal index={1} style={{ display: 'flex', gap: '8px' }}>
             {DISCIPLINES_LIST.map((d, idx) => (
               <button
                 key={d.id}
@@ -109,24 +110,25 @@ export function DisciplinesSection() {
                 {d.name.split('&')[0].trim()}
               </button>
             ))}
-          </div>
+          </Reveal>
         </div>
 
         {/* 3-Column Showcase matching Reference Slide 3 & 4 */}
-        <div
-          key={item.id}
-          className="slide-entering"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.25fr 1fr 0.85fr',
-            gap: '40px',
-            alignItems: 'center',
-            backgroundColor: '#FAF8F5',
-            padding: '48px 40px',
-            borderRadius: '4px',
-            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.04)',
-          }}
-        >
+        <Reveal index={2}>
+          <div
+            key={item.id}
+            className="slide-entering"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1.25fr 1fr 0.85fr',
+              gap: '40px',
+              alignItems: 'center',
+              backgroundColor: '#FAF8F5',
+              padding: '48px 40px',
+              borderRadius: '4px',
+              boxShadow: '0 12px 32px rgba(0, 0, 0, 0.04)',
+            }}
+          >
           {/* Main Hero Photo */}
           <div
             className="image-card-wrapper"
@@ -241,6 +243,7 @@ export function DisciplinesSection() {
             </div>
           </div>
         </div>
+        </Reveal>
       </div>
     </section>
   );

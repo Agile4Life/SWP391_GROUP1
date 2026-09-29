@@ -1,4 +1,5 @@
 import { ArrowButton } from '../ArrowButton';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 interface PackagesSectionProps {
   onSelectPlan?: (planName: string) => void;
@@ -64,7 +65,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
   return (
     <section id="packages" className="sol-section" style={{ backgroundColor: '#F6F2EC' }}>
       <div className="sol-section-inner">
-        <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 20px auto' }}>
+        <Reveal index={0} style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 20px auto' }}>
           <div className="editorial-category">MEMBERSHIP CURATIONS / 04</div>
           <h2 className="editorial-headline" style={{ marginBottom: '16px' }}>
             CURATED{' '}
@@ -75,11 +76,11 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
           <p className="editorial-body" style={{ margin: '0 auto' }}>
             Membership at Söl Wellness Sanctuary is capped to preserve an uncrowded atmosphere of serenity and focus.
           </p>
-        </div>
+        </Reveal>
 
         <div className="pricing-grid">
-          {tiers.map((tier) => (
-            <div key={tier.id} className={`pricing-card ${tier.featured ? 'featured' : ''}`}>
+          {tiers.map((tier, idx) => (
+            <Reveal key={tier.id} index={idx} className={`pricing-card ${tier.featured ? 'featured' : ''}`}>
               {tier.featured && <div className="pricing-badge">MOST REVERED</div>}
 
               <div>
@@ -196,7 +197,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   onClick={() => handleSelect(tier.name)}
                 />
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
