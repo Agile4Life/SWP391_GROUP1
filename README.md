@@ -14,13 +14,21 @@ docs/           API contracts, ADR và test cases
 
 ## Khởi động local
 
+### Cách 1: 1-Click (Khuyên dùng trên Windows)
+- Click đúp vào file `run-local.bat` (hoặc chạy `.\run-local.ps1` trong PowerShell).
+- Bộ chạy sẽ tự động kiểm tra môi trường, khởi tạo database `SportsCenterDB` nếu chưa có, và mở Web + API.
+- Để dừng hệ thống: chạy `stop-local.bat` (hoặc `.\stop-local.ps1`).
+
+Chi tiết xem tại [LOCAL_DEV_GUIDE.md](LOCAL_DEV_GUIDE.md).
+
+### Cách 2: Khởi động thủ công
 1. Cài Java 21+, Maven 3.9+, Node.js 20+ và SQL Server 2019+.
-2. Sao chép `.env.example` thành `.env` và thay `MSSQL_SA_PASSWORD` bằng mật khẩu mạnh hợp lệ.
-3. Tạo database bằng `databaseschema.sql` theo [db/README.md](db/README.md).
-4. Chạy API: `cd apps/api && mvn spring-boot:run`.
+2. Sao chép `.env.example` thành `.env` (hoặc cấu hình lại thông số kết nối).
+3. Khởi tạo database: chạy `.\init-db.bat` hoặc thực thi [databaseschema.sql](databaseschema.sql).
+4. Chạy API: `cd apps/api && .\mvnw.cmd spring-boot:run`.
 5. Chạy Web: `cd apps/web && npm install && npm run dev`.
 
-Web: `http://localhost:5173` · API: `http://localhost:8080/api/v1/health`.
+Web: `http://localhost:5173` · API: `http://localhost:8080/api/v1/health` · Swagger: `http://localhost:8080/swagger-ui/index.html`.
 
 ## Quy ước làm việc
 
