@@ -2,6 +2,8 @@ package com.swp391.scms.auth;
 
 import com.swp391.scms.common.ErrorResponse;
 import com.swp391.scms.security.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Tag(name = "Authentication", description = "Đăng ký tài khoản, đăng nhập JWT, gửi và xác thực mã OTP")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -32,6 +35,7 @@ public class AuthController {
     }
 
     // API 1: Đăng nhập
+    @Operation(summary = "Đăng nhập hệ thống", description = "Xác thực tài khoản và trả về JWT Token cùng vai trò người dùng")
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest req) {
         var user = users.stream().filter(u -> u.username().equalsIgnoreCase(req.username())).findFirst();
@@ -54,6 +58,7 @@ public class AuthController {
     }
 
     // API 2: Đăng ký
+    @Operation(summary = "Đăng ký tài khoản", description = "Tạo tài khoản hội viên mới và gửi mã kích hoạt")
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody RegisterRequest req) {
         if (users.stream().anyMatch(u -> u.username().equalsIgnoreCase(req.username()))) {
@@ -74,6 +79,7 @@ public class AuthController {
     }
 
     // API 3: Gửi mã OTP
+    @Operation(summary = "Gửi mã OTP", description = "Gửi mã OTP 6 chữ số đến email hoặc số điện thoại (hết hạn trong 5 phút)")
     @PostMapping("/send-otp")
     public ResponseEntity<Object> sendOtp(@RequestBody OtpRequest req) {
         if ((req.email() == null || req.email().isBlank()) && (req.phoneNumber() == null || req.phoneNumber().isBlank())) {
@@ -92,6 +98,7 @@ public class AuthController {
     }
 
     // API 4: Xác thực mã OTP
+    @Operation(summary = "Xác thực mã OTP", description = "Xác thực mã OTP và kích hoạt tài khoản hội viên")
     @PostMapping("/verify-otp")
     public ResponseEntity<Object> verifyOtp(@Valid @RequestBody VerifyOtpRequest req) {
         var status = otpService.verifyOtp(req.target(), req.otpCode());

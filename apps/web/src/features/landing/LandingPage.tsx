@@ -7,32 +7,35 @@ import { DisciplinesSection } from './components/sections/DisciplinesSection';
 import { IntelligenceSection } from './components/sections/IntelligenceSection';
 import { PackagesSection } from './components/sections/PackagesSection';
 import { ContactSection } from './components/sections/ContactSection';
+import { FullpageScrollManager } from './components/FullpageScrollManager';
 import { LiquidGlassChatbot } from '../../shared/liquid-glass';
 
 export function LandingPage() {
+  const [activeScreen, setActiveScreen] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<string>('THE SANCTUARY');
 
   const handleSelectPlan = (plan: string) => {
     setSelectedPlan(plan);
-    const contactElem = document.getElementById('contact');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    }
+    setActiveScreen(5); // Navigate to Contact Screen
   };
 
   return (
-    <div className="sol-page-root">
+    <div className="sol-page-root" style={{ width: '100vw', height: '100dvh', overflow: 'hidden' }}>
       {/* Dynamic Glassmorphic Navigation Bar */}
-      <ScrollNavbar />
+      <ScrollNavbar activeScreen={activeScreen} onNavigate={setActiveScreen} />
 
-      {/* Main Continuous Flow of Luxury Sections */}
-      <main>
-        <HeroSection />
-        <PhilosophySection />
-        <DisciplinesSection />
-        <IntelligenceSection />
-        <PackagesSection onSelectPlan={handleSelectPlan} />
-        <ContactSection key={selectedPlan} initialPlan={selectedPlan} />
+      {/* Discrete 1-Screen Viewport Manager */}
+      <main style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+        <FullpageScrollManager
+          activeScreen={activeScreen}
+          onScreenChange={setActiveScreen}
+          heroSection={<HeroSection onNavigate={setActiveScreen} />}
+          philosophySection={<PhilosophySection isActive={activeScreen === 1} onNavigate={setActiveScreen} />}
+          disciplinesSection={<DisciplinesSection isActive={activeScreen === 2} />}
+          intelligenceSection={<IntelligenceSection />}
+          packagesSection={<PackagesSection onSelectPlan={handleSelectPlan} />}
+          contactSection={<ContactSection key={selectedPlan} initialPlan={selectedPlan} />}
+        />
       </main>
 
       {/* VisionOS Floating Apple Liquid Glass AI Chatbot Concierge */}

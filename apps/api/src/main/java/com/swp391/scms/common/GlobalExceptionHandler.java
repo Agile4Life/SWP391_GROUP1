@@ -1,41 +1,241 @@
 package com.swp391.scms.common;
 
+import com.swp391.scms.common.exception.AppException;
+import com.swp391.scms.common.exception.ResourceNotFoundException;
+import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Centralized exception handler for all REST controllers.
+ * Maps application and database errors into standardized API responses.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(err -> 
-            errors.put(err.getField(), err.getDefaultMessage())
-        );
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-        ErrorResponse res = new ErrorResponse(
-            HttpStatus.BAD_REQUEST.value(),
-            "VALIDATION_ERROR",
-            "Dữ liệu gửi lên không hợp lệ",
-            errors
+    /**
+     * Handles custom business application exceptions.
+     */
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAppException(AppException ex) {
+        log.warn("Application exception [{}]: {}", ex.getErrorCode(), ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(
+                ex.getStatus().value(),
+                ex.getErrorCode(),
+                ex.getMessage(),
+                ex.getDetails()
         );
-        return ResponseEntity.badRequest().body(res);
+        return ResponseEntity.status(ex.getStatus()).body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
-        ErrorResponse res = new ErrorResponse(
-            HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "INTERNAL_SERVER_ERROR",
-            ex.getMessage() != null ? ex.getMessage() : "Lỗi hệ thống",
-            null
+    /**
+     * Handles ResourceNotFoundException specifically.
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleResourceNotFound(ResourceNotFoundException ex) {
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getErrorCode(),
+                ex.getMessage()
         );
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    /**
+     * Handles bean validation errors (@Valid on request bodies).
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(err ->
+                errors.put(err.getField(), err.getDefaultMessage())
+        );
+
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.BAD_REQUEST.value(),
+                "VALIDATION_ERROR",
+                "Dữ liệu gửi lên không hợp lệ",
+                errors
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    /**
+     * Handles constraint violation errors on query params or entities.
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleConstraintViolation(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(cv ->
+                errors.put(cv.getPropertyPath().toString(), cv.getMessage())
+        );
+
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.BAD_REQUEST.value(),
+                "CONSTRAINT_VIOLATION",
+                "Ràng buộc dữ liệu không thỏa mãn",
+                errors
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    /**
+     * Handles Spring Security access denied (HTTP 403).
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAccessDenied(AccessDeniedException ex) {
+        log.warn("Access denied: {}", ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.FORBIDDEN.value(),
+                "FORBIDDEN",
+                "Bạn không có quyền thực hiện thao tác này"
+        );
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    /**
+     * Handles Spring Security authentication failures (HTTP 401).
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAuthentication(AuthenticationException ex) {
+        log.warn("Authentication failure: {}", ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.UNAUTHORIZED.value(),
+                "UNAUTHORIZED",
+                "Xác thực thất bại hoặc phiên làm việc đã hết hạn"
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    /**
+     * Handles illegal arguments and invalid states.
+     */
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public ResponseEntity<ApiResponse<Object>> handleIllegalArgument(RuntimeException ex) {
+        log.warn("Illegal argument / state: {}", ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.BAD_REQUEST.value(),
+                "BAD_REQUEST",
+                ex.getMessage()
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    /**
+     * Handles Database Integrity and Trigger Violations.
+     * Invariants from AGENTS.md & PROJECT_MASTER_GUIDE.md:
+     * - trg_enrollments_check_capacity (Capacity Exceeded)
+     * - trg_sessions_check_conflict (Coach / Room Schedule Overlap)
+     * - trg_enrollments_check_membership & trg_checkins_check_membership (Active Subscription)
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleDataIntegrity(DataIntegrityViolationException ex) {
+        String rootMsg = ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage();
+        log.error("Data integrity violation: {}", rootMsg);
+
+        if (rootMsg != null) {
+            if (rootMsg.contains("Lớp học đã đầy chỗ") || rootMsg.contains("trg_enrollments_check_capacity")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "CLASS_CAPACITY_EXCEEDED", "Lớp học đã đầy chỗ (vượt quá capacity cho phép).")
+                );
+            }
+            if (rootMsg.contains("trg_sessions_check_conflict") || rootMsg.contains("trùng lịch") || rootMsg.contains("khung giờ")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "SCHEDULE_CONFLICT", "Trùng lịch: Huấn luyện viên hoặc phòng học đã có lịch trong khung giờ này.")
+                );
+            }
+            if (rootMsg.contains("trg_enrollments_check_membership") || rootMsg.contains("trg_checkins_check_membership") || rootMsg.contains("gói")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                        ApiResponse.error(HttpStatus.FORBIDDEN.value(), "MEMBERSHIP_INACTIVE_OR_EXPIRED", "Gói tập của hội viên chưa được kích hoạt hoặc đã hết hạn.")
+                );
+            }
+            if (rootMsg.contains("duplicate") || rootMsg.contains("UNIQUE") || rootMsg.contains("UQ_")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "DUPLICATE_RESOURCE", "Dữ liệu đã tồn tại trong hệ thống (vi phạm ràng buộc duy nhất).")
+                );
+            }
+            if (rootMsg.contains("FOREIGN KEY") || rootMsg.contains("FK_")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "FOREIGN_KEY_VIOLATION", "Ràng buộc liên kết dữ liệu không hợp lệ.")
+                );
+            }
+        }
+
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.CONFLICT.value(),
+                "DATA_INTEGRITY_VIOLATION",
+                "Vi phạm ràng buộc toàn vẹn cơ sở dữ liệu."
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    /**
+     * Handles malformed JSON payloads.
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<Object>> handleMalformedJson(HttpMessageNotReadableException ex) {
+        log.warn("Malformed JSON request: {}", ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.BAD_REQUEST.value(),
+                "MALFORMED_JSON_REQUEST",
+                "Định dạng JSON gửi lên không hợp lệ."
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    /**
+     * Handles unsupported HTTP methods.
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleMethodNotAllowed(HttpRequestMethodNotSupportedException ex) {
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.METHOD_NOT_ALLOWED.value(),
+                "METHOD_NOT_ALLOWED",
+                "Phương thức HTTP " + ex.getMethod() + " không được hỗ trợ cho endpoint này."
+        );
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
+    }
+
+    /**
+     * Handles non-existent API routes.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleNoResourceFound(NoResourceFoundException ex) {
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.NOT_FOUND.value(),
+                "ENDPOINT_NOT_FOUND",
+                "Đường dẫn API không tồn tại: " + ex.getResourcePath()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    /**
+     * Fallback for any unhandled exceptions (HTTP 500).
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Object>> handleGeneral(Exception ex) {
+        log.error("Unhandled server error: ", ex);
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "INTERNAL_SERVER_ERROR",
+                "Đã xảy ra lỗi hệ thống. Vui lòng liên hệ quản trị viên."
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
