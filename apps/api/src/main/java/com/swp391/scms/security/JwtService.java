@@ -1,5 +1,6 @@
 package com.swp391.scms.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +13,16 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    @Value("${app.jwt.secret}")
-    private String secret;
+    private final SecretKey key;
+    private final long expirationMs;
 
-    @Value("${app.jwt.expiration-ms:86400000}")
-    private long expirationMs;
+    public JwtService(@Value("${app.jwt.secret}") String secret,
+                      @Value("${app.jwt.expiration-ms:86400000}") long expirationMs) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.expirationMs = expirationMs;
+    }
 
-    public String generateToken(int userId, String username, String role) {
-        SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    public String generateToken(Long userId, String username, String role) {
         return Jwts.builder()
                 .subject(username)
                 .claim("userId", userId)
@@ -30,23 +33,21 @@ public class JwtService {
                 .compact();
     }
 
+    public Claims parseClaims(String token) {
+        return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
+    }
+
     public Integer extractUserId(String token) {
-        SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        return Jwts.parser()
-                .verifyWith(key)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .get("userId", Integer.class);
+        Long userId = extractUserIdAsLong(token);
+        return userId == null ? null : Math.toIntExact(userId);
+    }
+
+    public Long extractUserIdAsLong(String token) {
+        Object userId = parseClaims(token).get("userId");
+        return userId instanceof Number number ? number.longValue() : null;
     }
 
     public String extractRole(String token) {
-        SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        return Jwts.parser()
-                .verifyWith(key)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .get("role", String.class);
+        return parseClaims(token).get("role", String.class);
     }
 }

@@ -147,30 +147,31 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiResponse<Object>> handleDataIntegrity(DataIntegrityViolationException ex) {
         String rootMsg = ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage();
-        log.error("Data integrity violation: {}", rootMsg);
+        String normalizedRootMsg = rootMsg == null ? "" : rootMsg.toLowerCase(java.util.Locale.ROOT);
+        log.error("Data integrity violation from {}", ex.getMostSpecificCause().getClass().getSimpleName());
 
         if (rootMsg != null) {
-            if (rootMsg.contains("Lớp học đã đầy chỗ") || rootMsg.contains("trg_enrollments_check_capacity")) {
+            if (normalizedRootMsg.contains("lớp học đã đầy chỗ") || normalizedRootMsg.contains("trg_enrollments_check_capacity")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
                         ApiResponse.error(HttpStatus.CONFLICT.value(), "CLASS_CAPACITY_EXCEEDED", "Lớp học đã đầy chỗ (vượt quá capacity cho phép).")
                 );
             }
-            if (rootMsg.contains("trg_sessions_check_conflict") || rootMsg.contains("trùng lịch") || rootMsg.contains("khung giờ")) {
+            if (normalizedRootMsg.contains("trg_sessions_check_conflict") || normalizedRootMsg.contains("trùng lịch") || normalizedRootMsg.contains("khung giờ")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
                         ApiResponse.error(HttpStatus.CONFLICT.value(), "SCHEDULE_CONFLICT", "Trùng lịch: Huấn luyện viên hoặc phòng học đã có lịch trong khung giờ này.")
                 );
             }
-            if (rootMsg.contains("trg_enrollments_check_membership") || rootMsg.contains("trg_checkins_check_membership") || rootMsg.contains("gói")) {
+            if (normalizedRootMsg.contains("trg_enrollments_check_membership") || normalizedRootMsg.contains("trg_checkins_check_membership") || normalizedRootMsg.contains("gói")) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
                         ApiResponse.error(HttpStatus.FORBIDDEN.value(), "MEMBERSHIP_INACTIVE_OR_EXPIRED", "Gói tập của hội viên chưa được kích hoạt hoặc đã hết hạn.")
                 );
             }
-            if (rootMsg.contains("duplicate") || rootMsg.contains("UNIQUE") || rootMsg.contains("UQ_")) {
+            if (normalizedRootMsg.contains("duplicate") || normalizedRootMsg.contains("unique constraint") || normalizedRootMsg.contains("uq_")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
                         ApiResponse.error(HttpStatus.CONFLICT.value(), "DUPLICATE_RESOURCE", "Dữ liệu đã tồn tại trong hệ thống (vi phạm ràng buộc duy nhất).")
                 );
             }
-            if (rootMsg.contains("FOREIGN KEY") || rootMsg.contains("FK_")) {
+            if (normalizedRootMsg.contains("foreign key") || normalizedRootMsg.contains("fk_")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
                         ApiResponse.error(HttpStatus.CONFLICT.value(), "FOREIGN_KEY_VIOLATION", "Ràng buộc liên kết dữ liệu không hợp lệ.")
                 );

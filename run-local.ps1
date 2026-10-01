@@ -72,6 +72,13 @@ if (($Only -in @("all", "api")) -and [string]::IsNullOrWhiteSpace($env:APP_JWT_S
     $env:APP_JWT_SECRET = [Convert]::ToBase64String($localJwtSecretBytes)
     Write-Host "[INFO] Generated an in-memory JWT secret for this local run." -ForegroundColor DarkGray
 }
+if ($Only -in @("all", "api")) {
+    if ([string]::IsNullOrWhiteSpace($env:SPRING_PROFILES_ACTIVE)) {
+        $env:SPRING_PROFILES_ACTIVE = "sqlserver,local"
+    } elseif ($env:SPRING_PROFILES_ACTIVE -notmatch '(^|,)local(,|$)') {
+        $env:SPRING_PROFILES_ACTIVE += ",local"
+    }
+}
 # 2. Pre-flight check: Node.js & npm
 if ($Only -in @("all", "web")) {
     $nodeCmd = Get-Command node -ErrorAction SilentlyContinue
