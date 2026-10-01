@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class InvoiceComputedColumnTest {
 
@@ -23,6 +24,30 @@ class InvoiceComputedColumnTest {
     }
 
     @Test
+    @DisplayName("Should accurately compute total_amount when tax is null or zero")
+    void shouldComputeInvoiceTotalAmountWithZeroOrNullTax() {
+        Invoice invoice = new Invoice();
+        invoice.setSubtotalAmount(new BigDecimal("1500000.00"));
+        invoice.setTaxAmount(null);
+
+        assertEquals(new BigDecimal("1500000.00"), invoice.getTotalAmount());
+
+        invoice.setTaxAmount(BigDecimal.ZERO);
+        assertEquals(new BigDecimal("1500000.00"), invoice.getTotalAmount());
+    }
+
+    @Test
+    @DisplayName("Should preserve database-populated total_amount if set")
+    void shouldPreserveDatabasePopulatedTotalAmount() {
+        Invoice invoice = new Invoice();
+        invoice.setSubtotalAmount(new BigDecimal("1000000.00"));
+        invoice.setTaxAmount(new BigDecimal("100000.00"));
+        invoice.setTotalAmount(new BigDecimal("1100000.00"));
+
+        assertEquals(new BigDecimal("1100000.00"), invoice.getTotalAmount());
+    }
+
+    @Test
     @DisplayName("Should accurately compute item amount as (quantity * unit_price)")
     void shouldComputeInvoiceItemAmount() {
         InvoiceItem item = new InvoiceItem();
@@ -35,7 +60,31 @@ class InvoiceComputedColumnTest {
     }
 
     @Test
-    @DisplayName("Should support adding items to invoice with cascading relationship")
+    @DisplayName("Should return ZERO for item amount when quantity or unit price is null")
+    void shouldHandleNullQuantityOrUnitPrice() {
+        InvoiceItem item = new InvoiceItem();
+        item.setQuantity(null);
+        item.setUnitPrice(new BigDecimal("350000.00"));
+        assertEquals(BigDecimal.ZERO, item.getAmount());
+
+        item.setQuantity(2);
+        item.setUnitPrice(null);
+        assertEquals(BigDecimal.ZERO, item.getAmount());
+    }
+
+    @Test
+    @DisplayName("Should preserve database-populated item amount if set")
+    void shouldPreserveDatabasePopulatedItemAmount() {
+        InvoiceItem item = new InvoiceItem();
+        item.setQuantity(2);
+        item.setUnitPrice(new BigDecimal("50000.00"));
+        item.setAmount(new BigDecimal("100000.00"));
+
+        assertEquals(new BigDecimal("100000.00"), item.getAmount());
+    }
+
+    @Test
+    @DisplayName("Should support adding and removing items with cascading relationship")
     void shouldSupportInvoiceItemsRelationship() {
         Invoice invoice = new Invoice();
         invoice.setSubtotalAmount(new BigDecimal("2000000.00"));
@@ -49,5 +98,9 @@ class InvoiceComputedColumnTest {
         assertEquals(2, invoice.getItems().size());
         assertEquals(invoice, item1.getInvoice());
         assertEquals(invoice, item2.getInvoice());
+
+        invoice.removeItem(item2);
+        assertEquals(1, invoice.getItems().size());
+        assertNull(item2.getInvoice());
     }
 }

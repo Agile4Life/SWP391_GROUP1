@@ -132,11 +132,11 @@
 - Consumes: provider-neutral repositories and global database error mapping.
 - Produces stable invoice/payment DTO use cases that work on PostgreSQL and SQL Server.
 
-- [ ] Confirm computed columns and generated values for invoices on both database engines; preserve database ownership of computed values.
-- [ ] Keep payment/invoice state transitions in services and use repository query methods instead of controller persistence access.
-- [ ] Isolate provider-specific constraint translation and avoid SQL Server error numbers in feature services.
-- [ ] Add integration coverage for invoice computed values and duplicate/invalid payment constraints on both supported engines.
-- [ ] Run finance checks and commit as `refactor(finance): isolate provider-specific persistence behavior`.
+- [x] Confirm computed columns and generated values for invoices on both database engines; preserve database ownership of computed values.
+- [x] Keep payment/invoice state transitions in services and use repository query methods instead of controller persistence access.
+- [x] Isolate provider-specific constraint translation and avoid SQL Server error numbers in feature services.
+- [x] Add integration coverage for invoice computed values and duplicate/invalid payment constraints on both supported engines.
+- [x] Run finance checks and commit as `refactor(finance): isolate provider-specific persistence behavior`.
 
 ### Task 7: Normalize common handlers and remaining existing modules
 

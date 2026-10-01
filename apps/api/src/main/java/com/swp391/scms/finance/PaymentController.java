@@ -3,6 +3,7 @@ package com.swp391.scms.finance;
 import com.swp391.scms.common.ApiResponse;
 import com.swp391.scms.finance.dto.PaymentCreateDto;
 import com.swp391.scms.finance.dto.PaymentDto;
+import com.swp391.scms.finance.dto.PaymentStatusUpdateRequest;
 import com.swp391.scms.finance.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Tag(name = "Payments & Invoices", description = "Quản lý giao dịch thu tiền, xuất hóa đơn điện tử và công nợ")
 @RestController
@@ -51,9 +51,8 @@ public class PaymentController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<ApiResponse<PaymentDto>> updatePaymentStatus(
             @PathVariable Long id,
-            @RequestBody Map<String, String> body) {
-        String status = body.get("status");
-        PaymentDto updated = paymentService.updatePaymentStatus(id, status);
+            @Valid @RequestBody PaymentStatusUpdateRequest request) {
+        PaymentDto updated = paymentService.updatePaymentStatus(id, request.status());
         return ResponseEntity.ok(ApiResponse.ok("Cập nhật trạng thái thanh toán thành công", updated));
     }
 }

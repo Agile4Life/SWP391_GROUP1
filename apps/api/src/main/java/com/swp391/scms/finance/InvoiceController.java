@@ -22,7 +22,7 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @Operation(summary = "Phát hành hóa đơn điện tử", description = "Tạo hóa đơn điện tử kèm các dòng chi tiết. Tổng tiền được SQL Server tính toán qua PERSISTED computed column")
+    @Operation(summary = "Phát hành hóa đơn điện tử", description = "Tạo hóa đơn điện tử kèm các dòng chi tiết. Tổng tiền do computed column của database tính toán")
     @PostMapping
     public ResponseEntity<ApiResponse<InvoiceDto>> createInvoice(@Valid @RequestBody InvoiceCreateDto dto) {
         InvoiceDto created = invoiceService.createInvoice(dto);

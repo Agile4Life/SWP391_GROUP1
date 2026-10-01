@@ -8,8 +8,9 @@ spring:
     name: scms-api
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
     show-sql: false
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: true

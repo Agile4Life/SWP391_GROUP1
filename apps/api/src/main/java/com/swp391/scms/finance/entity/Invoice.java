@@ -2,6 +2,7 @@ package com.swp391.scms.finance.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GeneratedColumn;
 import org.hibernate.generator.EventType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -37,11 +38,13 @@ public class Invoice {
     private BigDecimal taxAmount = BigDecimal.ZERO;
 
     /**
-     * [FIX 1NF-3NF §3.6] Computed column: AS (subtotal_amount + tax_amount) PERSISTED in SQL Server.
-     * insertable = false, updatable = false prevents manual writing by Hibernate.
+     * [FIX 1NF-3NF §3.6] Computed column: AS (subtotal_amount + tax_amount).
+     * @GeneratedColumn instructs Hibernate ORM (Code-First) to generate the database-agnostic
+     * computed/generated column DDL across any relational database (SQL Server, PostgreSQL, etc.).
      * @Generated informs Hibernate to fetch the database-computed value upon INSERT and UPDATE.
      */
     @Generated(event = {EventType.INSERT, EventType.UPDATE})
+    @GeneratedColumn("subtotal_amount + tax_amount")
     @Column(name = "total_amount", insertable = false, updatable = false, precision = 12, scale = 2)
     private BigDecimal totalAmount;
 

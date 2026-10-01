@@ -14,7 +14,9 @@ import com.swp391.scms.users.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.List;
 
 /**
@@ -28,15 +30,17 @@ public class PaymentService {
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
     private final PaymentMapper paymentMapper;
+    private final Clock clock;
 
     public PaymentService(PaymentRepository paymentRepository,
                           MemberRepository memberRepository,
                           UserRepository userRepository,
-                          PaymentMapper paymentMapper) {
+                          PaymentMapper paymentMapper, Clock clock) {
         this.paymentRepository = paymentRepository;
         this.memberRepository = memberRepository;
         this.userRepository = userRepository;
         this.paymentMapper = paymentMapper;
+        this.clock = clock;
     }
 
     public PaymentDto createPayment(PaymentCreateDto dto) {
@@ -45,7 +49,7 @@ public class PaymentService {
 
         User receiver = null;
         if (dto.getReceivedById() != null) {
-            receiver = userRepository.findById(dto.getReceivedById())
+            receiver = userRepository.findByIdAndDeletedAtIsNull(dto.getReceivedById())
                     .orElseThrow(() -> new ResourceNotFoundException("Nhân viên thu ngân", dto.getReceivedById()));
         }
 
@@ -53,8 +57,14 @@ public class PaymentService {
         payment.setMember(member);
         payment.setReceivedBy(receiver);
 
-        if ("success".equalsIgnoreCase(payment.getStatus()) && payment.getPaidAt() == null) {
-            payment.setPaidAt(LocalDateTime.now());
+        if (dto.getMethod() != null) {
+            payment.setMethod(dto.getMethod().toLowerCase(Locale.ROOT));
+        }
+        String initialStatus = dto.getStatus() != null ? dto.getStatus().toLowerCase(Locale.ROOT) : "pending";
+        payment.setStatus(initialStatus);
+
+        if ("success".equals(initialStatus) && payment.getPaidAt() == null) {
+            payment.setPaidAt(LocalDateTime.now(clock));
         }
 
         Payment saved = paymentRepository.save(payment);
@@ -70,6 +80,9 @@ public class PaymentService {
 
     @Transactional(readOnly = true)
     public List<PaymentDto> getPaymentsByMemberId(Long memberId) {
+        if (!memberRepository.existsById(memberId)) {
+            throw new ResourceNotFoundException("Hội viên", memberId);
+        }
         List<Payment> payments = paymentRepository.findByMemberUserId(memberId);
         return paymentMapper.toDtoList(payments);
     }
@@ -78,13 +91,27 @@ public class PaymentService {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Giao dịch thanh toán", id));
 
-        if (!List.of("success", "pending", "failed", "refunded").contains(status.toLowerCase())) {
-            throw new BadRequestException("Trạng thái thanh toán không hợp lệ: " + status);
+        if (status == null || !List.of("success", "pending", "failed", "refunded").contains(status.toLowerCase(Locale.ROOT))) {
+            throw new BadRequestException("INVALID_PAYMENT_STATUS", "Trạng thái thanh toán không hợp lệ: " + status);
         }
+        String normalizedStatus = status.toLowerCase(Locale.ROOT);
+        String currentStatus = payment.getStatus() != null ? payment.getStatus().toLowerCase(Locale.ROOT) : "pending";
 
-        payment.setStatus(status.toLowerCase());
-        if ("success".equalsIgnoreCase(status) && payment.getPaidAt() == null) {
-            payment.setPaidAt(LocalDateTime.now());
+        if (!currentStatus.equals(normalizedStatus)) {
+            boolean allowed = switch (currentStatus) {
+                case "pending" -> "success".equals(normalizedStatus) || "failed".equals(normalizedStatus);
+                case "failed" -> "pending".equals(normalizedStatus);
+                case "success" -> "refunded".equals(normalizedStatus);
+                default -> false;
+            };
+            if (!allowed) {
+                throw new BadRequestException("INVALID_STATUS_TRANSITION",
+                        "Không thể chuyển trạng thái thanh toán từ '" + currentStatus + "' sang '" + normalizedStatus + "'");
+            }
+            payment.setStatus(normalizedStatus);
+            if ("success".equals(normalizedStatus) && payment.getPaidAt() == null) {
+                payment.setPaidAt(LocalDateTime.now(clock));
+            }
         }
 
         return paymentMapper.toDto(payment);
