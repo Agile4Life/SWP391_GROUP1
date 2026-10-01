@@ -22,7 +22,7 @@ public class Member {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate;
 
-    @Column(name = "health_notes", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "health_notes")
     private String healthNotes;
 
     @Column(name = "fitness_goal", length = 255)

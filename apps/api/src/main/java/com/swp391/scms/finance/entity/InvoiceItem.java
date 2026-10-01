@@ -36,8 +36,7 @@ public class InvoiceItem {
      * @Generated informs Hibernate to fetch the database-computed value upon INSERT and UPDATE.
      */
     @Generated(event = {EventType.INSERT, EventType.UPDATE})
-    @Column(name = "amount", insertable = false, updatable = false, precision = 12, scale = 2,
-            columnDefinition = "AS (quantity * unit_price) PERSISTED")
+    @Column(name = "amount", insertable = false, updatable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
     public InvoiceItem() {}

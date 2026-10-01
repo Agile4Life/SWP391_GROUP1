@@ -42,8 +42,7 @@ public class Invoice {
      * @Generated informs Hibernate to fetch the database-computed value upon INSERT and UPDATE.
      */
     @Generated(event = {EventType.INSERT, EventType.UPDATE})
-    @Column(name = "total_amount", insertable = false, updatable = false, precision = 12, scale = 2,
-            columnDefinition = "AS (subtotal_amount + tax_amount) PERSISTED")
+    @Column(name = "total_amount", insertable = false, updatable = false, precision = 12, scale = 2)
     private BigDecimal totalAmount;
 
     @Column(name = "pdf_url", length = 255)

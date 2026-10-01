@@ -50,6 +50,28 @@ if (-not (Test-Path $envFile)) {
     }
 }
 
+# Load local environment values for the API and frontend subprocesses.
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        $line = $_.Trim()
+        if ($line -and -not $line.StartsWith('#')) {
+            $separator = $line.IndexOf('=')
+            if ($separator -gt 0) {
+                $name = $line.Substring(0, $separator).Trim()
+                $value = $line.Substring($separator + 1).Trim()
+                Set-Item -Path "Env:$name" -Value $value
+            }
+        }
+    }
+}
+
+# A temporary signing key keeps local development usable without storing a secret in the repository.
+if (($Only -in @("all", "api")) -and [string]::IsNullOrWhiteSpace($env:APP_JWT_SECRET)) {
+    $localJwtSecretBytes = [byte[]]::new(32)
+    [System.Security.Cryptography.RandomNumberGenerator]::Fill($localJwtSecretBytes)
+    $env:APP_JWT_SECRET = [Convert]::ToBase64String($localJwtSecretBytes)
+    Write-Host "[INFO] Generated an in-memory JWT secret for this local run." -ForegroundColor DarkGray
+}
 # 2. Pre-flight check: Node.js & npm
 if ($Only -in @("all", "web")) {
     $nodeCmd = Get-Command node -ErrorAction SilentlyContinue
