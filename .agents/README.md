@@ -1,8 +1,25 @@
 # Agent workspace
 
-Use the repository instructions in `../AGENTS.md` first. The `skills/scms-development` skill adds project-specific routing when an agent is implementing or reviewing an SCMS ticket.
+Bất kỳ AI Agent nào khi tham gia phát triển dự án này PHẢI đọc và tuân thủ:
+1. `../AGENTS.md` (root) và `rules/mandatory-rules.md`: Bất biến kiến trúc, phân vai squad, và cấm hard-code.
+2. `../rules/backend-architecture.md`: Chuẩn mực 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, và i18n.
+3. `workflows/scms-development.md`: Quy trình 6 bước chuẩn mực để triển khai ticket.
 
 Do not treat files in this directory as product runtime code.
+
+## Danh sách Workflows (`.agents/workflows`)
+
+1. **SCMS Development** (`workflows/scms-development.md` - lệnh `/scms-development`):
+   - Quy trình 6 bước chuẩn mực: Đọc Rules -> Kiểm tra Squad Boundaries -> Thiết kế bất biến ORM/Triggers/i18n -> Triển khai 3 lớp -> Verification test -> Knowledge Graph & Commit.
+2. **Graphify** (`workflows/graphify.md` - lệnh `/graphify`):
+   - Xây dựng hoặc cập nhật knowledge graph cho toàn bộ codebase.
+
+## Danh sách Rules tự động kích hoạt (`.agents/rules`)
+
+1. **Mandatory Rules** (`rules/mandatory-rules.md`):
+   - Tự động nạp vào mọi phiên làm việc của Agent. Bắt buộc đọc tài liệu, không code đè phân hệ của người khác, cấm hard-code strings, và tuân thủ Code-First & ORM Polymorphism.
+2. **Graphify** (`rules/graphify.md`):
+   - Quy tắc truy vấn và cập nhật đồ thị kiến trúc sau khi sửa đổi mã nguồn.
 
 ## Danh sách Skills đã tích hợp
 
@@ -24,3 +41,4 @@ Do not treat files in this directory as product runtime code.
 5. **Taste Skill (Anti-Slop Frontend)** (`skills/taste-skill`, `taste-skill-v1`, `gpt-tasteskill`, `minimalist-skill`, `brutalist-skill`, `soft-skill`, `redesign-skill`, `stitch-skill`, `image-to-code-skill`, `imagegen-frontend-web`, `imagegen-frontend-mobile`, `brandkit`, `output-skill`):
    - Nguồn: [taste-skill](https://github.com/leonxlnx/taste-skill)
    - Khung thiết kế frontend chống rập khuôn (anti-slop) cho web/landing page, chuyển động GSAP mượt mà, typography và design systems cao cấp.
+
