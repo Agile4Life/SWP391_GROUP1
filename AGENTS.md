@@ -1,5 +1,7 @@
 # Hướng dẫn cho contributor và coding agent
 
+Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và hỗ trợ PostgreSQL/SQL Server nằm tại `rules/backend-architecture.md`; mọi contributor và agent làm backend phải tuân theo cả hai tài liệu.
+
 ## Bối cảnh
 
 - Nguồn nghiệp vụ: `PROJECT_MASTER_GUIDE.md`; schema nguồn chân lý: `databaseschema.sql`; backlog: `AGILE_SCRUM_JIRA_PLAN.md`.
