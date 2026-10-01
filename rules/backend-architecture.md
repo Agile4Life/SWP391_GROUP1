@@ -21,15 +21,14 @@ Use a strict three-layer flow:
 - Use Spring constructor injection with `final` dependencies. Do not use field injection, service locators, static mutable state, or manually instantiate Spring-managed collaborators.
 - Prefer explicit, named implementations and configuration conditions so selected adapters are visible during debugging.
 
-## JPA, database support, and migrations
+## JPA, database support, and Code-First polymorphism
 
-- Use Jakarta Persistence and Spring Data JPA. Prefer portable mappings, derived queries, JPQL, and standard transaction behavior. Avoid vendor-specific native SQL in business services.
-- PostgreSQL is the deployment target. Keep SQL Server operational during the transition. Configure each engine with a separate Spring profile and environment-provided connection settings; never commit credentials.
-- Version schema changes with migrations. Keep PostgreSQL and SQL Server migration scripts separate when SQL syntax or features differ. Do not use `ddl-auto: update` in deployed environments.
-- Keep entities inside persistence boundaries. Do not serialize entities as API responses or use them as request payloads.
-- Isolate database-specific behavior (native queries, error codes, computed columns, triggers, generated values) behind provider configuration or focused adapters. Do not make a database-specific exception code a feature-service concern.
-- Claim an engine is supported only after its migration and integration behavior have been checked on that engine. H2 is useful for fast tests but does not prove PostgreSQL or SQL Server compatibility.
-- Preserve required database triggers for capacity and schedule-overlap enforcement. Translate known constraint failures into stable client-safe errors; never disable the trigger to make an application test pass.
+- **Nguyên tắc Code-First & ORM Polymorphism:** Toàn bộ cấu trúc bảng, kiểu dữ liệu, khóa chính/ngoại, index và computed columns được định nghĩa trực tiếp bằng Java Entity (Jakarta Persistence & Hibernate 6).
+- **Linh hoạt đa cơ sở dữ liệu:** Hibernate ORM đẩy thẳng DDL xuống cơ sở dữ liệu qua `spring.jpa.hibernate.ddl-auto: update`. Khi chuyển đổi giữa Microsoft SQL Server, PostgreSQL, MySQL hoặc bất kỳ hệ RDBMS nào, lập trình viên không phải viết lại script `CREATE TABLE`; Hibernate Dialect sẽ đa hình (polymorphic) sinh DDL tương thích hoàn toàn với database đích.
+- **Cột tính toán (Computed/Generated columns):** Bắt buộc sử dụng `@GeneratedColumn("expression")` của Hibernate 6 kết hợp `@Generated(event = {EventType.INSERT, EventType.UPDATE})`. Hibernate Dialect sẽ tự động dịch sang cú pháp phù hợp của từng database (`PERSISTED` trên SQL Server, `GENERATED ALWAYS AS ... STORED` trên PostgreSQL/MySQL).
+- **Trigger toàn vẹn dữ liệu (Capacity, Schedule Conflict, Membership Invariants):** Không phụ thuộc vào DDL migration thủ công. Hệ thống sử dụng interface đa hình `DatabaseTriggerProvider` SPI kết hợp `DatabaseTriggerInitializer` để tự động nhận diện CSDL và kích hoạt trigger tương ứng ngay sau khi Hibernate Code-First sinh bảng.
+- **Không dùng native vendor SQL trong Java:** Tuyệt đối không dùng native SQL ghim cứng cú pháp một hệ quản trị CSDL trong Repository/Service; ưu tiên derived query methods hoặc JPQL chuẩn.
+- **Ranh giới Entity:** Giữ Entity bên trong persistence boundary; luôn dùng DTO và Mapper để giao tiếp với Controller.
 
 ## API, validation, security, and errors
 

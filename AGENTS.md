@@ -15,8 +15,10 @@ Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và h�
 4. Frontend: đặt UI trong `features/<feature>`, page chỉ compose feature; luôn có loading, empty và error state.
 5. Chạy test/lint phù hợp trước khi mở PR và ghi Jira key trong mô tả PR.
 
-## Bất biến nghiệp vụ
+## Bất biến nghiệp vụ và kiến trúc dữ liệu
 
+- **Code-First & ORM Polymorphism bắt buộc:** Toàn bộ bảng, cột, khóa và quan hệ định nghĩa qua Java Entity; chuyển đổi CSDL không viết lại DDL thủ công mà dùng Hibernate ORM đẩy thẳng (`ddl-auto: update`).
+- **Trigger đa hình:** Các trigger nghiệp vụ bắt buộc (capacity, trùng lịch) được nạp tự động qua Strategy Polymorphism (`DatabaseTriggerProvider`) dựa trên CSDL đang kết nối, không ghim cứng DDL.
 - Chỉ Member có subscription `active` và chưa hết hạn được booking/check-in.
 - Database trigger kiểm tra capacity và trùng lịch là bắt buộc. Map lỗi SQL đó thành lỗi HTTP dễ hiểu, không vô hiệu trigger.
 - `users.deleted_at IS NOT NULL` không được xác thực hoặc hiện trong list mặc định.
