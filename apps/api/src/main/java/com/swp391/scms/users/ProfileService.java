@@ -1,6 +1,6 @@
 package com.swp391.scms.users;
 
-import com.swp391.scms.common.api.ApiError;
+import com.swp391.scms.common.exception.ResourceNotFoundException;
 import com.swp391.scms.users.dto.ProfileDto;
 import com.swp391.scms.users.entity.Member;
 import com.swp391.scms.users.entity.User;
@@ -18,50 +18,21 @@ public class ProfileService {
         this.memberRepository = memberRepository;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public ProfileDto getProfile(Long userId) {
-        User user = userRepository.findById(userId).orElseGet(() -> {
-            // Tự động tạo user giả để test nếu chưa có trong Database
-            User newUser = new User();
-            newUser.setId(userId);
-            newUser.setFullName("Member Test Auto");
-            newUser.setEmail("member1@example.com");
-            newUser.setCreatedAt(java.time.LocalDateTime.now());
-            return userRepository.save(newUser);
-        });
-                
+        User user = findActiveUser(userId);
         Member member = memberRepository.findById(userId).orElse(null);
-        
-        return new ProfileDto(
-                user.getId(),
-                user.getFullName(),
-                user.getEmail(),
-                user.getPhone(),
-                user.getDob(),
-                user.getGender(),
-                user.getAvatarUrl(),
-                user.getAddress(),
-                member != null ? member.getMembershipCode() : null,
-                member != null ? member.getHealthNotes() : null,
-                member != null ? member.getFitnessGoal() : null,
-                member != null ? member.getFitnessLevel() : null,
-                member != null ? member.getEmergencyContactName() : null,
-                member != null ? member.getEmergencyContactPhone() : null
-        );
+        return toDto(user, member);
     }
 
     @Transactional
     public ProfileDto updateProfile(Long userId, ProfileDto request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-                
+        User user = findActiveUser(userId);
         user.setFullName(request.fullName());
         user.setDob(request.dob());
         user.setGender(request.gender());
         user.setAvatarUrl(request.avatarUrl());
         user.setAddress(request.address());
-        // Email and phone might need OTP validation, but for profile update we just set them if allowed.
-        userRepository.save(user);
 
         Member member = memberRepository.findById(userId).orElse(null);
         if (member != null) {
@@ -72,9 +43,26 @@ public class ProfileService {
             }
             member.setEmergencyContactName(request.emergencyContactName());
             member.setEmergencyContactPhone(request.emergencyContactPhone());
-            memberRepository.save(member);
         }
 
-        return getProfile(userId);
+        return toDto(user, member);
+    }
+
+    private User findActiveUser(Long userId) {
+        return userRepository.findByIdAndDeletedAtIsNull(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("người dùng", userId));
+    }
+
+    private ProfileDto toDto(User user, Member member) {
+        return new ProfileDto(
+                user.getId(), user.getFullName(), user.getEmail(), user.getPhone(), user.getDob(),
+                user.getGender(), user.getAvatarUrl(), user.getAddress(),
+                member != null ? member.getMembershipCode() : null,
+                member != null ? member.getHealthNotes() : null,
+                member != null ? member.getFitnessGoal() : null,
+                member != null ? member.getFitnessLevel() : null,
+                member != null ? member.getEmergencyContactName() : null,
+                member != null ? member.getEmergencyContactPhone() : null
+        );
     }
 }
