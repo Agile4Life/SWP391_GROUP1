@@ -39,6 +39,18 @@ Use a strict three-layer flow:
 - Do not authenticate users whose `deleted_at` is set; exclude them from default lists.
 - Do not log passwords, OTP secrets, bearer tokens, database credentials, or sensitive health data. Add contextual IDs and operation names to logs where they help diagnose failures.
 
+## Đa ngôn ngữ (i18n - Internationalization)
+
+- **Nguyên tắc không hard-code chuỗi thông báo:** Tuyệt đối không hard-code chuỗi thông báo (success message, error message, validation message) bằng tiếng Việt hoặc tiếng Anh trực tiếp trong Controller, Service, hay Exception.
+- **Vị trí tài nguyên i18n:** Toàn bộ thông báo được quản lý tập trung tại `apps/api/src/main/resources/i18n/`:
+  - `messages.properties`: Bộ từ khóa mặc định (Tiếng Việt).
+  - `messages_vi.properties`: Tiếng Việt (`Locale("vi")`).
+  - `messages_en.properties`: Tiếng Anh (`Locale("en")`).
+- **Quy tắc bắt buộc khi code tính năng mới (Dành cho mọi Contributor và Agent):** Khi tạo mới endpoint API, thêm nghiệp vụ, hoặc thêm mã lỗi mới, **BẮT BUỘC** phải bổ sung các key tương ứng vào cả 2 file `messages_vi.properties` và `messages_en.properties`.
+- **Cơ chế phân giải đa ngôn ngữ:**
+  - Sử dụng component `MessageService` (`com.swp391.scms.common.i18n.MessageService`) với phương thức `messageService.getMessage("key.name", args...)`.
+  - Hệ thống tự động nhận diện ngôn ngữ qua HTTP header `Accept-Language` (ví dụ: `Accept-Language: vi` hoặc `Accept-Language: en`, mặc định là `vi`).
+
 ## Change workflow checklist
 
 Before opening or completing a backend change:
@@ -49,5 +61,6 @@ Before opening or completing a backend change:
 - Check both PostgreSQL and SQL Server implications for entity mappings, migrations, generated columns, and constraint errors.
 - Preserve role/subscription authorization and trigger-enforced constraints.
 - Update API contracts and OpenAPI when public behavior changes.
+- Bắt buộc bổ sung message key vào cả `messages_vi.properties` và `messages_en.properties` khi thêm endpoint, mã lỗi hoặc thông báo mới.
 - Add or update focused tests for changed behavior and run the relevant Maven checks before committing.
 - Review `git status` and stage only files belonging to the current feature-sized change. Make one small, descriptive commit per independently reviewable refactor part.

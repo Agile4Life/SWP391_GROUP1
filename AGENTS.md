@@ -11,7 +11,7 @@ Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và h�
 
 1. Xác định Jira key, owner màn hình và acceptance criteria trong backlog.
 2. Nếu đổi API, cập nhật OpenAPI ở `docs/api-contracts/` trước hoặc cùng PR.
-3. Backend: giữ package-by-feature, dùng DTO, validation, service transaction và global error handler. Không trả entity trực tiếp.
+3. Backend: giữ package-by-feature, dùng DTO, validation, service transaction và global error handler. Không trả entity trực tiếp. Bắt buộc bổ sung message key i18n (`messages_vi.properties`, `messages_en.properties`) cho thông báo thành công hoặc lỗi mới.
 4. Frontend: đặt UI trong `features/<feature>`, page chỉ compose feature; luôn có loading, empty và error state.
 5. Chạy test/lint phù hợp trước khi mở PR và ghi Jira key trong mô tả PR.
 
@@ -19,6 +19,7 @@ Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và h�
 
 - **Code-First & ORM Polymorphism bắt buộc:** Toàn bộ bảng, cột, khóa và quan hệ định nghĩa qua Java Entity; chuyển đổi CSDL không viết lại DDL thủ công mà dùng Hibernate ORM đẩy thẳng (`ddl-auto: update`).
 - **Trigger đa hình:** Các trigger nghiệp vụ bắt buộc (capacity, trùng lịch) được nạp tự động qua Strategy Polymorphism (`DatabaseTriggerProvider`) dựa trên CSDL đang kết nối, không ghim cứng DDL.
+- **Đa ngôn ngữ (i18n bắt buộc):** Hệ thống hỗ trợ đa ngôn ngữ qua `Accept-Language` (mặc định `vi`). Bất kỳ tính năng backend mới nào khi thêm thông báo/mã lỗi bắt buộc phải cập nhật đồng thời cả `i18n/messages_vi.properties` và `i18n/messages_en.properties`, dùng `MessageService` để resolve.
 - Chỉ Member có subscription `active` và chưa hết hạn được booking/check-in.
 - Database trigger kiểm tra capacity và trùng lịch là bắt buộc. Map lỗi SQL đó thành lỗi HTTP dễ hiểu, không vô hiệu trigger.
 - `users.deleted_at IS NOT NULL` không được xác thực hoặc hiện trong list mặc định.

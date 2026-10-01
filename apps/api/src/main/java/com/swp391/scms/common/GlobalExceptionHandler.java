@@ -17,17 +17,36 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import com.swp391.scms.common.i18n.MessageService;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Centralized exception handler for all REST controllers.
- * Maps application and database errors into standardized API responses.
+ * Maps application and database errors into standardized API responses,
+ * with i18n multi-language support.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    private final MessageService messageService;
+
+    public GlobalExceptionHandler() {
+        this.messageService = null;
+    }
+
+    public GlobalExceptionHandler(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
+    private String resolveMessage(String code, String defaultMessage, Object... args) {
+        if (messageService != null) {
+            return messageService.getMessageOrDefault(code, defaultMessage, args);
+        }
+        return defaultMessage;
+    }
 
     /**
      * Handles custom business application exceptions.
@@ -70,7 +89,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
                 "VALIDATION_ERROR",
-                "Dữ liệu gửi lên không hợp lệ",
+                resolveMessage("error.validation", "Dữ liệu gửi lên không hợp lệ"),
                 errors
         );
         return ResponseEntity.badRequest().body(response);
@@ -89,7 +108,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
                 "CONSTRAINT_VIOLATION",
-                "Ràng buộc dữ liệu không thỏa mãn",
+                resolveMessage("error.constraint_violation", "Ràng buộc dữ liệu không thỏa mãn"),
                 errors
         );
         return ResponseEntity.badRequest().body(response);
@@ -104,7 +123,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.FORBIDDEN.value(),
                 "FORBIDDEN",
-                "Bạn không có quyền thực hiện thao tác này"
+                resolveMessage("error.forbidden", "Bạn không có quyền thực hiện thao tác này")
         );
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
@@ -118,7 +137,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.UNAUTHORIZED.value(),
                 "UNAUTHORIZED",
-                "Xác thực thất bại hoặc phiên làm việc đã hết hạn"
+                resolveMessage("error.unauthorized", "Xác thực thất bại hoặc phiên làm việc đã hết hạn")
         );
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
@@ -153,27 +172,32 @@ public class GlobalExceptionHandler {
         if (rootMsg != null) {
             if (normalizedRootMsg.contains("lớp học đã đầy chỗ") || normalizedRootMsg.contains("trg_enrollments_check_capacity")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                        ApiResponse.error(HttpStatus.CONFLICT.value(), "CLASS_CAPACITY_EXCEEDED", "Lớp học đã đầy chỗ (vượt quá capacity cho phép).")
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "CLASS_CAPACITY_EXCEEDED",
+                                resolveMessage("invariant.capacity_exceeded", "Lớp học đã đầy chỗ (vượt quá capacity cho phép)."))
                 );
             }
             if (normalizedRootMsg.contains("trg_sessions_check_conflict") || normalizedRootMsg.contains("trùng lịch") || normalizedRootMsg.contains("khung giờ")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                        ApiResponse.error(HttpStatus.CONFLICT.value(), "SCHEDULE_CONFLICT", "Trùng lịch: Huấn luyện viên hoặc phòng học đã có lịch trong khung giờ này.")
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "SCHEDULE_CONFLICT",
+                                resolveMessage("invariant.schedule_conflict", "Trùng lịch: Huấn luyện viên hoặc phòng học đã có lịch trong khung giờ này."))
                 );
             }
             if (normalizedRootMsg.contains("trg_enrollments_check_membership") || normalizedRootMsg.contains("trg_checkins_check_membership") || normalizedRootMsg.contains("gói")) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
-                        ApiResponse.error(HttpStatus.FORBIDDEN.value(), "MEMBERSHIP_INACTIVE_OR_EXPIRED", "Gói tập của hội viên chưa được kích hoạt hoặc đã hết hạn.")
+                        ApiResponse.error(HttpStatus.FORBIDDEN.value(), "MEMBERSHIP_INACTIVE_OR_EXPIRED",
+                                resolveMessage("invariant.membership_inactive_or_expired", "Gói tập của hội viên chưa được kích hoạt hoặc đã hết hạn."))
                 );
             }
             if (normalizedRootMsg.contains("duplicate") || normalizedRootMsg.contains("unique constraint") || normalizedRootMsg.contains("uq_")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                        ApiResponse.error(HttpStatus.CONFLICT.value(), "DUPLICATE_RESOURCE", "Dữ liệu đã tồn tại trong hệ thống (vi phạm ràng buộc duy nhất).")
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "DUPLICATE_RESOURCE",
+                                resolveMessage("invariant.duplicate_resource", "Dữ liệu đã tồn tại trong hệ thống (vi phạm ràng buộc duy nhất)."))
                 );
             }
             if (normalizedRootMsg.contains("foreign key") || normalizedRootMsg.contains("fk_")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                        ApiResponse.error(HttpStatus.CONFLICT.value(), "FOREIGN_KEY_VIOLATION", "Ràng buộc liên kết dữ liệu không hợp lệ.")
+                        ApiResponse.error(HttpStatus.CONFLICT.value(), "FOREIGN_KEY_VIOLATION",
+                                resolveMessage("invariant.foreign_key_violation", "Ràng buộc liên kết dữ liệu không hợp lệ."))
                 );
             }
         }
@@ -181,7 +205,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.CONFLICT.value(),
                 "DATA_INTEGRITY_VIOLATION",
-                "Vi phạm ràng buộc toàn vẹn cơ sở dữ liệu."
+                resolveMessage("invariant.data_integrity", "Vi phạm ràng buộc toàn vẹn cơ sở dữ liệu.")
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -195,7 +219,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
                 "MALFORMED_JSON_REQUEST",
-                "Định dạng JSON gửi lên không hợp lệ."
+                resolveMessage("error.malformed_json", "Định dạng JSON gửi lên không hợp lệ.")
         );
         return ResponseEntity.badRequest().body(response);
     }
@@ -208,7 +232,8 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 "METHOD_NOT_ALLOWED",
-                "Phương thức HTTP " + ex.getMethod() + " không được hỗ trợ cho endpoint này."
+                resolveMessage("error.method_not_allowed",
+                        "Phương thức HTTP " + ex.getMethod() + " không được hỗ trợ cho endpoint này.", ex.getMethod())
         );
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
     }
@@ -221,7 +246,8 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.NOT_FOUND.value(),
                 "ENDPOINT_NOT_FOUND",
-                "Đường dẫn API không tồn tại: " + ex.getResourcePath()
+                resolveMessage("error.endpoint_not_found",
+                        "Đường dẫn API không tồn tại: " + ex.getResourcePath(), ex.getResourcePath())
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -235,7 +261,7 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "INTERNAL_SERVER_ERROR",
-                "Đã xảy ra lỗi hệ thống. Vui lòng liên hệ quản trị viên."
+                resolveMessage("error.internal", "Đã xảy ra lỗi hệ thống. Vui lòng liên hệ quản trị viên.")
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
