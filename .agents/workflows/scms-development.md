@@ -14,8 +14,9 @@ Trước khi đọc hay sửa bất kỳ dòng code nào, Agent PHẢI dùng cô
 1. `AGENTS.md` (tại thư mục gốc): Nguồn chân lý về kiến trúc chung, bất biến dữ liệu, và phạm vi MVP.
 2. `rules/backend-architecture.md`: Quy định kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, Trigger Strategy, và quy tắc đa ngôn ngữ (i18n).
 3. `.agents/rules/mandatory-rules.md`: Bảng quy tắc bắt buộc về phân quyền squad và cấm hard-code chuỗi.
-4. `PROJECT_MASTER_GUIDE.md`: Xem phần nghiệp vụ tương ứng với ticket cần làm.
-5. `AGILE_SCRUM_JIRA_PLAN.md`: Tra cứu Jira key, acceptance criteria, và người phụ trách.
+4. `.agents/rules/ponytail.md`: Quy tắc tối giản hóa mã nguồn (Ponytail - Lazy Senior Dev Mode), chống over-engineering.
+5. `PROJECT_MASTER_GUIDE.md`: Xem phần nghiệp vụ tương ứng với ticket cần làm.
+6. `AGILE_SCRUM_JIRA_PLAN.md`: Tra cứu Jira key, acceptance criteria, và người phụ trách.
 
 ---
 
@@ -29,15 +30,20 @@ Nếu người dùng yêu cầu làm ticket thuộc phân hệ của người kh
 
 ---
 
-## Bước 3: Thiết kế tuân thủ bất biến kiến trúc
+## Bước 3: Thiết kế tuân thủ bất biến kiến trúc & Ponytail Ladder
 Trước khi viết mã triển khai:
-1. **Code-First & ORM Polymorphism:**
+1. **Áp dụng các bậc thang Ponytail (The Ladder):**
+   - **YAGNI (Cần thiết thực sự?):** Không viết tính năng để "phòng xa" nếu ticket không yêu cầu.
+   - **Tái sử dụng (Reuse first):** Kiểm tra xem codebase đã có helper, mapper, entity, component nào tương tự chưa; tái sử dụng thay vì viết mới.
+   - **Standard Library & Built-in:** Tận dụng thư viện chuẩn của Java/Spring/Web, không thêm dependency mới khi vài dòng code built-in có thể giải quyết.
+   - **Diff ngắn nhất hoạt động an toàn:** Ưu tiên xóa bớt hơn là thêm mới (Deletion over addition). Đơn giản, rõ ràng, ít file nhất có thể.
+2. **Code-First & ORM Polymorphism:**
    - Mọi bảng, cột, kiểu dữ liệu, ràng buộc quan hệ PHẢI định nghĩa bằng Java JPA Entity trong `apps/api`.
    - CSDL do Hibernate tự động đồng bộ (`ddl-auto: update`), không viết file DDL migration thủ công riêng biệt.
-2. **Trigger đa hình (DatabaseTriggerProvider Strategy):**
+3. **Trigger đa hình (DatabaseTriggerProvider Strategy):**
    - Không ghim cứng trigger theo cú pháp của một CSDL đơn lẻ.
    - Thêm câu lệnh trigger vào lớp Strategy tương ứng (`SqlServerTriggerStrategy`, `PostgresTriggerStrategy`, `H2TriggerStrategy`).
-3. **Đa ngôn ngữ (i18n) - CẤM HARD-CODE STRING:**
+4. **Đa ngôn ngữ (i18n) - CẤM HARD-CODE STRING:**
    - Mọi câu thông báo response API, exception message, validation message PHẢI dùng mã khóa (message key).
    - Khai báo đồng thời vào cả 3 file:
      + `apps/api/src/main/resources/i18n/messages_vi.properties`

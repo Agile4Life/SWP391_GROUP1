@@ -33,6 +33,13 @@ Tuyệt đối KHÔNG can thiệp, tự ý sửa đổi hoặc code vào phân h
   - Backend luôn kiểm tra Role/Authority qua Spring Security; ẩn nút bấm ở frontend không phải là bảo mật.
   - `users.deleted_at IS NOT NULL` không được phép đăng nhập hoặc xuất hiện trong danh sách dữ liệu hoạt động.
 
-## 4. Quy trình kiểm thử và hoàn thiện (Verification)
+## 4. Ponytail - Triết lý tối giản hóa code & Chống over-engineering (YAGNI)
+- **YAGNI (You Aren't Gonna Need It):** Không viết code, abstraction (interface 1 impl, factory 1 product) hay cấu hình cho những thứ chưa được yêu cầu trong ticket.
+- **Tái sử dụng trước khi tạo mới (Reuse First):** Tìm kiếm và dùng lại helper, mapper, entity, component có sẵn trong dự án.
+- **Tận dụng Standard Library & Built-in:** Dùng thư viện chuẩn của Java/Spring/Web thay vì cài thêm thư viện bên ngoài.
+- **Diff ngắn nhất - Xóa hơn là thêm (Deletion over Addition):** Mã nguồn ít nhất mà vẫn chạy đúng và an toàn luôn là lựa chọn tối ưu.
+- **Sửa lỗi tận gốc (Root Cause):** Khi fix bug, grep mọi nơi gọi hàm đó để sửa 1 lần tại gốc rễ, không vá chắp vá ở từng caller riêng lẻ.
+
+## 5. Quy trình kiểm thử và hoàn thiện (Verification)
 - Trước khi tuyên bố hoàn thành hoặc push code, BẮT BUỘC chạy `./mvnw test` (backend) và `npm run build` / lint (frontend) để đảm bảo 100% tests pass.
 - Chạy `graphify update .` sau khi thay đổi mã nguồn để đồng bộ knowledge graph kiến trúc.
