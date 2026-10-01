@@ -15,7 +15,7 @@ import java.util.List;
 @Schema(description = "Yêu cầu phát hành hóa đơn mới")
 public class InvoiceCreateDto {
 
-    @NotNull(message = "ID giao dịch thanh toán không được để trống")
+    @NotNull(message = "{validation.invoice.payment_id.not_null}")
     @Schema(description = "ID giao dịch thanh toán gắn với hóa đơn này", example = "10")
     private Long paymentId;
 
@@ -25,12 +25,12 @@ public class InvoiceCreateDto {
     @Schema(description = "Thời gian phát hành hóa đơn (mặc định hiện tại nếu null)")
     private LocalDateTime issuedAt;
 
-    @NotNull(message = "Tổng tiền trước thuế không được để trống")
-    @DecimalMin(value = "0.0", message = "Tiền trước thuế không được âm")
+    @NotNull(message = "{validation.invoice.subtotal.not_null}")
+    @DecimalMin(value = "0.0", message = "{validation.invoice.subtotal.min}")
     @Schema(description = "Tổng tiền trước thuế (VNĐ)", example = "1000000.00")
     private BigDecimal subtotalAmount;
 
-    @DecimalMin(value = "0.0", message = "Tiền thuế không được âm")
+    @DecimalMin(value = "0.0", message = "{validation.invoice.tax.min}")
     @Schema(description = "Tiền thuế VAT (VNĐ, mặc định 0 nếu không có)", example = "100000.00")
     private BigDecimal taxAmount = BigDecimal.ZERO;
 

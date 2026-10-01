@@ -18,4 +18,8 @@ public class BadRequestException extends AppException {
     public BadRequestException(String errorCode, String message, Object details) {
         super(HttpStatus.BAD_REQUEST, errorCode, message, details);
     }
+
+    public BadRequestException(String errorCode, String messageKey, Object[] messageArgs, String fallbackMessage) {
+        super(HttpStatus.BAD_REQUEST, errorCode, messageKey, messageArgs, fallbackMessage);
+    }
 }

@@ -14,6 +14,7 @@ import com.swp391.scms.users.UserRepository;
 import com.swp391.scms.users.entity.Member;
 import com.swp391.scms.users.entity.Role;
 import com.swp391.scms.users.entity.User;
+import com.swp391.scms.common.i18n.MessageService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,11 +35,20 @@ public class AuthService {
     private final OtpDeliveryPort otpDeliveryPort;
     private final boolean debugOtpEnabled;
     private final Clock clock;
+    private final MessageService messageService;
 
     public AuthService(UserRepository userRepository, RoleRepository roleRepository,
                        PasswordEncoder passwordEncoder, JwtService jwtService,
                        OtpService otpService, OtpDeliveryPort otpDeliveryPort, Clock clock,
                        @org.springframework.beans.factory.annotation.Value("${app.auth.debug-otp-enabled:false}") boolean debugOtpEnabled) {
+        this(userRepository, roleRepository, passwordEncoder, jwtService, otpService, otpDeliveryPort, clock, debugOtpEnabled, null);
+    }
+
+    public AuthService(UserRepository userRepository, RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder, JwtService jwtService,
+                       OtpService otpService, OtpDeliveryPort otpDeliveryPort, Clock clock,
+                       @org.springframework.beans.factory.annotation.Value("${app.auth.debug-otp-enabled:false}") boolean debugOtpEnabled,
+                       MessageService messageService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -47,18 +57,29 @@ public class AuthService {
         this.otpDeliveryPort = otpDeliveryPort;
         this.debugOtpEnabled = debugOtpEnabled;
         this.clock = clock;
+        this.messageService = messageService;
+    }
+
+    private String msg(String key, String fallback, Object... args) {
+        if (messageService != null) {
+            return messageService.getMessageOrDefault(key, fallback, args);
+        }
+        return fallback;
     }
 
     @Transactional
     public AuthTokenResponse login(LoginRequest request) {
         User user = userRepository.findActiveByIdentifier(normalize(request.username()))
-                .orElseThrow(() -> new UnauthorizedException("INVALID_CREDENTIALS", "Tên đăng nhập hoặc mật khẩu không chính xác"));
+                .orElseThrow(() -> new UnauthorizedException("INVALID_CREDENTIALS", "auth.login.invalid_credentials", null,
+                        "Tên đăng nhập hoặc mật khẩu không chính xác"));
 
         if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
-            throw new UnauthorizedException("INVALID_CREDENTIALS", "Tên đăng nhập hoặc mật khẩu không chính xác");
+            throw new UnauthorizedException("INVALID_CREDENTIALS", "auth.login.invalid_credentials", null,
+                    "Tên đăng nhập hoặc mật khẩu không chính xác");
         }
         if (!"active".equalsIgnoreCase(user.getStatus())) {
-            throw new ForbiddenException("ACCOUNT_INACTIVE", "Tài khoản của bạn đã bị khóa hoặc chưa kích hoạt");
+            throw new ForbiddenException("ACCOUNT_INACTIVE", "auth.account.inactive", null,
+                    "Tài khoản của bạn đã bị khóa hoặc chưa kích hoạt");
         }
 
         user.setLastLoginAt(LocalDateTime.now(clock));
@@ -72,14 +93,16 @@ public class AuthService {
         String username = normalize(request.username());
         String email = normalize(request.email());
         if (userRepository.findByUsernameIgnoreCase(username).isPresent()) {
-            throw new ConflictException("USERNAME_EXISTS", "Username đã tồn tại");
+            throw new ConflictException("USERNAME_EXISTS", "auth.register.username_exists", null,
+                    "Username đã tồn tại");
         }
         if (userRepository.findByEmailIgnoreCase(email).isPresent()) {
-            throw new ConflictException("EMAIL_EXISTS", "Email đã tồn tại");
+            throw new ConflictException("EMAIL_EXISTS", "auth.register.email_exists", null,
+                    "Email đã tồn tại");
         }
 
         Role memberRole = roleRepository.findByCodeIgnoreCase("MEMBER")
-                .orElseThrow(() -> new ResourceNotFoundException("vai trò MEMBER", "MEMBER"));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.role_member", "MEMBER"));
 
         User user = new User();
         user.setUsername(username);
@@ -101,16 +124,22 @@ public class AuthService {
         user.setMember(member);
         userRepository.save(user);
 
-        return new RegistrationResponse("Đăng ký thành công. Vui lòng xác thực OTP để kích hoạt", user.getId(), username);
+        return new RegistrationResponse(
+                msg("auth.register.success", "Đăng ký thành công. Vui lòng xác thực OTP để kích hoạt"),
+                user.getId(), username);
     }
 
     @Transactional
     public OtpService.Status verifyOtp(VerifyOtpRequest request) {
         OtpService.Status status = otpService.verifyOtp(request.target(), request.otpCode());
         switch (status.result()) {
-            case EXPIRED_OR_NOT_FOUND -> throw new BadRequestException("OTP_EXPIRED", "Mã OTP đã hết hạn hoặc không tồn tại");
-            case MAX_ATTEMPTS_EXCEEDED -> throw new TooManyRequestsException("MAX_ATTEMPTS", "Bạn đã nhập sai OTP quá 3 lần. Vui lòng gửi lại mã mới.");
-            case INVALID_CODE -> throw new BadRequestException("INVALID_OTP", "Mã OTP không chính xác. Bạn còn " + status.remainingAttempts() + " lần thử");
+            case EXPIRED_OR_NOT_FOUND -> throw new BadRequestException("OTP_EXPIRED", "auth.otp.expired", null,
+                    "Mã OTP đã hết hạn hoặc không tồn tại");
+            case MAX_ATTEMPTS_EXCEEDED -> throw new TooManyRequestsException("MAX_ATTEMPTS", "auth.otp.max_attempts", null,
+                    "Bạn đã nhập sai OTP quá 3 lần. Vui lòng gửi lại mã mới.");
+            case INVALID_CODE -> throw new BadRequestException("INVALID_OTP", "auth.otp.invalid",
+                    new Object[]{status.remainingAttempts()},
+                    "Mã OTP không chính xác. Bạn còn " + status.remainingAttempts() + " lần thử");
             case SUCCESS -> activateAccount(request.target());
         }
         return status;
@@ -122,13 +151,14 @@ public class AuthService {
         return (normalizedTarget.contains("@")
                 ? userRepository.findByEmailIgnoreCaseAndDeletedAtIsNull(normalizedTarget)
                 : userRepository.findByPhoneAndDeletedAtIsNull(normalizedTarget))
-                .orElseThrow(() -> new ResourceNotFoundException("tài khoản", target));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.account", target));
     }
 
     public String generateOtp(String target) {
         User user = findOtpTarget(target);
         if (!"inactive".equalsIgnoreCase(user.getStatus())) {
-            throw new BadRequestException("ACCOUNT_NOT_PENDING", "Tài khoản không ở trạng thái chờ xác thực");
+            throw new BadRequestException("ACCOUNT_NOT_PENDING", "auth.account.not_pending", null,
+                    "Tài khoản không ở trạng thái chờ xác thực");
         }
         String code = otpService.generateOtp(normalize(target));
         if (!debugOtpEnabled) {
@@ -145,7 +175,8 @@ public class AuthService {
     private void activateAccount(String target) {
         User user = findOtpTarget(target);
         if (!"inactive".equalsIgnoreCase(user.getStatus())) {
-            throw new BadRequestException("ACCOUNT_NOT_PENDING", "Tài khoản không ở trạng thái chờ xác thực");
+            throw new BadRequestException("ACCOUNT_NOT_PENDING", "auth.account.not_pending", null,
+                    "Tài khoản không ở trạng thái chờ xác thực");
         }
         user.setStatus("active");
         user.setUpdatedAt(LocalDateTime.now(clock));

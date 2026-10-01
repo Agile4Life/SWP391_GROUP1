@@ -14,4 +14,8 @@ public class UnauthorizedException extends AppException {
     public UnauthorizedException(String errorCode, String message) {
         super(HttpStatus.UNAUTHORIZED, errorCode, message);
     }
+
+    public UnauthorizedException(String errorCode, String messageKey, Object[] messageArgs, String fallbackMessage) {
+        super(HttpStatus.UNAUTHORIZED, errorCode, messageKey, messageArgs, fallbackMessage);
+    }
 }

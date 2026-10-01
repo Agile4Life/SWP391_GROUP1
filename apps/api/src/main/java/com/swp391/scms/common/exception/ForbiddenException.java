@@ -14,4 +14,8 @@ public class ForbiddenException extends AppException {
     public ForbiddenException(String errorCode, String message) {
         super(HttpStatus.FORBIDDEN, errorCode, message);
     }
+
+    public ForbiddenException(String errorCode, String messageKey, Object[] messageArgs, String fallbackMessage) {
+        super(HttpStatus.FORBIDDEN, errorCode, messageKey, messageArgs, fallbackMessage);
+    }
 }

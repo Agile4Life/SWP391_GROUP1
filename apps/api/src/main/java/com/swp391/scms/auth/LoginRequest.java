@@ -3,6 +3,6 @@ package com.swp391.scms.auth;
 import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(
-    @NotBlank(message = "Tên đăng nhập không được để trống") String username,
-    @NotBlank(message = "Mật khẩu không được để trống") String password
+    @NotBlank(message = "{validation.auth.username.not_blank}") String username,
+    @NotBlank(message = "{validation.auth.password.not_blank}") String password
 ) {}

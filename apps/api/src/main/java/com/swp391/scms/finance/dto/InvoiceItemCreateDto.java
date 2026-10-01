@@ -13,17 +13,17 @@ import java.math.BigDecimal;
 @Schema(description = "Yêu cầu tạo chi tiết dòng hóa đơn")
 public class InvoiceItemCreateDto {
 
-    @NotBlank(message = "Mô tả sản phẩm/dịch vụ không được để trống")
+    @NotBlank(message = "{validation.invoice.item.description.not_blank}")
     @Schema(description = "Mô tả dịch vụ", example = "Gói tập Gold 6 tháng")
     private String description;
 
-    @NotNull(message = "Số lượng không được để trống")
-    @Min(value = 1, message = "Số lượng tối thiểu là 1")
+    @NotNull(message = "{validation.invoice.item.quantity.not_null}")
+    @Min(value = 1, message = "{validation.invoice.item.quantity.min}")
     @Schema(description = "Số lượng", example = "1")
     private Integer quantity = 1;
 
-    @NotNull(message = "Đơn giá không được để trống")
-    @DecimalMin(value = "0.0", message = "Đơn giá không được âm")
+    @NotNull(message = "{validation.invoice.item.unit_price.not_null}")
+    @DecimalMin(value = "0.0", message = "{validation.invoice.item.unit_price.min}")
     @Schema(description = "Đơn giá (VNĐ)", example = "3000000.00")
     private BigDecimal unitPrice;
 

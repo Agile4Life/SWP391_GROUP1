@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Yêu cầu tạo mới giao dịch thanh toán")
 public class PaymentCreateDto {
 
-    @NotNull(message = "ID hội viên không được để trống")
+    @NotNull(message = "{validation.payment.member_id.not_null}")
     @Schema(description = "ID hội viên thực hiện thanh toán", example = "2")
     private Long memberId;
 
@@ -24,17 +24,17 @@ public class PaymentCreateDto {
     @Schema(description = "ID lượt đăng ký lớp học (nếu thanh toán cho lớp)", example = "5")
     private Long classEnrollmentId;
 
-    @NotNull(message = "Số tiền thanh toán không được để trống")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Số tiền phải lớn hơn 0")
+    @NotNull(message = "{validation.payment.amount.not_null}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{validation.payment.amount.min}")
     @Schema(description = "Số tiền thanh toán (VNĐ)", example = "1500000.00")
     private BigDecimal amount;
 
-    @NotBlank(message = "Phương thức thanh toán không được để trống")
-    @Pattern(regexp = "cash|pos|bank_transfer|online_wallet", message = "Phương thức thanh toán phải là một trong: cash, pos, bank_transfer, online_wallet")
+    @NotBlank(message = "{validation.payment.method.not_blank}")
+    @Pattern(regexp = "cash|pos|bank_transfer|online_wallet", message = "{validation.payment.method.pattern}")
     @Schema(description = "Phương thức thanh toán", example = "pos")
     private String method;
 
-    @Pattern(regexp = "success|pending|failed|refunded", message = "Trạng thái phải là một trong: success, pending, failed, refunded")
+    @Pattern(regexp = "success|pending|failed|refunded", message = "{validation.payment.status.pattern}")
     @Schema(description = "Trạng thái thanh toán ban đầu", example = "success")
     private String status = "pending";
 

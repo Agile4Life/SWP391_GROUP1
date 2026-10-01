@@ -1,6 +1,7 @@
 package com.swp391.scms.auth;
 
 import com.swp391.scms.common.exception.ServiceUnavailableException;
+import com.swp391.scms.common.i18n.MessageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,23 +14,39 @@ public class SmtpOtpDeliveryAdapter implements OtpDeliveryPort {
 
     private final JavaMailSender mailSender;
     private final String fromAddress;
+    private final MessageService messageService;
 
     public SmtpOtpDeliveryAdapter(JavaMailSender mailSender,
                                   @Value("${app.auth.otp.from-address}") String fromAddress) {
+        this(mailSender, fromAddress, null);
+    }
+
+    public SmtpOtpDeliveryAdapter(JavaMailSender mailSender,
+                                  @Value("${app.auth.otp.from-address}") String fromAddress,
+                                  MessageService messageService) {
         this.mailSender = mailSender;
         this.fromAddress = fromAddress;
+        this.messageService = messageService;
+    }
+
+    private String msg(String key, String fallback, Object... args) {
+        if (messageService != null) {
+            return messageService.getMessageOrDefault(key, fallback, args);
+        }
+        return fallback;
     }
 
     @Override
     public void send(String destination, String code) {
         if (!destination.contains("@")) {
-            throw new ServiceUnavailableException("Chưa cấu hình kênh gửi OTP qua SMS.");
+            throw new ServiceUnavailableException("SMS_DELIVERY_DISABLED", "auth.otp.sms_not_supported", null,
+                    "Chưa cấu hình kênh gửi OTP qua SMS.");
         }
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromAddress);
         message.setTo(destination);
-        message.setSubject("Mã xác thực SCMS");
-        message.setText("Mã OTP của bạn là " + code + ". Mã hết hạn sau 5 phút.");
+        message.setSubject(msg("auth.otp.subject", "Mã xác thực SCMS"));
+        message.setText(msg("auth.otp.email_body", "Mã OTP của bạn là " + code + ". Mã hết hạn sau 5 phút.", code));
         mailSender.send(message);
     }
 }

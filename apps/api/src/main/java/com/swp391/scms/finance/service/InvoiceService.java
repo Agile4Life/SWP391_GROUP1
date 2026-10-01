@@ -47,22 +47,26 @@ public class InvoiceService {
      */
     public InvoiceDto createInvoice(InvoiceCreateDto dto) {
         Payment payment = paymentRepository.findById(dto.getPaymentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Giao dịch thanh toán", dto.getPaymentId()));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.payment", dto.getPaymentId()));
 
         if ("failed".equalsIgnoreCase(payment.getStatus()) || "refunded".equalsIgnoreCase(payment.getStatus())) {
-            throw new BadRequestException("INVALID_PAYMENT_STATE",
+            throw new BadRequestException("INVALID_PAYMENT_STATE", "finance.invoice.invalid_payment_state",
+                    new Object[]{payment.getStatus()},
                     "Không thể xuất hóa đơn cho giao dịch có trạng thái '" + payment.getStatus() + "'");
         }
 
         if (invoiceRepository.findByPaymentId(dto.getPaymentId()).isPresent()) {
-            throw new ConflictException("Giao dịch thanh toán này đã có hóa đơn điện tử");
+            throw new ConflictException("INVOICE_ALREADY_EXISTS", "finance.invoice.already_exists", null,
+                    "Giao dịch thanh toán này đã có hóa đơn điện tử");
         }
 
         String invoiceNumber = dto.getInvoiceNumber();
         if (invoiceNumber == null || invoiceNumber.isBlank()) {
             invoiceNumber = generateInvoiceNumber();
         } else if (invoiceRepository.existsByInvoiceNumber(invoiceNumber)) {
-            throw new ConflictException("Mã số hóa đơn " + invoiceNumber + " đã tồn tại");
+            throw new ConflictException("DUPLICATE_INVOICE_NUMBER", "finance.invoice.duplicate_number",
+                    new Object[]{invoiceNumber},
+                    "Mã số hóa đơn " + invoiceNumber + " đã tồn tại");
         }
 
         Invoice invoice = invoiceMapper.toEntity(dto);
@@ -87,21 +91,21 @@ public class InvoiceService {
     @Transactional(readOnly = true)
     public InvoiceDto getInvoiceById(Long id) {
         Invoice invoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Hóa đơn", id));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.invoice", id));
         return invoiceMapper.toDto(invoice);
     }
 
     @Transactional(readOnly = true)
     public InvoiceDto getInvoiceByNumber(String invoiceNumber) {
         Invoice invoice = invoiceRepository.findByInvoiceNumber(invoiceNumber)
-                .orElseThrow(() -> new ResourceNotFoundException("Hóa đơn", invoiceNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.invoice", invoiceNumber));
         return invoiceMapper.toDto(invoice);
     }
 
     @Transactional(readOnly = true)
     public InvoiceDto getInvoiceByPaymentId(Long paymentId) {
         Invoice invoice = invoiceRepository.findByPaymentId(paymentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Hóa đơn cho giao dịch", paymentId));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.invoice_for_payment", paymentId));
         return invoiceMapper.toDto(invoice);
     }
 

@@ -45,12 +45,12 @@ public class PaymentService {
 
     public PaymentDto createPayment(PaymentCreateDto dto) {
         Member member = memberRepository.findById(dto.getMemberId())
-                .orElseThrow(() -> new ResourceNotFoundException("Hội viên", dto.getMemberId()));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.member", dto.getMemberId()));
 
         User receiver = null;
         if (dto.getReceivedById() != null) {
             receiver = userRepository.findByIdAndDeletedAtIsNull(dto.getReceivedById())
-                    .orElseThrow(() -> new ResourceNotFoundException("Nhân viên thu ngân", dto.getReceivedById()));
+                    .orElseThrow(() -> new ResourceNotFoundException("resource.cashier", dto.getReceivedById()));
         }
 
         Payment payment = paymentMapper.toEntity(dto);
@@ -74,14 +74,14 @@ public class PaymentService {
     @Transactional(readOnly = true)
     public PaymentDto getPaymentById(Long id) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Giao dịch thanh toán", id));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.payment", id));
         return paymentMapper.toDto(payment);
     }
 
     @Transactional(readOnly = true)
     public List<PaymentDto> getPaymentsByMemberId(Long memberId) {
         if (!memberRepository.existsById(memberId)) {
-            throw new ResourceNotFoundException("Hội viên", memberId);
+            throw new ResourceNotFoundException("resource.member", memberId);
         }
         List<Payment> payments = paymentRepository.findByMemberUserId(memberId);
         return paymentMapper.toDtoList(payments);
@@ -89,10 +89,11 @@ public class PaymentService {
 
     public PaymentDto updatePaymentStatus(Long id, String status) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Giao dịch thanh toán", id));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.payment", id));
 
         if (status == null || !List.of("success", "pending", "failed", "refunded").contains(status.toLowerCase(Locale.ROOT))) {
-            throw new BadRequestException("INVALID_PAYMENT_STATUS", "Trạng thái thanh toán không hợp lệ: " + status);
+            throw new BadRequestException("INVALID_PAYMENT_STATUS", "finance.payment.invalid_status", new Object[]{status},
+                    "Trạng thái thanh toán không hợp lệ: " + status);
         }
         String normalizedStatus = status.toLowerCase(Locale.ROOT);
         String currentStatus = payment.getStatus() != null ? payment.getStatus().toLowerCase(Locale.ROOT) : "pending";
@@ -105,7 +106,8 @@ public class PaymentService {
                 default -> false;
             };
             if (!allowed) {
-                throw new BadRequestException("INVALID_STATUS_TRANSITION",
+                throw new BadRequestException("INVALID_STATUS_TRANSITION", "finance.payment.invalid_transition",
+                        new Object[]{currentStatus, normalizedStatus},
                         "Không thể chuyển trạng thái thanh toán từ '" + currentStatus + "' sang '" + normalizedStatus + "'");
             }
             payment.setStatus(normalizedStatus);

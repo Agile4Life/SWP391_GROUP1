@@ -18,4 +18,8 @@ public class ConflictException extends AppException {
     public ConflictException(String errorCode, String message, Object details) {
         super(HttpStatus.CONFLICT, errorCode, message, details);
     }
+
+    public ConflictException(String errorCode, String messageKey, Object[] messageArgs, String fallbackMessage) {
+        super(HttpStatus.CONFLICT, errorCode, messageKey, messageArgs, fallbackMessage);
+    }
 }

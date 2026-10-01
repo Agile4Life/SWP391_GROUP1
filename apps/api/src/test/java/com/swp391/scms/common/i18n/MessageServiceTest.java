@@ -62,4 +62,17 @@ class MessageServiceTest {
         String defaultMsg = messageService.getMessageOrDefault("missing.code.test", "Default Fallback");
         assertEquals("Default Fallback", defaultMsg);
     }
+
+    @Test
+    @DisplayName("Should resolve validation and resource keys in both VI and EN")
+    void shouldResolveValidationAndResourceKeys() {
+        assertEquals("Hội viên", messageService.getMessage("resource.member", Locale.forLanguageTag("vi")));
+        assertEquals("Member", messageService.getMessage("resource.member", Locale.ENGLISH));
+
+        assertEquals("Số tiền phải lớn hơn 0", messageService.getMessage("validation.payment.amount.min", Locale.forLanguageTag("vi")));
+        assertEquals("Amount must be greater than 0", messageService.getMessage("validation.payment.amount.min", Locale.ENGLISH));
+
+        assertEquals("Mã OTP đã được tạo thành công", messageService.getMessage("auth.otp.sent", Locale.forLanguageTag("vi")));
+        assertEquals("OTP code has been generated successfully", messageService.getMessage("auth.otp.sent", Locale.ENGLISH));
+    }
 }

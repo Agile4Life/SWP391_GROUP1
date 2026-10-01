@@ -37,13 +37,25 @@ public class GlobalExceptionHandler {
         this.messageService = null;
     }
 
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
     public GlobalExceptionHandler(MessageService messageService) {
         this.messageService = messageService;
     }
 
     private String resolveMessage(String code, String defaultMessage, Object... args) {
         if (messageService != null) {
-            return messageService.getMessageOrDefault(code, defaultMessage, args);
+            Object[] resolvedArgs = args;
+            if (args != null && args.length > 0) {
+                resolvedArgs = new Object[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i] instanceof String strArg && (strArg.startsWith("resource.") || strArg.startsWith("role."))) {
+                        resolvedArgs[i] = messageService.getMessageOrDefault(strArg, strArg);
+                    } else {
+                        resolvedArgs[i] = args[i];
+                    }
+                }
+            }
+            return messageService.getMessageOrDefault(code, defaultMessage, resolvedArgs);
         }
         return defaultMessage;
     }
@@ -54,10 +66,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ApiResponse<Object>> handleAppException(AppException ex) {
         log.warn("Application exception [{}]: {}", ex.getErrorCode(), ex.getMessage());
+        String message = ex.getMessageKey() != null
+                ? resolveMessage(ex.getMessageKey(), ex.getMessage(), ex.getMessageArgs() != null ? ex.getMessageArgs() : new Object[0])
+                : ex.getMessage();
         ApiResponse<Object> response = ApiResponse.error(
                 ex.getStatus().value(),
                 ex.getErrorCode(),
-                ex.getMessage(),
+                message,
                 ex.getDetails()
         );
         return ResponseEntity.status(ex.getStatus()).body(response);
@@ -68,10 +83,13 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<Object>> handleResourceNotFound(ResourceNotFoundException ex) {
+        String message = ex.getMessageKey() != null
+                ? resolveMessage(ex.getMessageKey(), ex.getMessage(), ex.getMessageArgs() != null ? ex.getMessageArgs() : new Object[0])
+                : ex.getMessage();
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.NOT_FOUND.value(),
                 ex.getErrorCode(),
-                ex.getMessage()
+                message
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -82,9 +100,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(err ->
-                errors.put(err.getField(), err.getDefaultMessage())
-        );
+        ex.getBindingResult().getFieldErrors().forEach(err -> {
+            String defaultMsg = err.getDefaultMessage();
+            if (defaultMsg != null && defaultMsg.startsWith("{") && defaultMsg.endsWith("}")) {
+                String key = defaultMsg.substring(1, defaultMsg.length() - 1);
+                defaultMsg = resolveMessage(key, defaultMsg);
+            }
+            errors.put(err.getField(), defaultMsg);
+        });
 
         ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
