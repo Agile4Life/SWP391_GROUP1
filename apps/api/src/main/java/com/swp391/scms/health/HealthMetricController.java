@@ -3,6 +3,8 @@ package com.swp391.scms.health;
 import com.swp391.scms.common.ErrorResponse;
 import com.swp391.scms.health.dto.HealthMetricDto;
 import com.swp391.scms.security.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Health Metrics", description = "Quản lý và ghi nhận chỉ số sức khỏe của hội viên")
 @RestController
 @RequestMapping("/api/v1/members/{memberId}/health-metrics")
 public class HealthMetricController {
@@ -42,6 +45,7 @@ public class HealthMetricController {
         return jwtService.extractRole(token);
     }
 
+    @Operation(summary = "Xem lịch sử chỉ số sức khỏe", description = "Lấy danh sách các chỉ số sức khỏe đã đo của hội viên")
     @GetMapping
     public ResponseEntity<?> getMetrics(
             @PathVariable Long memberId,
@@ -61,6 +65,7 @@ public class HealthMetricController {
         }
     }
 
+    @Operation(summary = "Thêm chỉ số sức khỏe mới", description = "Ghi nhận chỉ số thể chất mới (chiều cao, cân nặng, huyết áp, v.v.)")
     @PostMapping
     public ResponseEntity<?> addMetric(
             @PathVariable Long memberId,

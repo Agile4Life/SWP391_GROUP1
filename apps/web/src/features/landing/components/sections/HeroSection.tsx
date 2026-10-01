@@ -15,9 +15,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         width: '100%',
         height: '100%',
         minHeight: '100vh',
-        backgroundImage: `linear-gradient(rgba(24, 20, 18, 0.45), rgba(24, 20, 18, 0.7)), url(${LANDING_IMAGES.heroBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -28,6 +26,22 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         boxSizing: 'border-box',
       }}
     >
+      {/* Background Image Layer with slow-zoom animation */}
+      <div
+        className="hero-bg-layer"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `linear-gradient(rgba(24, 20, 18, 0.45), rgba(24, 20, 18, 0.7)), url(${LANDING_IMAGES.heroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          zIndex: 0,
+          willChange: 'transform',
+          animation: 'slow-zoom 14s var(--ease-luxury) both',
+        }}
+      />
+
       {/* Background Watermark */}
       <div
         style={{
@@ -50,7 +64,9 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
 
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '880px', margin: '0 auto' }}>
         <div
+          className="anim-fade-up"
           style={{
+            animationDelay: '80ms',
             fontFamily: 'var(--font-sans)',
             fontSize: 'clamp(0.72rem, 1vw, 0.8rem)',
             letterSpacing: '0.28em',
@@ -64,6 +80,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         </div>
 
         <h1
+          aria-label="DISCIPLINE. Movement. MASTERY."
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: 'clamp(2.8rem, 6.5vw, 5.8rem)',
@@ -75,17 +92,48 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             fontWeight: 400,
           }}
         >
-          DISCIPLINE.
-          <br />
-          <span style={{ fontStyle: 'italic', fontWeight: 300, letterSpacing: '0.05em' }}>
-            Movement.
+          <span style={{ display: 'block', overflow: 'hidden' }}>
+            <span
+              style={{
+                display: 'block',
+                animation: 'hero-slide-up var(--dur-slow) var(--ease-luxury) both',
+                animationDelay: '0ms',
+              }}
+            >
+              DISCIPLINE.
+            </span>
           </span>
-          <br />
-          MASTERY.
+          <span style={{ display: 'block', overflow: 'hidden' }}>
+            <span
+              style={{
+                display: 'block',
+                fontStyle: 'italic',
+                fontWeight: 300,
+                letterSpacing: '0.05em',
+                animation: 'hero-slide-up var(--dur-slow) var(--ease-luxury) both',
+                animationDelay: '90ms',
+              }}
+            >
+              Movement.
+            </span>
+          </span>
+          <span style={{ display: 'block', overflow: 'hidden' }}>
+            <span
+              style={{
+                display: 'block',
+                animation: 'hero-slide-up var(--dur-slow) var(--ease-luxury) both',
+                animationDelay: '180ms',
+              }}
+            >
+              MASTERY.
+            </span>
+          </span>
         </h1>
 
         <p
+          className="anim-fade-up"
           style={{
+            animationDelay: '420ms',
             color: 'rgba(250, 248, 245, 0.88)',
             fontSize: 'clamp(0.92rem, 1.2vw, 1.05rem)',
             lineHeight: 1.75,
@@ -99,7 +147,16 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           AI biometric calibration, and enduring physical longevity.
         </p>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', flexWrap: 'wrap' }}>
+        <div
+          className="anim-fade-up"
+          style={{
+            animationDelay: '540ms',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '32px',
+            flexWrap: 'wrap',
+          }}
+        >
           <ArrowButton
             label="EXPLORE PHILOSOPHY"
             href="#about"

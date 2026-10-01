@@ -16,6 +16,10 @@
 
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 800ms;
+  --stagger-step: 60ms;
 
   font-family: var(--font-sans);
   color: var(--color-text-main);
@@ -171,3 +175,182 @@ main header {
     padding: 22px;
   }
 }
+
+/* ==========================================================================
+   QUIET LUXURY ANIMATION KEYFRAMES & UTILITIES
+   ========================================================================== */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes route-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .75; transform: scale(1.03); }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+@keyframes grow-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes grow-y {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes slow-zoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* Utilities */
+.anim-fade-up {
+  animation: fade-up var(--dur-slow) var(--ease-luxury) both;
+}
+
+.anim-shimmer {
+  background: linear-gradient(90deg, transparent, rgb(194 166 132 / .25), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.anim-shake {
+  animation: shake .5s var(--ease-luxury) both;
+}
+
+.anim-pulse {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scroll reveal: ẩn cho tới khi có .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--dur-slow) var(--ease-luxury),
+              transform var(--dur-slow) var(--ease-luxury);
+  transition-delay: calc(var(--i, 0) * var(--stagger-step));
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* App Shell & Navigation Transitions */
+.route-fade {
+  animation: route-fade-up var(--dur-base) var(--ease-luxury) both;
+}
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  background: var(--color-accent-gold, #C2A684);
+  border-radius: 2px;
+  transform: translateY(var(--y, 0));
+  height: var(--h, 0);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.nav-indicator.is-ready {
+  transition: transform var(--dur-base) var(--ease-luxury),
+              height var(--dur-base) var(--ease-luxury);
+}
+
+.role-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(.98);
+  transform-origin: top;
+  transition: opacity var(--dur-fast) var(--ease-luxury),
+              transform var(--dur-fast) var(--ease-luxury),
+              visibility 0s linear var(--dur-fast);
+}
+
+.role-menu[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+/* Charts, Progress Bars & Table Staggering */
+.chart-bar {
+  height: var(--value);
+  transform-origin: bottom;
+  transform: scaleY(0);
+}
+
+.chart-bar.is-visible {
+  animation: grow-y var(--dur-slow) var(--ease-luxury) both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+
+.progress-fill {
+  transform-origin: left;
+  transform: scaleX(0);
+  width: var(--value);
+}
+
+.progress-fill.is-visible {
+  animation: grow-x var(--dur-slow) var(--ease-luxury) both;
+}
+
+.row-in {
+  animation: fade-up var(--dur-base) var(--ease-luxury) both;
+  animation-delay: calc(min(var(--i, 0), 12) * 40ms);
+}
+
+/* Bắt buộc: tôn trọng prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .chart-bar {
+    transform: none !important;
+  }
+  .progress-fill {
+    transform: none !important;
+  }
+  .role-menu {
+    transform: none !important;
+  }
+}
+

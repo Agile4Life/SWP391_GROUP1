@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LANDING_IMAGES } from '../../assets/images';
 import { SlideControls } from '../SlideControls';
 import { RevealImage } from '../RevealImage';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 const DISCIPLINES_LIST = [
   {
@@ -91,7 +92,7 @@ export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
             gap: '16px',
           }}
         >
-          <div>
+          <Reveal index={0}>
             <div className="editorial-category" style={{ marginBottom: '8px' }}>
               DISCIPLINES / 02
             </div>
@@ -101,10 +102,10 @@ export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
                 Distinction
               </span>
             </h2>
-          </div>
+          </Reveal>
 
           {/* Tab Selector Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <Reveal index={1} style={{ display: 'flex', gap: '8px' }}>
             {DISCIPLINES_LIST.map((d, idx) => (
               <button
                 key={d.id}
@@ -129,136 +130,138 @@ export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
                 {d.name.split('&')[0].trim()}
               </button>
             ))}
-          </div>
+          </Reveal>
         </div>
 
         {/* 3-Column Showcase matching Reference Slide */}
-        <div key={item.id} className="disciplines-showcase-grid slide-entering">
-          {/* Main Hero Photo with Reveal Animation */}
-          <div className="disciplines-col">
-            <RevealImage
-              key={`primary-${item.id}`}
-              src={item.primaryImg}
-              alt={item.name}
-              direction="right"
-              delay={0.08}
-              isActive={isActive}
-              wrapperStyle={{
-                width: '100%',
-                height: 'clamp(160px, 25vh, 250px)',
-                boxShadow: '0 12px 28px rgba(0, 0, 0, 0.07)',
-                borderRadius: '2px',
-              }}
-            />
+        <Reveal index={2}>
+          <div key={item.id} className="disciplines-showcase-grid slide-entering">
+            {/* Main Hero Photo with Reveal Animation */}
+            <div className="disciplines-col">
+              <RevealImage
+                key={`primary-${item.id}`}
+                src={item.primaryImg}
+                alt={item.name}
+                direction="right"
+                delay={0.08}
+                isActive={isActive}
+                wrapperStyle={{
+                  width: '100%',
+                  height: 'clamp(160px, 25vh, 250px)',
+                  boxShadow: '0 12px 28px rgba(0, 0, 0, 0.07)',
+                  borderRadius: '2px',
+                }}
+              />
+            </div>
+
+            {/* Details & Specs */}
+            <div className="disciplines-col">
+              <div
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.72rem',
+                  color: 'var(--color-text-muted)',
+                  letterSpacing: '0.12em',
+                  marginBottom: '8px',
+                }}
+              >
+                {item.location}
+              </div>
+
+              <h3
+                style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: 'clamp(1.3rem, 2vw, 1.7rem)',
+                  fontWeight: 500,
+                  letterSpacing: '0.03em',
+                  margin: '0 0 8px 0',
+                  color: 'var(--color-text-main)',
+                }}
+              >
+                {item.name}
+              </h3>
+
+              <p
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 'clamp(0.78rem, 0.95vw, 0.85rem)',
+                  lineHeight: 1.55,
+                  color: 'var(--color-text-muted)',
+                  margin: '0 0 12px 0',
+                  fontWeight: 300,
+                }}
+              >
+                {item.description}
+              </p>
+
+              <div
+                style={{
+                  borderTop: '1px solid var(--color-border-subtle)',
+                  paddingTop: '10px',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.74rem',
+                  color: 'var(--color-text-muted)',
+                  lineHeight: 1.5,
+                }}
+              >
+                {item.specs.map((spec, i) => (
+                  <div key={i}>✦ {spec}</div>
+                ))}
+              </div>
+            </div>
+
+            {/* Secondary Photo & Carousel Nav */}
+            <div className="disciplines-col disciplines-col-secondary" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '0.88rem',
+                  letterSpacing: '0.15em',
+                  color: 'var(--color-text-muted)',
+                  marginBottom: '8px',
+                }}
+              >
+                {item.number}
+              </div>
+
+              <RevealImage
+                key={`secondary-${item.id}`}
+                src={item.secondaryImg}
+                alt={`${item.name} detail`}
+                direction="down"
+                delay={0.2}
+                isActive={isActive}
+                wrapperStyle={{
+                  width: '100%',
+                  height: 'clamp(95px, 14vh, 140px)',
+                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
+                  marginBottom: '10px',
+                  borderRadius: '2px',
+                }}
+              />
+
+              <div
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.7rem',
+                  color: 'var(--color-text-muted)',
+                  lineHeight: 1.35,
+                  marginBottom: '12px',
+                  fontStyle: 'italic',
+                }}
+              >
+                {item.palette}
+              </div>
+
+              <div style={{ alignSelf: 'flex-end' }}>
+                <SlideControls onPrev={handlePrev} onNext={handleNext} />
+              </div>
+            </div>
           </div>
-
-          {/* Details & Specs */}
-          <div className="disciplines-col">
-            <div
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.72rem',
-                color: 'var(--color-text-muted)',
-                letterSpacing: '0.12em',
-                marginBottom: '8px',
-              }}
-            >
-              {item.location}
-            </div>
-
-            <h3
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.3rem, 2vw, 1.7rem)',
-                fontWeight: 500,
-                letterSpacing: '0.03em',
-                margin: '0 0 8px 0',
-                color: 'var(--color-text-main)',
-              }}
-            >
-              {item.name}
-            </h3>
-
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 'clamp(0.78rem, 0.95vw, 0.85rem)',
-                lineHeight: 1.55,
-                color: 'var(--color-text-muted)',
-                margin: '0 0 12px 0',
-                fontWeight: 300,
-              }}
-            >
-              {item.description}
-            </p>
-
-            <div
-              style={{
-                borderTop: '1px solid var(--color-border-subtle)',
-                paddingTop: '10px',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.74rem',
-                color: 'var(--color-text-muted)',
-                lineHeight: 1.5,
-              }}
-            >
-              {item.specs.map((spec, i) => (
-                <div key={i}>✦ {spec}</div>
-              ))}
-            </div>
-          </div>
-
-          {/* Secondary Photo & Carousel Nav */}
-          <div className="disciplines-col disciplines-col-secondary" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'flex-end',
-                fontFamily: 'var(--font-serif)',
-                fontSize: '0.88rem',
-                letterSpacing: '0.15em',
-                color: 'var(--color-text-muted)',
-                marginBottom: '8px',
-              }}
-            >
-              {item.number}
-            </div>
-
-            <RevealImage
-              key={`secondary-${item.id}`}
-              src={item.secondaryImg}
-              alt={`${item.name} detail`}
-              direction="down"
-              delay={0.2}
-              isActive={isActive}
-              wrapperStyle={{
-                width: '100%',
-                height: 'clamp(95px, 14vh, 140px)',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
-                marginBottom: '10px',
-                borderRadius: '2px',
-              }}
-            />
-
-            <div
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.7rem',
-                color: 'var(--color-text-muted)',
-                lineHeight: 1.35,
-                marginBottom: '12px',
-                fontStyle: 'italic',
-              }}
-            >
-              {item.palette}
-            </div>
-
-            <div style={{ alignSelf: 'flex-end' }}>
-              <SlideControls onPrev={handlePrev} onNext={handleNext} />
-            </div>
-          </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { CountUp } from '../../shared/ui/CountUp';
 
 export function MemberDashboardPage() {
   const upcomingClasses = [
@@ -53,26 +54,32 @@ export function MemberDashboardPage() {
         <div className="metric-card">
           <div className="metric-label">TRẠNG THÁI GÓI TẬP</div>
           <div className="metric-value" style={{ fontSize: '1.7rem', color: '#15803d' }}>
-            ACTIVE
+            <CountUp value="ACTIVE" />
           </div>
           <div className="metric-trend">Hạn dùng: 26/12/2026 (còn 42 ngày)</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">BUỔI TẬP TRONG THÁNG</div>
-          <div className="metric-value">18</div>
+          <div className="metric-value">
+            <CountUp value={18} />
+          </div>
           <div className="metric-trend">↑ +4 buổi so với tháng trước</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">CHỈ SỐ THỂ CHẤT (BMI)</div>
-          <div className="metric-value">21.8</div>
+          <div className="metric-value">
+            <CountUp value={21.8} format={(v) => v.toFixed(1)} />
+          </div>
           <div className="metric-trend">Cân nặng: 68.5 kg • Mỡ: 14.2%</div>
         </div>
 
         <div className="metric-card">
           <div className="metric-label">ĐIỂM TÍCH LŨY RESIDENCY</div>
-          <div className="metric-value">1,450</div>
+          <div className="metric-value">
+            <CountUp value={1450} format={(v) => Math.round(v).toLocaleString('vi-VN')} />
+          </div>
           <div className="metric-trend">Đủ đổi 2 buổi Hydrotherapy</div>
         </div>
       </div>
@@ -89,9 +96,10 @@ export function MemberDashboardPage() {
           </div>
 
           <div style={{ display: 'grid', gap: '14px' }}>
-            {upcomingClasses.map((cls) => (
+            {upcomingClasses.map((cls, index) => (
               <div
                 key={cls.id}
+                className="row-in"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -100,7 +108,8 @@ export function MemberDashboardPage() {
                   backgroundColor: '#FAF8F5',
                   borderRadius: '6px',
                   border: '1px solid rgba(33, 28, 24, 0.06)',
-                }}
+                  ['--i' as string]: index,
+                } as React.CSSProperties}
               >
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#1A1614', marginBottom: '4px' }}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowButton } from '../ArrowButton';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 interface PackagesSectionProps {
   onSelectPlan?: (planName: string) => void;
@@ -70,7 +71,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
       style={{ backgroundColor: '#F6F2EC' }}
     >
       <div className="sol-section-inner">
-        <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto clamp(10px, 2vh, 20px) auto' }}>
+        <Reveal index={0} style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto clamp(10px, 2vh, 20px) auto' }}>
           <div className="editorial-category" style={{ marginBottom: '6px' }}>
             MEMBERSHIP CURATIONS / 04
           </div>
@@ -83,7 +84,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
           <p className="editorial-body" style={{ margin: '0 auto', fontSize: 'clamp(0.8rem, 1vw, 0.88rem)' }}>
             Membership at Söl Wellness Sanctuary is capped to preserve an uncrowded atmosphere of serenity and focus.
           </p>
-        </div>
+        </Reveal>
 
         {/* Mobile Tier Tabs */}
         <div className="pricing-tabs-mobile">
@@ -113,8 +114,9 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
 
         <div className="pricing-grid" style={{ marginTop: 'clamp(10px, 1.8vh, 22px)', gap: 'clamp(14px, 2vw, 24px)' }}>
           {tiers.map((tier, idx) => (
-            <div
+            <Reveal
               key={tier.id}
+              index={idx}
               className={`pricing-card ${tier.featured ? 'featured' : ''} ${mobileTierIdx === idx ? 'mobile-active' : ''}`}
               style={{
                 padding: 'clamp(16px, 2.2vh, 26px) clamp(16px, 2vw, 24px)',
@@ -236,7 +238,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   onClick={() => handleSelect(tier.name)}
                 />
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

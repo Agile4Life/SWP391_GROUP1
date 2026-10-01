@@ -1,6 +1,7 @@
 import { LANDING_IMAGES } from '../../assets/images';
 import { ArrowButton } from '../ArrowButton';
 import { RevealImage } from '../RevealImage';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 interface PhilosophySectionProps {
   isActive?: boolean;
@@ -24,45 +25,51 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
         <div className="philosophy-content-grid">
           {/* Narrative Column */}
           <div className="philosophy-text-col">
-            <div className="editorial-category" style={{ marginBottom: '8px' }}>
+            <Reveal index={0} className="editorial-category" style={{ marginBottom: '8px' }}>
               PHILOSOPHY / 01
-            </div>
+            </Reveal>
 
-            <h2
-              className="editorial-headline"
-              style={{
-                fontSize: 'clamp(1.7rem, 2.8vw, 2.6rem)',
-                lineHeight: 1.1,
-                marginBottom: '12px',
-              }}
-            >
-              <span className="editorial-flourish" style={{ fontStyle: 'italic', marginRight: '6px' }}>
-                Train
-              </span>{' '}
-              WITH
-              <br />
-              INTENTION
-            </h2>
+            <Reveal index={1}>
+              <h2
+                className="editorial-headline"
+                style={{
+                  fontSize: 'clamp(1.7rem, 2.8vw, 2.6rem)',
+                  lineHeight: 1.1,
+                  marginBottom: '12px',
+                }}
+              >
+                <span className="editorial-flourish" style={{ fontStyle: 'italic', marginRight: '6px' }}>
+                  Train
+                </span>{' '}
+                WITH
+                <br />
+                INTENTION
+              </h2>
+            </Reveal>
 
-            <p
-              className="editorial-body"
-              style={{
-                maxWidth: '460px',
-                marginBottom: '16px',
-                fontSize: 'clamp(0.78rem, 0.95vw, 0.88rem)',
-                lineHeight: 1.55,
-              }}
-            >
-              At Söl Wellness Sanctuary, we believe that physical conditioning is not just about raw exertion — it&apos;s
-              about how every movement calibrates your body and mind. We approach athletic longevity as a layered
-              composition of breath, biomechanics, and intelligent recovery.
-            </p>
+            <Reveal index={2}>
+              <p
+                className="editorial-body"
+                style={{
+                  maxWidth: '460px',
+                  marginBottom: '16px',
+                  fontSize: 'clamp(0.78rem, 0.95vw, 0.88rem)',
+                  lineHeight: 1.55,
+                }}
+              >
+                At Söl Wellness Sanctuary, we believe that physical conditioning is not just about raw exertion — it&apos;s
+                about how every movement calibrates your body and mind. We approach athletic longevity as a layered
+                composition of breath, biomechanics, and intelligent recovery.
+              </p>
+            </Reveal>
 
-            <ArrowButton
-              label="EXPLORE OUR DISCIPLINES"
-              href="#disciplines"
-              onClick={handleExplore}
-            />
+            <Reveal index={3}>
+              <ArrowButton
+                label="EXPLORE OUR DISCIPLINES"
+                href="#disciplines"
+                onClick={handleExplore}
+              />
+            </Reveal>
           </div>
 
           {/* Asymmetric Gallery with Reveal Animation */}
@@ -108,7 +115,7 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
             gap: 'clamp(16px, 2.5vw, 32px)',
           }}
         >
-          <div>
+          <Reveal index={0}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -125,9 +132,9 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.76rem', color: 'var(--color-text-muted)', lineHeight: 1.5, margin: 0 }}>
               Corrective posture restoration, mobility expansion, and spine decompression guided by master coaches.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal index={1}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -144,9 +151,9 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.76rem', color: 'var(--color-text-muted)', lineHeight: 1.5, margin: 0 }}>
               AI Engine parses InBody biomarkers, HRV recovery metrics, and workout histories to calibrate adaptive training.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal index={2}>
             <div
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -163,7 +170,7 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.76rem', color: 'var(--color-text-muted)', lineHeight: 1.5, margin: 0 }}>
               Contrast therapy pools, Himalayan salt stone saunas, and pneumatic compression lounges for expedited renewal.
             </p>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
