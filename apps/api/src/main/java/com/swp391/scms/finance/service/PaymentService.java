@@ -18,6 +18,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Service managing Payments transactions.
@@ -25,6 +26,8 @@ import java.util.List;
 @Service
 @Transactional
 public class PaymentService {
+
+    private static final Set<String> VALID_STATUSES = Set.of("success", "pending", "failed", "refunded");
 
     private final PaymentRepository paymentRepository;
     private final MemberRepository memberRepository;
@@ -62,10 +65,7 @@ public class PaymentService {
         }
         String initialStatus = dto.getStatus() != null ? dto.getStatus().toLowerCase(Locale.ROOT) : "pending";
         payment.setStatus(initialStatus);
-
-        if ("success".equals(initialStatus) && payment.getPaidAt() == null) {
-            payment.setPaidAt(LocalDateTime.now(clock));
-        }
+        markPaidIfSuccess(payment, initialStatus);
 
         Payment saved = paymentRepository.save(payment);
         return paymentMapper.toDto(saved);
@@ -91,7 +91,7 @@ public class PaymentService {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("resource.payment", id));
 
-        if (status == null || !List.of("success", "pending", "failed", "refunded").contains(status.toLowerCase(Locale.ROOT))) {
+        if (status == null || !VALID_STATUSES.contains(status.toLowerCase(Locale.ROOT))) {
             throw new BadRequestException("INVALID_PAYMENT_STATUS", "finance.payment.invalid_status", new Object[]{status},
                     "Trạng thái thanh toán không hợp lệ: " + status);
         }
@@ -111,11 +111,15 @@ public class PaymentService {
                         "Không thể chuyển trạng thái thanh toán từ '" + currentStatus + "' sang '" + normalizedStatus + "'");
             }
             payment.setStatus(normalizedStatus);
-            if ("success".equals(normalizedStatus) && payment.getPaidAt() == null) {
-                payment.setPaidAt(LocalDateTime.now(clock));
-            }
+            markPaidIfSuccess(payment, normalizedStatus);
         }
 
         return paymentMapper.toDto(payment);
+    }
+
+    private void markPaidIfSuccess(Payment payment, String status) {
+        if ("success".equals(status) && payment.getPaidAt() == null) {
+            payment.setPaidAt(LocalDateTime.now(clock));
+        }
     }
 }

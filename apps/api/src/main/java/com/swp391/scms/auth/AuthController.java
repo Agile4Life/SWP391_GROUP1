@@ -57,8 +57,7 @@ public class AuthController {
     @Operation(summary = "Gửi mã OTP", description = "Gửi mã OTP 6 chữ số đến email hoặc số điện thoại")
     @PostMapping("/send-otp")
     public ResponseEntity<Object> sendOtp(@Valid @RequestBody OtpRequest request) {
-        String target = request.email() != null && !request.email().isBlank()
-                ? request.email().trim() : request.phoneNumber();
+        String target = request.target();
         if (target == null || target.isBlank()) {
             throw new BadRequestException("MISSING_TARGET", "auth.otp.missing_target", null,
                     "Cần cung cấp Email hoặc Số điện thoại");

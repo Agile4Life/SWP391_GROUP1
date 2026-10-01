@@ -155,11 +155,7 @@ public class AuthService {
     }
 
     public String generateOtp(String target) {
-        User user = findOtpTarget(target);
-        if (!"inactive".equalsIgnoreCase(user.getStatus())) {
-            throw new BadRequestException("ACCOUNT_NOT_PENDING", "auth.account.not_pending", null,
-                    "Tài khoản không ở trạng thái chờ xác thực");
-        }
+        findPendingUser(target);
         String code = otpService.generateOtp(normalize(target));
         if (!debugOtpEnabled) {
             try {
@@ -173,14 +169,19 @@ public class AuthService {
     }
 
     private void activateAccount(String target) {
+        User user = findPendingUser(target);
+        user.setStatus("active");
+        user.setUpdatedAt(LocalDateTime.now(clock));
+        userRepository.save(user);
+    }
+
+    private User findPendingUser(String target) {
         User user = findOtpTarget(target);
         if (!"inactive".equalsIgnoreCase(user.getStatus())) {
             throw new BadRequestException("ACCOUNT_NOT_PENDING", "auth.account.not_pending", null,
                     "Tài khoản không ở trạng thái chờ xác thực");
         }
-        user.setStatus("active");
-        user.setUpdatedAt(LocalDateTime.now(clock));
-        userRepository.save(user);
+        return user;
     }
 
     private String normalize(String value) {

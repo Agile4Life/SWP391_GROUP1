@@ -78,10 +78,7 @@ public class InvoiceService {
         }
 
         if (dto.getItems() != null) {
-            for (InvoiceItemCreateDto itemDto : dto.getItems()) {
-                InvoiceItem item = invoiceMapper.toItemEntity(itemDto);
-                invoice.addItem(item);
-            }
+            dto.getItems().forEach(item -> invoice.addItem(invoiceMapper.toItemEntity(item)));
         }
 
         Invoice saved = invoiceRepository.save(invoice);
