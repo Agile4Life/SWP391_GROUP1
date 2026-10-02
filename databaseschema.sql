@@ -21,7 +21,7 @@
 -- CREATE DATABASE phải nằm trong batch riêng (trước GO đầu tiên), không được
 -- gộp chung batch với các câu lệnh khác. Đổi tên "SportsCenterDB" nếu muốn.
 
-IF DB_ID(N'SportCenterDB') IS NULL
+IF DB_ID(N'SportsCenterDB') IS NULL
 BEGIN
     CREATE DATABASE SportsCenterDB;
 END
@@ -71,6 +71,7 @@ CREATE TABLE dbo.users (
     role_id         BIGINT NOT NULL,
     full_name       NVARCHAR(150) NOT NULL,
     email           NVARCHAR(150) NOT NULL UNIQUE,
+    username        NVARCHAR(50) NULL,
     phone           NVARCHAR(20)  NULL UNIQUE,
     password_hash   NVARCHAR(255) NOT NULL,
     dob             DATE NULL,
@@ -88,6 +89,7 @@ CREATE TABLE dbo.users (
 );
 GO
 CREATE INDEX ix_users_role ON dbo.users (role_id);
+CREATE UNIQUE INDEX uq_users_username ON dbo.users (username) WHERE username IS NOT NULL;
 GO
 
 CREATE TRIGGER dbo.trg_users_updated_at
@@ -101,6 +103,15 @@ BEGIN
 END;
 GO
 
+CREATE TABLE dbo.otp_challenges (
+    id              BIGINT IDENTITY(1,1) PRIMARY KEY,
+    target          NVARCHAR(255) NOT NULL UNIQUE,
+    code_hash       NVARCHAR(100) NOT NULL,
+    expires_at      DATETIME2 NOT NULL,
+    failed_attempts INT NOT NULL DEFAULT 0,
+    created_at      DATETIME2 NOT NULL DEFAULT SYSDATETIME()
+);
+GO
 CREATE TABLE dbo.members (
     user_id                     BIGINT PRIMARY KEY,
     membership_code             NVARCHAR(30) NOT NULL UNIQUE,

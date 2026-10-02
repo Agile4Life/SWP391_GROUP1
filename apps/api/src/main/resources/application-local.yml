@@ -1,0 +1,3 @@
+app:
+  auth:
+    debug-otp-enabled: true

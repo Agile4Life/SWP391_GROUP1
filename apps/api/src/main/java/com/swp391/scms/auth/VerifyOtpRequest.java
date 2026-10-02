@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record VerifyOtpRequest(
-    @NotBlank(message = "Vui lòng cung cấp email hoặc số điện thoại") String target,
-    @NotBlank(message = "Mã OTP không được trống") @Size(min = 6, max = 6, message = "OTP phải đúng 6 ký tự") String otpCode
+    @NotBlank(message = "{validation.auth.target.not_blank}") String target,
+    @NotBlank(message = "{validation.auth.otp.not_blank}") @Size(min = 6, max = 6, message = "{validation.auth.otp.size}") String otpCode
 ) {}

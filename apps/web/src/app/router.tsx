@@ -19,7 +19,7 @@ import { CoachAttendancePage } from '../features/coaching/CoachAttendancePage';
 
 // Manager Feature Pages
 import { ManagerCatalogsPage } from '../features/manager/ManagerCatalogsPage';
-import { ManagerUsersPage } from '../features/manager/ManagerUsersPage';
+import { UserManagerPage } from '../features/manager/UserManagerPage'; // <-- Màn hình US04 RBAC
 import { ManagerReportsPage } from '../features/manager/ManagerReportsPage';
 
 export const router = createBrowserRouter([
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
 
       // Group Member Routes (US01, US03, US04, US05)
       {
-        element: <RoleGuard allowedRoles={['MEMBER', 'MANAGER']} />,
+        element: <RoleGuard allowedRoles={['MEMBER', 'MANAGER', 'CENTER_MANAGER']} />,
         children: [
           { path: '/member/dashboard', element: <MemberDashboardPage /> },
           { path: '/member/profile', element: <MemberProfilePage /> },
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
 
       // Group Staff / Coach Routes (US02, US04, US05)
       {
-        element: <RoleGuard allowedRoles={['STAFF', 'COACH', 'MANAGER']} />,
+        element: <RoleGuard allowedRoles={['STAFF', 'COACH', 'RECEPTIONIST', 'MANAGER', 'CENTER_MANAGER']} />,
         children: [
           { path: '/staff/reception', element: <StaffReceptionPage /> },
           { path: '/staff/check-in', element: <StaffCheckInPage /> },
@@ -58,12 +58,12 @@ export const router = createBrowserRouter([
         ],
       },
 
-      // Group Manager Routes (US06, US07, US08)
+      // Group Manager Routes (US06, US07, US08 & US04 RBAC)
       {
-        element: <RoleGuard allowedRoles={['MANAGER']} />,
+        element: <RoleGuard allowedRoles={['MANAGER', 'CENTER_MANAGER']} />,
         children: [
           { path: '/manager/catalogs', element: <ManagerCatalogsPage /> },
-          { path: '/manager/users', element: <ManagerUsersPage /> },
+          { path: '/manager/users', element: <UserManagerPage /> }, // <-- Đã gắn màn hình quản lý tài khoản & phân quyền
           { path: '/manager/reports', element: <ManagerReportsPage /> },
         ],
       },

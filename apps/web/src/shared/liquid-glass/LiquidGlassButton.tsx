@@ -135,7 +135,10 @@ export function LiquidGlassButton({
         if (!snapshot) return;
 
         gl.bindTexture(gl.TEXTURE_2D, refs.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, snapshot);
+        if (refs.lastSnapshot !== snapshot) {
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, snapshot);
+          refs.lastSnapshot = snapshot;
+        }
 
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
         gl.uniform2f(refs.textureSizeLoc, snapshot.width, snapshot.height);

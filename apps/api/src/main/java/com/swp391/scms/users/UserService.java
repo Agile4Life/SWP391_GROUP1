@@ -1,0 +1,121 @@
+package com.swp391.scms.users;
+
+import com.swp391.scms.common.exception.BadRequestException;
+import com.swp391.scms.common.exception.ConflictException;
+import com.swp391.scms.common.exception.ResourceNotFoundException;
+import com.swp391.scms.users.dto.UserCreateDto;
+import com.swp391.scms.users.dto.UserDto;
+import com.swp391.scms.users.dto.UserUpdateDto;
+import com.swp391.scms.users.mapper.UserMapper;
+import com.swp391.scms.users.entity.Role;
+import com.swp391.scms.users.entity.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Locale;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAllByDeletedAtIsNullOrderByIdAsc().stream()
+                .map(userMapper::toDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto getUserById(Long id) {
+        return userMapper.toDto(findActiveUser(id));
+    }
+
+    @Transactional
+    public UserDto createUser(UserCreateDto dto) {
+        if (userRepository.findByEmailIgnoreCase(dto.getEmail().trim()).isPresent()) {
+            throw new ConflictException("EMAIL_EXISTS", "Email đã tồn tại");
+        }
+        if (dto.getPhone() != null && userRepository.findByPhone(dto.getPhone().trim()).isPresent()) {
+            throw new ConflictException("PHONE_EXISTS", "Số điện thoại đã tồn tại");
+        }
+
+        Role role = roleRepository.findById(dto.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException("vai trò", dto.getRoleId()));
+
+        User user = new User();
+        user.setRole(role);
+        user.setFullName(dto.getFullName().trim());
+        user.setEmail(dto.getEmail().trim().toLowerCase(Locale.ROOT));
+        user.setPhone(dto.getPhone() == null || dto.getPhone().isBlank() ? null : dto.getPhone().trim());
+        user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
+        user.setStatus("active");
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        return userMapper.toDto(userRepository.save(user));
+    }
+
+    @Transactional
+    public UserDto updateUser(Long id, UserUpdateDto dto) {
+        User user = findActiveUser(id);
+
+        if (dto.getFullName() != null) {
+            user.setFullName(dto.getFullName().trim());
+        }
+        if (dto.getPhone() != null) {
+            String phone = dto.getPhone().isBlank() ? null : dto.getPhone().trim();
+            if (phone != null) {
+                userRepository.findByPhone(phone)
+                        .filter(existing -> !existing.getId().equals(id))
+                        .ifPresent(existing -> { throw new ConflictException("PHONE_EXISTS", "Số điện thoại đã tồn tại"); });
+            }
+            user.setPhone(phone);
+        }
+        if (dto.getRoleId() != null) {
+            user.setRole(roleRepository.findById(dto.getRoleId())
+                    .orElseThrow(() -> new ResourceNotFoundException("vai trò", dto.getRoleId())));
+        }
+        user.setUpdatedAt(LocalDateTime.now());
+        return userMapper.toDto(userRepository.save(user));
+    }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = findActiveUser(id);
+        LocalDateTime now = LocalDateTime.now();
+        user.setDeletedAt(now);
+        user.setUpdatedAt(now);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public UserDto setStatus(Long id, String status) {
+        if (!"active".equals(status) && !"locked".equals(status)) {
+            throw new BadRequestException("INVALID_USER_STATUS", "Trạng thái chỉ được là 'active' hoặc 'locked'");
+        }
+        User user = findActiveUser(id);
+        user.setStatus(status);
+        user.setUpdatedAt(LocalDateTime.now());
+        return userMapper.toDto(userRepository.save(user));
+    }
+
+    private User findActiveUser(Long id) {
+        return userRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new ResourceNotFoundException("người dùng", id));
+    }
+}

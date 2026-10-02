@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { ArrowButton } from '../ArrowButton';
+import { Reveal } from '../../../../shared/ui/Reveal';
 
 interface PackagesSectionProps {
   onSelectPlan?: (planName: string) => void;
 }
 
 export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
+  const [mobileTierIdx, setMobileTierIdx] = useState(1);
   const tiers = [
     {
       id: 'essential',
@@ -62,35 +65,74 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
   };
 
   return (
-    <section id="packages" className="sol-section" style={{ backgroundColor: '#F6F2EC' }}>
+    <section
+      id="packages"
+      className="sol-section sol-fullscreen-card"
+      style={{ backgroundColor: '#F6F2EC' }}
+    >
       <div className="sol-section-inner">
-        <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 20px auto' }}>
-          <div className="editorial-category">MEMBERSHIP CURATIONS / 04</div>
-          <h2 className="editorial-headline" style={{ marginBottom: '16px' }}>
+        <Reveal index={0} style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto clamp(10px, 2vh, 20px) auto' }}>
+          <div className="editorial-category" style={{ marginBottom: '6px' }}>
+            MEMBERSHIP CURATIONS / 04
+          </div>
+          <h2 className="editorial-headline" style={{ marginBottom: '8px', fontSize: 'clamp(1.7rem, 2.8vw, 2.5rem)' }}>
             CURATED{' '}
             <span className="editorial-flourish" style={{ fontStyle: 'italic', fontWeight: 300 }}>
               Residencies
             </span>
           </h2>
-          <p className="editorial-body" style={{ margin: '0 auto' }}>
+          <p className="editorial-body" style={{ margin: '0 auto', fontSize: 'clamp(0.8rem, 1vw, 0.88rem)' }}>
             Membership at Söl Wellness Sanctuary is capped to preserve an uncrowded atmosphere of serenity and focus.
           </p>
+        </Reveal>
+
+        {/* Mobile Tier Tabs */}
+        <div className="pricing-tabs-mobile">
+          {tiers.map((t, idx) => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => setMobileTierIdx(idx)}
+              style={{
+                background: mobileTierIdx === idx ? 'var(--color-text-main)' : 'transparent',
+                color: mobileTierIdx === idx ? '#FAF8F5' : 'var(--color-text-muted)',
+                border: '1px solid',
+                borderColor: mobileTierIdx === idx ? 'var(--color-text-main)' : 'var(--color-border-medium)',
+                padding: '4px 12px',
+                borderRadius: '2px',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.68rem',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+              }}
+            >
+              {t.name.replace('THE ', '')}
+            </button>
+          ))}
         </div>
 
-        <div className="pricing-grid">
-          {tiers.map((tier) => (
-            <div key={tier.id} className={`pricing-card ${tier.featured ? 'featured' : ''}`}>
+        <div className="pricing-grid" style={{ marginTop: 'clamp(10px, 1.8vh, 22px)', gap: 'clamp(14px, 2vw, 24px)' }}>
+          {tiers.map((tier, idx) => (
+            <Reveal
+              key={tier.id}
+              index={idx}
+              className={`pricing-card ${tier.featured ? 'featured' : ''} ${mobileTierIdx === idx ? 'mobile-active' : ''}`}
+              style={{
+                padding: 'clamp(16px, 2.2vh, 26px) clamp(16px, 2vw, 24px)',
+              }}
+            >
               {tier.featured && <div className="pricing-badge">MOST REVERED</div>}
 
               <div>
                 <div
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.2em',
+                    fontSize: '0.68rem',
+                    letterSpacing: '0.18em',
                     color: 'var(--color-text-muted)',
                     textTransform: 'uppercase',
-                    marginBottom: '12px',
+                    marginBottom: '6px',
                     fontWeight: 600,
                   }}
                 >
@@ -100,21 +142,21 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                 <h3
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '1.9rem',
+                    fontSize: 'clamp(1.2rem, 1.6vw, 1.5rem)',
                     fontWeight: 500,
                     letterSpacing: '0.04em',
-                    margin: '0 0 16px 0',
+                    margin: '0 0 8px 0',
                     color: 'var(--color-text-main)',
                   }}
                 >
                   {tier.name}
                 </h3>
 
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '10px' }}>
                   <span
                     style={{
                       fontFamily: 'var(--font-serif)',
-                      fontSize: '2.4rem',
+                      fontSize: 'clamp(1.6rem, 2.2vw, 2.1rem)',
                       fontWeight: 500,
                       color: 'var(--color-text-main)',
                     }}
@@ -124,7 +166,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   <span
                     style={{
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.75rem',
+                      fontSize: '0.72rem',
                       color: 'var(--color-text-muted)',
                       letterSpacing: '0.05em',
                     }}
@@ -136,10 +178,10 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                 <p
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.86rem',
-                    lineHeight: 1.65,
+                    fontSize: 'clamp(0.78rem, 0.95vw, 0.84rem)',
+                    lineHeight: 1.5,
                     color: 'var(--color-text-muted)',
-                    marginBottom: '28px',
+                    marginBottom: 'clamp(10px, 1.5vh, 16px)',
                     fontWeight: 300,
                   }}
                 >
@@ -149,18 +191,18 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                 <div
                   style={{
                     borderTop: '1px solid var(--color-border-subtle)',
-                    paddingTop: '20px',
-                    marginBottom: '36px',
+                    paddingTop: 'clamp(8px, 1.2vh, 12px)',
+                    marginBottom: 'clamp(12px, 1.8vh, 18px)',
                   }}
                 >
                   <div
                     style={{
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.72rem',
+                      fontSize: '0.66rem',
                       letterSpacing: '0.15em',
                       textTransform: 'uppercase',
                       color: 'var(--color-text-muted)',
-                      marginBottom: '14px',
+                      marginBottom: '8px',
                       fontWeight: 600,
                     }}
                   >
@@ -172,16 +214,16 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                       padding: 0,
                       margin: 0,
                       display: 'grid',
-                      gap: '10px',
+                      gap: '6px',
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.82rem',
+                      fontSize: 'clamp(0.74rem, 0.9vw, 0.78rem)',
                       color: 'var(--color-text-main)',
-                      lineHeight: 1.5,
+                      lineHeight: 1.4,
                     }}
                   >
-                    {tier.perks.map((p, idx) => (
-                      <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                        <span style={{ color: 'var(--color-accent-gold)' }}>✦</span>
+                    {tier.perks.slice(0, 4).map((p, idx) => (
+                      <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                        <span style={{ color: 'var(--color-accent-gold)', flexShrink: 0 }}>✦</span>
                         <span>{p}</span>
                       </li>
                     ))}
@@ -196,7 +238,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                   onClick={() => handleSelect(tier.name)}
                 />
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

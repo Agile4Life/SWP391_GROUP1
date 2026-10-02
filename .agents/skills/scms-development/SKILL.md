@@ -5,16 +5,30 @@ description: Implement or review a Sports Center Management System ticket using 
 
 # SCMS development
 
-Read `AGENTS.md`, the applicable ticket in `AGILE_SCRUM_JIRA_PLAN.md`, and the relevant section of `PROJECT_MASTER_GUIDE.md` before changing code.
+## 1. Bắt buộc đọc Rules & Tài liệu trước khi làm việc
+Trước khi sửa hoặc thêm bất kỳ dòng code nào, Agent PHẢI đọc:
+1. `AGENTS.md` (root): Quy tắc bất biến dữ liệu, trigger, bảo mật và phạm vi MVP.
+2. `rules/backend-architecture.md`: Kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, và chuẩn i18n.
+3. `.agents/rules/mandatory-rules.md`: Bảng quy tắc bắt buộc về phân định squad và cấm hard-code.
+4. `.agents/workflows/scms-development.md`: Quy trình 6 bước chuẩn mực để triển khai ticket.
+5. `AGILE_SCRUM_JIRA_PLAN.md` & `PROJECT_MASTER_GUIDE.md`: Xem Jira key, Acceptance Criteria và luồng nghiệp vụ.
 
-## Routing
+## 2. Squad Boundaries (Ranh giới trách nhiệm)
+- **Phong**: Backend Core Architecture, Hạ tầng Trigger Strategy, Global Exception, i18n, Phân hệ Finance (`payments`, `invoices`, computed columns), AI Services.
+- **Tài**: Phân hệ Identity & Access Management (User Management, RBAC, Roles, Permissions, User Profile).
+- **An**: Phân hệ Core Operations (Classes, Schedules, Enrollments, Check-in, Facilities, Subscriptions).
+- **Tuyệt đối không can thiệp code vào phân hệ của người khác.**
 
-- For backend screen/API work, use the matching feature package in `apps/api`; define DTOs and validation at the boundary, and map SQL business errors to stable HTTP errors.
-- For frontend work, use the matching `apps/web/src/features` directory; use the shared API client and role route shell, and include loading, empty, error and forbidden states.
-- For a database change, add a forward migration in `db/migrations` only after checking that it preserves the business triggers and constraints documented in the master guide.
+## 3. Bất biến kiến trúc bắt buộc (Architectural Invariants)
+- **Code-First & ORM Polymorphism:** Toàn bộ bảng, cột, quan hệ định nghĩa qua Java JPA Entity; Hibernate ORM đẩy thẳng (`ddl-auto: update`), không tạo file DDL thủ công.
+- **Trigger đa hình:** Trigger được nạp tự động qua Strategy Polymorphism (`DatabaseTriggerProvider`) theo loại CSDL đang kết nối (`SqlServerTriggerStrategy`, `PostgresTriggerStrategy`, `H2TriggerStrategy`), không ghim cứng DDL.
+- **Đa ngôn ngữ (i18n bắt buộc):** Mọi response API message, exception message, validation message PHẢI dùng message key qua `MessageService`. Cấm tuyệt đối hard-code chuỗi tiếng Việt/tiếng Anh. Bắt buộc cập nhật đồng thời cả 3 file:
+  + `apps/api/src/main/resources/i18n/messages_vi.properties`
+  + `apps/api/src/main/resources/i18n/messages_en.properties`
+  + `apps/api/src/main/resources/i18n/messages.properties`
+- **Tương thích Standalone Unit Tests:** Controllers & Services khi inject `MessageService` luôn dùng constructor chaining null-safe để không làm gãy các test standalone.
 
-## Project constraints
-
-- SQL Server constraints and triggers are part of the application contract. Never bypass a trigger in application code.
-- A feature is not complete until its role/permission check is server-side and its API failure state is visible in the UI.
-- Keep a pull request scoped to a Jira key. Document adjacent improvements separately rather than expanding a ticket silently.
+## 4. Routing & Implementation
+- **Backend (`apps/api`):** Tổ chức package-by-feature; DTOs ở ranh giới; Service quản lý transaction và ném `AppException` con kèm `(errorCode, messageKey, messageArgs, fallbackMessage)`; Controller chỉ điều phối và trả về `ApiResponse<T>`.
+- **Frontend (`apps/web`):** Đặt UI trong `src/features/<feature>`; page chỉ compose feature; luôn có trạng thái loading, empty, error và forbidden.
+- **Verification:** Chạy `./mvnw test` (100% tests pass) và cập nhật `graphify update .` trước khi commit.

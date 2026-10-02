@@ -781,3 +781,407 @@ html {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Reveal Image Animation
+   ========================================================================== */
+
+.sol-reveal-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.sol-reveal-curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-accent-sand, #D6CEC5);
+  z-index: 3;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: none;
+}
+
+.sol-reveal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.15);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+  filter: brightness(0.92);
+}
+
+.sol-reveal-wrapper.is-revealed .sol-reveal-img {
+  transform: scale(1);
+  filter: brightness(1);
+}
+
+.sol-reveal-wrapper:hover .sol-reveal-img {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   Fullpage Hybrid Scroll Stage (Horizontal for Screens 1-3, Vertical for 4-6)
+   ========================================================================== */
+
+.sol-fullpage-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--color-bg-base);
+}
+
+.sol-vertical-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400vh;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.sol-fullpage-row {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.sol-fullpage-row.row-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.sol-horizontal-track-fullpage {
+  display: flex;
+  flex-direction: row;
+  width: 300vw;
+  height: 100vh;
+  height: 100dvh;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.sol-slide-panel {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.sol-fullscreen-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(65px, 9.5vh, 88px) clamp(20px, 4vw, 64px) clamp(20px, 3vh, 36px) clamp(20px, 4vw, 64px);
+  position: relative;
+}
+
+/* Philosophy Section Responsive Classes */
+.philosophy-content-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.25fr;
+  gap: clamp(20px, 3.5vw, 48px);
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.philosophy-visual-col {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(12px, 1.8vw, 20px);
+  align-items: start;
+  min-width: 0;
+}
+
+/* Disciplines Section Responsive Classes */
+.disciplines-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1.2fr 0.95fr;
+  gap: clamp(16px, 2.2vw, 32px);
+  align-items: center;
+  background-color: #FAF8F5;
+  padding: clamp(16px, 2.5vh, 28px) clamp(20px, 2.5vw, 36px);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.disciplines-col {
+  min-width: 0;
+}
+
+/* Media Query Responsive Breakpoints for 1-Screen Viewport */
+@media (max-width: 1024px) {
+  .sol-fullscreen-card {
+    padding: clamp(55px, 8vh, 75px) clamp(16px, 3vw, 32px) clamp(16px, 2.5vh, 24px) clamp(16px, 3vw, 32px);
+  }
+}
+
+@media (max-width: 900px) {
+  .sol-fullscreen-card {
+    padding: clamp(68px, 10vh, 88px) clamp(16px, 4vw, 28px) clamp(16px, 2.5vh, 24px) clamp(16px, 4vw, 28px) !important;
+  }
+  .aura-brand-mark {
+    white-space: nowrap !important;
+    font-size: clamp(0.82rem, 3.4vw, 1.1rem) !important;
+    letter-spacing: 0.15em !important;
+  }
+  .philosophy-content-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .philosophy-secondary-img {
+    display: none !important;
+  }
+  .philosophy-visual-col {
+    grid-template-columns: 1fr;
+  }
+  .pillar-stats-grid {
+    gap: 8px !important;
+    margin-top: 8px !important;
+    padding-top: 6px !important;
+  }
+  .pillar-stats-grid p {
+    display: none !important;
+  }
+  .disciplines-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+  .disciplines-col-secondary {
+    display: none !important;
+  }
+  .intelligence-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .intelligence-card:nth-child(3) {
+    display: none;
+  }
+  .pricing-tabs-mobile {
+    display: flex !important;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    margin-top: 8px !important;
+  }
+  .pricing-card:not(.mobile-active) {
+    display: none !important;
+  }
+  .contact-responsive-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .contact-narrative-extra {
+    display: none !important;
+  }
+  .aura-footer-bar {
+    display: none !important;
+  }
+  .contact-mobile-footer {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-warm);
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.pricing-tabs-mobile {
+  display: none;
+}
+
+.contact-mobile-footer {
+  display: none;
+}
+
+/* Active Navigation Link */
+.aura-nav-link.active {
+  opacity: 1 !important;
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--color-accent-gold);
+}
+
+/* Floating Vertical Dot Navigation */
+.sol-floating-dot-nav {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sol-dot-item {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.dot-pill {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(33, 28, 24, 0.3);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sol-dot-item.is-active .dot-pill {
+  width: 6px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--color-accent-gold, #C5A059);
+}
+
+.dot-tooltip {
+  position: absolute;
+  right: 26px;
+  background: rgba(24, 20, 18, 0.88);
+  color: #FAF8F5;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.sol-dot-item:hover .dot-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Horizontal Indicator HUD Badge */
+.sol-horizontal-hud-badge {
+  position: fixed;
+  bottom: 28px;
+  left: 48px;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 7px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  font-family: var(--font-sans);
+}
+
+.hud-page-count {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.hud-sep {
+  opacity: 0.35;
+  font-size: 0.68rem;
+}
+
+.hud-max {
+  opacity: 0.6;
+  font-size: 0.68rem;
+}
+
+.hud-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.hud-tab-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.hud-tab-btn .hud-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.hud-tab-btn.active {
+  background: var(--color-text-main);
+  color: #FAF8F5;
+}
+
+.hud-tab-btn.active .hud-dot {
+  background: var(--color-accent-gold);
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .sol-floating-dot-nav {
+    display: none;
+  }
+  .sol-horizontal-hud-badge {
+    left: 20px;
+    bottom: 20px;
+  }
+}
+

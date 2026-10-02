@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './landing.css';
 import { ScrollNavbar } from './components/sections/ScrollNavbar';
 import { HeroSection } from './components/sections/HeroSection';
@@ -7,32 +7,64 @@ import { DisciplinesSection } from './components/sections/DisciplinesSection';
 import { IntelligenceSection } from './components/sections/IntelligenceSection';
 import { PackagesSection } from './components/sections/PackagesSection';
 import { ContactSection } from './components/sections/ContactSection';
+import { FullpageScrollManager } from './components/FullpageScrollManager';
 import { LiquidGlassChatbot } from '../../shared/liquid-glass';
 
+const HASH_TO_SCREEN: Record<string, number> = {
+  '#hero': 0,
+  '#about': 1,
+  '#disciplines': 2,
+  '#intelligence': 3,
+  '#packages': 4,
+  '#contact': 5,
+};
+
 export function LandingPage() {
+  const [activeScreen, setActiveScreen] = useState<number>(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return HASH_TO_SCREEN[window.location.hash] ?? 0;
+    }
+    return 0;
+  });
   const [selectedPlan, setSelectedPlan] = useState<string>('THE SANCTUARY');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const handleHashChange = () => {
+      window.scrollTo(0, 0);
+      const hash = window.location.hash;
+      if (hash && hash in HASH_TO_SCREEN) {
+        setActiveScreen(HASH_TO_SCREEN[hash]);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleSelectPlan = (plan: string) => {
     setSelectedPlan(plan);
-    const contactElem = document.getElementById('contact');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    }
+    setActiveScreen(5); // Navigate to Contact Screen
   };
 
   return (
-    <div className="sol-page-root">
+    <div className="sol-page-root" style={{ width: '100vw', height: '100dvh', overflow: 'hidden' }}>
       {/* Dynamic Glassmorphic Navigation Bar */}
-      <ScrollNavbar />
+      <ScrollNavbar activeScreen={activeScreen} onNavigate={setActiveScreen} />
 
-      {/* Main Continuous Flow of Luxury Sections */}
-      <main>
-        <HeroSection />
-        <PhilosophySection />
-        <DisciplinesSection />
-        <IntelligenceSection />
-        <PackagesSection onSelectPlan={handleSelectPlan} />
-        <ContactSection key={selectedPlan} initialPlan={selectedPlan} />
+      {/* Discrete 1-Screen Viewport Manager */}
+      <main style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+        <FullpageScrollManager
+          activeScreen={activeScreen}
+          onScreenChange={setActiveScreen}
+          heroSection={<HeroSection onNavigate={setActiveScreen} />}
+          philosophySection={<PhilosophySection isActive={activeScreen === 1} onNavigate={setActiveScreen} />}
+          disciplinesSection={<DisciplinesSection isActive={activeScreen === 2} />}
+          intelligenceSection={<IntelligenceSection />}
+          packagesSection={<PackagesSection onSelectPlan={handleSelectPlan} />}
+          contactSection={<ContactSection key={selectedPlan} initialPlan={selectedPlan} />}
+        />
       </main>
 
       {/* VisionOS Floating Apple Liquid Glass AI Chatbot Concierge */}

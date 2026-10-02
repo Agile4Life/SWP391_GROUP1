@@ -1,4 +1,3 @@
-import html2canvas from 'html2canvas';
 import {
   DEFAULT_GLASS_PARAMS,
   LiquidGlassParams,
@@ -40,6 +39,7 @@ export interface GLProgramRefs {
   // Nested-specific locations
   buttonPositionLoc?: WebGLUniformLocation | null;
   containerSizeLoc?: WebGLUniformLocation | null;
+  lastSnapshot?: HTMLCanvasElement | null;
 }
 
 class LiquidGlassEngine {
@@ -52,9 +52,11 @@ class LiquidGlassEngine {
   private waitingInstances: Array<() => void> = [];
   private activeRenderers: Set<() => void> = new Set();
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private animFrameId: number | null = null;
 
   private constructor() {
     if (typeof window !== 'undefined') {
+      this.pageSnapshot = this.createFallbackTexture();
       window.addEventListener('scroll', this.handleScroll, { passive: true });
       window.addEventListener('resize', this.handleResize, { passive: true });
     }
@@ -88,7 +90,9 @@ class LiquidGlassEngine {
   }
 
   public requestAllRender() {
-    requestAnimationFrame(() => {
+    if (this.animFrameId) return;
+    this.animFrameId = requestAnimationFrame(() => {
+      this.animFrameId = null;
       this.activeRenderers.forEach((render) => render());
     });
   }
@@ -100,58 +104,20 @@ class LiquidGlassEngine {
   private handleResize = () => {
     if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
-      this.pageSnapshot = null;
-      this.captureSnapshot();
+      this.pageSnapshot = this.createFallbackTexture();
+      this.requestAllRender();
     }, 250);
   };
 
   public captureSnapshot(onComplete?: () => void) {
     if (typeof window === 'undefined') return;
 
-    if (this.pageSnapshot) {
-      if (onComplete) onComplete();
-      return;
+    if (!this.pageSnapshot) {
+      this.pageSnapshot = this.createFallbackTexture();
     }
 
-    if (onComplete) {
-      this.waitingInstances.push(onComplete);
-    }
-
-    if (this.isCapturing) return;
-    this.isCapturing = true;
-
-    // Use html2canvas to capture page without glass elements
-    html2canvas(document.body, {
-      scale: 1,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null,
-      ignoreElements: (element) => {
-        return (
-          element.classList.contains('glass-container') ||
-          element.classList.contains('glass-button') ||
-          element.classList.contains('glass-controls-panel') ||
-          element.classList.contains('liquid-glass-dock')
-        );
-      },
-    })
-      .then((canvas) => {
-        this.pageSnapshot = canvas;
-        this.isCapturing = false;
-        const callbacks = this.waitingInstances.slice();
-        this.waitingInstances = [];
-        callbacks.forEach((cb) => cb());
-        this.requestAllRender();
-      })
-      .catch((err) => {
-        console.warn('html2canvas capture notice, falling back to procedural ambient texture:', err);
-        this.pageSnapshot = this.createFallbackTexture();
-        this.isCapturing = false;
-        const callbacks = this.waitingInstances.slice();
-        this.waitingInstances = [];
-        callbacks.forEach((cb) => cb());
-        this.requestAllRender();
-      });
+    if (onComplete) onComplete();
+    this.requestAllRender();
   }
 
   private createFallbackTexture(): HTMLCanvasElement {
