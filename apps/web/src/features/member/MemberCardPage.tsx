@@ -27,10 +27,7 @@ export function MemberCardPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Gói Tập &amp; Thẻ Thành Viên Điện Tử</h1>
-          <p className="portal-subtitle">
-            Mã QR động đối soát cổng Turnstile và tra cứu lịch sử giao dịch (SCMS Flow 1 &amp; Flow 5)
-          </p>
+          <h1 className="portal-title">Thẻ Thành Viên</h1>
         </div>
         <span className="badge badge-success">GÓI TẬP ĐANG HOẠT ĐỘNG</span>
       </div>
@@ -157,7 +154,6 @@ export function MemberCardPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Chi Tiết Hợp Đồng Hội Viên</h2>
-            <span className="badge badge-success">3 THÁNG RESIDENCY</span>
           </div>
 
           <div style={{ display: 'grid', gap: '14px', fontSize: '0.88rem' }}>
@@ -204,7 +200,6 @@ export function MemberCardPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Nhật Ký Quét Cổng Turnstile</h2>
-            <span className="badge badge-info">TABLE: center_checkins</span>
           </div>
 
           <div className="portal-table-wrapper">
@@ -237,7 +232,6 @@ export function MemberCardPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Hóa Đơn &amp; Lịch Sử Thanh Toán</h2>
-            <span className="badge badge-info">TABLE: payments &amp; invoices</span>
           </div>
 
           <div className="portal-table-wrapper">

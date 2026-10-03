@@ -78,9 +78,6 @@ export function AppLayout() {
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', letterSpacing: '0.15em', fontWeight: 600 }}>
                 SÖL SANCTUARY
               </div>
-              <div style={{ fontSize: '0.65rem', color: '#9E958C', letterSpacing: '0.12em' }}>
-                SCMS MANAGEMENT PORTAL
-              </div>
             </NavLink>
           </div>
 
@@ -129,9 +126,7 @@ export function AppLayout() {
             borderBottom: '1px solid rgba(33, 28, 24, 0.08)',
           }}
         >
-          <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600 }}>
-            SÖL WELLNESS SANCTUARY PORTAL
-          </span>
+          <span />
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ textAlign: 'right' }}>

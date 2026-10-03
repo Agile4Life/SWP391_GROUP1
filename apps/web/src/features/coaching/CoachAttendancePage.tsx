@@ -51,17 +51,14 @@ export function CoachAttendancePage() {
   };
 
   const handleSaveAttendance = () => {
-    alert('Điểm danh và đánh giá buổi học đã được lưu vào bảng session_attendance & session_evaluations!');
+    alert('Đã lưu điểm danh và đánh giá buổi học.');
   };
 
   return (
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Điểm Danh &amp; Đánh Giá Buổi Học Của Huấn Luyện Viên</h1>
-          <p className="portal-subtitle">
-            Ghi nhận hiện diện học viên và đánh giá tiến độ thể lực (SCMS Module E &amp; Module G)
-          </p>
+          <h1 className="portal-title">Điểm Danh</h1>
         </div>
         <button type="button" className="btn-primary" onClick={handleSaveAttendance}>
           Lưu Bảng Điểm Danh
@@ -103,7 +100,6 @@ export function CoachAttendancePage() {
         <div className="portal-card" style={{ flex: 1.4 }}>
           <div className="portal-card-header">
             <h2 className="portal-card-title">Danh Sách Học Viên Điểm Danh</h2>
-            <span className="badge badge-info">SESSION ATTENDANCE</span>
           </div>
 
           <div style={{ display: 'grid', gap: '18px' }}>
@@ -200,7 +196,6 @@ export function CoachAttendancePage() {
         <div className="portal-card" style={{ background: '#FAF7F2', border: '1px solid #E5DED5' }}>
           <div className="portal-card-header">
             <h2 className="portal-card-title">✨ Trợ Lý AI Gợi Ý Giáo Án</h2>
-            <span className="badge badge-info">AI COACHING LOG</span>
           </div>
 
           <p style={{ fontSize: '0.86rem', color: '#4A433D', lineHeight: 1.65 }}>
@@ -232,7 +227,7 @@ export function CoachAttendancePage() {
             type="button"
             className="btn-primary"
             style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => alert('HLV đã duyệt và lưu kế hoạch bài tập vào bảng training_plans!')}
+            onClick={() => alert('Đã duyệt và lưu kế hoạch bài tập.')}
           >
             Duyệt &amp; Giao Bài Tập Cho Học Viên
           </button>

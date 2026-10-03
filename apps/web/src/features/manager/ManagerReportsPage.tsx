@@ -15,10 +15,7 @@ export function ManagerReportsPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Báo Cáo Doanh Thu &amp; Phân Tích Vận Hành</h1>
-          <p className="portal-subtitle">
-            Ảnh chụp dữ liệu tài chính đa chiều và nhật ký kiểm toán hệ thống (SCMS Module F &amp; Module J)
-          </p>
+          <h1 className="portal-title">Báo Cáo</h1>
         </div>
         <button type="button" className="btn-secondary" onClick={() => alert('Xuất báo cáo tài chính')}>
           Xuất Báo Cáo Doanh Thu
@@ -65,7 +62,6 @@ export function ManagerReportsPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Cơ Cấu Doanh Thu Theo Gói Dịch Vụ</h2>
-            <span className="badge badge-success">MONTHLY SNAPSHOT</span>
           </div>
 
           <div ref={revenueRef} style={{ display: 'grid', gap: '16px' }}>
@@ -126,23 +122,13 @@ export function ManagerReportsPage() {
               </div>
             </div>
           </div>
-
-          <div style={{ marginTop: '28px', padding: '16px', background: '#FAF8F5', borderRadius: '6px', fontSize: '0.82rem', color: '#6A635D' }}>
-            💡 Gói <strong>The Sanctuary VIP</strong> tiếp tục là gói chủ lực mang lại 61% tổng doanh thu nhờ sự kết hợp
-            giữa lớp Reformer Pilates và 4 buổi kèm 1-1 của HLV Master.
-          </div>
         </div>
 
         {/* Audit Logs Trail */}
         <div className="portal-card">
           <div className="portal-card-header">
-            <h2 className="portal-card-title">Nhật Ký Kiểm Toán (Audit Trail)</h2>
-            <span className="badge badge-info">TABLE: audit_logs</span>
+            <h2 className="portal-card-title">Nhật Ký Hệ Thống</h2>
           </div>
-
-          <p style={{ fontSize: '0.82rem', color: '#7E7771', marginBottom: '16px' }}>
-            Ghi vết 100% các biến động dữ liệu nhạy cảm theo quy định bảo mật của dự án.
-          </p>
 
           <div className="portal-table-wrapper">
             <table className="portal-table">

@@ -10,15 +10,13 @@ const DISCIPLINES_LIST = [
     number: '01/03',
     location: 'Studio 01, Level 2',
     name: 'ZENITH PILATES & MINDFUL YOGA',
-    subtitle: 'Mindful elongation meets deep core architecture.',
     description:
       'A serene sanctuary for postural restoration, myofascial alignment, and diaphragmatic control. Equipped with custom maple-wood Reformers and aerial silk apparatus.',
     specs: [
       'Capacity: 12 members / session',
       'Led by Master Yoga & Pilates Instructors',
-      'Smart Booking & Automated Waitlists (SCMS Flow 3)',
+      'Smart booking & automated waitlists',
     ],
-    palette: 'Accent palette: warm sandstone, muted sage, and soft linen white',
     primaryImg: LANDING_IMAGES.pilatesPrimary,
     secondaryImg: LANDING_IMAGES.pilatesSecondary,
   },
@@ -27,15 +25,13 @@ const DISCIPLINES_LIST = [
     number: '02/03',
     location: 'Arena 02, Level 1',
     name: 'OLYMPUS FUNCTIONAL & BOXING',
-    subtitle: 'High-intensity power and tactile combat precision.',
     description:
       'Engineered for peak human output and kinetic conditioning. Featuring Olympic weightlifting platforms, handcrafted cowhide boxing bags, and real-time biometric tracking.',
     specs: [
       'Capacity: 16 athletes / arena',
       'Certified Strength & Conditioning Coaches (CSCS)',
-      'AI Biometric Coaching & Training Progress Logs (SCMS Flow 4)',
+      'AI coaching & training progress logs',
     ],
-    palette: 'Accent palette: smoked oak, matte bronze, and charcoal stone',
     primaryImg: LANDING_IMAGES.boxingPrimary,
     secondaryImg: LANDING_IMAGES.boxingSecondary,
   },
@@ -44,15 +40,13 @@ const DISCIPLINES_LIST = [
     number: '03/03',
     location: 'Sub-level Oasis',
     name: 'HYDROTHERAPY & AQUATICS',
-    subtitle: 'Hydrodynamic flow meets deep cellular decompression.',
     description:
       'Saltwater lap pools calibrated to thermal neutrality, paired with infrared cedar saunas, cold plunge tubs, and contrast hydrotherapy circuits.',
     specs: [
       'Capacity: 20 members / circuit',
       'Dedicated Aquatic Therapists & Recovery Specialists',
-      'Center Turnstile Check-in & Gate Access (SCMS Flow 5)',
+      'QR turnstile check-in',
     ],
-    palette: 'Accent palette: deep travertine, mineral blue, and weathered stone',
     primaryImg: LANDING_IMAGES.swimmingPrimary,
     secondaryImg: LANDING_IMAGES.swimmingSecondary,
   },
@@ -93,9 +87,6 @@ export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
           }}
         >
           <Reveal index={0}>
-            <div className="editorial-category" style={{ marginBottom: '8px' }}>
-              DISCIPLINES / 02
-            </div>
             <h2 className="editorial-headline" style={{ margin: 0, fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)' }}>
               DISCIPLINES OF{' '}
               <span className="editorial-flourish" style={{ fontStyle: 'italic', fontWeight: 300 }}>
@@ -242,19 +233,6 @@ export function DisciplinesSection({ isActive }: DisciplinesSectionProps) {
                   borderRadius: '2px',
                 }}
               />
-
-              <div
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.7rem',
-                  color: 'var(--color-text-muted)',
-                  lineHeight: 1.35,
-                  marginBottom: '12px',
-                  fontStyle: 'italic',
-                }}
-              >
-                {item.palette}
-              </div>
 
               <div style={{ alignSelf: 'flex-end' }}>
                 <SlideControls onPrev={handlePrev} onNext={handleNext} />

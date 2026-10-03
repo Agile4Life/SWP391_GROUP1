@@ -57,12 +57,8 @@ export function StaffReceptionPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Bàn Tiếp Đón &amp; Thu Phí POS Lễ Tân</h1>
-          <p className="portal-subtitle">
-            Tra cứu hội viên, xử lý thanh toán đa kênh và phát hành hóa đơn điện tử (SCMS Flow 1 &amp; Flow 2)
-          </p>
+          <h1 className="portal-title">Lễ Tân</h1>
         </div>
-        <span className="badge badge-info">QUẦY LỄ TÂN SẢNH CHÍNH</span>
       </div>
 
       {/* Member Lookup Bar */}
@@ -154,7 +150,6 @@ export function StaffReceptionPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Xử Lý Thu Phí &amp; Hóa Đơn (POS)</h2>
-            <span className="badge badge-warning">MODULE F: BILLING</span>
           </div>
 
           {invoiceIssued ? (

@@ -79,7 +79,7 @@ export function ManagerUsersPage() {
       setUsers((prev) =>
         prev.map((u) => (u.id === id ? { ...u, deletedAt: new Date().toISOString() } : u))
       );
-      alert('Tài khoản đã được cập nhật deleted_at (Không còn hiển thị trong danh sách mặc định).');
+      alert('Đã xóa tài khoản khỏi danh sách.');
     }
   };
 
@@ -102,10 +102,7 @@ export function ManagerUsersPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Quản Lý Người Dùng &amp; Phân Quyền (RBAC)</h1>
-          <p className="portal-subtitle">
-            Quản trị tài khoản 4 vai trò, kiểm soát trạng thái khóa và bảo mật quyền hạn (SCMS Module A: Identity)
-          </p>
+          <h1 className="portal-title">Tài Khoản &amp; Phân Quyền</h1>
         </div>
         <button
           type="button"

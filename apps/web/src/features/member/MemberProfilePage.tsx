@@ -93,8 +93,7 @@ export function MemberProfilePage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Hồ Sơ Hội Viên &amp; Chỉ Số Sức Khỏe</h1>
-          <p className="portal-subtitle">Quản lý dữ liệu định danh, mục tiêu thể chất và lịch sử chỉ số sức khỏe</p>
+          <h1 className="portal-title">Hồ Sơ Hội Viên</h1>
         </div>
         {saved && <span className="badge badge-success">Đã lưu thay đổi thành công!</span>}
       </div>

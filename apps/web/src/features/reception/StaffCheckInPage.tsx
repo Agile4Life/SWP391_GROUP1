@@ -78,14 +78,7 @@ export function StaffCheckInPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Cổng Kiểm Soát Ra Vào Turnstile &amp; Quét QR</h1>
-          <p className="portal-subtitle">
-            Hệ thống đối soát thẻ thành viên tự động thời gian thực (SCMS Flow 5: Center Check-in)
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <span className="badge badge-success">CỔNG A1: ONLINE</span>
-          <span className="badge badge-success">CỔNG A2: ONLINE</span>
+          <h1 className="portal-title">Check-in</h1>
         </div>
       </div>
 
@@ -94,7 +87,6 @@ export function StaffCheckInPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Mắt Đọc Mã QR Cổng Turnstile</h2>
-            <span className="badge badge-info">CAMERA SENSOR SCAN</span>
           </div>
 
           <form onSubmit={handleSubmit} style={{ marginBottom: '24px' }}>
@@ -116,7 +108,7 @@ export function StaffCheckInPage() {
           {/* Quick Simulation Buttons */}
           <div style={{ padding: '16px', background: '#F8F6F2', borderRadius: '6px', marginBottom: '24px' }}>
             <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#6A635D', marginBottom: '8px' }}>
-              🧪 Thử nghiệm giả lập luồng quét:
+              Quét thử:
             </div>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
@@ -183,7 +175,6 @@ export function StaffCheckInPage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <h2 className="portal-card-title">Nhật Ký Lượt Ra Vào Hôm Nay</h2>
-            <span className="badge badge-info">LIVE STREAM</span>
           </div>
 
           <div className="portal-table-wrapper">

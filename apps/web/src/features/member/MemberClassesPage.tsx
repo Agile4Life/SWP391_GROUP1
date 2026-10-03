@@ -135,10 +135,7 @@ export function MemberClassesPage() {
       )}
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Thời Khóa Biểu &amp; Đặt Chỗ Lớp Học</h1>
-          <p className="portal-subtitle">
-            Hệ thống đặt chỗ thông minh với cơ chế hàng chờ tự động (SCMS Flow 3: Class Utilization)
-          </p>
+          <h1 className="portal-title">Lớp Học</h1>
         </div>
 
         {/* Filter Discipline */}

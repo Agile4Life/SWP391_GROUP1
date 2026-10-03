@@ -97,8 +97,7 @@ export function ManagerCatalogsPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Quản Trị Danh Mục &amp; Cơ Sở Vật Chất</h1>
-          <p className="portal-subtitle">Cấu hình bộ môn thể thao, phòng tập và bảng giá gói dịch vụ</p>
+          <h1 className="portal-title">Danh Mục Vận Hành</h1>
         </div>
         <button type="button" className="btn-primary" onClick={() => setEditing({ id: null, form: emptyForm() })}>
           + Thêm Mục Mới

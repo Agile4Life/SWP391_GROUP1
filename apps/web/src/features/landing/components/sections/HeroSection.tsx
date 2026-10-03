@@ -42,43 +42,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         }}
       />
 
-      {/* Background Watermark */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 'clamp(60px, 9vh, 90px)',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontFamily: 'var(--font-serif)',
-          fontSize: 'clamp(3.5rem, 12vw, 10.5rem)',
-          letterSpacing: '0.22em',
-          textTransform: 'uppercase',
-          color: 'rgba(255, 255, 255, 0.07)',
-          pointerEvents: 'none',
-          whiteSpace: 'nowrap',
-          zIndex: 1,
-        }}
-      >
-        SÖL SANCTUARY
-      </div>
-
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '880px', margin: '0 auto' }}>
-        <div
-          className="anim-fade-up"
-          style={{
-            animationDelay: '80ms',
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(0.72rem, 1vw, 0.8rem)',
-            letterSpacing: '0.28em',
-            textTransform: 'uppercase',
-            color: 'var(--color-accent-sand)',
-            marginBottom: 'clamp(12px, 2vh, 20px)',
-            fontWeight: 500,
-          }}
-        >
-          SPORTS CENTER MANAGEMENT SYSTEM • EST. 2026
-        </div>
-
         <h1
           aria-label="DISCIPLINE. Movement. MASTERY."
           style={{
@@ -130,27 +94,11 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           </span>
         </h1>
 
-        <p
-          className="anim-fade-up"
-          style={{
-            animationDelay: '420ms',
-            color: 'rgba(250, 248, 245, 0.88)',
-            fontSize: 'clamp(0.92rem, 1.2vw, 1.05rem)',
-            lineHeight: 1.75,
-            maxWidth: '580px',
-            margin: '0 auto clamp(24px, 4vh, 36px) auto',
-            fontFamily: 'var(--font-sans)',
-            fontWeight: 300,
-          }}
-        >
-          Söl Wellness Sanctuary is an architectural health and sports club designed for intentional movement, precision
-          AI biometric calibration, and enduring physical longevity.
-        </p>
-
         <div
           className="anim-fade-up"
           style={{
-            animationDelay: '540ms',
+            animationDelay: '420ms',
+            marginTop: 'clamp(24px, 4vh, 36px)',
             display: 'flex',
             justifyContent: 'center',
             gap: '32px',

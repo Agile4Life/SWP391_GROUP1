@@ -67,36 +67,18 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
       }}
     >
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-        <div
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.72rem',
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)',
-            marginBottom: '8px',
-            fontWeight: 600,
-          }}
-        >
-          CỔNG XÁC THỰC TẬP TRUNG
-        </div>
-
         <h3
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: '2rem',
             fontWeight: 600,
-            margin: '0 0 10px 0',
+            margin: 0,
             color: '#1A1614',
             letterSpacing: '0.02em',
           }}
         >
-          Đăng Nhập Portal
+          Đăng nhập
         </h3>
-
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: '#7E7771', margin: 0, lineHeight: 1.6 }}>
-          Hệ thống xác thực đa vai trò hỗ trợ Hội viên, Lễ tân, Huấn luyện viên và Ban quản lý.
-        </p>
       </div>
 
       {formError && (
@@ -172,7 +154,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
             </span>
           ) : (
             <>
-              <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL'}</span>
+              <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'ĐĂNG NHẬP'}</span>
               <span className="submit-arrow" aria-hidden="true">→</span>
             </>
           )}

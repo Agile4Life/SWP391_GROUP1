@@ -219,9 +219,6 @@ export function UserManagerPage() {
       <div style={styles.header}>
         <div>
           <h1 style={styles.title}>Quản lý Người dùng & Phân quyền</h1>
-          <p style={styles.subtitle}>
-            Cấu hình danh sách tài khoản nhân viên, hội viên và ma trận quyền hạn (RBAC)
-          </p>
         </div>
         <div style={styles.tabGroup}>
           <button

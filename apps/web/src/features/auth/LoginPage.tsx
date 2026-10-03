@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { LuxuryLoginForm } from './LuxuryLoginForm';
-import { InfiniteMarquee } from '../landing/components/InfiniteMarquee';
 import { LANDING_IMAGES } from '../landing/assets/images';
+import { SiteFooter } from '../landing/components/SiteFooter';
 
 export function LoginPage() {
   return (
@@ -58,14 +58,12 @@ export function LoginPage() {
         >
           {/* Left Column: Atmospheric Architectural Imagery & Philosophy */}
           <div>
-            <div className="editorial-category">PORTAL ACCESS / RESIDENCY GATEWAY</div>
-
             <h1
               className="editorial-headline"
               style={{
                 fontSize: 'clamp(2.6rem, 4.4vw, 4rem)',
                 lineHeight: 1.05,
-                marginBottom: '24px',
+                marginBottom: '32px',
               }}
             >
               ENTER THE{' '}
@@ -73,11 +71,6 @@ export function LoginPage() {
                 Sanctuary
               </span>
             </h1>
-
-            <p className="editorial-body" style={{ maxWidth: '480px', marginBottom: '32px' }}>
-              Cổng quản trị tập trung Sports Center Management System (SCMS). Nền tảng số hóa đồng bộ phục vụ công tác
-              vận hành, huấn luyện và đối soát thẻ thành viên dựa trên phân quyền vai trò (RBAC) nghiêm ngặt.
-            </p>
 
             {/* Architectural Visual Plinth */}
             <div
@@ -95,21 +88,6 @@ export function LoginPage() {
                 loading="lazy"
               />
             </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gap: '12px',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.84rem',
-                color: '#6A635D',
-              }}
-            >
-              <div>✦ <strong>Hội viên:</strong> Quản lý lịch tập, đặt chỗ lớp Reformer/Boxing, thẻ QR ra vào cổng.</div>
-              <div>✦ <strong>Lễ tân &amp; Thu phí:</strong> Tra cứu hội viên tức thì, tiếp nhận thanh toán POS/VietQR.</div>
-              <div>✦ <strong>Huấn luyện viên:</strong> Điểm danh buổi dạy, đánh giá thể trạng và nhận gợi ý giáo án AI.</div>
-              <div>✦ <strong>Quản lý:</strong> Thiết lập danh mục bộ môn/phòng, phân quyền và theo dõi báo cáo doanh thu.</div>
-            </div>
           </div>
 
           {/* Right Column: Quiet Luxury Login Form */}
@@ -119,95 +97,7 @@ export function LoginPage() {
         </div>
       </main>
 
-      {/* Footer Matching Main Website */}
-      <div>
-        <footer className="aura-footer-bar">
-          <div>
-            <div
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.25rem',
-                letterSpacing: '0.2em',
-                fontWeight: 600,
-                marginBottom: '10px',
-              }}
-            >
-              SÖL WELLNESS SANCTUARY
-            </div>
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.8rem',
-                lineHeight: 1.65,
-                color: 'var(--color-text-muted)',
-                maxWidth: '280px',
-                margin: 0,
-              }}
-            >
-              Sports Center Management System (SCMS). Nền tảng thể thao đa năng tích hợp AI coaching &amp; quản trị vận hành
-              thông minh.
-            </p>
-          </div>
-
-          <div>
-            <div className="footer-col-title">KHÁM PHÁ</div>
-            <ul className="footer-nav-list">
-              <li className="footer-nav-item"><Link to="/#about">Về Chúng Tôi</Link></li>
-              <li className="footer-nav-item"><Link to="/#disciplines">Các Bộ Môn</Link></li>
-              <li className="footer-nav-item"><Link to="/#intelligence">Công Nghệ AI</Link></li>
-              <li className="footer-nav-item"><Link to="/#packages">Bảng Giá Gói Tập</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="footer-col-title">CỔNG TRUY CẬP (PORTAL)</div>
-            <ul className="footer-nav-list">
-              <li className="footer-nav-item">
-                <Link to="/member/dashboard" title="Đăng nhập Hội viên">Cổng Hội Viên (Member)</Link>
-              </li>
-              <li className="footer-nav-item">
-                <Link to="/staff/attendance" title="Đăng nhập Huấn luyện viên">Cổng Coach &amp; Điểm danh</Link>
-              </li>
-              <li className="footer-nav-item">
-                <Link to="/staff/reception" title="Đăng nhập Lễ tân">Cổng Lễ Tân &amp; Check-in</Link>
-              </li>
-              <li className="footer-nav-item">
-                <Link to="/manager/reports" title="Đăng nhập Quản lý">Cổng Quản Trị Trung Tâm</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="footer-col-title">LIÊN HỆ TRUNG TÂM</div>
-            <div
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.8rem',
-                color: 'var(--color-text-muted)',
-                lineHeight: 1.8,
-              }}
-            >
-              <div>Tòa nhà Landmark Sports, 120 Hai Bà Trưng, Q.1, TP. Hồ Chí Minh</div>
-              <div style={{ marginTop: '6px' }}><strong>Hotline:</strong> 1900 6868</div>
-              <div><strong>Email:</strong> concierge@sol-wellness.vn</div>
-              <div style={{ fontSize: '0.72rem', marginTop: '6px', color: '#9E958C' }}>
-                Giờ hoạt động: 06:00 – 22:00 hàng ngày
-              </div>
-            </div>
-          </div>
-        </footer>
-
-        {/* Marquee Banner */}
-        <InfiniteMarquee
-          phrases={[
-            'SÖL WELLNESS SANCTUARY',
-            'PORTAL AUTHENTICATION',
-            'ELEVATE YOUR STRENGTH',
-            'MINDFUL MOVEMENT',
-            'DISCIPLINE & MASTERY',
-          ]}
-        />
-      </div>
+      <SiteFooter />
     </div>
   );
 }

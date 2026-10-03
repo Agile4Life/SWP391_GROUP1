@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+import { useEffect, useRef, useCallback, ReactNode } from 'react';
 
 export interface FullpageScrollManagerProps {
   activeScreen: number;
@@ -33,15 +33,6 @@ export function FullpageScrollManager({
   const isAnimatingRef = useRef(false);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
-  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -217,31 +208,6 @@ export function FullpageScrollManager({
           </button>
         ))}
       </nav>
-
-      {/* Horizontal Progress Badge (Active on first 3 screens) */}
-      {isDesktop && activeScreen <= 2 && (
-        <aside className="sol-horizontal-hud-badge" aria-label="Horizontal scroll indicator">
-          <div className="hud-page-count">
-            <span className="hud-current">0{activeScreen + 1}</span>
-            <span className="hud-sep">/</span>
-            <span className="hud-max">03</span>
-          </div>
-
-          <div className="hud-tabs">
-            {['COVER', 'PHILOSOPHY', 'DISCIPLINES'].map((title, idx) => (
-              <button
-                key={title}
-                type="button"
-                onClick={() => goToScreen(idx)}
-                className={`hud-tab-btn ${activeScreen === idx ? 'active' : ''}`}
-              >
-                <span className="hud-dot" />
-                <span className="hud-name">{title}</span>
-              </button>
-            ))}
-          </div>
-        </aside>
-      )}
     </div>
   );
 }

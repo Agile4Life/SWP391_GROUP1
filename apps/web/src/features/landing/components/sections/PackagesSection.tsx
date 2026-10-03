@@ -51,7 +51,7 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
         'Unrestricted VIP access across all facilities 24/7',
         'Dedicated Personal Performance Coach & Dietitian',
         'Unlimited Cryotherapy & Contrast Hydrotherapy circuits',
-        'Priority studio waitlist allocation (SCMS VIP queue)',
+        'Priority studio waitlist allocation',
         'Executive private dressing suite with organic amenities',
       ],
       featured: false,
@@ -72,18 +72,12 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
     >
       <div className="sol-section-inner">
         <Reveal index={0} style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto clamp(10px, 2vh, 20px) auto' }}>
-          <div className="editorial-category" style={{ marginBottom: '6px' }}>
-            MEMBERSHIP CURATIONS / 04
-          </div>
-          <h2 className="editorial-headline" style={{ marginBottom: '8px', fontSize: 'clamp(1.7rem, 2.8vw, 2.5rem)' }}>
+          <h2 className="editorial-headline" style={{ margin: 0, fontSize: 'clamp(1.7rem, 2.8vw, 2.5rem)' }}>
             CURATED{' '}
             <span className="editorial-flourish" style={{ fontStyle: 'italic', fontWeight: 300 }}>
               Residencies
             </span>
           </h2>
-          <p className="editorial-body" style={{ margin: '0 auto', fontSize: 'clamp(0.8rem, 1vw, 0.88rem)' }}>
-            Membership at Söl Wellness Sanctuary is capped to preserve an uncrowded atmosphere of serenity and focus.
-          </p>
         </Reveal>
 
         {/* Mobile Tier Tabs */}
@@ -195,19 +189,6 @@ export function PackagesSection({ onSelectPlan }: PackagesSectionProps) {
                     marginBottom: 'clamp(12px, 1.8vh, 18px)',
                   }}
                 >
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.66rem',
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase',
-                      color: 'var(--color-text-muted)',
-                      marginBottom: '8px',
-                      fontWeight: 600,
-                    }}
-                  >
-                    INCLUDED PRIVILEGES
-                  </div>
                   <ul
                     style={{
                       listStyle: 'none',

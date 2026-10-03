@@ -25,17 +25,13 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
         <div className="philosophy-content-grid">
           {/* Narrative Column */}
           <div className="philosophy-text-col">
-            <Reveal index={0} className="editorial-category" style={{ marginBottom: '8px' }}>
-              PHILOSOPHY / 01
-            </Reveal>
-
             <Reveal index={1}>
               <h2
                 className="editorial-headline"
                 style={{
                   fontSize: 'clamp(1.7rem, 2.8vw, 2.6rem)',
                   lineHeight: 1.1,
-                  marginBottom: '12px',
+                  marginBottom: '20px',
                 }}
               >
                 <span className="editorial-flourish" style={{ fontStyle: 'italic', marginRight: '6px' }}>
@@ -45,22 +41,6 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
                 <br />
                 INTENTION
               </h2>
-            </Reveal>
-
-            <Reveal index={2}>
-              <p
-                className="editorial-body"
-                style={{
-                  maxWidth: '460px',
-                  marginBottom: '16px',
-                  fontSize: 'clamp(0.78rem, 0.95vw, 0.88rem)',
-                  lineHeight: 1.55,
-                }}
-              >
-                At Söl Wellness Sanctuary, we believe that physical conditioning is not just about raw exertion — it&apos;s
-                about how every movement calibrates your body and mind. We approach athletic longevity as a layered
-                composition of breath, biomechanics, and intelligent recovery.
-              </p>
             </Reveal>
 
             <Reveal index={3}>

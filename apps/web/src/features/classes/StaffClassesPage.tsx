@@ -99,17 +99,14 @@ export function StaffClassesPage() {
       schedule: 'T2, T4, T6 (09:00 - 10:00)',
       capacity: 12,
     });
-    alert('Tạo lớp học thành công! Database trigger đã xác nhận phòng không bị trùng lịch.');
+    alert('Tạo lớp học thành công!');
   };
 
   return (
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Quản Lý Lớp Học &amp; Thời Khóa Biểu</h1>
-          <p className="portal-subtitle">
-            Điều phối phòng tập, phân công HLV và kiểm soát công suất lớp (SCMS Module D: Classes &amp; Scheduling)
-          </p>
+          <h1 className="portal-title">Quản Lý Lớp Học</h1>
         </div>
         <button type="button" className="btn-primary" onClick={() => setShowModal(true)}>
           + Tạo Lớp Học Mới

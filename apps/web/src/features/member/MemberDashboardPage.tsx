@@ -34,10 +34,7 @@ export function MemberDashboardPage() {
       {/* Header Welcome */}
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Chào Mừng Trở Lại, Nguyễn Văn An</h1>
-          <p className="portal-subtitle">
-            Mã Hội Viên: <strong>MB-2026-089</strong> • Hạng Thẻ: <strong>THE SANCTUARY VIP</strong>
-          </p>
+          <h1 className="portal-title">Xin chào, Nguyễn Văn An</h1>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <Link to="/member/classes" className="btn-primary">
@@ -76,7 +73,7 @@ export function MemberDashboardPage() {
         </div>
 
         <div className="metric-card">
-          <div className="metric-label">ĐIỂM TÍCH LŨY RESIDENCY</div>
+          <div className="metric-label">ĐIỂM TÍCH LŨY</div>
           <div className="metric-value">
             <CountUp value={1450} format={(v) => Math.round(v).toLocaleString('vi-VN')} />
           </div>
@@ -142,7 +139,6 @@ export function MemberDashboardPage() {
               <span style={{ fontSize: '1.2rem' }}>✨</span>
               <h2 className="portal-card-title">Gợi Ý Từ Trợ Lý AI Coaching</h2>
             </div>
-            <span className="badge badge-info">AI ENGINE v2.4</span>
           </div>
 
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: '#4A433D', lineHeight: 1.65 }}>
