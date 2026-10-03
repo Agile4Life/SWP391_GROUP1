@@ -391,8 +391,8 @@
     "semantic_hash": ""
   },
   "apps/api/pom.xml": {
-    "mtime": 1790851549.8359976,
-    "ast_hash": "36ac8df4f7ee0608706629991cbdc8d3",
+    "mtime": 1791008738.921934,
+    "ast_hash": "d719336a0151de78d3a9e6aed32caea7",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/ScmsApplication.java": {
@@ -461,8 +461,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/security/SecurityConfig.java": {
-    "mtime": 1791008236.5755117,
-    "ast_hash": "4ee8775d2457e41438b69491116a617d",
+    "mtime": 1791008780.8298304,
+    "ast_hash": "b0e808211f1b7c0dea84b28f1c7102f9",
     "semantic_hash": ""
   },
   "apps/web/eslint.config.js": {
@@ -476,8 +476,8 @@
     "semantic_hash": "00f60a13b2b991b5a61d6db6ac19769d"
   },
   "apps/web/src/app/router.tsx": {
-    "mtime": 1790851549.9066172,
-    "ast_hash": "2954efac15acfbcb3b17fc21bd6150e7",
+    "mtime": 1791009138.7832537,
+    "ast_hash": "eb261739c7c109bd09e5957b15e52883",
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LoginPage.tsx": {
@@ -602,8 +602,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/RoleController.java": {
-    "mtime": 1790851549.8815284,
-    "ast_hash": "b0cfbbcaf0fd88a4baa825d5afd28cc4",
+    "mtime": 1791008929.3985248,
+    "ast_hash": "b2bc75f898ff19e1b39c795b2b2bc9f9",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/RoleRepository.java": {
@@ -612,8 +612,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/RoleService.java": {
-    "mtime": 1790851549.8835263,
-    "ast_hash": "7a09905f1e65a2e6493759a71d45eb48",
+    "mtime": 1791008929.3945224,
+    "ast_hash": "fc228230a7301c9a22a3ca6bb8596d93",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/UserController.java": {
@@ -627,8 +627,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/UserService.java": {
-    "mtime": 1790851549.8865244,
-    "ast_hash": "d6cfbb6c94e18f34a72c14cbccef074f",
+    "mtime": 1791008758.1609855,
+    "ast_hash": "3c845415e8df88da8e32d990a00ed6e4",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/dto/PermissionDto.java": {
@@ -682,9 +682,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LuxuryLoginForm.tsx": {
-    "mtime": 1790405834.125548,
-    "ast_hash": "c63e560952f05ca2eb3a05dd2ba72478",
-    "semantic_hash": "c63e560952f05ca2eb3a05dd2ba72478"
+    "mtime": 1791009138.7882555,
+    "ast_hash": "ba321625e51d86daf3e496d021dd85dc",
+    "semantic_hash": ""
   },
   "apps/web/src/features/classes/StaffClassesPage.tsx": {
     "mtime": 1790405834.1265533,
@@ -847,9 +847,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberProfilePage.tsx": {
-    "mtime": 1790405834.1461017,
-    "ast_hash": "defa6ddec12c2eaf6a8e908c669637d5",
-    "semantic_hash": "defa6ddec12c2eaf6a8e908c669637d5"
+    "mtime": 1791009089.146555,
+    "ast_hash": "d294d89428d029f71958110eada1e6f0",
+    "semantic_hash": ""
   },
   "apps/web/src/features/reception/StaffCheckInPage.tsx": {
     "mtime": 1790405834.1471303,
@@ -1397,8 +1397,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/facilities/service/CatalogService.java": {
-    "mtime": 1791008192.9452682,
-    "ast_hash": "585ce56f6a1d72eff2c9f123efb7043b",
+    "mtime": 1791008758.1619542,
+    "ast_hash": "53e0a1818352a51b5f21731b349ff009",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/finance/InvoiceController.java": {
@@ -1562,8 +1562,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/UserManagerPage.tsx": {
-    "mtime": 1790851549.907618,
-    "ast_hash": "e564d53033dc33429f94dbf7271232e2",
+    "mtime": 1791009164.402117,
+    "ast_hash": "00dece989c810f3ca42848d38318bb9d",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/catalogApi.ts": {
@@ -1572,8 +1572,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/userApi.ts": {
-    "mtime": 1790851549.907618,
-    "ast_hash": "31ec0be8d3573fefe29201c1382f3eab",
+    "mtime": 1791008986.2359955,
+    "ast_hash": "faa44d64b649aec52d7f4260d7f83578",
     "semantic_hash": ""
   },
   "apps/web/src/hooks/index.ts": {
@@ -2969,6 +2969,81 @@
   "diagram_screenshots/page_9.png": {
     "mtime": 1789573445.6327362,
     "ast_hash": "9fd5fae317820e16766c0cfb7e114244",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/audit/AuditAspect.java": {
+    "mtime": 1791008738.971894,
+    "ast_hash": "f677345ebeff2e1b6ef17c41122249b0",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/audit/AuditLog.java": {
+    "mtime": 1791008738.9678926,
+    "ast_hash": "9e9a3a0d28755ce1cab6b80c8476dceb",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/audit/AuditLogRepository.java": {
+    "mtime": 1791008738.969892,
+    "ast_hash": "fb9e1f815acc7b9dde44f427cc1a3446",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/audit/Audited.java": {
+    "mtime": 1791008738.965895,
+    "ast_hash": "ca1e62dab7324fa83b2fa29296596ef7",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/reception/MemberLookupController.java": {
+    "mtime": 1791008780.8138323,
+    "ast_hash": "3a1119e20ef7787c5f7989daa72510e7",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/reception/MemberLookupDto.java": {
+    "mtime": 1791008780.8038332,
+    "ast_hash": "36edf9b0366c475ff3b34b91107785cb",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/reception/MemberLookupRepository.java": {
+    "mtime": 1791008780.807834,
+    "ast_hash": "cebc3739af27a03cb0a197072779e000",
+    "semantic_hash": ""
+  },
+  "apps/api/src/main/java/com/swp391/scms/reception/MemberLookupService.java": {
+    "mtime": 1791008780.810833,
+    "ast_hash": "960a0eb29656ce9ad1e978829f8c95c4",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/audit/AuditAspectTest.java": {
+    "mtime": 1791008834.2278936,
+    "ast_hash": "258e8d4b2f2cad5974a158977af9ed3e",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/auth/AuthServiceTest.java": {
+    "mtime": 1791008834.2155805,
+    "ast_hash": "edc66a16a53ddf0f0bce7ff2dd2c4c2a",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/auth/OtpServiceTest.java": {
+    "mtime": 1791008834.2115831,
+    "ast_hash": "97feb3fb2033e9af78afd5a025ac91ef",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/reception/MemberLookupServiceTest.java": {
+    "mtime": 1791008834.2334101,
+    "ast_hash": "62888fbb53b391e7ac8b8a6d354a57d7",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/users/RoleServiceTest.java": {
+    "mtime": 1791008940.8909574,
+    "ast_hash": "078e058df0273999f7f7ba8e9e3fb5d9",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/users/UserServiceTest.java": {
+    "mtime": 1791008834.2228923,
+    "ast_hash": "442407040cd7b52caae9f047ebb419aa",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/auth/RegisterPage.tsx": {
+    "mtime": 1791009129.005222,
+    "ast_hash": "9967793b61ad92fb843d287ad9c50e25",
     "semantic_hash": ""
   }
 }
