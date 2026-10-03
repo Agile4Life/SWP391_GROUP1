@@ -1,5 +1,6 @@
 import { CountUp } from '../../shared/ui/CountUp';
 import { useInView } from '../../hooks/useInView';
+import { toast } from '../../shared/ui/toast';
 
 export function ManagerReportsPage() {
   const [revenueRef, revenueInView] = useInView<HTMLDivElement>(0.2);
@@ -15,9 +16,14 @@ export function ManagerReportsPage() {
     <div className="portal-container">
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Báo Cáo</h1>
+          <h1 className="portal-title">Báo Cáo Trung Tâm</h1>
+          <p className="portal-subtitle">Thống kê doanh thu, lưu lượng check-in và nhật ký kiểm toán hệ thống</p>
         </div>
-        <button type="button" className="btn-secondary" onClick={() => alert('Xuất báo cáo tài chính')}>
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() => toast('Đang tạo và tải xuống bản báo cáo tài chính PDF...', 'success')}
+        >
           Xuất Báo Cáo Doanh Thu
         </button>
       </div>

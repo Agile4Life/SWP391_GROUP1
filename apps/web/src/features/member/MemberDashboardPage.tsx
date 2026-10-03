@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { CountUp } from '../../shared/ui/CountUp';
+import { getCurrentUser } from '../../shared/api/client';
+import { toast } from '../../shared/ui/toast';
 
 export function MemberDashboardPage() {
+  const currentUser = getCurrentUser();
+  const userName = currentUser?.name || 'Hội viên';
+
   const upcomingClasses = [
     {
       id: 1,
@@ -34,7 +39,7 @@ export function MemberDashboardPage() {
       {/* Header Welcome */}
       <div className="portal-header">
         <div>
-          <h1 className="portal-title">Xin chào, Nguyễn Văn An</h1>
+          <h1 className="portal-title">Xin chào, {userName}</h1>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <Link to="/member/classes" className="btn-primary">
@@ -170,7 +175,7 @@ export function MemberDashboardPage() {
             type="button"
             className="btn-primary"
             style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => alert('Đã đồng bộ giáo án AI sang Huấn luyện viên trưởng phụ trách của bạn!')}
+            onClick={() => toast('Đã đồng bộ giáo án sang Huấn luyện viên phụ trách của bạn!', 'success')}
           >
             Gửi Giáo Án Cho HLV Elena Phê Duyệt
           </button>

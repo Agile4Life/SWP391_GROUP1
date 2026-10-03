@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from '../../shared/ui/toast';
 
 export function StaffReceptionPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,7 +33,7 @@ export function StaffReceptionPage() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) {
-      alert('Vui lòng nhập SĐT hoặc Mã hội viên');
+      toast('Vui lòng nhập SĐT hoặc Mã hội viên để tra cứu.', 'error');
       return;
     }
     // Mock found result
@@ -45,12 +46,14 @@ export function StaffReceptionPage() {
       status: 'EXPIRED',
       endDate: '20/09/2026',
     });
+    toast('Đã tìm thấy thông tin hội viên.', 'success');
   };
 
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
     const newInvoiceNo = `INV-2026-${Math.floor(10000 + Math.random() * 90000)}`;
     setInvoiceIssued(newInvoiceNo);
+    toast(`Đã ghi nhận thanh toán và xuất hóa đơn ${newInvoiceNo}!`, 'success');
   };
 
   return (
@@ -126,14 +129,14 @@ export function StaffReceptionPage() {
                 <button
                   type="button"
                   className="btn-secondary btn-sm"
-                  onClick={() => alert(`Đã cấp mã QR thẻ thay thế cho hội viên ${foundMember.name}`)}
+                  onClick={() => toast(`Đã cấp mã QR thẻ thay thế cho hội viên ${foundMember.name}`, 'success')}
                 >
                   Cấp Lại Thẻ QR
                 </button>
                 <button
                   type="button"
                   className="btn-secondary btn-sm"
-                  onClick={() => alert(`Lịch sử tham gia: 18 buổi tập trong 30 ngày qua`)}
+                  onClick={() => toast('Lịch sử tham gia: 18 buổi tập trong 30 ngày qua', 'success')}
                 >
                   Xem Lịch Sử Điểm Danh
                 </button>
@@ -169,7 +172,7 @@ export function StaffReceptionPage() {
                 của hội viên đã tự động gia hạn thêm ngày.
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
-                <button type="button" className="btn-primary btn-sm" onClick={() => alert('Đang in hóa đơn...')}>
+                <button type="button" className="btn-primary btn-sm" onClick={() => toast('Đang xuất lệnh in hóa đơn...', 'success')}>
                   In Hóa Đơn Khách Hàng
                 </button>
                 <button type="button" className="btn-secondary btn-sm" onClick={() => setInvoiceIssued(null)}>

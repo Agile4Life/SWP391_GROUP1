@@ -1,11 +1,13 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   userApi,
   UserAccount,
   SystemRole,
   CORE_ROLES,
   Permission,
-} from "./userApi";
+} from './userApi';
+import { Modal } from '../../shared/ui/Modal';
+import { toast } from '../../shared/ui/toast';
 
 export function UserManagerPage() {
   const [users, setUsers] = useState<UserAccount[]>([]);
@@ -15,19 +17,19 @@ export function UserManagerPage() {
     RECEPTIONIST: [],
     MEMBER: [],
   });
-  const [activeTab, setActiveTab] = useState<"USERS" | "ROLES">("ROLES");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [roleFilter, setRoleFilter] = useState<string>("ALL");
+  const [activeTab, setActiveTab] = useState<'USERS' | 'ROLES'>('USERS');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [roleFilter, setRoleFilter] = useState<string>('ALL');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    role: "COACH" as SystemRole,
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    role: 'COACH' as SystemRole,
   });
 
-  // Quản lý lỗi hiển thị trực tiếp dưới từng ô input
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
@@ -36,17 +38,17 @@ export function UserManagerPage() {
   }>({});
 
   const [loading, setLoading] = useState(false);
-  const [loadError, setLoadError] = useState("");
+  const [loadError, setLoadError] = useState('');
   const [permissions, setPermissions] = useState<Permission[]>([]);
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, []);
 
   async function loadData() {
     setLoading(true);
     try {
-      setLoadError("");
+      setLoadError('');
       const [u, r, p] = await Promise.all([
         userApi.getUsers(),
         userApi.getRolePermissions(),
@@ -56,38 +58,41 @@ export function UserManagerPage() {
       setRolePerms(r);
       setPermissions(p);
     } catch (err) {
-      setLoadError(err instanceof Error ? err.message : "Không thể tải dữ liệu.");
+      setLoadError(err instanceof Error ? err.message : 'Không thể tải dữ liệu.');
     } finally {
       setLoading(false);
     }
   }
 
   const filteredUsers = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
     return users.filter((u) => {
       const matchSearch =
-        u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.phone.includes(searchTerm);
-      const matchRole = roleFilter === "ALL" || u.role === roleFilter;
+        !term ||
+        u.name.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term) ||
+        u.phone.includes(term);
+      const matchRole = roleFilter === 'ALL' || u.role === roleFilter;
       return matchSearch && matchRole;
     });
   }, [users, searchTerm, roleFilter]);
 
   async function handleToggleLock(user: UserAccount) {
-    const actionName =
-      user.status === "ACTIVE" ? "khóa (soft-delete)" : "mở khóa";
-    if (
-      !window.confirm(
-        `Bạn có chắc muốn ${actionName} tài khoản "${user.name}"?`,
-      )
-    )
-      return;
+    const actionName = user.status === 'ACTIVE' ? 'khóa tài khoản' : 'mở khóa tài khoản';
+    if (!window.confirm(`Bạn có chắc muốn ${actionName} "${user.name}"?`)) return;
 
     try {
       const updated = await userApi.toggleLockUser(user.id);
       setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+      toast(
+        updated.status === 'ACTIVE'
+          ? `Đã mở khóa tài khoản "${user.name}".`
+          : `Đã khóa tài khoản "${user.name}".`,
+        'success'
+      );
     } catch (err) {
-      alert((err as Error).message || "Thao tác thất bại.");
+      const msg = err instanceof Error ? err.message : 'Thao tác thất bại.';
+      toast(msg, 'error');
     }
   }
 
@@ -100,34 +105,30 @@ export function UserManagerPage() {
 
     const errors: { name?: string; email?: string; phone?: string; password?: string } = {};
 
-    // 1. Kiểm tra Họ và tên
     if (!cleanName) {
-      errors.name = "Vui lòng nhập họ và tên.";
+      errors.name = 'Vui lòng nhập họ và tên.';
     } else if (cleanName.length < 2) {
-      errors.name = "Họ và tên quá ngắn (tối thiểu 2 ký tự).";
+      errors.name = 'Họ và tên quá ngắn (tối thiểu 2 ký tự).';
     }
 
-    // 2. Kiểm tra Email
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!cleanEmail) {
-      errors.email = "Vui lòng nhập email liên hệ.";
-    } else if (cleanEmail.toLowerCase().endsWith("@gmail.co")) {
-      errors.email = "Có vẻ bạn gõ nhầm @gmail.co? Vui lòng sửa thành @gmail.com";
+      errors.email = 'Vui lòng nhập email liên hệ.';
+    } else if (cleanEmail.toLowerCase().endsWith('@gmail.co')) {
+      errors.email = 'Có vẻ bạn gõ nhầm @gmail.co? Vui lòng sửa thành @gmail.com';
     } else if (!emailRegex.test(cleanEmail)) {
-      errors.email = "Email liên hệ không đúng định dạng (vd: mai@fitcenter.com).";
+      errors.email = 'Email liên hệ không đúng định dạng (vd: mai@sol-wellness.vn).';
     }
 
-    // 3. Kiểm tra Số điện thoại Việt Nam (10 số, bắt đầu 03, 05, 07, 08, 09)
     const phoneRegex = /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/;
     if (!cleanPhone) {
-      errors.phone = "Vui lòng nhập số điện thoại.";
+      errors.phone = 'Vui lòng nhập số điện thoại.';
     } else if (!phoneRegex.test(cleanPhone)) {
-      errors.phone = "Số điện thoại không hợp lệ (Phải là 10 số, vd: 0912345678).";
+      errors.phone = 'Số điện thoại không hợp lệ (Phải là 10 số, vd: 0912345678).';
     }
 
-    // Nếu có lỗi ở trường nào, set lỗi vào state để hiển thị ngay bên dưới
     if (formData.password.length < 6 || formData.password.length > 50) {
-      errors.password = "Mật khẩu phải từ 6 đến 50 ký tự.";
+      errors.password = 'Mật khẩu phải từ 6 đến 50 ký tự.';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -136,6 +137,8 @@ export function UserManagerPage() {
     }
 
     setFieldErrors({});
+    setIsCreating(true);
+
     try {
       const created = await userApi.createUser({
         name: cleanName,
@@ -146,664 +149,414 @@ export function UserManagerPage() {
       });
       setUsers((prev) => [created, ...prev]);
       setIsModalOpen(false);
-      setFormData({ name: "", email: "", phone: "", password: "", role: "COACH" });
+      setFormData({ name: '', email: '', phone: '', password: '', role: 'COACH' });
+      toast(`Đã tạo tài khoản "${created.name}" thành công!`, 'success');
     } catch (err) {
-      alert((err as Error).message || "Không thể tạo người dùng.");
+      const msg = err instanceof Error ? err.message : 'Không thể tạo người dùng.';
+      toast(msg, 'error');
+    } finally {
+      setIsCreating(false);
     }
   }
 
   async function handleTogglePermission(role: SystemRole, permId: string) {
-    if (role === "CENTER_MANAGER") return;
+    if (role === 'CENTER_MANAGER') return;
 
-    await userApi.toggleRolePermission(role, permId);
-    const updated = await userApi.getRolePermissions();
-    setRolePerms({ ...updated });
+    // Optimistic update
+    const previous = rolePerms[role] ?? [];
+    const hasPerm = previous.includes(permId);
+    const updatedList = hasPerm
+      ? previous.filter((id) => id !== permId)
+      : [...previous, permId];
+
+    setRolePerms((prev) => ({ ...prev, [role]: updatedList }));
+
+    try {
+      await userApi.toggleRolePermission(role, permId);
+      toast('Đã cập nhật quyền thành công!', 'success');
+    } catch (err) {
+      // Revert on error
+      setRolePerms((prev) => ({ ...prev, [role]: previous }));
+      const msg = err instanceof Error ? err.message : 'Không thể cập nhật quyền.';
+      toast(msg, 'error');
+    }
   }
 
   const getRoleBadge = (role: SystemRole) => {
     switch (role) {
-      case "CENTER_MANAGER":
-        return (
-          <span
-            style={{
-              ...styles.badge,
-              backgroundColor: "#FEF3C7",
-              color: "#92400E",
-            }}
-          >
-            Quản lý
-          </span>
-        );
-      case "COACH":
-        return (
-          <span
-            style={{
-              ...styles.badge,
-              backgroundColor: "#E0E7FF",
-              color: "#3730A3",
-            }}
-          >
-            Huấn luyện viên
-          </span>
-        );
-      case "RECEPTIONIST":
-        return (
-          <span
-            style={{
-              ...styles.badge,
-              backgroundColor: "#E0F2FE",
-              color: "#0369A1",
-            }}
-          >
-            Lễ tân
-          </span>
-        );
-      case "MEMBER":
-        return (
-          <span
-            style={{
-              ...styles.badge,
-              backgroundColor: "#F1F5F9",
-              color: "#475569",
-            }}
-          >
-            Hội viên
-          </span>
-        );
+      case 'CENTER_MANAGER':
+        return <span className="badge badge-warning">Quản lý trung tâm</span>;
+      case 'COACH':
+        return <span className="badge badge-info">Huấn luyện viên</span>;
+      case 'RECEPTIONIST':
+        return <span className="badge" style={{ background: '#E0F2FE', color: '#0369A1' }}>Lễ tân</span>;
+      case 'MEMBER':
+        return <span className="badge">Hội viên</span>;
     }
   };
 
   return (
-    <div style={styles.container}>
-      {/* Page Header */}
-      <div style={styles.header}>
+    <div className="portal-container">
+      {/* Header */}
+      <div className="portal-header">
         <div>
-          <h1 style={styles.title}>Quản lý Người dùng & Phân quyền</h1>
-        </div>
-        <div style={styles.tabGroup}>
-          <button
-            onClick={() => setActiveTab("USERS")}
-            style={
-              activeTab === "USERS" ? styles.tabActive : styles.tabInactive
-            }
-          >
-            Danh sách Tài khoản
-          </button>
-          <button
-            onClick={() => setActiveTab("ROLES")}
-            style={
-              activeTab === "ROLES" ? styles.tabActive : styles.tabInactive
-            }
-          >
-            Phân quyền Vai trò
-          </button>
+          <h1 className="portal-title">Tài Khoản & Phân Quyền</h1>
+          <p className="portal-subtitle">Quản lý nhân sự, hội viên và ma trận phân quyền vai trò (RBAC)</p>
         </div>
       </div>
 
-      {loading && <div role="status">{"\u0110ang t\u1ea3i d\u1eef li\u1ec7u..."}</div>}
+      {/* Tabs */}
+      <div className="portal-tabs">
+        <button
+          type="button"
+          className={`portal-tab ${activeTab === 'USERS' ? 'active' : ''}`}
+          onClick={() => setActiveTab('USERS')}
+        >
+          Danh Sách Tài Khoản ({users.length})
+        </button>
+        <button
+          type="button"
+          className={`portal-tab ${activeTab === 'ROLES' ? 'active' : ''}`}
+          onClick={() => setActiveTab('ROLES')}
+        >
+          Ma Trận Phân Quyền Vai Trò
+        </button>
+      </div>
 
       {loadError && (
-        <div role="alert" style={{ color: "#B91C1C", marginBottom: 12 }}>
-          {loadError}{" "}
-          <button type="button" onClick={() => void loadData()}>
+        <div role="alert" className="portal-alert">
+          <span>⚠️ {loadError}</span>
+          <button type="button" className="btn-secondary btn-sm" onClick={() => void loadData()}>
             Thử lại
           </button>
         </div>
       )}
 
-      {activeTab === "USERS" ? (
+      {loading ? (
+        <div className="portal-card">
+          <div className="portal-state">
+            <div className="spinner" />
+            <p>Đang tải dữ liệu tài khoản và phân quyền...</p>
+          </div>
+        </div>
+      ) : activeTab === 'USERS' ? (
         <div>
-          {/* Controls Bar */}
-          <div style={styles.controlsBar}>
-            <div style={styles.filterGroup}>
-              <input
-                type="text"
-                placeholder="Tìm theo tên, email hoặc SĐT..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={styles.searchInput}
-              />
-              <select
-                value={roleFilter}
-                onChange={(e) => setRoleFilter(e.target.value)}
-                style={styles.selectInput}
-              >
-                <option value="ALL">Tất cả vai trò</option>
-                <option value="CENTER_MANAGER">Quản lý trung tâm</option>
-                <option value="COACH">Huấn luyện viên</option>
-                <option value="RECEPTIONIST">Lễ tân</option>
-                <option value="MEMBER">Hội viên</option>
-              </select>
-            </div>
+          {/* Controls / Filter Bar */}
+          <div className="portal-toolbar">
+            <input
+              type="text"
+              className="portal-input"
+              placeholder="Tìm kiếm theo họ tên, email hoặc SĐT..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <select
+              className="portal-select"
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+            >
+              <option value="ALL">Tất cả vai trò</option>
+              <option value="CENTER_MANAGER">Quản lý trung tâm</option>
+              <option value="COACH">Huấn luyện viên</option>
+              <option value="RECEPTIONIST">Lễ tân</option>
+              <option value="MEMBER">Hội viên</option>
+            </select>
             <button
+              type="button"
+              className="btn-primary"
               onClick={() => {
                 setFieldErrors({});
                 setIsModalOpen(true);
               }}
-              style={styles.primaryBtn}
             >
-              + Thêm tài khoản mới
+              + Thêm Tài Khoản Mới
             </button>
           </div>
 
           {/* User Table */}
-          <div style={styles.tableCard}>
-            <table style={styles.table}>
+          <div className="portal-card portal-card--flush">
+            {filteredUsers.length === 0 ? (
+              <div className="portal-state" style={{ minHeight: '180px' }}>
+                <p style={{ color: '#7E7771', margin: 0 }}>
+                  Không tìm thấy tài khoản nào phù hợp với bộ lọc hiện tại.
+                </p>
+                {(searchTerm || roleFilter !== 'ALL') && (
+                  <button
+                    type="button"
+                    className="btn-secondary btn-sm"
+                    style={{ marginTop: 8 }}
+                    onClick={() => {
+                      setSearchTerm('');
+                      setRoleFilter('ALL');
+                    }}
+                  >
+                    Xóa bộ lọc tìm kiếm
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="portal-table-wrapper">
+                <table className="portal-table">
+                  <thead>
+                    <tr>
+                      <th>Họ và Tên</th>
+                      <th>Thông Tin Liên Hệ</th>
+                      <th>Vai Trò</th>
+                      <th>Trạng Thái</th>
+                      <th>Ngày Tạo</th>
+                      <th className="actions">Thao Tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.map((u) => (
+                      <tr key={u.id}>
+                        <td>
+                          <strong>{u.name}</strong>
+                          <div className="muted">ID: {u.id}</div>
+                        </td>
+                        <td>
+                          <div>{u.email}</div>
+                          <div className="muted">{u.phone || '—'}</div>
+                        </td>
+                        <td>{getRoleBadge(u.role)}</td>
+                        <td>
+                          {u.status === 'ACTIVE' ? (
+                            <span className="badge badge-success">● Đang hoạt động</span>
+                          ) : (
+                            <span className="badge badge-warning">● Đã khóa</span>
+                          )}
+                        </td>
+                        <td>{u.created_at || '—'}</td>
+                        <td className="actions">
+                          <button
+                            type="button"
+                            className={u.status === 'ACTIVE' ? 'btn-secondary btn-sm' : 'btn-primary btn-sm'}
+                            disabled={u.role === 'CENTER_MANAGER'}
+                            title={
+                              u.role === 'CENTER_MANAGER'
+                                ? 'Không thể khóa tài khoản Quản lý trung tâm'
+                                : u.status === 'ACTIVE'
+                                  ? 'Khóa tài khoản'
+                                  : 'Mở khóa tài khoản'
+                            }
+                            onClick={() => handleToggleLock(u)}
+                          >
+                            {u.status === 'ACTIVE' ? 'Khóa' : 'Kích hoạt'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* Matrix Phân quyền RBAC */
+        <div className="portal-card portal-card--flush">
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(33, 28, 24, 0.08)' }}>
+            <h2 className="portal-card-title">Ma Trận Phân Quyền &amp; Vai Trò (RBAC)</h2>
+            <p className="portal-card-subtitle" style={{ margin: '4px 0 0' }}>
+              4 vai trò hệ thống cốt lõi. Quản lý trung tâm mặc định giữ toàn quyền bảo mật. Click vào các ô vuông để gán hoặc thu hồi quyền cho từng vai trò.
+            </p>
+          </div>
+
+          <div className="portal-table-wrapper">
+            <table className="portal-table">
               <thead>
-                <tr style={styles.tableHeadRow}>
-                  <th style={styles.th}>Họ và tên</th>
-                  <th style={styles.th}>Liên hệ</th>
-                  <th style={styles.th}>Vai trò</th>
-                  <th style={styles.th}>Trạng thái</th>
-                  <th style={styles.th}>Ngày tạo</th>
-                  <th style={{ ...styles.th, textAlign: "right" }}>Thao tác</th>
+                <tr>
+                  <th style={{ width: '42%' }}>Chức Năng / Phân Hệ</th>
+                  {CORE_ROLES.map((r) => (
+                    <th key={r.id} style={{ textAlign: 'center' }}>
+                      {r.name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((u) => (
-                  <tr key={u.id} style={styles.tr}>
-                    <td style={styles.td}>
-                      <div style={{ fontWeight: 600, color: "#0F172A" }}>
-                        {u.name}
-                      </div>
-                      <div style={{ fontSize: "11px", color: "#94A3B8" }}>
-                        ID: {u.id}
+                {permissions.map((perm) => (
+                  <tr key={perm.id}>
+                    <td>
+                      <strong>{perm.name}</strong>
+                      <div className="muted">
+                        Mã: <code>{perm.code}</code> • Phân hệ: {perm.module}
                       </div>
                     </td>
-                    <td style={styles.td}>
-                      <div>{u.email}</div>
-                      <div style={{ fontSize: "12px", color: "#64748B" }}>
-                        {u.phone}
-                      </div>
-                    </td>
-                    <td style={styles.td}>{getRoleBadge(u.role)}</td>
-                    <td style={styles.td}>
-                      {u.status === "ACTIVE" ? (
-                        <span style={styles.activeDot}>● Hoạt động</span>
-                      ) : (
-                        <div>
-                          <span style={styles.lockedDot}>● Đã khóa</span>
-                          <div
+                    {CORE_ROLES.map((role) => {
+                      const isManager = role.id === 'CENTER_MANAGER';
+                      const isChecked = isManager || rolePerms[role.id]?.includes(perm.id);
+
+                      return (
+                        <td key={role.id} style={{ textAlign: 'center' }}>
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            disabled={isManager}
+                            title={
+                              isManager
+                                ? 'Quyền mặc định của Quản lý trung tâm (bất biến)'
+                                : 'Nhấp để gán hoặc hủy quyền'
+                            }
+                            onChange={() => handleTogglePermission(role.id, perm.id)}
                             style={{
-                              fontSize: "10px",
-                              color: "#94A3B8",
-                              marginTop: "2px",
+                              width: '18px',
+                              height: '18px',
+                              accentColor: 'var(--color-accent-gold)',
+                              cursor: isManager ? 'not-allowed' : 'pointer',
+                              opacity: isManager ? 0.7 : 1,
                             }}
-                          >
-                            Soft-delete:{" "}
-                            {new Date(u.deleted_at!).toLocaleDateString("vi-VN")}
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                    <td style={styles.td}>{u.created_at}</td>
-                    <td style={{ ...styles.td, textAlign: "right" }}>
-                      <button
-                        onClick={() => handleToggleLock(u)}
-                        disabled={u.role === "CENTER_MANAGER"}
-                        style={
-                          u.status === "ACTIVE"
-                            ? styles.lockBtn
-                            : styles.unlockBtn
-                        }
-                      >
-                        {u.status === "ACTIVE" ? "Khóa" : "Kích hoạt"}
-                      </button>
-                    </td>
+                          />
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-      ) : (
-        /* Matrix Phân quyền RBAC */
-        <div style={styles.tableCard}>
-          <div style={{ padding: "20px", borderBottom: "1px solid #E2E8F0" }}>
-            <h2
-              style={{
-                fontSize: "16px",
-                fontWeight: 700,
-                margin: 0,
-                color: "#0F172A",
-              }}
-            >
-              Ma trận Phân quyền & Vai trò (RBAC)
-            </h2>
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#64748B",
-                margin: "4px 0 0 0",
-              }}
-            >
-              4 vai trò gốc cố định. Quản lý trung tâm mặc định giữ toàn quyền bảo mật. Click vào các ô vuông để phân quyền cho Huấn luyện viên, Lễ tân hoặc Hội viên.
-            </p>
-          </div>
-          <table style={styles.table}>
-            <thead>
-              <tr style={styles.tableHeadRow}>
-                <th style={{ ...styles.th, width: "40%" }}>
-                  Chức năng / Quyền hạn
-                </th>
-                {CORE_ROLES.map((r) => (
-                  <th key={r.id} style={{ ...styles.th, textAlign: "center" }}>
-                    {r.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {permissions.map((perm) => (
-                <tr key={perm.id} style={styles.tr}>
-                  <td style={styles.td}>
-                    <div style={{ fontWeight: 600, color: "#1E293B" }}>
-                      {perm.name}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "11px",
-                        color: "#64748B",
-                        marginTop: "2px",
-                      }}
-                    >
-                      Mã: <code>{perm.code}</code> • Phân hệ: {perm.module}
-                    </div>
-                  </td>
-                  {CORE_ROLES.map((role) => {
-                    const isManager = role.id === "CENTER_MANAGER";
-                    const isChecked = rolePerms[role.id]?.includes(perm.id);
-
-                    return (
-                      <td
-                        key={role.id}
-                        style={{ ...styles.td, textAlign: "center" }}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          disabled={isManager}
-                          title={
-                            isManager
-                              ? "Quyền mặc định của Quản lý trung tâm (không thể hủy)"
-                              : "Click để gán hoặc hủy quyền"
-                          }
-                          onChange={() =>
-                            handleTogglePermission(role.id, perm.id)
-                          }
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                            accentColor: "#046A38",
-                            cursor: isManager ? "not-allowed" : "pointer",
-                            opacity: isManager ? 0.65 : 1,
-                          }}
-                        />
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       )}
 
-      {/* Modal Thêm tài khoản */}
+      {/* Modal Thêm tài khoản mới */}
       {isModalOpen && (
-        <div style={styles.modalOverlay}>
-          <div style={styles.modalCard}>
-            <div style={styles.modalHeader}>
-              <h3 style={{ margin: 0, fontSize: "17px", fontWeight: 700 }}>
-                Thêm tài khoản mới
-              </h3>
+        <Modal
+          title="Thêm Tài Khoản Mới"
+          onClose={() => {
+            if (!isCreating) {
+              setIsModalOpen(false);
+              setFieldErrors({});
+            }
+          }}
+        >
+          <form onSubmit={handleCreateUser} style={{ display: 'grid', gap: 14 }} noValidate>
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="user-name">Họ và tên *</label>
+              <input
+                id="user-name"
+                type="text"
+                className="portal-input"
+                autoFocus
+                placeholder="Vd: Nguyễn Thị Mai"
+                value={formData.name}
+                onChange={(e) => {
+                  setFormData({ ...formData, name: e.target.value });
+                  if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: undefined }));
+                }}
+              />
+              {fieldErrors.name && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {fieldErrors.name}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="user-email">Địa chỉ Email *</label>
+              <input
+                id="user-email"
+                type="email"
+                className="portal-input"
+                placeholder="mai.nguyen@sol-wellness.vn"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                }}
+              />
+              {fieldErrors.email && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {fieldErrors.email}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="user-phone">Số điện thoại *</label>
+              <input
+                id="user-phone"
+                type="tel"
+                className="portal-input"
+                placeholder="0912345678"
+                maxLength={11}
+                value={formData.phone}
+                onChange={(e) => {
+                  const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+                  setFormData({ ...formData, phone: onlyNums });
+                  if (fieldErrors.phone) setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+                }}
+              />
+              {fieldErrors.phone && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {fieldErrors.phone}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="user-pass">Mật khẩu khởi tạo *</label>
+              <input
+                id="user-pass"
+                type="password"
+                className="portal-input"
+                autoComplete="new-password"
+                placeholder="Tối thiểu 6 ký tự"
+                value={formData.password}
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                  if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                }}
+              />
+              {fieldErrors.password && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {fieldErrors.password}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="user-role">Gán vai trò (Role) *</label>
+              <select
+                id="user-role"
+                className="portal-select"
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value as SystemRole })
+                }
+              >
+                <option value="COACH">Huấn luyện viên (Coach)</option>
+                <option value="RECEPTIONIST">Lễ tân (Receptionist)</option>
+                <option value="MEMBER">Hội viên (Member)</option>
+                <option value="CENTER_MANAGER">Quản lý trung tâm (Center Manager)</option>
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 14 }}>
               <button
+                type="button"
+                className="btn-secondary"
+                disabled={isCreating}
                 onClick={() => {
                   setIsModalOpen(false);
                   setFieldErrors({});
                 }}
-                style={styles.closeBtn}
               >
-                ✕
+                Hủy
+              </button>
+              <button type="submit" className="btn-primary" disabled={isCreating}>
+                {isCreating ? (
+                  <>
+                    <span className="spinner" />
+                    <span>Đang tạo...</span>
+                  </>
+                ) : (
+                  'Tạo Tài Khoản'
+                )}
               </button>
             </div>
-
-            <form onSubmit={handleCreateUser} style={styles.form} noValidate>
-              {/* Ô Họ và tên */}
-              <div>
-                <label style={styles.label}>Họ và tên</label>
-                <input
-                  type="text"
-                  placeholder="Vd: Nguyễn Thị Mai"
-                  value={formData.name}
-                  onChange={(e) => {
-                    setFormData({ ...formData, name: e.target.value });
-                    if (fieldErrors.name) {
-                      setFieldErrors((prev) => ({ ...prev, name: undefined }));
-                    }
-                  }}
-                  style={{
-                    ...styles.modalInput,
-                    borderColor: fieldErrors.name ? "#DC2626" : "#CBD5E1",
-                  }}
-                />
-                {fieldErrors.name && (
-                  <p style={styles.fieldErrorText}>{fieldErrors.name}</p>
-                )}
-              </div>
-
-              {/* Ô Email */}
-              <div>
-                <label style={styles.label}>Email liên hệ</label>
-                <input
-                  type="email"
-                  placeholder="mai.nguyen@fitcenter.com"
-                  value={formData.email}
-                  onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value });
-                    if (fieldErrors.email) {
-                      setFieldErrors((prev) => ({ ...prev, email: undefined }));
-                    }
-                  }}
-                  style={{
-                    ...styles.modalInput,
-                    borderColor: fieldErrors.email ? "#DC2626" : "#CBD5E1",
-                  }}
-                />
-                {fieldErrors.email && (
-                  <p style={styles.fieldErrorText}>{fieldErrors.email}</p>
-                )}
-              </div>
-
-              {/* Ô Số điện thoại */}
-              <div>
-                <label style={styles.label}>Số điện thoại</label>
-                <input
-                  type="tel"
-                  placeholder="0912345678"
-                  maxLength={11}
-                  value={formData.phone}
-                  onChange={(e) => {
-                    // Tự động loại bỏ chữ cái, chỉ nhận ký tự số
-                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
-                    setFormData({ ...formData, phone: onlyNumbers });
-                    if (fieldErrors.phone) {
-                      setFieldErrors((prev) => ({ ...prev, phone: undefined }));
-                    }
-                  }}
-                  style={{
-                    ...styles.modalInput,
-                    borderColor: fieldErrors.phone ? "#DC2626" : "#CBD5E1",
-                  }}
-                />
-                {fieldErrors.phone && (
-                  <p style={styles.fieldErrorText}>{fieldErrors.phone}</p>
-                )}
-              </div>
-
-              <div>
-                <label style={styles.label}>Mật khẩu ban đầu</label>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder="Tối thiểu 6 ký tự"
-                  value={formData.password}
-                  onChange={(e) => {
-                    setFormData({ ...formData, password: e.target.value });
-                    if (fieldErrors.password) {
-                      setFieldErrors((prev) => ({ ...prev, password: undefined }));
-                    }
-                  }}
-                  style={{
-                    ...styles.modalInput,
-                    borderColor: fieldErrors.password ? "#DC2626" : "#CBD5E1",
-                  }}
-                />
-                {fieldErrors.password && (
-                  <p style={styles.fieldErrorText}>{fieldErrors.password}</p>
-                )}
-              </div>
-
-              {/* Ô Role */}
-              <div>
-                <label style={styles.label}>Gán vai trò (Role)</label>
-                <select
-                  value={formData.role}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      role: e.target.value as SystemRole,
-                    })
-                  }
-                  style={styles.modalInput}
-                >
-                  <option value="COACH">Huấn luyện viên (Coach)</option>
-                  <option value="RECEPTIONIST">
-                    Lễ tân / Thu ngân (Receptionist)
-                  </option>
-                  <option value="MEMBER">Hội viên (Member)</option>
-                </select>
-              </div>
-
-              <div style={styles.modalActions}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsModalOpen(false);
-                    setFieldErrors({});
-                  }}
-                  style={styles.secondaryBtn}
-                >
-                  Hủy
-                </button>
-                <button type="submit" style={styles.primaryBtn}>
-                  Xác nhận tạo
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+          </form>
+        </Modal>
       )}
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    padding: "32px",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "24px",
-  },
-  title: { fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: 0 },
-  subtitle: { fontSize: "13px", color: "#64748B", marginTop: "4px" },
-  tabGroup: {
-    display: "flex",
-    backgroundColor: "#E2E8F0",
-    padding: "4px",
-    borderRadius: "12px",
-  },
-  tabActive: {
-    backgroundColor: "#FFFFFF",
-    color: "#046A38",
-    fontWeight: 700,
-    border: "none",
-    padding: "8px 16px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-  },
-  tabInactive: {
-    backgroundColor: "transparent",
-    color: "#64748B",
-    border: "none",
-    padding: "8px 16px",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-  controlsBar: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "16px",
-    gap: "16px",
-  },
-  filterGroup: { display: "flex", gap: "12px", flex: 1 },
-  searchInput: {
-    flex: 1,
-    padding: "10px 14px",
-    borderRadius: "10px",
-    border: "1px solid #CBD5E1",
-    outline: "none",
-    fontSize: "13px",
-  },
-  selectInput: {
-    padding: "10px 14px",
-    borderRadius: "10px",
-    border: "1px solid #CBD5E1",
-    outline: "none",
-    fontSize: "13px",
-    backgroundColor: "#FFFFFF",
-  },
-  primaryBtn: {
-    backgroundColor: "#046A38",
-    color: "#FFFFFF",
-    border: "none",
-    padding: "10px 18px",
-    borderRadius: "10px",
-    fontWeight: 600,
-    fontSize: "13px",
-    cursor: "pointer",
-  },
-  secondaryBtn: {
-    backgroundColor: "#F1F5F9",
-    color: "#475569",
-    border: "none",
-    padding: "10px 18px",
-    borderRadius: "10px",
-    fontWeight: 600,
-    fontSize: "13px",
-    cursor: "pointer",
-  },
-  tableCard: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: "16px",
-    border: "1px solid #E2E8F0",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
-    overflow: "hidden",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-    textAlign: "left",
-    fontSize: "13px",
-  },
-  tableHeadRow: {
-    backgroundColor: "#F8FAFC",
-    borderBottom: "1px solid #E2E8F0",
-  },
-  th: {
-    padding: "14px 18px",
-    fontWeight: 600,
-    color: "#475569",
-    fontSize: "12px",
-  },
-  tr: { borderBottom: "1px solid #F1F5F9" },
-  td: { padding: "14px 18px", verticalAlign: "middle" },
-  badge: {
-    display: "inline-block",
-    padding: "4px 10px",
-    borderRadius: "12px",
-    fontSize: "11px",
-    fontWeight: 700,
-  },
-  activeDot: { color: "#046A38", fontWeight: 600 },
-  lockedDot: { color: "#DC2626", fontWeight: 600 },
-  lockBtn: {
-    backgroundColor: "#FEE2E2",
-    color: "#991B1B",
-    border: "none",
-    padding: "6px 12px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontSize: "12px",
-    fontWeight: 600,
-  },
-  unlockBtn: {
-    backgroundColor: "#E0F2FE",
-    color: "#0284C7",
-    border: "none",
-    padding: "6px 12px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontSize: "12px",
-    fontWeight: 600,
-  },
-  modalOverlay: {
-    position: "fixed",
-    inset: 0,
-    backgroundColor: "rgba(15, 23, 42, 0.4)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 100,
-  },
-  modalCard: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: "20px",
-    width: "100%",
-    maxWidth: "440px",
-    padding: "24px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-  },
-  modalHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "16px",
-  },
-  closeBtn: {
-    background: "none",
-    border: "none",
-    fontSize: "18px",
-    cursor: "pointer",
-    color: "#64748B",
-  },
-  form: { display: "flex", flexDirection: "column", gap: "14px" },
-  label: {
-    fontSize: "12px",
-    fontWeight: 600,
-    color: "#334155",
-    display: "block",
-    marginBottom: "4px",
-  },
-  modalInput: {
-    width: "100%",
-    padding: "10px 12px",
-    borderRadius: "8px",
-    border: "1px solid #CBD5E1",
-    fontSize: "13px",
-    boxSizing: "border-box",
-    outline: "none",
-  },
-  fieldErrorText: {
-    color: "#DC2626",
-    fontSize: "11px",
-    marginTop: "4px",
-    marginBottom: "0px",
-    fontWeight: 500,
-  },
-  modalActions: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "10px",
-    marginTop: "10px",
-  },
-};

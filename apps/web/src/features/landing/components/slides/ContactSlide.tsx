@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowButton } from '../ArrowButton';
 import { InfiniteMarquee } from '../InfiniteMarquee';
+import { toast } from '../../../../shared/ui/toast';
 
 export function ContactSlide() {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ export function ContactSlide() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim()) {
-      alert('Vui lòng điền Họ tên và Số điện thoại để chuyên viên tư vấn liên hệ.');
+      toast('Vui lòng điền Họ tên và Số điện thoại để chuyên viên tư vấn liên hệ.', 'error');
       return;
     }
     setIsLoading(true);
@@ -199,7 +200,7 @@ export function ContactSlide() {
                 margin: 0,
               }}
             >
-              Sports Center Management System (SCMS). Nền tảng thể thao đa năng tích hợp AI coaching & quản trị vận hành
+              Sports Center Management System (SCMS). Nền tảng thể thao đa năng tích hợp AI coaching &amp; quản trị vận hành
               thông minh.
             </p>
           </div>

@@ -18,6 +18,11 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
   const [shaking, setShaking] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const [isExpired, setIsExpired] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('expired') === '1';
+  });
+
   const fail = (msg: string) => {
     setFormError(msg);
     setShaking(true);
@@ -25,6 +30,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsExpired(false);
     if (!identifier.trim()) {
       fail('Vui lòng nhập tên đăng nhập hoặc email.');
       return;
@@ -81,19 +87,21 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
         </h3>
       </div>
 
+      {isExpired && (
+        <div
+          role="status"
+          className="portal-alert portal-alert--info"
+          style={{ marginBottom: '18px' }}
+        >
+          <span>Phiên đăng nhập đã hết hạn để đảm bảo an toàn. Vui lòng đăng nhập lại.</span>
+        </div>
+      )}
+
       {formError && (
         <div
           role="alert"
-          className="anim-fade-up"
-          style={{
-            backgroundColor: '#FEF2F2',
-            border: '1px solid #FCA5A5',
-            color: '#B91C1C',
-            fontSize: '0.82rem',
-            padding: '10px 14px',
-            borderRadius: '4px',
-            marginBottom: '18px',
-          }}
+          className="portal-alert anim-fade-up"
+          style={{ marginBottom: '18px' }}
         >
           ⚠️ {formError}
         </div>
@@ -101,20 +109,25 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
       <form onSubmit={handleSubmit}>
         <div className="portal-form-group">
-          <label className="portal-label">Tên đăng nhập hoặc Email</label>
+          <label className="portal-label" htmlFor="login-identifier">Tên đăng nhập hoặc Email</label>
           <input
+            id="login-identifier"
             type="text"
             className="portal-input"
             placeholder="Tên đăng nhập hoặc email"
+            autoComplete="username"
             value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
+            onChange={(e) => {
+              setIdentifier(e.target.value);
+              if (isExpired) setIsExpired(false);
+            }}
             aria-invalid={!!formError && !identifier.trim() ? true : undefined}
           />
         </div>
 
         <div className="portal-form-group">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-            <label className="portal-label" style={{ margin: 0 }}>
+            <label className="portal-label" htmlFor="login-password" style={{ margin: 0 }}>
               Mật Khẩu
             </label>
             <button
@@ -133,11 +146,16 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
             </button>
           </div>
           <input
+            id="login-password"
             type={showPassword ? 'text' : 'password'}
             className="portal-input"
             placeholder="Nhập mật khẩu"
+            autoComplete="current-password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (isExpired) setIsExpired(false);
+            }}
             aria-invalid={!!formError && (!password || !!identifier.trim()) ? true : undefined}
           />
         </div>

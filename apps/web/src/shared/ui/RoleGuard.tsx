@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { getCurrentUser } from '../api/client';
+import { getCurrentUser, homePath } from '../api/client';
 
 export function RoleGuard({ allowedRoles }: { allowedRoles: string[] }) {
   const user = getCurrentUser();
@@ -7,7 +7,7 @@ export function RoleGuard({ allowedRoles }: { allowedRoles: string[] }) {
     return <Navigate to="/login" replace />;
   }
   if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={homePath(user.role)} replace />;
   }
   return <Outlet />;
 }

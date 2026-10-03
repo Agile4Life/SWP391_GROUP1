@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { catalogApi, type Discipline, type MembershipPackage, type Room } from './catalogApi';
+import { Modal } from '../../shared/ui/Modal';
+import { toast } from '../../shared/ui/toast';
 
 type Tab = 'disciplines' | 'rooms' | 'packages';
 type Form = Record<string, string>;
@@ -13,6 +15,7 @@ export function ManagerCatalogsPage() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [packages, setPackages] = useState<MembershipPackage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [editing, setEditing] = useState<{ id: number | null; form: Form } | null>(null);
 
@@ -35,14 +38,20 @@ export function ManagerCatalogsPage() {
     void load();
   }, [load]);
 
-  const run = async (action: () => Promise<unknown>) => {
+  const run = async (action: () => Promise<unknown>, successMsg = 'Thao tác thành công!') => {
     setError('');
+    setIsSubmitting(true);
     try {
       await action();
       setEditing(null);
       await load();
+      toast(successMsg, 'success');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Thao tác thất bại.');
+      const msg = err instanceof Error ? err.message : 'Thao tác thất bại.';
+      setError(msg);
+      toast(msg, 'error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -55,41 +64,42 @@ export function ManagerCatalogsPage() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editing) return;
+    if (!editing || isSubmitting) return;
     const { id, form: f } = editing;
-    void run(() => {
-      if (tab === 'disciplines') return catalogApi.saveDiscipline(id, { name: f.name, description: f.description });
-      if (tab === 'rooms')
+    const isNew = id == null;
+
+    void run(async () => {
+      if (tab === 'disciplines') {
+        return catalogApi.saveDiscipline(id, { name: f.name.trim(), description: f.description.trim() });
+      }
+      if (tab === 'rooms') {
         return catalogApi.saveRoom(id, {
-          name: f.name,
-          location: f.location,
+          name: f.name.trim(),
+          location: f.location.trim(),
           capacity: Number(f.capacity),
           status: f.status as Room['status'],
         });
+      }
       return catalogApi.savePackage(id, {
-        name: f.name,
-        description: f.description,
+        name: f.name.trim(),
+        description: f.description.trim(),
         price: Number(f.price),
         durationDays: Number(f.durationDays),
         classCreditLimit: f.classCreditLimit === '' ? null : Number(f.classCreditLimit),
         status: f.status as MembershipPackage['status'],
       });
-    });
+    }, isNew ? 'Đã thêm mới danh mục thành công!' : 'Đã cập nhật danh mục thành công!');
   };
 
   const set = (key: string, value: string) => editing && setEditing({ ...editing, form: { ...editing.form, [key]: value } });
-  const field = (key: string, label: string, type = 'text', required = false) => (
-    <label key={key} style={{ display: 'grid', gap: 4 }}>
-      {label}
-      <input
-        className="portal-input"
-        type={type}
-        required={required}
-        value={editing?.form[key] ?? ''}
-        onChange={(e) => set(key, e.target.value)}
-      />
-    </label>
-  );
+
+  const modalTitle = () => {
+    if (!editing) return '';
+    const isNew = editing.id == null;
+    if (tab === 'disciplines') return isNew ? 'Thêm Bộ Môn Mới' : 'Chỉnh Sửa Bộ Môn';
+    if (tab === 'rooms') return isNew ? 'Thêm Phòng Tập / Không Gian' : 'Chỉnh Sửa Phòng Tập';
+    return isNew ? 'Thêm Gói Hội Viên Mới' : 'Chỉnh Sửa Gói Hội Viên';
+  };
 
   const rowCount = tab === 'disciplines' ? disciplines.length : tab === 'rooms' ? rooms.length : packages.length;
 
@@ -98,8 +108,13 @@ export function ManagerCatalogsPage() {
       <div className="portal-header">
         <div>
           <h1 className="portal-title">Danh Mục Vận Hành</h1>
+          <p className="portal-subtitle">Quản lý bộ môn rèn luyện, cơ sở phòng tập và các gói hội viên</p>
         </div>
-        <button type="button" className="btn-primary" onClick={() => setEditing({ id: null, form: emptyForm() })}>
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={() => setEditing({ id: null, form: emptyForm() })}
+        >
           + Thêm Mục Mới
         </button>
       </div>
@@ -127,69 +142,225 @@ export function ManagerCatalogsPage() {
       </div>
 
       {error && (
-        <div className="portal-card" role="alert" style={{ color: '#9B2C2C', padding: 12 }}>
-          {error}{' '}
+        <div className="portal-alert" role="alert">
+          <span>⚠️ {error}</span>
           <button type="button" className="btn-secondary btn-sm" onClick={() => void load()}>
             Thử lại
           </button>
         </div>
       )}
 
+      {/* Accessible Dialog Modal for Adding/Editing */}
       {editing && (
-        <form className="portal-card" onSubmit={submit} style={{ display: 'grid', gap: 12, padding: 16 }}>
-          {field('name', 'Tên', 'text', true)}
-          {tab === 'rooms' && field('location', 'Vị trí / Tầng')}
-          {tab === 'rooms' && field('capacity', 'Sức chứa tối đa', 'number', true)}
-          {tab !== 'rooms' && field('description', 'Mô tả')}
-          {tab === 'packages' && field('price', 'Đơn giá (VND)', 'number', true)}
-          {tab === 'packages' && field('durationDays', 'Thời hạn (ngày)', 'number', true)}
-          {tab === 'packages' && field('classCreditLimit', 'Số buổi lớp kèm theo (để trống = không giới hạn)', 'number')}
-          {tab !== 'disciplines' && (
-            <label style={{ display: 'grid', gap: 4 }}>
-              Trạng thái
-              <select className="portal-input" value={editing.form.status} onChange={(e) => set('status', e.target.value)}>
-                {tab === 'rooms' ? (
+        <Modal title={modalTitle()} onClose={() => !isSubmitting && setEditing(null)}>
+          <form onSubmit={submit} style={{ display: 'grid', gap: 14 }}>
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="cat-name">Tên hiển thị *</label>
+              <input
+                id="cat-name"
+                className="portal-input"
+                type="text"
+                required
+                autoFocus
+                placeholder="Vd: Reformer Core Pilates..."
+                value={editing.form.name ?? ''}
+                onChange={(e) => set('name', e.target.value)}
+              />
+            </div>
+
+            {tab === 'rooms' && (
+              <>
+                <div className="portal-form-group">
+                  <label className="portal-label" htmlFor="cat-location">Vị trí / Tầng</label>
+                  <input
+                    id="cat-location"
+                    className="portal-input"
+                    type="text"
+                    placeholder="Vd: Tầng 2, Khu Đông"
+                    value={editing.form.location ?? ''}
+                    onChange={(e) => set('location', e.target.value)}
+                  />
+                </div>
+                <div className="portal-form-group">
+                  <label className="portal-label" htmlFor="cat-capacity">Sức chứa tối đa (người) *</label>
+                  <input
+                    id="cat-capacity"
+                    className="portal-input"
+                    type="number"
+                    min="1"
+                    max="200"
+                    required
+                    value={editing.form.capacity ?? ''}
+                    onChange={(e) => set('capacity', e.target.value)}
+                  />
+                </div>
+              </>
+            )}
+
+            {tab !== 'rooms' && (
+              <div className="portal-form-group">
+                <label className="portal-label" htmlFor="cat-desc">Mô tả chi tiết</label>
+                <textarea
+                  id="cat-desc"
+                  className="portal-textarea"
+                  rows={3}
+                  placeholder="Mô tả công năng hoặc quyền lợi..."
+                  value={editing.form.description ?? ''}
+                  onChange={(e) => set('description', e.target.value)}
+                />
+              </div>
+            )}
+
+            {tab === 'packages' && (
+              <div className="grid-2">
+                <div className="portal-form-group">
+                  <label className="portal-label" htmlFor="cat-price">Đơn giá (VND) *</label>
+                  <input
+                    id="cat-price"
+                    className="portal-input"
+                    type="number"
+                    min="0"
+                    step="10000"
+                    required
+                    placeholder="Vd: 3500000"
+                    value={editing.form.price ?? ''}
+                    onChange={(e) => set('price', e.target.value)}
+                  />
+                </div>
+                <div className="portal-form-group">
+                  <label className="portal-label" htmlFor="cat-duration">Thời hạn (ngày) *</label>
+                  <input
+                    id="cat-duration"
+                    className="portal-input"
+                    type="number"
+                    min="1"
+                    required
+                    placeholder="Vd: 30"
+                    value={editing.form.durationDays ?? ''}
+                    onChange={(e) => set('durationDays', e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {tab === 'packages' && (
+              <div className="portal-form-group">
+                <label className="portal-label" htmlFor="cat-credit">
+                  Số buổi lớp kèm theo (để trống = không giới hạn)
+                </label>
+                <input
+                  id="cat-credit"
+                  className="portal-input"
+                  type="number"
+                  min="0"
+                  placeholder="Vd: 12 hoặc để trống"
+                  value={editing.form.classCreditLimit ?? ''}
+                  onChange={(e) => set('classCreditLimit', e.target.value)}
+                />
+              </div>
+            )}
+
+            {tab !== 'disciplines' && (
+              <div className="portal-form-group">
+                <label className="portal-label" htmlFor="cat-status">Trạng thái vận hành</label>
+                <select
+                  id="cat-status"
+                  className="portal-select"
+                  value={editing.form.status}
+                  onChange={(e) => set('status', e.target.value)}
+                >
+                  {tab === 'rooms' ? (
+                    <>
+                      <option value="available">Đang hoạt động</option>
+                      <option value="maintenance">Bảo trì</option>
+                      <option value="closed">Đã đóng</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="active">Đang bán</option>
+                      <option value="inactive">Ngừng bán</option>
+                    </>
+                  )}
+                </select>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={isSubmitting}
+                onClick={() => setEditing(null)}
+              >
+                Hủy
+              </button>
+              <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                {isSubmitting ? (
                   <>
-                    <option value="available">Đang hoạt động</option>
-                    <option value="maintenance">Bảo trì</option>
-                    <option value="closed">Đã đóng</option>
+                    <span className="spinner" />
+                    <span>Đang lưu...</span>
                   </>
                 ) : (
-                  <>
-                    <option value="active">Đang bán</option>
-                    <option value="inactive">Ngừng bán</option>
-                  </>
+                  'Lưu Thông Tin'
                 )}
-              </select>
-            </label>
-          )}
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button type="submit" className="btn-primary">Lưu</button>
-            <button type="button" className="btn-secondary" onClick={() => setEditing(null)}>Hủy</button>
-          </div>
-        </form>
+              </button>
+            </div>
+          </form>
+        </Modal>
       )}
 
       {loading ? (
-        <div className="portal-card" style={{ padding: 24 }}>Đang tải danh mục...</div>
-      ) : rowCount === 0 && !error ? (
-        <div className="portal-card" style={{ padding: 24 }}>Chưa có dữ liệu. Nhấn “Thêm Mục Mới” để tạo.</div>
-      ) : (
         <div className="portal-card">
+          <div className="portal-state">
+            <div className="spinner" />
+            <p>Đang tải danh mục vận hành...</p>
+          </div>
+        </div>
+      ) : rowCount === 0 && !error ? (
+        <div className="portal-card">
+          <div className="portal-state">
+            <h3 className="portal-state__title">
+              {tab === 'disciplines' && 'Chưa có bộ môn nào'}
+              {tab === 'rooms' && 'Chưa có cơ sở phòng tập nào'}
+              {tab === 'packages' && 'Chưa có gói hội viên nào'}
+            </h3>
+            <p style={{ color: '#7E7771' }}>
+              Hãy nhấn nút thêm để cấu hình danh mục phục vụ vận hành.
+            </p>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => setEditing({ id: null, form: emptyForm() })}
+            >
+              + Thêm Mục Mới
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="portal-card portal-card--flush">
           <div className="portal-table-wrapper">
             <table className="portal-table">
               {tab === 'disciplines' && (
                 <>
-                  <thead><tr><th>Tên Bộ Môn</th><th>Mô Tả</th><th>Thao Tác</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '25%' }}>Tên Bộ Môn</th>
+                      <th>Mô Tả Chi Tiết</th>
+                      <th className="actions" style={{ width: '120px' }}>Thao Tác</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {disciplines.map((d) => (
                       <tr key={d.id}>
                         <td><strong>{d.name}</strong></td>
-                        <td style={{ color: '#6A635D', maxWidth: 400 }}>{d.description}</td>
-                        <td>
-                          <button type="button" className="btn-secondary btn-sm"
-                            onClick={() => setEditing({ id: d.id, form: { name: d.name, description: d.description ?? '' } })}>
-                            Sửa
+                        <td style={{ color: '#6A635D' }}>{d.description || <span className="muted">Không có mô tả</span>}</td>
+                        <td className="actions">
+                          <button
+                            type="button"
+                            className="btn-secondary btn-sm"
+                            onClick={() => setEditing({ id: d.id, form: { name: d.name, description: d.description ?? '' } })}
+                          >
+                            Chỉnh sửa
                           </button>
                         </td>
                       </tr>
@@ -197,27 +368,41 @@ export function ManagerCatalogsPage() {
                   </tbody>
                 </>
               )}
+
               {tab === 'rooms' && (
                 <>
-                  <thead><tr><th>Tên Phòng</th><th>Vị Trí</th><th>Sức Chứa</th><th>Tình Trạng</th><th>Thao Tác</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Tên Không Gian / Phòng</th>
+                      <th>Vị Trí</th>
+                      <th>Sức Chứa Tối Đa</th>
+                      <th>Tình Trạng</th>
+                      <th className="actions">Thao Tác</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {rooms.map((r) => (
                       <tr key={r.id}>
                         <td><strong>{r.name}</strong></td>
-                        <td>{r.location}</td>
+                        <td>{r.location || <span className="muted">—</span>}</td>
                         <td><strong>{r.capacity} người</strong></td>
                         <td>
                           <span className={`badge ${r.status === 'available' ? 'badge-success' : 'badge-warning'}`}>
-                            {ROOM_STATUS_LABEL[r.status]}
+                            {ROOM_STATUS_LABEL[r.status] ?? r.status}
                           </span>
                         </td>
-                        <td>
-                          <button type="button" className="btn-secondary btn-sm"
-                            onClick={() => setEditing({
-                              id: r.id,
-                              form: { name: r.name, location: r.location ?? '', capacity: String(r.capacity), status: r.status },
-                            })}>
-                            Sửa
+                        <td className="actions">
+                          <button
+                            type="button"
+                            className="btn-secondary btn-sm"
+                            onClick={() =>
+                              setEditing({
+                                id: r.id,
+                                form: { name: r.name, location: r.location ?? '', capacity: String(r.capacity), status: r.status },
+                              })
+                            }
+                          >
+                            Chỉnh sửa
                           </button>
                         </td>
                       </tr>
@@ -225,14 +410,27 @@ export function ManagerCatalogsPage() {
                   </tbody>
                 </>
               )}
+
               {tab === 'packages' && (
                 <>
-                  <thead><tr><th>Tên Gói</th><th>Đơn Giá</th><th>Thời Hạn</th><th>Số Buổi Lớp</th><th>Tình Trạng</th><th>Thao Tác</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Tên Gói</th>
+                      <th>Đơn Giá</th>
+                      <th>Thời Hạn</th>
+                      <th>Số Buổi Lớp</th>
+                      <th>Trạng Thái</th>
+                      <th className="actions">Thao Tác</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {packages.map((p) => (
                       <tr key={p.id}>
-                        <td><strong>{p.name}</strong></td>
-                        <td style={{ fontWeight: 600 }}>{vnd(p.price)}</td>
+                        <td>
+                          <strong>{p.name}</strong>
+                          {p.description && <div className="muted">{p.description}</div>}
+                        </td>
+                        <td style={{ fontWeight: 600, color: 'var(--color-text-luxury)' }}>{vnd(p.price)}</td>
                         <td>{p.durationDays} ngày</td>
                         <td>{p.classCreditLimit ?? 'Không giới hạn'}</td>
                         <td>
@@ -240,23 +438,40 @@ export function ManagerCatalogsPage() {
                             {p.status === 'active' ? 'Đang bán' : 'Ngừng bán'}
                           </span>
                         </td>
-                        <td style={{ display: 'flex', gap: 6 }}>
-                          <button type="button" className="btn-secondary btn-sm"
-                            onClick={() => setEditing({
-                              id: p.id,
-                              form: {
-                                name: p.name,
-                                description: p.description ?? '',
-                                price: String(p.price),
-                                durationDays: String(p.durationDays),
-                                classCreditLimit: p.classCreditLimit == null ? '' : String(p.classCreditLimit),
-                                status: p.status,
-                              },
-                            })}>
+                        <td className="actions">
+                          <button
+                            type="button"
+                            className="btn-secondary btn-sm"
+                            onClick={() =>
+                              setEditing({
+                                id: p.id,
+                                form: {
+                                  name: p.name,
+                                  description: p.description ?? '',
+                                  price: String(p.price),
+                                  durationDays: String(p.durationDays),
+                                  classCreditLimit: p.classCreditLimit == null ? '' : String(p.classCreditLimit),
+                                  status: p.status,
+                                },
+                              })
+                            }
+                          >
                             Sửa
                           </button>
-                          <button type="button" className="btn-secondary btn-sm"
-                            onClick={() => void run(() => catalogApi.setPackageStatus(p.id, p.status === 'active' ? 'inactive' : 'active'))}>
+                          <button
+                            type="button"
+                            className="btn-secondary btn-sm"
+                            onClick={() => {
+                              const nextStatus = p.status === 'active' ? 'inactive' : 'active';
+                              const label = nextStatus === 'active' ? 'mở bán' : 'ngừng bán';
+                              if (window.confirm(`Bạn có chắc muốn ${label} gói "${p.name}"?`)) {
+                                void run(
+                                  () => catalogApi.setPackageStatus(p.id, nextStatus),
+                                  `Đã chuyển gói "${p.name}" sang ${label}!`
+                                );
+                              }
+                            }}
+                          >
                             {p.status === 'active' ? 'Ngừng bán' : 'Mở bán'}
                           </button>
                         </td>

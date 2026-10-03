@@ -44,62 +44,34 @@ a {
   text-decoration: none;
 }
 
-/* Completely hide scrollbars across all browsers while maintaining smooth scrolling */
-html,
-body,
+/* Ẩn thanh cuộn chỉ trên landing toàn màn hình; portal giữ thanh cuộn mảnh để người dùng biết còn nội dung */
+.sol-page-root,
+.sol-page-root * {
+  scrollbar-width: none;
+}
+
+.sol-page-root ::-webkit-scrollbar {
+  display: none;
+}
+
 * {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(33, 28, 24, 0.22) transparent;
 }
 
-::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
+/* Vòng focus rõ ràng cho người dùng bàn phím */
+:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
 }
 
-/* App shell for Portal (Back-office & member dashboard) */
-.app-shell {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 230px 1fr;
-}
-
-.app-shell aside {
-  padding: 28px 18px;
-  color: #FAF8F5;
-  background: #1A1614;
-}
-.app-shell aside strong {
-  font-size: 1.5rem;
-}
-
-.app-shell nav {
-  display: grid;
-  gap: 5px;
-  margin-top: 28px;
-}
-.app-shell nav a {
-  padding: 9px 11px;
-  border-radius: 7px;
-  color: #B8AFA6;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-.app-shell nav a.active,
-.app-shell nav a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #FAF8F5;
-}
-
-main header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 34px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .page {
@@ -156,20 +128,6 @@ main header {
 }
 
 @media (max-width: 720px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-  }
-  aside {
-    padding: 15px;
-  }
-  nav {
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 12px;
-    font-size: 0.8rem;
-  }
-  main header {
-    padding: 16px;
-  }
   .page {
     margin: 16px;
     padding: 22px;
@@ -663,6 +621,32 @@ button:not(:disabled):active,
 }
 
 .sol-toast .status-mark--success { stroke: #86EFAC; }
+
+.sol-toast__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(134, 239, 172, .16);
+  color: #86EFAC;
+  font-weight: 700;
+}
+
+.sol-toast--error .sol-toast__icon {
+  background: rgba(252, 165, 165, .16);
+  color: #FCA5A5;
+}
+
+@media (max-width: 600px) {
+  .sol-toast {
+    right: 16px;
+    left: 16px;
+    bottom: 16px;
+    max-width: none;
+  }
+}
 
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(16px) scale(.96); }

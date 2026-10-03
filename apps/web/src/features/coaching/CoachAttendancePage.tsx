@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from '../../shared/ui/toast';
 
 interface AttendanceStudent {
   id: number;
@@ -51,7 +52,7 @@ export function CoachAttendancePage() {
   };
 
   const handleSaveAttendance = () => {
-    alert('Đã lưu điểm danh và đánh giá buổi học.');
+    toast('Đã lưu dữ liệu điểm danh và đánh giá buổi học!', 'success');
   };
 
   return (
@@ -227,7 +228,7 @@ export function CoachAttendancePage() {
             type="button"
             className="btn-primary"
             style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => alert('Đã duyệt và lưu kế hoạch bài tập.')}
+            onClick={() => toast('Đã duyệt và lưu kế hoạch bài tập cho học viên!', 'success')}
           >
             Duyệt &amp; Giao Bài Tập Cho Học Viên
           </button>

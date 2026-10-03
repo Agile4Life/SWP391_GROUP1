@@ -47,15 +47,8 @@ export function LoginPage() {
       </header>
 
       {/* Main Login Stage Matching Editorial Split Layout */}
-      <main style={{ padding: '80px 64px', maxWidth: '1280px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.05fr 1fr',
-            gap: '64px',
-            alignItems: 'center',
-          }}
-        >
+      <main className="auth-stage">
+        <div className="auth-split-grid">
           {/* Left Column: Atmospheric Architectural Imagery & Philosophy */}
           <div>
             <h1

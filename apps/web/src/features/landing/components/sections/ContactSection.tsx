@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowButton } from '../ArrowButton';
 import { SiteFooter } from '../SiteFooter';
+import { toast } from '../../../../shared/ui/toast';
 
 interface ContactSectionProps {
   initialPlan?: string;
@@ -22,7 +23,7 @@ export function ContactSection({ initialPlan }: ContactSectionProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim()) {
-      alert('Vui lòng điền Họ tên và Số điện thoại để chuyên viên tư vấn liên hệ.');
+      toast('Vui lòng điền Họ tên và Số điện thoại để chuyên viên tư vấn liên hệ.', 'error');
       return;
     }
     setIsLoading(true);

@@ -481,8 +481,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LoginPage.tsx": {
-    "mtime": 1791014846.1242023,
-    "ast_hash": "47ece2bc67b8d29da55383eb9b81e14d",
+    "mtime": 1791044488.6469398,
+    "ast_hash": "3f8a4d5d6779fc8f9922dc6e36d5bd70",
     "semantic_hash": ""
   },
   "apps/web/src/main.tsx": {
@@ -491,13 +491,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/shared/api/client.ts": {
-    "mtime": 1791012125.6232681,
-    "ast_hash": "c141f4016184c64c3d793e78a9e4f6c8",
+    "mtime": 1791044670.4740362,
+    "ast_hash": "1ce67e37413a195887af95c1b24429a6",
     "semantic_hash": ""
   },
   "apps/web/src/shared/ui/AppLayout.tsx": {
-    "mtime": 1791015010.3655047,
-    "ast_hash": "e2dd17028a48d934c2db9e21b43a7fdc",
+    "mtime": 1791044684.7099514,
+    "ast_hash": "75519abbef67f50f2145505ab415eb24",
     "semantic_hash": ""
   },
   "apps/web/src/shared/ui/PlaceholderPage.tsx": {
@@ -682,18 +682,18 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LuxuryLoginForm.tsx": {
-    "mtime": 1791014859.227799,
-    "ast_hash": "e1cb050e7fbdda54183b71071c24ef22",
+    "mtime": 1791044473.145233,
+    "ast_hash": "00d2003b6d056c2edd7e208654dd119b",
     "semantic_hash": ""
   },
   "apps/web/src/features/classes/StaffClassesPage.tsx": {
-    "mtime": 1791014900.2180488,
-    "ast_hash": "0f10eb333717abdc383f63819f88a02c",
+    "mtime": 1791044908.4182734,
+    "ast_hash": "08d3eca742aa3e7896a8bfeca597a6e5",
     "semantic_hash": ""
   },
   "apps/web/src/features/coaching/CoachAttendancePage.tsx": {
-    "mtime": 1791014902.8456967,
-    "ast_hash": "105fe12c145bb7eb85563ea3806afc64",
+    "mtime": 1791044808.8687043,
+    "ast_hash": "7ca933257e319cb268095c21b528dab6",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/LandingPage.tsx": {
@@ -712,8 +712,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/FullpageScrollManager.tsx": {
-    "mtime": 1790696030.2016168,
-    "ast_hash": "81e3a24f9d8ec0762aade0e837a7d187",
+    "mtime": 1791015632.9105535,
+    "ast_hash": "32ab5ca77cdde393bc1d549decfb3379",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/InfiniteMarquee.tsx": {
@@ -747,8 +747,8 @@
     "semantic_hash": "45924a9bfbd5c2e17f2ba6d63ca14d1c"
   },
   "apps/web/src/features/landing/components/sections/ContactSection.tsx": {
-    "mtime": 1791014793.990854,
-    "ast_hash": "e255d3a3ee552a578ed5c9a70955ccd2",
+    "mtime": 1791044935.7135122,
+    "ast_hash": "0768c78167858f7507c937239c1590b5",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/DisciplinesSection.tsx": {
@@ -792,9 +792,9 @@
     "semantic_hash": "3df2d229ebb6ad459fc2b2bb2b169be2"
   },
   "apps/web/src/features/landing/components/slides/ContactSlide.tsx": {
-    "mtime": 1790405834.139122,
-    "ast_hash": "c186ab0349577966256e986073890836",
-    "semantic_hash": "c186ab0349577966256e986073890836"
+    "mtime": 1791044947.824758,
+    "ast_hash": "d7b53c701a91cfde256cb1a79a8725a7",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/DisciplinesSlide.tsx": {
     "mtime": 1790405834.139122,
@@ -817,13 +817,13 @@
     "semantic_hash": "e547d5e445f42efdca2e3572d6c59ef9"
   },
   "apps/web/src/features/manager/ManagerCatalogsPage.tsx": {
-    "mtime": 1791014909.742138,
-    "ast_hash": "4a00d88e5dde6327b4e9dfe4ed39aa2d",
+    "mtime": 1791044558.0535676,
+    "ast_hash": "6aa73b0264519c63b37d728fac2796f8",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/ManagerReportsPage.tsx": {
-    "mtime": 1791014955.1411874,
-    "ast_hash": "8afb4662efbbbe5e86cea950c9888382",
+    "mtime": 1791044828.3008392,
+    "ast_hash": "bb6ae7238d967526be8b0d277199e008",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/ManagerUsersPage.tsx": {
@@ -832,8 +832,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberCardPage.tsx": {
-    "mtime": 1791014958.5346138,
-    "ast_hash": "c9604570747f60970686ce8321a2d21b",
+    "mtime": 1791044795.9123497,
+    "ast_hash": "bb8a31bdef7bb2c456b6fbc7b1e23b3d",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberClassesPage.tsx": {
@@ -842,13 +842,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberDashboardPage.tsx": {
-    "mtime": 1791014953.0502515,
-    "ast_hash": "482ddc6e71225f76c132142656fb85bb",
+    "mtime": 1791044774.0250793,
+    "ast_hash": "73cac4c7d5e7e5ee33f96e7a0f8bbbe6",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberProfilePage.tsx": {
-    "mtime": 1791014922.0989518,
-    "ast_hash": "a27141f8fe48b0c361c32a5ee0ae0efd",
+    "mtime": 1791044519.5555296,
+    "ast_hash": "bef8fe64d05c5b8756f73944c2652e3b",
     "semantic_hash": ""
   },
   "apps/web/src/features/reception/StaffCheckInPage.tsx": {
@@ -857,8 +857,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/reception/StaffReceptionPage.tsx": {
-    "mtime": 1791014962.437987,
-    "ast_hash": "faf3063b553079737eb45cad68acf283",
+    "mtime": 1791044753.293823,
+    "ast_hash": "dcbe9bb35a53e9a29efcab8ae108d369",
     "semantic_hash": ""
   },
   "apps/web/src/shared/liquid-glass/LiquidGlassButton.tsx": {
@@ -902,9 +902,9 @@
     "semantic_hash": "88096b740dd2535b0792e8c53f8ebe0b"
   },
   "apps/web/src/shared/ui/RoleGuard.tsx": {
-    "mtime": 1790405834.161196,
-    "ast_hash": "1b5549c1f1d6e1a1ee7bee10c1dab8a4",
-    "semantic_hash": "1b5549c1f1d6e1a1ee7bee10c1dab8a4"
+    "mtime": 1791044224.238266,
+    "ast_hash": "0d0efa1c7a523e65c5b34485326e3f9f",
+    "semantic_hash": ""
   },
   "init-db.ps1": {
     "mtime": 1790695503.228333,
@@ -1547,8 +1547,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/UserManagerPage.tsx": {
-    "mtime": 1791015008.2688696,
-    "ast_hash": "220dd584fa76f966dce447a4afe1f0f7",
+    "mtime": 1791044607.8623886,
+    "ast_hash": "3d896e9b5fceafb16d72cb68ddcedd1d",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/catalogApi.ts": {
@@ -3022,8 +3022,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/RegisterPage.tsx": {
-    "mtime": 1791010169.5556767,
-    "ast_hash": "ed741723b385e57545e03eab838c0ee0",
+    "mtime": 1791044535.8347754,
+    "ast_hash": "21e9b9605ed8d63ec73020f72ddf6c66",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/facilities/DisciplineController.java": {
@@ -3249,6 +3249,21 @@
   "apps/web/src/shared/ui/clickRipple.ts": {
     "mtime": 1791014020.1071122,
     "ast_hash": "c9dd7d881880e15b8cc07b027e8a0dfd",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/landing/components/SiteFooter.tsx": {
+    "mtime": 1791015181.056672,
+    "ast_hash": "b9975f2481c94f509b84451bdc7ecfa4",
+    "semantic_hash": ""
+  },
+  "apps/web/src/shared/ui/Modal.tsx": {
+    "mtime": 1791044100.4334798,
+    "ast_hash": "a7a3a568d8c4834af648b4c386898f55",
+    "semantic_hash": ""
+  },
+  "apps/web/src/shared/ui/toast.ts": {
+    "mtime": 1791044098.3746827,
+    "ast_hash": "7a0fff44cc5d959e291952d9d04f4936",
     "semantic_hash": ""
   }
 }

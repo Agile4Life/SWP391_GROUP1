@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
+import { getCurrentUser } from '../../shared/api/client';
+import { toast } from '../../shared/ui/toast';
 
 export function MemberCardPage() {
+  const currentUser = getCurrentUser();
+  const holderName = (currentUser?.name || 'Nguyễn Văn An').toUpperCase();
   const [secondsLeft, setSecondsLeft] = useState(60);
 
   // Dynamic QR auto-refresh countdown
@@ -137,7 +141,7 @@ export function MemberCardPage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '16px' }}>
             <div>
               <div style={{ fontSize: '0.65rem', color: '#B8AFA6', letterSpacing: '0.1em' }}>CHỦ THẺ</div>
-              <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>NGUYỄN VĂN AN</div>
+              <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{holderName}</div>
             </div>
             <div>
               <div style={{ fontSize: '0.65rem', color: '#B8AFA6', letterSpacing: '0.1em' }}>MÃ HỘI VIÊN</div>
@@ -187,7 +191,7 @@ export function MemberCardPage() {
             type="button"
             className="btn-primary"
             style={{ width: '100%', justifyContent: 'center', marginTop: '24px' }}
-            onClick={() => alert('Yêu cầu gia hạn hợp đồng đã được chuyển tới quầy Lễ tân!')}
+            onClick={() => toast('Yêu cầu gia hạn hợp đồng đã được chuyển tới quầy Lễ tân!', 'success')}
           >
             Gia Hạn Hợp Đồng Hội Viên
           </button>

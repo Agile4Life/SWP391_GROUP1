@@ -54,18 +54,27 @@ const SESSION_ROLE: Record<string, UserSession['role']> = {
 // Calls the real API with the stored JWT; unwraps ApiResponse.data and throws ApiError on failure
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem(TOKEN_STORAGE_KEY);
-  const res = await fetch(`/api/v1${path}`, {
-    ...init,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept-Language': 'vi',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...init.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(`/api/v1${path}`, {
+      ...init,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': 'vi',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...init.headers,
+      },
+    });
+  } catch {
+    throw new ApiError('Không thể kết nối tới máy chủ. Vui lòng kiểm tra mạng và thử lại.', 0);
+  }
   const body = await res.json().catch(() => null);
-  if (res.status === 401) clearAuthSession();
-  if (!res.ok) throw new ApiError(body?.message ?? `HTTP ${res.status}`, res.status);
+  if (res.status === 401 && token && !path.startsWith('/auth/')) {
+    // Phiên đăng nhập hết hạn: đưa người dùng về trang đăng nhập kèm lời giải thích
+    clearAuthSession();
+    window.location.assign('/login?expired=1');
+  }
+  if (!res.ok) throw new ApiError(body?.message ?? `Yêu cầu thất bại (HTTP ${res.status})`, res.status);
   return (body && 'data' in body ? body.data : body) as T;
 }
 
@@ -75,13 +84,14 @@ export async function loginApi(identifier: string, password: string): Promise<Lo
     body: JSON.stringify({ username: identifier.trim(), password }),
   });
   const role = SESSION_ROLE[data.role];
-  if (!role) throw new ApiError('Unsupported role: ' + data.role, 403);
+  if (!role) throw new ApiError('Vai trò tài khoản chưa được hỗ trợ trên portal.', 403);
 
   const user: UserSession = { id: data.username, name: data.username, identifier: data.username, role };
   localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
   setCurrentUser(user);
   return { token: data.token, user };
 }
+
 // Màn hình mặc định sau đăng nhập theo từng vai trò
 export const homePath = (role: UserSession['role']): string => {
   switch (role) {
