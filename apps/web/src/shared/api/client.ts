@@ -82,6 +82,17 @@ export async function loginApi(identifier: string, password: string): Promise<Lo
   setCurrentUser(user);
   return { token: data.token, user };
 }
-// Màn hình mặc định sau đăng nhập (chỉ các màn hình đã nối API thật)
-export const homePath = (role: UserSession['role']): string =>
-  role === 'MANAGER' ? '/manager/users' : '/member/profile';
+// Màn hình mặc định sau đăng nhập theo từng vai trò
+export const homePath = (role: UserSession['role']): string => {
+  switch (role) {
+    case 'MANAGER':
+      return '/manager/users';
+    case 'STAFF':
+      return '/staff/reception';
+    case 'COACH':
+      return '/staff/attendance';
+    case 'MEMBER':
+    default:
+      return '/member/dashboard';
+  }
+};

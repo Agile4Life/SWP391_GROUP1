@@ -10,11 +10,28 @@ const ROLE_LABELS: Record<UserSession['role'], string> = {
   MANAGER: 'Quản lý trung tâm',
 };
 
-// Chỉ liệt kê các màn hình đã nối API thật (Sprint 1)
+// Danh sách màn hình theo phân quyền vai trò
 const NAV_ITEMS: { to: string; label: string; roles: UserSession['role'][] }[] = [
-  { to: '/member/profile', label: 'Hồ sơ & Chỉ số sức khỏe', roles: ['MEMBER', 'STAFF', 'COACH', 'MANAGER'] },
-  { to: '/manager/catalogs', label: 'Danh mục vận hành', roles: ['MANAGER'] },
+  // Hội viên
+  { to: '/member/dashboard', label: 'Bảng điều khiển', roles: ['MEMBER'] },
+  { to: '/member/classes', label: 'Lịch học & Đặt chỗ', roles: ['MEMBER'] },
+  { to: '/member/card', label: 'Thẻ hội viên & Hóa đơn', roles: ['MEMBER'] },
+
+  // Huấn luyện viên
+  { to: '/staff/attendance', label: 'Điểm danh học viên', roles: ['COACH'] },
+  { to: '/staff/classes', label: 'Lịch dạy & Lớp học', roles: ['COACH'] },
+
+  // Lễ tân / Thu ngân
+  { to: '/staff/reception', label: 'Quầy Lễ tân & POS', roles: ['STAFF', 'MANAGER'] },
+  { to: '/staff/check-in', label: 'Cổng quét QR Check-in', roles: ['STAFF', 'MANAGER'] },
+
+  // Quản lý trung tâm
   { to: '/manager/users', label: 'Tài khoản & Phân quyền', roles: ['MANAGER'] },
+  { to: '/manager/catalogs', label: 'Danh mục vận hành', roles: ['MANAGER'] },
+  { to: '/manager/reports', label: 'Báo cáo & Doanh thu', roles: ['MANAGER'] },
+
+  // Dùng chung cho tất cả vai trò
+  { to: '/member/profile', label: 'Hồ sơ & Sức khỏe', roles: ['MEMBER', 'STAFF', 'COACH', 'MANAGER'] },
 ];
 
 export function AppLayout() {
