@@ -33,50 +33,52 @@ export function clearAuthSession(): void {
   localStorage.removeItem('fitcenter_token');
 }
 
-// Mock API Contract cho US01 (Khi BE xong chỉ cần đổi logic bên trong thành fetch/axios)
-export async function loginApi(identifier: string, password: string): Promise<LoginResponse> {
-  // Giả lập độ trễ mạng 600ms
-  await new Promise((resolve) => setTimeout(resolve, 600));
+export const TOKEN_STORAGE_KEY = 'fitcenter_token';
 
-  const cleanId = identifier.trim().toLowerCase();
-
-  // Validate nghiệp vụ mẫu
-  if (password === 'wrongpass') {
-    const error = new Error('Tài khoản hoặc mật khẩu không chính xác.') as Error & { status?: number };
-    error.status = 401;
-    throw error;
+export class ApiError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
   }
+}
 
-  // Tự động phân vai trò dựa vào thông tin nhập để bạn test luồng (US01-F03)
-  let role: UserSession['role'];
-  let name: string;
+// Map backend role codes to the UI session roles
+const SESSION_ROLE: Record<string, UserSession['role']> = {
+  MEMBER: 'MEMBER',
+  COACH: 'COACH',
+  RECEPTIONIST: 'STAFF',
+  CENTER_MANAGER: 'MANAGER',
+};
 
-  if (cleanId.includes('admin') || cleanId.includes('manager') || cleanId.includes('tuananh')) {
-    role = 'MANAGER';
-    name = 'Trần Công Tuấn Anh (Manager)';
-  } else if (cleanId.includes('coach') || cleanId.includes('elena') || cleanId.includes('hung')) {
-    role = 'COACH';
-    name = 'Master Elena Vũ (Coach)';
-  } else if (cleanId.includes('staff') || cleanId.includes('letan') || cleanId.includes('thinh')) {
-    role = 'STAFF';
-    name = 'Lễ Tân Thịnh (Receptionist)';
-  } else {
-    role = 'MEMBER';
-    name = 'Nguyễn Văn An (Member)';
-  }
-
-  const responseData: LoginResponse = {
-    token: `mock_jwt_token_${Date.now()}`,
-    user: {
-      id: 'USR_001',
-      name,
-      identifier: cleanId,
-      role,
+// Calls the real API with the stored JWT; unwraps ApiResponse.data and throws ApiError on failure
+export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+  const res = await fetch(`/api/v1${path}`, {
+    ...init,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept-Language': 'vi',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...init.headers,
     },
-  };
+  });
+  const body = await res.json().catch(() => null);
+  if (res.status === 401) clearAuthSession();
+  if (!res.ok) throw new ApiError(body?.message ?? `HTTP ${res.status}`, res.status);
+  return (body && 'data' in body ? body.data : body) as T;
+}
 
-  localStorage.setItem('fitcenter_token', responseData.token);
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(responseData.user));
+export async function loginApi(identifier: string, password: string): Promise<LoginResponse> {
+  const data = await apiFetch<{ token: string; username: string; role: string }>('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ username: identifier.trim(), password }),
+  });
+  const role = SESSION_ROLE[data.role];
+  if (!role) throw new ApiError('Unsupported role: ' + data.role, 403);
 
-  return responseData;
+  const user: UserSession = { id: data.username, name: data.username, identifier: data.username, role };
+  localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
+  setCurrentUser(user);
+  return { token: data.token, user };
 }
