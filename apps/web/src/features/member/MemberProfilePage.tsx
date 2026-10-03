@@ -8,6 +8,15 @@ import {
   type Profile,
 } from './profileApi';
 
+// Mã chỉ số hợp lệ theo backend (HealthMetricService.ALLOWED_METRICS)
+const METRIC_LABELS: Record<string, string> = {
+  weight: 'Cân nặng (kg)',
+  height: 'Chiều cao (cm)',
+  bmi: 'BMI',
+  body_fat: 'Tỷ lệ mỡ (%)',
+  muscle_mass: 'Khối lượng cơ (kg)',
+};
+
 const EMPTY_METRIC = { metricName: '', metricValue: '', unit: '' };
 
 export function MemberProfilePage() {
@@ -198,8 +207,11 @@ export function MemberProfilePage() {
           </div>
 
           <form onSubmit={handleAddMetric} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: 8, marginBottom: 16 }}>
-            <input className="portal-input" required placeholder="Tên chỉ số (vd: Cân nặng)" value={metric.metricName}
-              onChange={(e) => setMetric({ ...metric, metricName: e.target.value })} />
+            <select className="portal-select" required value={metric.metricName} aria-label="Chỉ số"
+              onChange={(e) => setMetric({ ...metric, metricName: e.target.value })}>
+              <option value="">Chọn chỉ số</option>
+              {Object.entries(METRIC_LABELS).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+            </select>
             <input className="portal-input" required type="number" step="0.01" min="0.01" placeholder="Giá trị" value={metric.metricValue}
               onChange={(e) => setMetric({ ...metric, metricValue: e.target.value })} />
             <input className="portal-input" placeholder="Đơn vị" value={metric.unit}
@@ -219,7 +231,7 @@ export function MemberProfilePage() {
                   {metrics.map((m) => (
                     <tr key={m.id}>
                       <td style={{ fontWeight: 600 }}>{new Date(m.recordedAt).toLocaleDateString('vi-VN')}</td>
-                      <td>{m.metricName}</td>
+                      <td>{METRIC_LABELS[m.metricName] ?? m.metricName}</td>
                       <td>{m.metricValue} {m.unit ?? ''}</td>
                     </tr>
                   ))}
