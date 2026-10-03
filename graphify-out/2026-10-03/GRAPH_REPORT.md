@@ -1,22 +1,22 @@
 # Graph Report - SWP391_GROUP1  (2026-10-03)
 
 ## Corpus Check
-- 583 files · ~654,804 words
+- 593 files · ~656,062 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 6359 nodes · 9818 edges · 489 communities (391 shown, 98 thin omitted)
-- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 651 edges (avg confidence: 0.75)
+- 6420 nodes · 10093 edges · 512 communities (402 shown, 110 thin omitted)
+- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 675 edges (avg confidence: 0.76)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `75e3b1fc`
+- Built from commit: `191aac05`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - validate_data.py
-- scripts/core.py
+- Member
 - server.cjs
 - gray
 - User
@@ -35,44 +35,44 @@
 - test_design_system_mode.py
 - LiquidGlassEngine.ts
 - Room
-- UserDto
+- PaymentDto
 - DesignSystemGenerator
 - Permission
 - TailwindConfigGenerator
 - org.springframework.context.annotation.Bean
-- react
-- ResourceNotFoundException
+- DisciplinesSection.tsx
+- org.springframework.transaction.annotation.Transactional
 - .verifyOtp
 - object
 - generate-slide.py
-- CatalogService
-- io.swagger.v3.oas.annotations.Operation
+- org.junit.jupiter.api.extension.ExtendWith
+- RoleController
 - AuditLog
 - fetch-background.py
 - slide_search_core.py
 - scripts
-- icon/generate.py
+- generate_icon
 - list
 - cip/generate.py
 - MemberProgressLog
 - fontSize
-- patch
+- org.junit.jupiter.api.Test
 - LandingPage.tsx
 - compilerOptions
-- org.junit.jupiter.api.Test
+- Invoice
 - CatalogRefreshTest
 - DisciplinesSlide.tsx
 - extract-colors.cjs
 - validate-asset.cjs
-- CatalogController
+- InvoiceController
 - logo/core.py
 - search_stack
-- hooks-windows.test.js
+- publish-openclaw-skills.js
 - Subagent-Driven Development
 - LiquidGlassEngine
 - sync-brand-to-tokens.cjs
-- AuditAspect
-- detect_domain
+- AuthenticatedPrincipal
+- PaymentServiceTest.java
 - search
 - Navbar.tsx
 - compilerOptions
@@ -86,33 +86,33 @@
 - Tailwind CSS Utility Reference
 - client.ts
 - inject-brand-context.cjs
-- embed-tokens.cjs
+- AuthService
 - ponytail/package.json
 - Payment
 - ref_fs
 - Brand Guidelines v1.0
+- MemberLookupController.java
 - MessageService
-- io.swagger.v3.oas.annotations.tags.Tag
 - Role
 - generate-tokens.cjs
-- test_validate_tokens.py
+- _run
 - duration
 - ._base_config
 - mvnw
 - RoleService
 - helper.js
-- BM25
-- PaymentController.java
+- ApiResponse
+- io.swagger.v3.oas.annotations.Operation
 - RoleDto
-- test_tailwind_config_gen.py
+- TestGeneratedConfigIsValidJs
 - Design
 - radius
 - PermissionDto
 - test_skill_script_paths.py
-- ApiResponse
+- org.springframework.http.ResponseEntity
 - stop-server.sh
 - TestThresholdGate
-- selftest
+- PaymentServiceTest
 - com.fasterxml.jackson.databind.ObjectMapper
 - ponytail-activate.js
 - TestStackFlagWithDesignSystem
@@ -120,8 +120,8 @@
 - ScmsApplication.java
 - design-tokens-starter.json
 - Canvas Design System
-- copilot-plugin.test.js
-- .test_add_all_components_no_config
+- apiFetch
+- AuthController.java
 - TestFixtureValidation
 - start-server.sh
 - sdd-workspace
@@ -137,23 +137,23 @@
 - .test_add_components_no_config
 - CORE DIRECTIVE: IMAGE-FIRST WEBSITE DESIGN TO CODE
 - CORE DIRECTIVE: PREMIUM MOBILE APP IMAGE DIRECTION
-- .test_add_color_palette
+- .getMessage
 - .test_list_installed_no_config
 - Prerequisites
 - run.py
 - .test_get_installed_components_empty
-- .test_generate_typescript_config
+- BM25
 - MembershipPackage
 - .test_recommend_plugins
 - Form & Input Components
-- .test_generate_config_with_colors
+- AuditAspect
 - Tailwind CSS Responsive Design
 - .test_generate_config_with_plugins
 - .test_validate_config_no_content
 - .test_write_config
 - .test_write_config_creates_content
 - ponytail-config.js
-- .test_base_config_structure
+- $type
 - .test_full_configuration_javascript
 - .test_default_content_paths_react
 - .test_default_content_paths_nextjs
@@ -176,14 +176,14 @@
 - CIP Deliverable Guide
 - States and Variants
 - What You Must Do When Invoked
-- DatabaseTriggerInitializer.java
-- JwtService
+- org.springframework.stereotype.Component
+- UserRepository
 - Workflow
 - Design System
 - correctness.js
 - uninstall.test.js
 - Tailwind CSS Customization
-- ponytail-instructions.js
+- radius
 - __init__.py
 - judge.py
 - devDependencies
@@ -212,7 +212,7 @@
 - Root Cause Tracing
 - Systematic Debugging
 - Persuasion Principles for Skill Design
-- org.springframework.stereotype.Component
+- SmtpOtpDeliveryAdapter
 - AppException
 - cursor-hooks.test.js
 - CIP Design Reference
@@ -224,7 +224,7 @@
 - Appendix B - Canonical Sources (read these before reinventing)
 - Using Git Worktrees
 - Writing Skills
-- JwtService.java
+- lg
 - README.ko.md
 - ponytail-mcp/package.json
 - Install
@@ -247,7 +247,7 @@
 - Token Architecture
 - Testing Skills With Subagents
 - ManagerCatalogsPage.tsx
-- CountUp.tsx
+- react
 - 3. Các Bước Thực Hiện Chi Tiết (Bite-Sized Tasks)
 - Chi tiết các bước chuyển trạng thái (State Transitions):
 - 2026-06-18-agentic.md
@@ -277,8 +277,8 @@
 - Cursor hooks
 - Platform-Native Solutions
 - Rate Limiting in FastAPI
-- ponytail.mjs
-- publish-openclaw-skills.js
+- sm
+- padding-x
 - opencode-plugin.test.js
 - Slide Strategies
 - Component Tokens
@@ -289,7 +289,7 @@
 - Slide Strategies
 - Condition-Based Waiting
 - 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)
-- _normalize
+- md
 - Verification Before Completion
 - Skill structure
 - ambiguous_python_import_516c554c03de
@@ -317,7 +317,7 @@
 - check-versions.js
 - uninstall.js
 - Ponytail Help
-- commands.test.js
+- MessageBundlesConsistencyTest.java
 - ambiguous_python_import_544fa441ff54
 - input
 - issue.md
@@ -325,7 +325,7 @@
 - 8. ANTI-AI-SLOP RULES
 - Ponytail Help
 - 9. AI TELLS (Forbidden Patterns)
-- _row_identities
+- 16
 - Quy trình phát triển tính năng & Tuân thủ Rules dự án SCMS
 - Kế hoạch cá nhân
 - Kế hoạch cá nhân
@@ -447,6 +447,7 @@
 - secretkey
 - graphify reference: GitHub clone and cross-repo merge
 - graphify reference: transcribe video and audio
+- 2
 - .__init__
 - Antigravity CLI (`agy`) Tool Mapping
 - Claude Code Tool Notes
@@ -468,9 +469,16 @@
 - extraction-spec.md
 - create.md
 - test-academic.md
+- 6
+- 8
 - .test_list_installed_empty
+- destructive-foreground
+- muted
 - .test_check_shadcn_config_exists
+- primary
+- primary-foreground
 - .test_recommend_plugins_nextjs
+- ring
 - .test_validate_config_valid
 - .test_write_config_refuses_to_overwrite_existing_file
 - .test_full_configuration_typescript
@@ -480,43 +488,58 @@
 - db/README.md
 - api-contracts/README.md
 - 2026-10-01-backend-postgresql-amendment.md
+- secondary-foreground
+- org.springframework.boot.ApplicationArguments
+- .test_add_components_with_overwrite
+- .test_add_components_success
+- .test_add_components_npx_not_found
+- .test_add_all_components_dry_run
+- .test_add_all_components_success
+- .test_init_custom_project_root
+- .test_init_dry_run
+- .test_add_components_no_components
+- .test_add_colors_multiple_times
+- .test_add_fonts
+- .test_init_default_typescript
+- .test_generate_javascript_config
+- .test_default_output_path_javascript
 
 ## God Nodes (most connected - your core abstractions)
 1. `User` - 90 edges
-2. `ApiResponse` - 63 edges
+2. `ApiResponse` - 85 edges
 3. `TailwindConfigGenerator` - 60 edges
-4. `Payment` - 49 edges
-5. `Member` - 49 edges
+4. `MessageService` - 56 edges
+5. `Payment` - 49 edges
 6. `DesignSystemGenerator` - 48 edges
 7. `PaymentDto` - 47 edges
-8. `Invoice` - 44 edges
-9. `search()` - 43 edges
-10. `TestTailwindConfigGenerator` - 41 edges
+8. `Member` - 47 edges
+9. `Invoice` - 44 edges
+10. `search()` - 43 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `TestBm25CoreBehavior` --uses--> `BM25`  [INFERRED]
+  .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
+- `TestDiagnosticsContracts` --uses--> `BM25`  [INFERRED]
+  .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 - `TestDomainDetection` --uses--> `BM25`  [INFERRED]
   .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 - `TestPersistence` --uses--> `BM25`  [INFERRED]
   .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 - `TestReasoningMatch` --uses--> `BM25`  [INFERRED]
   .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
-- `TestSearchDomains` --uses--> `BM25`  [INFERRED]
-  .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
-- `TestTokenizer` --uses--> `BM25`  [INFERRED]
-  .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (489 total, 98 thin omitted)
+## Communities (512 total, 110 thin omitted)
 
 ### Community 0 - "validate_data.py"
 Cohesion: 0.07
-Nodes (46): read_rows(), TestAccessibilityGuidance, TestChartsTypographyAndIcons, TestCurrentReactGuidance, TestSemanticColors, _catalog_date(), _check_app_interface_contract(), _check_catalog_contract() (+38 more)
+Nodes (47): read_rows(), TestAccessibilityGuidance, TestChartsTypographyAndIcons, TestCurrentReactGuidance, TestSemanticColors, _catalog_date(), _check_app_interface_contract(), _check_catalog_contract() (+39 more)
 
-### Community 1 - "scripts/core.py"
-Cohesion: 0.12
-Nodes (26): _contains_phrase(), _domain_keywords(), _file_signature(), _get_bm25(), _load_csv(), _load_csv_snapshot(), _load_product_keywords(), _load_rows_or_empty() (+18 more)
+### Community 1 - "Member"
+Cohesion: 0.08
+Nodes (5): ProfileDto, Entity, Table, Member, ProfileService
 
 ### Community 2 - "server.cjs"
 Cohesion: 0.06
@@ -527,24 +550,24 @@ Cohesion: 0.05
 Nodes (53): $type, $value, $type, $value, $type, $value, $type, $value (+45 more)
 
 ### Community 4 - "User"
-Cohesion: 0.04
-Nodes (15): AuthService, RegisterRequest, ProfileDto, UserCreateDto, UserUpdateDto, Entity, Table, Member (+7 more)
+Cohesion: 0.06
+Nodes (9): RegistrationResponse, RegisterRequest, UserCreateDto, Entity, PreUpdate, Table, User, PostMapping (+1 more)
 
 ### Community 5 - "color"
-Cohesion: 0.05
-Nodes (37): $type, $value, background, destructive, destructive-foreground, foreground, muted, muted-foreground (+29 more)
+Cohesion: 0.11
+Nodes (19): $type, $value, background, destructive, foreground, muted-foreground, primary-hover, secondary (+11 more)
 
 ### Community 6 - "card"
 Cohesion: 0.20
-Nodes (12): radius, padding, radius, shadow, card, radius, $type, $value (+4 more)
+Nodes (12): $type, $value, bg, bg, padding, shadow, card, bg (+4 more)
 
 ### Community 8 - "router.tsx"
 Cohesion: 0.13
 Nodes (13): router, ClassItem, StaffClassesPage(), AttendanceStudent, CoachAttendancePage(), MemberCardPage(), ClassSessionItem, MemberClassesPage() (+5 more)
 
 ### Community 9 - "design_system.py"
-Cohesion: 0.15
-Nodes (21): main(), Delegate to unified html-token-validator.py with --type slides., Tests for shadcn_add.py, format_output(), Format results for Claude consumption (token-optimized), argparse, copy, csv (+13 more)
+Cohesion: 0.07
+Nodes (44): generate_html(), get_deliverable_info(), get_image_base64(), main(), Convert image to base64 for embedding in HTML, Extract deliverable type from filename and get info, Generate HTML presentation from CIP images, load_env() (+36 more)
 
 ### Community 10 - "logo/generate.py"
 Cohesion: 0.12
@@ -552,7 +575,7 @@ Nodes (30): _atlas_prediction_data(), _download_atlas_image(), _download_image()
 
 ### Community 11 - "TestTailwindConfigGenerator"
 Cohesion: 0.06
-Nodes (17): Test adding colors multiple times., Test adding custom fonts., Test adding custom breakpoints., Test TailwindConfigGenerator class., Test that adding same plugin twice doesn't duplicate., Test initialization with default settings., Test generating JavaScript configuration., Test validating config with empty theme extensions. (+9 more)
+Nodes (17): Test adding full color palette., Test adding custom spacing., Test TailwindConfigGenerator class., Test that adding same plugin twice doesn't duplicate., Test generating TypeScript configuration., Test generating config with custom colors., Test validating config with empty theme extensions., An explicit force opt-in permits replacing an existing config. (+9 more)
 
 ### Community 12 - "generate_design_system"
 Cohesion: 0.07
@@ -563,60 +586,60 @@ Cohesion: 0.09
 Nodes (33): CompletedProcess, Path, Regression test for sync-brand-to-tokens.cjs. The color parser required a…, The missing-guidelines path is the one that breaks a locale-decoded pipe. It is…, A first sync should create assets/ instead of failing with ENOENT., The script must not silently replace its own existing token source., Common app CSS token sources must be named instead of duplicated., A :root selector list is still an existing project token source. (+25 more)
 
 ### Community 14 - "BM25"
-Cohesion: 0.16
-Nodes (7): BM25, BM25 ranking algorithm for text search, Lowercase, normalize synonyms, split, remove punctuation, filter stopwords, Build BM25 index from documents, Score all documents against query, All indexed terms, for suggestion/typo-recovery purposes., TestTokenizer
+Cohesion: 0.12
+Nodes (8): BM25, BM25 ranking algorithm for text search, Lowercase, normalize synonyms, split, remove punctuation, filter stopwords, Build BM25 index from documents, Score all documents against query, All indexed terms, for suggestion/typo-recovery purposes., TestBm25CoreBehavior, TestTokenizer
 
 ### Community 15 - "spacing"
-Cohesion: 0.06
-Nodes (34): $type, $value, $type, $value, $type, $value, $type, $value (+26 more)
+Cohesion: 0.09
+Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more)
 
 ### Community 16 - "InvoiceServiceTest.java"
-Cohesion: 0.06
-Nodes (18): LoginRequest, InvoiceCreateDto, InvoiceItemCreateDto, PaymentStatusUpdateRequest, ObjectMapper, ObjectMapper, bigdecimal, decimalmin (+10 more)
+Cohesion: 0.13
+Nodes (11): LoginRequest, bigdecimal, decimalmin, email, io.swagger.v3.oas.annotations.media.Schema, localdatetime, notblank, notnull (+3 more)
 
 ### Community 17 - "html-token-validator.py"
 Cohesion: 0.12
 Nodes (25): _find_project_root(), get_context(), is_allowed_exception(), is_allowed_rgba(), is_inside_block(), load_css_variables(), main(), print_result() (+17 more)
 
 ### Community 18 - "test_design_system_mode.py"
-Cohesion: 0.07
-Nodes (24): _contrast_ratio(), _derive_dark_palette(), _filter_anti_patterns_for_mode(), _palette_is_dark(), _query_wants_dark(), WCAG relative luminance of a #RRGGBB string, or None if unparseable., True when a colors.csv row's Background is a dark surface., WCAG contrast ratio for two hex colors, or None if either is invalid. (+16 more)
+Cohesion: 0.06
+Nodes (29): _contrast_ratio(), _derive_dark_palette(), _filter_anti_patterns_for_mode(), _palette_is_dark(), _query_wants_dark(), WCAG relative luminance of a #RRGGBB string, or None if unparseable., True when a colors.csv row's Background is a dark surface., WCAG contrast ratio for two hex colors, or None if either is invalid. (+21 more)
 
 ### Community 19 - "LiquidGlassEngine.ts"
 Cohesion: 0.14
 Nodes (22): apps_web_src_shared_liquid_glass_liquid_glass, LiquidGlassButton(), LiquidGlassButtonProps, ChatMessage, createMessage(), INITIAL_MESSAGES, LiquidGlassChatbot(), SuggestionItem (+14 more)
 
 ### Community 20 - "Room"
-Cohesion: 0.11
-Nodes (7): Override, RoomRequest, RoomDto, Entity, Table, Room, Room
+Cohesion: 0.08
+Nodes (13): RoomRequest, RoomDto, Entity, Table, Room, RoomRepository, GetMapping, PostMapping (+5 more)
 
 ### Community 22 - "DesignSystemGenerator"
-Cohesion: 0.05
-Nodes (25): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict. (+17 more)
+Cohesion: 0.07
+Nodes (14): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., TestReasoningMatch, read_rows() (+6 more)
 
 ### Community 23 - "Permission"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (4): Entity, Table, Permission, PermissionRepository
 
 ### Community 24 - "TailwindConfigGenerator"
-Cohesion: 0.07
-Nodes (15): main(), Add full color palette (50-950 shades) for a base color. Args: name: Color name…, Add custom font families. Args: fonts: Dict of font_type: [font_names] e.g.,…, Add custom spacing values. Args: spacing: Dict of name: value e.g., {'18':…, Add custom breakpoints. Args: breakpoints: Dict of name: width e.g., {'3xl':…, Add plugin requirements. Args: plugins: List of plugin names e.g.,…, Get plugin recommendations based on configuration. Returns: List of recommended…, Generate Tailwind CSS configuration files. (+7 more)
+Cohesion: 0.08
+Nodes (14): main(), Add full color palette (50-950 shades) for a base color. Args: name: Color name…, Add custom font families. Args: fonts: Dict of font_type: [font_names] e.g.,…, Add custom spacing values. Args: spacing: Dict of name: value e.g., {'18':…, Add custom breakpoints. Args: breakpoints: Dict of name: width e.g., {'3xl':…, Add plugin requirements. Args: plugins: List of plugin names e.g.,…, Get plugin recommendations based on configuration. Returns: List of recommended…, Generate Tailwind CSS configuration files. (+6 more)
 
 ### Community 25 - "org.springframework.context.annotation.Bean"
-Cohesion: 0.16
-Nodes (13): I18nConfig, OpenApiConfig, SecurityConfig, bcryptpasswordencoder, io.swagger.v3.oas.models.OpenAPI, OpenAPI, org.springdoc.core.models.GroupedOpenApi, org.springframework.context.annotation.Bean (+5 more)
+Cohesion: 0.12
+Nodes (18): I18nConfig, OpenApiConfig, Override, WebConfig, SecurityConfig, bcryptpasswordencoder, io.swagger.v3.oas.models.OpenAPI, OpenAPI (+10 more)
 
-### Community 26 - "react"
+### Community 26 - "DisciplinesSection.tsx"
 Cohesion: 0.10
-Nodes (15): LoginPage(), LANDING_IMAGES, ArrowButton(), ArrowButtonProps, InfiniteMarquee(), InfiniteMarqueeProps, ContactSectionProps, HeroSection() (+7 more)
+Nodes (19): LoginPage(), LANDING_IMAGES, ArrowButton(), ArrowButtonProps, InfiniteMarquee(), InfiniteMarqueeProps, RevealImage(), RevealImageProps (+11 more)
 
-### Community 27 - "ResourceNotFoundException"
-Cohesion: 0.08
-Nodes (24): Audited, AuthTokenResponse, RegistrationResponse, OtpDeliveryPort, BadRequestException, ConflictException, ForbiddenException, ResourceNotFoundException (+16 more)
+### Community 27 - "org.springframework.transaction.annotation.Transactional"
+Cohesion: 0.09
+Nodes (13): Audited, ConflictException, ResourceNotFoundException, UserUpdateDto, UserMapper, RoleRepository, PutMapping, UserService (+5 more)
 
 ### Community 28 - ".verifyOtp"
-Cohesion: 0.10
-Nodes (14): OtpChallenge, OtpService, Status, VerifyResult, EXPIRED_OR_NOT_FOUND, INVALID_CODE, MAX_ATTEMPTS_EXCEEDED, SUCCESS (+6 more)
+Cohesion: 0.12
+Nodes (9): OtpChallenge, OtpService, OtpChallengeRepository, OtpServiceTest, instant, jakarta.persistence.Entity, jakarta.persistence.Table, java.security.SecureRandom (+1 more)
 
 ### Community 29 - "object"
 Cohesion: 0.20
@@ -626,13 +649,13 @@ Nodes (3): AtlasGenerationTests, MuapiGenerationTests, object
 Cohesion: 0.14
 Nodes (20): _e(), generate_chart_slide(), generate_cta_slide(), generate_deck(), generate_metrics_slide(), generate_problem_slide(), generate_solution_slide(), generate_testimonial_slide() (+12 more)
 
-### Community 31 - "CatalogService"
-Cohesion: 0.13
-Nodes (13): CatalogSeeder, DisciplineRequest, DisciplineDto, Discipline, Entity, PrePersist, Table, DisciplineRepository (+5 more)
+### Community 31 - "org.junit.jupiter.api.extension.ExtendWith"
+Cohesion: 0.08
+Nodes (21): CatalogSeeder, Override, PostMapping, DisciplineRequest, DisciplineDto, Discipline, Entity, PrePersist (+13 more)
 
-### Community 32 - "io.swagger.v3.oas.annotations.Operation"
-Cohesion: 0.10
-Nodes (15): DeleteMapping, GetMapping, PutMapping, RequestMapping, RestController, RoleController, DeleteMapping, GetMapping (+7 more)
+### Community 32 - "RoleController"
+Cohesion: 0.24
+Nodes (6): DeleteMapping, GetMapping, PutMapping, RequestMapping, RestController, RoleController
 
 ### Community 33 - "AuditLog"
 Cohesion: 0.15
@@ -650,45 +673,45 @@ Nodes (36): format_context(), format_result(), main(), Format a single search re
 Cohesion: 0.08
 Nodes (22): author, description, keywords, license, name, private, scripts, build (+14 more)
 
-### Community 37 - "icon/generate.py"
-Cohesion: 0.10
-Nodes (27): call_ollama(), count_loc(), load_arms(), main(), Ponytail local benchmark — runs the same 5 tasks against any Ollama model. No…, Non-blank, non-comment lines of code: fenced blocks, or the whole response when…, run(), apply_color() (+19 more)
+### Community 37 - "generate_icon"
+Cohesion: 0.19
+Nodes (13): apply_color(), apply_viewbox_size(), extract_svgs(), generate_batch(), generate_icon(), generate_sizes(), main(), Extract SVG code blocks from model response (+5 more)
 
 ### Community 38 - "list"
-Cohesion: 0.16
-Nodes (10): InvoiceItemRepository, MemberLookupRepository, MemberLookupService, MemberLookupServiceTest, list, optional, org.springframework.data.jpa.repository.JpaRepository, org.springframework.data.jpa.repository.Lock (+2 more)
+Cohesion: 0.30
+Nodes (6): InvoiceItemRepository, list, optional, org.springframework.data.jpa.repository.JpaRepository, org.springframework.data.jpa.repository.Query, org.springframework.stereotype.Repository
 
 ### Community 39 - "cip/generate.py"
-Cohesion: 0.08
-Nodes (38): detect_domain(), get_cip_brief(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection, Search across all domains and combine results (+30 more)
+Cohesion: 0.07
+Nodes (37): BM25, detect_domain(), get_cip_brief(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection (+29 more)
 
 ### Community 40 - "MemberProgressLog"
-Cohesion: 0.14
-Nodes (5): Entity, Table, MemberProgressLog, HealthMetricService, MemberProgressLogRepository
+Cohesion: 0.13
+Nodes (7): HealthMetricDto, Entity, Table, MemberProgressLog, GetMapping, HealthMetricService, MemberProgressLogRepository
 
 ### Community 41 - "fontSize"
-Cohesion: 0.10
-Nodes (21): $type, $value, $type, $value, $type, $value, $type, $value (+13 more)
+Cohesion: 0.12
+Nodes (16): $type, $value, $type, $value, $type, $value, $type, $value (+8 more)
 
-### Community 42 - "patch"
-Cohesion: 0.17
-Nodes (6): Test adding components with overwrite flag., Test successful component addition., Test component addition with subprocess error., Test component addition when npx is not found., Test successful addition of all components., patch
+### Community 42 - "org.junit.jupiter.api.Test"
+Cohesion: 0.08
+Nodes (10): InvoiceComputedColumnTest, InvoiceControllerTest, ObjectMapper, ObjectMapper, PaymentControllerTest, org.junit.jupiter.api.BeforeEach, org.junit.jupiter.api.DisplayName, org.junit.jupiter.api.Test (+2 more)
 
 ### Community 43 - "LandingPage.tsx"
-Cohesion: 0.09
-Nodes (21): FullpageScrollManager(), FullpageScrollManagerProps, SECTION_NAMES, RevealImage(), RevealImageProps, ContactSection(), DISCIPLINES_LIST, DisciplinesSection() (+13 more)
+Cohesion: 0.16
+Nodes (11): FullpageScrollManager(), FullpageScrollManagerProps, SECTION_NAMES, IntelligenceSection(), PackagesSection(), ScrollNavbar(), ScrollNavbarProps, apps_web_src_features_landing_landing (+3 more)
 
 ### Community 44 - "compilerOptions"
 Cohesion: 0.10
 Nodes (19): compilerOptions, esModuleInterop, isolatedModules, jsx, lib, module, moduleResolution, noEmit (+11 more)
 
-### Community 45 - "org.junit.jupiter.api.Test"
-Cohesion: 0.05
-Nodes (15): Invoice, Entity, Table, InvoiceItem, Entity, Table, InvoiceMapper, InvoiceRepository (+7 more)
+### Community 45 - "Invoice"
+Cohesion: 0.04
+Nodes (13): InvoiceCreateDto, InvoiceItemCreateDto, Invoice, Entity, Table, InvoiceItem, Entity, Table (+5 more)
 
 ### Community 47 - "DisciplinesSlide.tsx"
-Cohesion: 0.21
-Nodes (7): DISCIPLINES_DATA, DisciplinesSlideProps, ThumbnailStripProps, DisciplineItem, InquiryFormData, SlideId, SlideItem
+Cohesion: 0.17
+Nodes (9): SlideControls(), SlideControlsProps, DISCIPLINES_DATA, DisciplinesSlideProps, ThumbnailStripProps, DisciplineItem, InquiryFormData, SlideId (+1 more)
 
 ### Community 48 - "extract-colors.cjs"
 Cohesion: 0.22
@@ -698,21 +721,21 @@ Nodes (11): calculateCompliance(), colorDistance(), displayPalette(), extractHex
 Cohesion: 0.25
 Nodes (13): checkManifest(), formatBytes(), formatOutput(), fs, main(), parseFilename(), path, RULES (+5 more)
 
-### Community 50 - "CatalogController"
-Cohesion: 0.17
-Nodes (6): CatalogController, GetMapping, PutMapping, RequestMapping, RestController, GetMapping
+### Community 50 - "InvoiceController"
+Cohesion: 0.36
+Nodes (4): InvoiceController, GetMapping, RequestMapping, RestController
 
 ### Community 51 - "logo/core.py"
-Cohesion: 0.10
-Nodes (21): BM25, detect_domain(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection, Search across all domains and combine results (+13 more)
+Cohesion: 0.17
+Nodes (14): detect_domain(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection, Search across all domains and combine results, search() (+6 more)
 
 ### Community 52 - "search_stack"
-Cohesion: 0.11
-Nodes (8): _exact_stack_identifier(), Resolve a standalone API identifier even when its BM25 IDF is low., Search stack-specific guidelines, search_stack(), _rows(), TestNativeDesktopStackFreshness, _rows(), TestWebStackFreshness
+Cohesion: 0.08
+Nodes (12): _exact_stack_identifier(), _project_row(), Resolve a standalone API identifier even when its BM25 IDF is low., Search stack-specific guidelines, search_stack(), _valid_max_results(), TestDiagnosticsContracts, _rows() (+4 more)
 
-### Community 53 - "hooks-windows.test.js"
-Cohesion: 0.16
-Nodes (13): assert, fs, HOST_PLUGIN_MANIFESTS, path, root, { spawn }, test, combineGraphs() (+5 more)
+### Community 53 - "publish-openclaw-skills.js"
+Cohesion: 0.09
+Nodes (20): fs, passthrough, path, root, skillsDir, slugs, { spawnSync }, assert (+12 more)
 
 ### Community 54 - "Subagent-Driven Development"
 Cohesion: 0.04
@@ -722,17 +745,17 @@ Nodes (39): 1. Take the task, 2. Work the steps, 3. The completion contract, 4. 
 Cohesion: 0.22
 Nodes (12): adjustBrightness(), CSS_TOKEN_SOURCES, { execFileSync }, extractColorsFromMarkdown(), findExistingTokenSources(), fs, GENERATE_TOKENS_SCRIPT, generateColorScale() (+4 more)
 
-### Community 57 - "AuditAspect"
-Cohesion: 0.15
-Nodes (8): AuditAspect, AuditLogRepository, AuditAspectTest, com.fasterxml.jackson.databind.JsonNode, org.aspectj.lang.annotation.AfterReturning, org.aspectj.lang.annotation.Aspect, org.aspectj.lang.JoinPoint, org.junit.jupiter.api.AfterEach
+### Community 57 - "AuthenticatedPrincipal"
+Cohesion: 0.27
+Nodes (5): AuthenticatedPrincipal, AuditAspectTest, org.aspectj.lang.annotation.AfterReturning, org.aspectj.lang.JoinPoint, org.junit.jupiter.api.AfterEach
 
-### Community 58 - "detect_domain"
-Cohesion: 0.23
-Nodes (3): detect_domain(), Auto-detect the most relevant domain from query. Matches are weighted by…, TestDomainDetection
+### Community 58 - "PaymentServiceTest.java"
+Cohesion: 0.15
+Nodes (12): BadRequestException, ForbiddenException, TooManyRequestsException, PaymentMapper, PaymentService, MemberLookupService, MemberRepository, MemberLookupServiceTest (+4 more)
 
 ### Community 59 - "search"
-Cohesion: 0.10
-Nodes (8): Resolve a deprecated in-domain alias, or expose a cross-domain redirect., Main search function with auto-domain detection, search(), _style_search_destination(), TestSearchDomains, read_rows(), TestStyleTaxonomy, TestTextLayoutRetrieval
+Cohesion: 0.04
+Nodes (51): _contains_phrase(), detect_domain(), _domain_keywords(), _exact_match_diagnostic(), _exact_row_identity(), _file_signature(), _get_bm25(), _legacy_successor_guidance() (+43 more)
 
 ### Community 61 - "compilerOptions"
 Cohesion: 0.13
@@ -747,8 +770,8 @@ Cohesion: 0.24
 Nodes (11): extensions, formatReport(), fs, getFiles(), main(), parseArgs(), path, patterns (+3 more)
 
 ### Community 64 - "ShadcnInstaller"
-Cohesion: 0.15
-Nodes (8): main(), Handle shadcn/ui component installation., ShadcnInstaller, Test adding components in dry run mode., Test initialization with custom project root., Test initialization with dry run mode., Test getting installed components when files exist., Test getting installed components without config.
+Cohesion: 0.18
+Nodes (7): main(), Handle shadcn/ui component installation., ShadcnInstaller, Test adding all components without config., Test listing installed components when they exist., Test checking for non-existent shadcn config., Test getting installed components when files exist.
 
 ### Community 65 - ".check_shadcn_config"
 Cohesion: 0.21
@@ -767,16 +790,16 @@ Cohesion: 0.05
 Nodes (43): Arbitrary Values, Aspect Ratio, Background Colors, Border Color, Border Radius, Border Style, Border Width, Borders (+35 more)
 
 ### Community 70 - "client.ts"
-Cohesion: 0.09
-Nodes (23): LuxuryLoginForm(), LuxuryLoginFormProps, RegisterPage(), Step, EMPTY_METRIC, HealthMetric, MemberProfilePage(), Profile (+15 more)
+Cohesion: 0.13
+Nodes (16): LuxuryLoginForm(), LuxuryLoginFormProps, ApiError, AUTH_STORAGE_KEY, clearAuthSession(), getCurrentUser(), loginApi(), LoginResponse (+8 more)
 
 ### Community 71 - "inject-brand-context.cjs"
 Cohesion: 0.31
 Nodes (10): extractColorsFromTable(), extractCoreAttributes(), extractHexColors(), extractImageStyle(), extractTypography(), extractVoice(), fs, generatePromptAddition() (+2 more)
 
-### Community 72 - "embed-tokens.cjs"
-Cohesion: 0.18
-Nodes (8): args, fs, minimal, MINIMAL_TOKENS, path, projectRoot, tokensPath, wrapStyle
+### Community 72 - "AuthService"
+Cohesion: 0.15
+Nodes (10): AuthService, OtpDeliveryPort, Status, VerifyResult, EXPIRED_OR_NOT_FOUND, INVALID_CODE, MAX_ATTEMPTS_EXCEEDED, SUCCESS (+2 more)
 
 ### Community 73 - "ponytail/package.json"
 Cohesion: 0.05
@@ -784,35 +807,35 @@ Nodes (41): author, name, url, bugs, url, description, exports, ./plugin (+33 mo
 
 ### Community 74 - "Payment"
 Cohesion: 0.03
-Nodes (13): PaymentCreateDto, PaymentDto, Entity, Table, Payment, PaymentMapper, PaymentRepository, PaymentService (+5 more)
+Nodes (8): PaymentCreateDto, Entity, Table, Payment, PaymentRepository, UserDto, org.mapstruct.Mapper, org.mapstruct.Mapping
 
 ### Community 75 - "ref_fs"
-Cohesion: 0.06
-Nodes (31): fs, path, system, fs, path, system, assert, fs (+23 more)
+Cohesion: 0.03
+Nodes (52): fs, path, system, fs, path, system, assert, commands (+44 more)
 
 ### Community 76 - "Brand Guidelines v1.0"
 Cohesion: 0.05
 Nodes (37): 1. Color Palette, 2. Typography, 3. Logo Usage, 4. Voice & Tone, 5. Imagery Guidelines, 6. Design Components, Accessibility, AI Image Generation (+29 more)
 
-### Community 77 - "MessageService"
-Cohesion: 0.10
-Nodes (14): AuthController, PostMapping, RequestMapping, RestController, OtpRequest, MessageService, HealthController, MemberLookupController (+6 more)
+### Community 77 - "MemberLookupController.java"
+Cohesion: 0.20
+Nodes (8): ApiError, HealthController, MemberLookupController, MemberLookupDto, map, org.springframework.web.bind.annotation.GetMapping, org.springframework.web.bind.annotation.RequestMapping, org.springframework.web.bind.annotation.RestController
 
-### Community 78 - "io.swagger.v3.oas.annotations.tags.Tag"
-Cohesion: 0.09
-Nodes (21): annotation, ApiError, CatalogResponses, InvoiceController, RequestMapping, RestController, HealthMetricDto, HealthMetricController (+13 more)
+### Community 78 - "MessageService"
+Cohesion: 0.11
+Nodes (18): annotation, MessageService, DisciplineController, RequestMapping, RestController, RequestMapping, RestController, PackageController (+10 more)
 
 ### Community 79 - "Role"
-Cohesion: 0.13
+Cohesion: 0.12
 Nodes (3): Entity, Table, Role
 
 ### Community 80 - "generate-tokens.cjs"
 Cohesion: 0.36
 Nodes (9): flattenTokens(), fs, generateCSS(), generateTailwind(), main(), parseArgs(), path, resolveReference() (+1 more)
 
-### Community 81 - "test_validate_tokens.py"
-Cohesion: 0.22
-Nodes (10): CompletedProcess, Path, Regression tests for validate-tokens.cjs. The validator used to skip any line…, A hardcoded hex on the same line as a var() token is still a violation., A line that references only tokens produces no false positives., _run(), test_flags_hardcoded_hex_sharing_line_with_token(), test_token_only_line_reports_no_violation() (+2 more)
+### Community 81 - "_run"
+Cohesion: 0.29
+Nodes (7): CompletedProcess, Path, A hardcoded hex on the same line as a var() token is still a violation., A line that references only tokens produces no false positives., _run(), test_flags_hardcoded_hex_sharing_line_with_token(), test_token_only_line_reports_no_violation()
 
 ### Community 82 - "duration"
 Cohesion: 0.20
@@ -827,56 +850,52 @@ Cohesion: 0.33
 Nodes (6): mvnw script, clean(), die(), exec_maven(), set_java_home(), verbose()
 
 ### Community 85 - "RoleService"
-Cohesion: 0.29
+Cohesion: 0.27
 Nodes (3): RoleMapper, RoleService, RoleServiceTest
 
 ### Community 86 - "helper.js"
 Cohesion: 0.42
 Nodes (7): connect(), nextReconnectDelay(), reloadAfterRecovery(), sessionKey(), setStatus(), showTombstone(), websocketUrl()
 
-### Community 87 - "BM25"
-Cohesion: 0.14
-Nodes (7): BM25, BM25 ranking algorithm for text search, Lowercase, split, remove punctuation, filter short words, Build BM25 index from documents, Score all documents against query, TestBm25CoreBehavior, TestDiagnosticsContracts
+### Community 87 - "ApiResponse"
+Cohesion: 0.09
+Nodes (5): ApiResponse, ErrorResponse, GetMapping, PostMapping, com.fasterxml.jackson.annotation.JsonInclude
 
-### Community 88 - "PaymentController.java"
-Cohesion: 0.22
-Nodes (6): GetMapping, PatchMapping, PostMapping, RequestMapping, RestController, PaymentController
+### Community 88 - "io.swagger.v3.oas.annotations.Operation"
+Cohesion: 0.11
+Nodes (17): GetMapping, PutMapping, GetMapping, PatchMapping, PostMapping, RequestMapping, RestController, PaymentController (+9 more)
 
-### Community 90 - "test_tailwind_config_gen.py"
-Cohesion: 0.22
-Nodes (8): Tests for tailwind_config_gen.py, Reduce a generated TS/JS config to a bare assignable object so it can be handed…, Regression guard for the missing-comma bug between the ``theme`` block and…, The property preceding ``plugins`` must end with a comma (pure-Python check, so…, The emitted config parses as valid JS via ``node --check``., _strip_to_object(), TestGeneratedConfigIsValidJs, parametrize
+### Community 90 - "TestGeneratedConfigIsValidJs"
+Cohesion: 0.25
+Nodes (7): Reduce a generated TS/JS config to a bare assignable object so it can be handed…, Regression guard for the missing-comma bug between the ``theme`` block and…, The property preceding ``plugins`` must end with a comma (pure-Python check, so…, The emitted config parses as valid JS via ``node --check``., _strip_to_object(), TestGeneratedConfigIsValidJs, parametrize
 
 ### Community 91 - "Design"
 Cohesion: 0.05
 Nodes (36): Banner Design (Built-in), Banner: Design Rules, Banner: Quick Size Reference, Banner: Top Art Styles, Banner: Workflow, CIP Design (Built-in), CIP: Generate Brief, CIP: Generate Mockups (+28 more)
 
 ### Community 92 - "radius"
-Cohesion: 0.12
-Nodes (23): $type, $value, lg, $type, $value, $type, $value, $type (+15 more)
+Cohesion: 0.19
+Nodes (14): $type, $value, $type, $value, $type, $value, primitive, radius (+6 more)
 
 ### Community 94 - "test_skill_script_paths.py"
 Cohesion: 0.38
 Nodes (5): Every script invocation in the shipped skill markdown resolves from the skill…, Return (target, None) for a skill-relative path, or (None, reason)., resolve(), shipped_invocations(), SkillScriptPathsTest
 
-### Community 95 - "ApiResponse"
-Cohesion: 0.09
-Nodes (17): ApiResponse, ErrorResponse, GlobalExceptionHandler, PostMapping, Override, com.fasterxml.jackson.annotation.JsonInclude, hashmap, jakarta.validation.ConstraintViolationException (+9 more)
+### Community 95 - "org.springframework.http.ResponseEntity"
+Cohesion: 0.21
+Nodes (12): GlobalExceptionHandler, hashmap, jakarta.validation.ConstraintViolationException, org.springframework.beans.factory.annotation.Autowired, org.springframework.dao.DataIntegrityViolationException, org.springframework.http.converter.HttpMessageNotReadableException, org.springframework.http.ResponseEntity, org.springframework.web.bind.annotation.ExceptionHandler (+4 more)
 
 ### Community 96 - "stop-server.sh"
 Cohesion: 0.43
 Nodes (4): command_has_server_id(), is_brainstorm_server(), mark_stopped(), stop-server.sh script
 
-### Community 98 - "selftest"
-Cohesion: 0.20
-Nodes (10): _plugin_dir(), Each task's good ref must score correct+safe; the bad ref must be caught on its…, Plugin-dir resolution must be portable: env override wins, and a missing…, Tree-kill one timed-out cell, never a blanket kill (that would also take down…, tree-kill must actually terminate a cell that outran its timeout, on this…, Resolve a plugin's cache dir portably -- hardcoding one machine's absolute path…, selftest(), _selftest_kill() (+2 more)
-
 ### Community 99 - "com.fasterxml.jackson.databind.ObjectMapper"
-Cohesion: 0.33
-Nodes (6): JsonAccessDeniedHandler, JsonAuthenticationEntryPoint, com.fasterxml.jackson.databind.ObjectMapper, org.springframework.security.core.AuthenticationException, org.springframework.security.web.access.AccessDeniedHandler, org.springframework.security.web.AuthenticationEntryPoint
+Cohesion: 0.21
+Nodes (11): Override, JsonAccessDeniedHandler, Override, JsonAuthenticationEntryPoint, com.fasterxml.jackson.databind.ObjectMapper, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.springframework.security.access.AccessDeniedException (+3 more)
 
 ### Community 101 - "ponytail-activate.js"
 Cohesion: 0.09
-Nodes (31): claudeDir, {
+Nodes (32): claudeDir, {
   clearMode,
   cursorRuleNotice,
   cursorRulePath,
@@ -885,7 +904,7 @@ Nodes (31): claudeDir, {
   isCursor,
   setMode,
   writeHookOutput,
-}, fs, { getDefaultMode, getClaudeDir, isShellSafe }, { getPonytailInstructions }, mode, output, path (+23 more)
+}, fs, { getDefaultMode, getClaudeDir, isShellSafe }, { getPonytailInstructions }, mode, output, path (+24 more)
 
 ### Community 104 - "ScmsApplication.java"
 Cohesion: 0.50
@@ -899,13 +918,17 @@ Nodes (12): component, $type, $value, dark, semantic, $schema, $type, $value (+4
 Cohesion: 0.06
 Nodes (35): 1. Visual Communication First, 2. Minimal Text Integration, 3. Expert Craftsmanship, 4. Systematic Patterns, Analog Meditation, Approach, Canvas Boundaries, Canvas Design System (+27 more)
 
-### Community 107 - "copilot-plugin.test.js"
-Cohesion: 0.25
-Nodes (6): assert, fs, path, REQUIRED_COMMAND_FILES, root, test
+### Community 107 - "apiFetch"
+Cohesion: 0.22
+Nodes (16): register(), RegisterInput, sendOtp(), verifyOtp(), RegisterPage(), Step, EMPTY_METRIC, MemberProfilePage() (+8 more)
+
+### Community 108 - "AuthController.java"
+Cohesion: 0.20
+Nodes (6): AuthController, PostMapping, RequestMapping, RestController, AuthTokenResponse, OtpRequest
 
 ### Community 112 - "TestShadcnInstaller"
-Cohesion: 0.12
-Nodes (10): Test adding components that are already installed., Test ShadcnInstaller class., Test adding all components in dry run mode., Create temporary project structure., Test listing installed components when they exist., Test initialization with default project root., Test checking for non-existent shadcn config., Test adding components with empty list. (+2 more)
+Cohesion: 0.13
+Nodes (9): Test adding components that are already installed., Test adding components in dry run mode., Test ShadcnInstaller class., Test component addition with subprocess error., Create temporary project structure., Test initialization with default project root., Test getting installed components without config., TestShadcnInstaller (+1 more)
 
 ### Community 122 - "CORE DIRECTIVE: IMAGE-FIRST WEBSITE DESIGN TO CODE"
 Cohesion: 0.06
@@ -920,24 +943,36 @@ Cohesion: 0.06
 Nodes (34): Accessibility, Available Domains, Available Stacks, Common Rules for Professional UI, Common Sticking Points, Example Workflow, How to Use This Skill, Icons & Visual Elements (+26 more)
 
 ### Community 127 - "run.py"
-Cohesion: 0.17
-Nodes (22): aggregate(), chat_code_loc(), _claude_version(), code_stats(), _count(), _git(), git_diff_stats(), _git_snapshot() (+14 more)
+Cohesion: 0.12
+Nodes (31): aggregate(), chat_code_loc(), _claude_version(), code_stats(), _count(), _git(), git_diff_stats(), _git_snapshot() (+23 more)
+
+### Community 129 - "BM25"
+Cohesion: 0.28
+Nodes (5): BM25, BM25 ranking algorithm for text search, Lowercase, split, remove punctuation, filter short words, Build BM25 index from documents, Score all documents against query
 
 ### Community 130 - "MembershipPackage"
-Cohesion: 0.07
-Nodes (12): PatchMapping, PostMapping, CatalogRequests, PackageRequest, PackageStatusRequest, PackageDto, Entity, PrePersist (+4 more)
+Cohesion: 0.06
+Nodes (13): CatalogRequests, PackageRequest, PackageStatusRequest, CatalogResponses, PackageDto, Entity, PrePersist, PreUpdate (+5 more)
 
 ### Community 132 - "Form & Input Components"
 Cohesion: 0.06
 Nodes (32): Accordion, Alert, Alert Dialog, Avatar, Badge, Button, Card, Checkbox (+24 more)
+
+### Community 133 - "AuditAspect"
+Cohesion: 0.25
+Nodes (4): AuditAspect, AuditLogRepository, com.fasterxml.jackson.databind.JsonNode, org.aspectj.lang.annotation.Aspect
 
 ### Community 134 - "Tailwind CSS Responsive Design"
 Cohesion: 0.06
 Nodes (32): 1. Mobile-First Design, 2. Consistent Breakpoint Usage, 3. Test at Breakpoint Boundaries, 4. Use Container for Content Width, 5. Progressive Enhancement, 6. Avoid Too Many Breakpoints, Best Practices, Breakpoint System (+24 more)
 
 ### Community 139 - "ponytail-config.js"
-Cohesion: 0.12
-Nodes (25): fs, getConfigDir(), getConfigPath(), getDefaultMode(), getHideStatus(), getQuietStartup(), isDeactivationCommand(), normalizeConfigMode() (+17 more)
+Cohesion: 0.07
+Nodes (48): fs, getConfigPath(), getDefaultMode(), getHideStatus(), getQuietStartup(), normalizeConfigMode(), normalizeMode(), normalizePersistedMode() (+40 more)
+
+### Community 140 - "$type"
+Cohesion: 0.60
+Nodes (5): $type, $value, border, border, border
 
 ### Community 152 - "tasks.py"
 Cohesion: 0.17
@@ -999,13 +1034,13 @@ Nodes (24): Accessibility, Accessibility Requirements, ARIA States, Color Contra
 Cohesion: 0.08
 Nodes (24): For /graphify add and --watch, For /graphify query, For the commit hook and native AGENTS.md integration, For --update and --cluster-only, /graphify, Honesty Rules, Interpreter guard for subcommands, Part A - Structural extraction for code files (+16 more)
 
-### Community 167 - "DatabaseTriggerInitializer.java"
-Cohesion: 0.15
-Nodes (13): DatabaseTriggerInitializer, Override, DatabaseTriggerProvider, Override, PostgreSqlTriggerProvider, Override, SqlServerTriggerProvider, javax.sql.DataSource (+5 more)
+### Community 167 - "org.springframework.stereotype.Component"
+Cohesion: 0.19
+Nodes (12): DatabaseTriggerInitializer, DatabaseTriggerProvider, Override, PostgreSqlTriggerProvider, Override, SqlServerTriggerProvider, javax.sql.DataSource, org.slf4j.Logger (+4 more)
 
-### Community 168 - "JwtService"
-Cohesion: 0.18
-Nodes (9): Override, Override, JwtAuthenticationFilter, JwtService, io.jsonwebtoken.Claims, jakarta.servlet.FilterChain, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse (+1 more)
+### Community 168 - "UserRepository"
+Cohesion: 0.14
+Nodes (11): Override, JwtAuthenticationFilter, JwtService, UserRepository, date, io.jsonwebtoken.Claims, jakarta.servlet.FilterChain, javax.crypto.SecretKey (+3 more)
 
 ### Community 169 - "Workflow"
 Cohesion: 0.08
@@ -1027,17 +1062,17 @@ Nodes (21): assert, claudeDir, configDir, configPath, cursorDir, cursorFlagPath,
 Cohesion: 0.09
 Nodes (22): @apply Directive, Best Practices, Color Customization, Complete Tailwind Config, Configuration Examples, Content Configuration, Custom Color Palette, Custom Font Sizes (+14 more)
 
-### Community 174 - "ponytail-instructions.js"
-Cohesion: 0.16
-Nodes (18): normalizeMode(), { DEFAULT_MODE, normalizeMode, normalizePersistedMode }, filterSkillBodyForMode(), fs, getFallbackInstructions(), getPonytailInstructions(), INDEPENDENT_MODES, path (+10 more)
+### Community 174 - "radius"
+Cohesion: 0.60
+Nodes (5): radius, radius, radius, $type, $value
 
 ### Community 175 - "__init__.py"
 Cohesion: 0.19
 Nodes (21): build_injected_context(), _config_dir(), _default_mode(), _fallback_instructions(), _filter_skill_body_for_mode(), _handle_mode_command(), _make_skill_command_handler(), _normalize_config_mode() (+13 more)
 
 ### Community 176 - "judge.py"
-Cohesion: 0.22
-Nodes (19): main(), parse_complete(), _rank_ok(), scores: {(task_id, label): {SCORE_KEY: int}}. For each task the 'complete'…, Live: the judge model must rank each complete ref above its stub., No API, no key: prove the GATE catches under-delivery. A well-ordered matrix…, run(), selftest() (+11 more)
+Cohesion: 0.13
+Nodes (28): main(), parse_complete(), _rank_ok(), scores: {(task_id, label): {SCORE_KEY: int}}. For each task the 'complete'…, Live: the judge model must rank each complete ref above its stub., No API, no key: prove the GATE catches under-delivery. A well-ordered matrix…, run(), selftest() (+20 more)
 
 ### Community 177 - "devDependencies"
 Cohesion: 0.05
@@ -1143,9 +1178,9 @@ Nodes (15): Common Rationalizations, Overview, Phase 1: Root Cause Investigation
 Cohesion: 0.12
 Nodes (15): 1. Authority, 2. Commitment, 3. Scarcity, 4. Social Proof, 5. Unity, 6. Reciprocity, 7. Liking, Ethical Use (+7 more)
 
-### Community 203 - "org.springframework.stereotype.Component"
-Cohesion: 0.22
-Nodes (8): Override, SmtpOtpDeliveryAdapter, Override, UnavailableOtpDeliveryAdapter, ServiceUnavailableException, org.springframework.boot.autoconfigure.condition.ConditionalOnProperty, org.springframework.mail.javamail.JavaMailSender, org.springframework.stereotype.Component
+### Community 203 - "SmtpOtpDeliveryAdapter"
+Cohesion: 0.21
+Nodes (7): Override, SmtpOtpDeliveryAdapter, Override, UnavailableOtpDeliveryAdapter, ServiceUnavailableException, org.springframework.boot.autoconfigure.condition.ConditionalOnProperty, org.springframework.mail.javamail.JavaMailSender
 
 ### Community 204 - "AppException"
 Cohesion: 0.22
@@ -1191,9 +1226,9 @@ Nodes (14): 1a. Native Worktree Tools (preferred), 1b. Git Worktree Fallback, Co
 Cohesion: 0.13
 Nodes (15): Code Examples, Common Rationalizations for Skipping Testing, Directory Structure, Discovery Workflow, Flowchart Usage, Match the Form to the Failure, Overview, Skill Creation Checklist (TDD Adapted) (+7 more)
 
-### Community 215 - "JwtService.java"
-Cohesion: 0.16
-Nodes (9): Override, WebConfig, date, javax.crypto.SecretKey, jwts, keys, org.springframework.web.servlet.config.annotation.CorsRegistry, org.springframework.web.servlet.config.annotation.WebMvcConfigurer (+1 more)
+### Community 215 - "lg"
+Cohesion: 0.60
+Nodes (5): lg, $type, $value, lg, lg
 
 ### Community 216 - "README.ko.md"
 Cohesion: 0.14
@@ -1283,9 +1318,9 @@ Nodes (13): Common Mistakes (Same as TDD), GREEN Phase: Write Minimal Skill (Mak
 Cohesion: 0.22
 Nodes (10): Body, catalogApi, Discipline, MembershipPackage, Room, Form, ManagerCatalogsPage(), ROOM_STATUS_LABEL (+2 more)
 
-### Community 238 - "CountUp.tsx"
-Cohesion: 0.28
-Nodes (8): ManagerReportsPage(), easeOutExpo(), useCountUp(), useInView(), CountUp(), CountUpProps, Reveal(), RevealProps
+### Community 238 - "react"
+Cohesion: 0.16
+Nodes (12): PackagesSectionProps, UseSlideControllerOptions, ManagerReportsPage(), UserRecord, easeOutExpo(), useCountUp(), useInView(), CountUp() (+4 more)
 
 ### Community 239 - "3. Các Bước Thực Hiện Chi Tiết (Bite-Sized Tasks)"
 Cohesion: 0.15
@@ -1395,13 +1430,13 @@ Nodes (9): CSS Capabilities, Database, HTML Elements, JavaScript / Browser APIs,
 Cohesion: 0.20
 Nodes (10): 1. **Using `slowapi` (Recommended - Easiest)**, 2. **Using `limits` Library (More Control)**, 3. **Custom Middleware (Full Control)**, 4. **Per-User Rate Limiting (With Authentication)**, 5. **Redis-Based Rate Limiting (Production)**, 6. **Complete Example with Multiple Endpoints**, Comparison Table, Rate Limiting in FastAPI (+2 more)
 
-### Community 268 - "ponytail.mjs"
-Cohesion: 0.22
-Nodes (7): __dirname, parseCommandFile(), { getDefaultMode, normalizePersistedMode }, { getPonytailInstructions }, { parseCommandFile }, require, statePath
+### Community 268 - "sm"
+Cohesion: 0.60
+Nodes (5): sm, sm, sm, $type, $value
 
-### Community 269 - "publish-openclaw-skills.js"
-Cohesion: 0.20
-Nodes (7): fs, passthrough, path, root, skillsDir, slugs, { spawnSync }
+### Community 269 - "padding-x"
+Cohesion: 0.67
+Nodes (4): padding-x, padding-x, $type, $value
 
 ### Community 270 - "opencode-plugin.test.js"
 Cohesion: 0.20
@@ -1416,8 +1451,8 @@ Cohesion: 0.20
 Nodes (9): Alert Tokens, Badge Tokens, Button Tokens, Card Tokens, Component Tokens, Dialog/Modal Tokens, Input Tokens, Table Tokens (+1 more)
 
 ### Community 273 - "button"
-Cohesion: 0.15
-Nodes (15): $type, $value, bg, fg, font-size, hover-bg, bg, button (+7 more)
+Cohesion: 0.20
+Nodes (10): fg, font-size, hover-bg, button, $type, $value, $type, $value (+2 more)
 
 ### Community 274 - "CORE DIRECTIVE: AWWWARDS-LEVEL DESIGN ENGINEERING"
 Cohesion: 0.20
@@ -1443,9 +1478,9 @@ Nodes (9): Common Mistakes, Condition-Based Waiting, Core Pattern, Implementatio
 Cohesion: 0.20
 Nodes (10): 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know), Animation Library Choice, Cards & Containers, Galleries & Media, Hero Paradigms, Layout & Grids, Micro-Interactions & Effects, Navigation & Menus (+2 more)
 
-### Community 280 - "_normalize"
-Cohesion: 0.25
-Nodes (9): _exact_match_diagnostic(), _legacy_successor_guidance(), _normalize(), Apply longest-first synonym substitution at token boundaries., Whether a stack query explicitly targets an older framework generation., Choose one coherent applicability generation for stack retrieval., Prefer the explicit successor row for a brand-new app on legacy-only stacks., _stack_query_requests_legacy() (+1 more)
+### Community 280 - "md"
+Cohesion: 0.67
+Nodes (4): $type, $value, md, md
 
 ### Community 281 - "Verification Before Completion"
 Cohesion: 0.20
@@ -1544,20 +1579,16 @@ Cohesion: 0.29
 Nodes (7): distinct, fs, path, readVersion(), root, VERSION_FILES, versions
 
 ### Community 306 - "uninstall.js"
-Cohesion: 0.25
-Nodes (6): cursorHooks, fs, { getConfigPath, getClaudeDir }, os, path, settingsPath
+Cohesion: 0.22
+Nodes (7): getClaudeDir(), cursorHooks, fs, { getConfigPath, getClaudeDir }, os, path, settingsPath
 
 ### Community 307 - "Ponytail Help"
 Cohesion: 0.25
 Nodes (7): Configure Default Mode, Deactivate, Levels, More, Ponytail Help, Skills, Update
 
-### Community 308 - "commands.test.js"
-Cohesion: 0.25
-Nodes (7): assert, commands, fs, path, piSource, root, test
-
 ### Community 310 - "input"
-Cohesion: 0.15
-Nodes (17): $type, $value, padding-x, padding-y, border, border, input, $type (+9 more)
+Cohesion: 0.29
+Nodes (8): padding-y, input, $type, $value, focus-ring, padding-y, $type, $value
 
 ### Community 311 - "issue.md"
 Cohesion: 0.25
@@ -1579,9 +1610,9 @@ Nodes (7): Configure Default Mode, Deactivate, Levels, More, Ponytail Help, Skil
 Cohesion: 0.25
 Nodes (8): 9.A Visual & CSS, 9. AI TELLS (Forbidden Patterns), 9.B Typography, 9.C Layout & Spacing, 9.D Content & Data ("Jane Doe" Effect), 9.E External Resources & Components, 9.F Production-Test Tells (banned outright), 9.G EM-DASH BAN (the single most-violated Tell)
 
-### Community 316 - "_row_identities"
-Cohesion: 0.25
-Nodes (8): _exact_row_identity(), Suggest complete public identities so a retry can bypass score thresholds., Return non-empty public identities from ordinary and alias fields., Resolve an explicit style identity without opening generic variant ranking., Return one row whose stable public identity exactly matches the query., _row_identities(), _style_identity(), _suggest_identities()
+### Community 316 - "16"
+Cohesion: 0.67
+Nodes (3): $type, $value, 16
 
 ### Community 317 - "Quy trình phát triển tính năng & Tuân thủ Rules dự án SCMS"
 Cohesion: 0.25
@@ -1987,19 +2018,55 @@ Nodes (4): 6.1. Script sinh State Diagrams tự động: [build_state_diagrams.j
 Cohesion: 0.50
 Nodes (4): 7.1. Kiến trúc Công nghệ Khuyến nghị (Recommended Tech Stack), 7.2. Thiết Kế RESTful API Blueprint, 7.3. Những quy tắc "Sống Còn" (Critical Gotchas) Dành Cho Agent Code, 7. HƯỚNG DẪN TRIỂN KHAI PHẦN MỀM CHO AGENT TIẾP THEO (IMPLEMENTATION BLUEPRINT)
 
+### Community 438 - "2"
+Cohesion: 0.67
+Nodes (3): $type, $value, 2
+
+### Community 460 - "6"
+Cohesion: 0.67
+Nodes (3): $type, $value, 6
+
+### Community 461 - "8"
+Cohesion: 0.67
+Nodes (3): $type, $value, 8
+
+### Community 463 - "destructive-foreground"
+Cohesion: 0.67
+Nodes (3): destructive-foreground, $type, $value
+
+### Community 464 - "muted"
+Cohesion: 0.67
+Nodes (3): muted, $type, $value
+
+### Community 466 - "primary"
+Cohesion: 0.67
+Nodes (3): primary, $type, $value
+
+### Community 467 - "primary-foreground"
+Cohesion: 0.67
+Nodes (3): primary-foreground, $type, $value
+
+### Community 469 - "ring"
+Cohesion: 0.67
+Nodes (3): ring, $type, $value
+
+### Community 497 - "secondary-foreground"
+Cohesion: 0.67
+Nodes (3): secondary-foreground, $type, $value
+
 ## Knowledge Gaps
 - **2743 isolated node(s):** `$schema`, `name`, `description`, `name`, `url` (+2738 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **98 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **110 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `search()` connect `search` to `validate_data.py`, `scripts/core.py`, `design_system.py`, `generate_design_system`, `DesignSystemGenerator`, `BM25`, `_normalize`, `detect_domain`, `_row_identities`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
-- **Why does `ShadcnInstaller` connect `ShadcnInstaller` to `.test_get_installed_components_empty`, `.check_shadcn_config`, `design_system.py`, `patch`, `.test_add_all_components_no_config`, `.test_list_installed_empty`, `TestShadcnInstaller`, `.test_check_shadcn_config_exists`, `.__init__`, `.test_add_components_no_config`, `.test_list_installed_no_config`?**
+- **Why does `search()` connect `search` to `validate_data.py`, `design_system.py`, `generate_design_system`, `test_design_system_mode.py`, `search_stack`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+- **Why does `ShadcnInstaller` connect `ShadcnInstaller` to `.test_get_installed_components_empty`, `.check_shadcn_config`, `.test_add_all_components_success`, `design_system.py`, `.test_init_dry_run`, `.test_list_installed_empty`, `TestShadcnInstaller`, `.test_check_shadcn_config_exists`, `.test_add_components_with_overwrite`, `.test_add_components_success`, `.test_add_components_npx_not_found`, `.test_add_all_components_dry_run`, `.__init__`, `.test_init_custom_project_root`, `.test_add_components_no_config`, `.test_add_components_no_components`, `.test_list_installed_no_config`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **Why does `DesignSystemGenerator` connect `DesignSystemGenerator` to `design_system.py`, `generate_design_system`, `BM25`, `test_design_system_mode.py`, `BM25`, `detect_domain`, `search`?**
+- **Why does `DesignSystemGenerator` connect `DesignSystemGenerator` to `design_system.py`, `generate_design_system`, `BM25`, `test_design_system_mode.py`, `search_stack`, `search`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `User` (e.g. with `.shouldCreatePaymentSuccessfully()` and `.searchesWithLowercasedWildcardPatternAndMapsResult()`) actually correct?**
   _`User` has 6 INFERRED edges - model-reasoned connections that need verification._
