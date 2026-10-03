@@ -28,20 +28,20 @@ public class RoleController {
         this.messageService = messageService;
     }
 
-    private String msg(String key, String fallback) {
-        return messageService != null ? messageService.getMessageOrDefault(key, fallback) : fallback;
+    private String msg(String key) {
+        return messageService != null ? messageService.getMessage(key) : key;
     }
 
     @Operation(summary = "Grant a permission to a role")
     @PutMapping("/{id}/permissions/{permissionId}")
     public ApiResponse<PermissionDto> grantPermission(@PathVariable Long id, @PathVariable Long permissionId) {
-        return ApiResponse.ok(msg("rbac.permission.granted", "Permission granted"), roleService.grantPermission(id, permissionId));
+        return ApiResponse.ok(msg("rbac.permission.granted"), roleService.grantPermission(id, permissionId));
     }
 
     @Operation(summary = "Revoke a permission from a role")
     @DeleteMapping("/{id}/permissions/{permissionId}")
     public ApiResponse<PermissionDto> revokePermission(@PathVariable Long id, @PathVariable Long permissionId) {
-        return ApiResponse.ok(msg("rbac.permission.revoked", "Permission revoked"), roleService.revokePermission(id, permissionId));
+        return ApiResponse.ok(msg("rbac.permission.revoked"), roleService.revokePermission(id, permissionId));
     }
 
     @Operation(summary = "Lấy danh sách vai trò", description = "Danh sách tất cả vai trò (Role) trong hệ thống")

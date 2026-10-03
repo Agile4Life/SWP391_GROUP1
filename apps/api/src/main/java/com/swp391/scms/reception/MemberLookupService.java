@@ -25,7 +25,7 @@ public class MemberLookupService {
         String keyword = query == null ? "" : query.trim().toLowerCase(Locale.ROOT);
         if (keyword.length() < MIN_QUERY_LENGTH) {
             throw new BadRequestException("QUERY_TOO_SHORT", "reception.lookup.query_too_short",
-                    new Object[]{MIN_QUERY_LENGTH}, "Search keyword is too short");
+                    new Object[]{MIN_QUERY_LENGTH}, null);
         }
         return repository.search("%" + keyword + "%", PageRequest.of(0, MAX_RESULTS)).stream()
                 .map(m -> new MemberLookupDto(m.getUserId(), m.getMembershipCode(), m.getUser().getFullName(),

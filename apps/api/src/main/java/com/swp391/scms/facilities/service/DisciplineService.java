@@ -1,0 +1,59 @@
+package com.swp391.scms.facilities.service;
+
+import com.swp391.scms.common.exception.ConflictException;
+import com.swp391.scms.common.exception.ResourceNotFoundException;
+import com.swp391.scms.facilities.dto.CatalogRequests.DisciplineRequest;
+import com.swp391.scms.facilities.dto.CatalogResponses.DisciplineDto;
+import com.swp391.scms.facilities.entity.Discipline;
+import com.swp391.scms.facilities.repository.DisciplineRepository;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/** Business logic for the discipline catalog (SCRUM-58). */
+@Service
+public class DisciplineService {
+
+    private final DisciplineRepository disciplines;
+
+    public DisciplineService(DisciplineRepository disciplines) {
+        this.disciplines = disciplines;
+    }
+
+    @Transactional(readOnly = true)
+    public List<DisciplineDto> list() {
+        return disciplines.findAllByOrderByNameAsc().stream().map(DisciplineDto::of).toList();
+    }
+
+    @Transactional
+    public DisciplineDto create(DisciplineRequest request) {
+        String name = request.name().trim();
+        if (disciplines.existsByNameIgnoreCase(name)) {
+            throw duplicate(name);
+        }
+        Discipline discipline = new Discipline();
+        apply(discipline, request);
+        return DisciplineDto.of(disciplines.save(discipline));
+    }
+
+    @Transactional
+    public DisciplineDto update(Long id, DisciplineRequest request) {
+        Discipline discipline = disciplines.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("resource.discipline", id));
+        String name = request.name().trim();
+        if (disciplines.existsByNameIgnoreCaseAndIdNot(name, id)) {
+            throw duplicate(name);
+        }
+        apply(discipline, request);
+        return DisciplineDto.of(discipline);
+    }
+
+    private void apply(Discipline discipline, DisciplineRequest request) {
+        discipline.setName(request.name().trim());
+        discipline.setDescription(request.description());
+    }
+
+    private ConflictException duplicate(String name) {
+        return new ConflictException("DISCIPLINE_EXISTS", "catalog.discipline.name_exists", new Object[]{name}, null);
+    }
+}

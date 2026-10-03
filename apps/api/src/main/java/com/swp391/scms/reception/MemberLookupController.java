@@ -27,12 +27,13 @@ public class MemberLookupController {
         this.messageService = messageService;
     }
 
+    private String msg(String key) {
+        return messageService != null ? messageService.getMessage(key) : key;
+    }
+
     @Operation(summary = "Quick member lookup by code, name, email or phone (max 20 results)")
     @GetMapping("/lookup")
     public ApiResponse<List<MemberLookupDto>> lookup(@RequestParam("q") String query) {
-        String message = messageService != null
-                ? messageService.getMessageOrDefault("reception.lookup.success", "Member lookup completed")
-                : "Member lookup completed";
-        return ApiResponse.ok(message, service.search(query));
+        return ApiResponse.ok(msg("reception.lookup.success"), service.search(query));
     }
 }
