@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginApi } from '../../shared/api/client';
+import { homePath, loginApi } from '../../shared/api/client';
 
 interface LuxuryLoginFormProps {
   onSuccess?: () => void;
@@ -9,22 +9,16 @@ interface LuxuryLoginFormProps {
 export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
   const navigate = useNavigate();
 
-  const [identifier, setIdentifier] = useState('an.member@sol-wellness.vn');
-  const [password, setPassword] = useState('123456');
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const quickFill = (id: string, pass: string = '123456') => {
-    setIdentifier(id);
-    setPassword(pass);
-    setFormError('');
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier.trim()) {
-      setFormError('Vui lòng nhập Email hoặc Số điện thoại.');
+      setFormError('Vui lòng nhập tên đăng nhập hoặc email.');
       return;
     }
     if (!password) {
@@ -39,21 +33,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
       const res = await loginApi(identifier, password);
       if (onSuccess) onSuccess();
 
-      switch (res.user.role) {
-        case 'MANAGER':
-          navigate('/manager/reports');
-          break;
-        case 'STAFF':
-          navigate('/staff/reception');
-          break;
-        case 'COACH':
-          navigate('/staff/attendance');
-          break;
-        case 'MEMBER':
-        default:
-          navigate('/member/dashboard');
-          break;
-      }
+      navigate(homePath(res.user.role));
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Đăng nhập không thành công.';
       setFormError(msg);
@@ -108,59 +88,6 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
         </p>
       </div>
 
-      {/* Quick Demo Pre-fill Cards */}
-      <div
-        style={{
-          background: '#FAF8F5',
-          border: '1px solid rgba(33, 28, 24, 0.08)',
-          borderRadius: '8px',
-          padding: '16px',
-          marginBottom: '24px',
-        }}
-      >
-        <div style={{ fontSize: '0.7rem', color: '#8C847C', letterSpacing: '0.12em', fontWeight: 600, marginBottom: '10px' }}>
-          ⚡ CHỌN TÀI KHOẢN TRẢI NGHIỆM NHANH (DEMO ACCOUNTS):
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <button
-            type="button"
-            className={`demo-role-card ${identifier === 'an.member@sol-wellness.vn' ? 'selected' : ''}`}
-            onClick={() => quickFill('an.member@sol-wellness.vn')}
-          >
-            <span className="demo-role-badge">MEMBER</span>
-            <span className="demo-role-name">👤 Nguyễn Văn An</span>
-            <span className="demo-role-email">Hội viên • Đặt lớp &amp; Thẻ QR</span>
-          </button>
-          <button
-            type="button"
-            className={`demo-role-card ${identifier === 'thinh.reception@sol-wellness.vn' ? 'selected' : ''}`}
-            onClick={() => quickFill('thinh.reception@sol-wellness.vn')}
-          >
-            <span className="demo-role-badge">STAFF</span>
-            <span className="demo-role-name">💁 Lễ Tân Thịnh</span>
-            <span className="demo-role-email">Check-in sảnh &amp; Thu POS</span>
-          </button>
-          <button
-            type="button"
-            className={`demo-role-card ${identifier === 'elena.vu@sol-wellness.vn' ? 'selected' : ''}`}
-            onClick={() => quickFill('elena.vu@sol-wellness.vn')}
-          >
-            <span className="demo-role-badge">COACH</span>
-            <span className="demo-role-name">🏋️ Elena Vũ</span>
-            <span className="demo-role-email">HLV • Điểm danh &amp; AI</span>
-          </button>
-          <button
-            type="button"
-            className={`demo-role-card ${identifier === 'admin.manager@sol-wellness.vn' ? 'selected' : ''}`}
-            onClick={() => quickFill('admin.manager@sol-wellness.vn')}
-          >
-            <span className="demo-role-badge">MANAGER</span>
-            <span className="demo-role-name">👔 Ban Quản Lý</span>
-            <span className="demo-role-email">Báo cáo &amp; Doanh thu</span>
-          </button>
-        </div>
-      </div>
-
       {formError && (
         <div
           style={{
@@ -179,11 +106,11 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
       <form onSubmit={handleSubmit}>
         <div className="portal-form-group">
-          <label className="portal-label">Email Hoặc Số Điện Thoại</label>
+          <label className="portal-label">Tên đăng nhập hoặc Email</label>
           <input
             type="text"
             className="portal-input"
-            placeholder="example@sol-wellness.vn hoặc 0908123456"
+            placeholder="Tên đăng nhập hoặc email"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
           />
@@ -212,7 +139,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
           <input
             type={showPassword ? 'text' : 'password'}
             className="portal-input"
-            placeholder="Nhập mật khẩu (Mặc định: 123456)"
+            placeholder="Nhập mật khẩu"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

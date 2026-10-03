@@ -4,6 +4,7 @@ import { LoginPage } from '../features/auth/LoginPage';
 import { RegisterPage } from '../features/auth/RegisterPage';
 import { AppLayout } from '../shared/ui/AppLayout';
 import { RoleGuard } from '../shared/ui/RoleGuard';
+import { PortalHome } from '../shared/ui/PortalHome';
 
 // Member Feature Pages
 import { MemberDashboardPage } from '../features/member/MemberDashboardPage';
@@ -34,17 +35,22 @@ export const router = createBrowserRouter([
   {
     element: <AppLayout />,
     children: [
-      { path: '/portal', element: <Navigate to="/member/dashboard" replace /> },
+      { path: '/portal', element: <PortalHome /> },
 
       // Group Member Routes (US01, US03, US04, US05)
       {
         element: <RoleGuard allowedRoles={['MEMBER', 'MANAGER', 'CENTER_MANAGER']} />,
         children: [
           { path: '/member/dashboard', element: <MemberDashboardPage /> },
-          { path: '/member/profile', element: <MemberProfilePage /> },
           { path: '/member/classes', element: <MemberClassesPage /> },
           { path: '/member/card', element: <MemberCardPage /> },
         ],
+      },
+
+      // Hồ sơ cá nhân: mọi vai trò đã đăng nhập (SCRUM-55)
+      {
+        element: <RoleGuard allowedRoles={['MEMBER', 'STAFF', 'COACH', 'MANAGER']} />,
+        children: [{ path: '/member/profile', element: <MemberProfilePage /> }],
       },
 
       // Group Staff / Coach Routes (US02, US04, US05)

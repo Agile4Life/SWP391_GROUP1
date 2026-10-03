@@ -82,3 +82,6 @@ export async function loginApi(identifier: string, password: string): Promise<Lo
   setCurrentUser(user);
   return { token: data.token, user };
 }
+// Màn hình mặc định sau đăng nhập (chỉ các màn hình đã nối API thật)
+export const homePath = (role: UserSession['role']): string =>
+  role === 'MANAGER' ? '/manager/users' : '/member/profile';
