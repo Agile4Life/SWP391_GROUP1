@@ -51,13 +51,11 @@ public class InvoiceService {
 
         if ("failed".equalsIgnoreCase(payment.getStatus()) || "refunded".equalsIgnoreCase(payment.getStatus())) {
             throw new BadRequestException("INVALID_PAYMENT_STATE", "finance.invoice.invalid_payment_state",
-                    new Object[]{payment.getStatus()},
-                    "Không thể xuất hóa đơn cho giao dịch có trạng thái '" + payment.getStatus() + "'");
+                    new Object[]{payment.getStatus()}, null);
         }
 
         if (invoiceRepository.findByPaymentId(dto.getPaymentId()).isPresent()) {
-            throw new ConflictException("INVOICE_ALREADY_EXISTS", "finance.invoice.already_exists", null,
-                    "Giao dịch thanh toán này đã có hóa đơn điện tử");
+            throw new ConflictException("INVOICE_ALREADY_EXISTS", "finance.invoice.already_exists", null, null);
         }
 
         String invoiceNumber = dto.getInvoiceNumber();
@@ -65,8 +63,7 @@ public class InvoiceService {
             invoiceNumber = generateInvoiceNumber();
         } else if (invoiceRepository.existsByInvoiceNumber(invoiceNumber)) {
             throw new ConflictException("DUPLICATE_INVOICE_NUMBER", "finance.invoice.duplicate_number",
-                    new Object[]{invoiceNumber},
-                    "Mã số hóa đơn " + invoiceNumber + " đã tồn tại");
+                    new Object[]{invoiceNumber}, null);
         }
 
         Invoice invoice = invoiceMapper.toEntity(dto);

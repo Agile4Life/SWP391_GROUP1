@@ -2,6 +2,7 @@ package com.swp391.scms.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swp391.scms.common.ApiResponse;
+import com.swp391.scms.common.i18n.MessageService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,9 +16,11 @@ import java.io.IOException;
 @Component
 public class JsonAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper;
+    private final MessageService messageService;
 
-    public JsonAuthenticationEntryPoint(ObjectMapper objectMapper) {
+    public JsonAuthenticationEntryPoint(ObjectMapper objectMapper, MessageService messageService) {
         this.objectMapper = objectMapper;
+        this.messageService = messageService;
     }
 
     @Override
@@ -26,6 +29,6 @@ public class JsonAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         objectMapper.writeValue(response.getOutputStream(),
-                ApiResponse.error(401, "UNAUTHORIZED", "Cần xác thực để truy cập tài nguyên này."));
+                ApiResponse.error(401, "UNAUTHORIZED", messageService.getMessage("error.unauthorized")));
     }
 }

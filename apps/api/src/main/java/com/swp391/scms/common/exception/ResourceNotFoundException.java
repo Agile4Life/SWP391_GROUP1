@@ -12,7 +12,6 @@ public class ResourceNotFoundException extends AppException {
     }
 
     public ResourceNotFoundException(String resourceName, Object identifier) {
-        super(HttpStatus.NOT_FOUND, "NOT_FOUND", "error.not_found", new Object[]{resourceName, identifier},
-                String.format("Không tìm thấy %s với định danh: %s", resourceName, identifier));
+        super(HttpStatus.NOT_FOUND, "NOT_FOUND", "error.not_found", new Object[]{resourceName, identifier}, null);
     }
 }

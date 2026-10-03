@@ -34,10 +34,6 @@ public class ApiResponse<T> {
 
     // --- Success Factory Methods ---
 
-    public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(true, 200, "Thành công", data, null, null);
-    }
-
     public static <T> ApiResponse<T> ok(String message, T data) {
         return new ApiResponse<>(true, 200, message, data, null, null);
     }

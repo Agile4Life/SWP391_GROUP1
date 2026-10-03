@@ -92,8 +92,7 @@ public class PaymentService {
                 .orElseThrow(() -> new ResourceNotFoundException("resource.payment", id));
 
         if (status == null || !VALID_STATUSES.contains(status.toLowerCase(Locale.ROOT))) {
-            throw new BadRequestException("INVALID_PAYMENT_STATUS", "finance.payment.invalid_status", new Object[]{status},
-                    "Trạng thái thanh toán không hợp lệ: " + status);
+            throw new BadRequestException("INVALID_PAYMENT_STATUS", "finance.payment.invalid_status", new Object[]{status}, null);
         }
         String normalizedStatus = status.toLowerCase(Locale.ROOT);
         String currentStatus = payment.getStatus() != null ? payment.getStatus().toLowerCase(Locale.ROOT) : "pending";
@@ -107,8 +106,7 @@ public class PaymentService {
             };
             if (!allowed) {
                 throw new BadRequestException("INVALID_STATUS_TRANSITION", "finance.payment.invalid_transition",
-                        new Object[]{currentStatus, normalizedStatus},
-                        "Không thể chuyển trạng thái thanh toán từ '" + currentStatus + "' sang '" + normalizedStatus + "'");
+                        new Object[]{currentStatus, normalizedStatus}, null);
             }
             payment.setStatus(normalizedStatus);
             markPaidIfSuccess(payment, normalizedStatus);
