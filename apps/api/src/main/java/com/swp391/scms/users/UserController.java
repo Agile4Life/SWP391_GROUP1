@@ -26,6 +26,7 @@ public class UserController {
         this(userService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public UserController(UserService userService, MessageService messageService) {
         this.userService = userService;
         this.messageService = messageService;

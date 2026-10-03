@@ -30,6 +30,7 @@ public class AuthController {
         this(authService, debugOtpEnabled, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public AuthController(AuthService authService,
                           @Value("${app.auth.debug-otp-enabled:false}") boolean debugOtpEnabled,
                           MessageService messageService) {

@@ -27,6 +27,7 @@ public class PaymentController {
         this(paymentService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public PaymentController(PaymentService paymentService, MessageService messageService) {
         this.paymentService = paymentService;
         this.messageService = messageService;

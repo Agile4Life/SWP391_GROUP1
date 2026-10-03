@@ -22,6 +22,7 @@ public class MemberLookupController {
         this(service, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public MemberLookupController(MemberLookupService service, MessageService messageService) {
         this.service = service;
         this.messageService = messageService;

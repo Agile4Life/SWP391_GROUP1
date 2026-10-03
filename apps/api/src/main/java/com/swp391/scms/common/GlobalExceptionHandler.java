@@ -248,6 +248,20 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles missing or mistyped request parameters.
+     */
+    @ExceptionHandler({org.springframework.web.bind.MissingServletRequestParameterException.class,
+            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ApiResponse<Object>> handleBadParameter(Exception ex) {
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.BAD_REQUEST.value(),
+                "INVALID_REQUEST_PARAMETER",
+                resolveMessage("error.invalid_parameter", "error.invalid_parameter")
+        );
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    /**
      * Handles unsupported HTTP methods.
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

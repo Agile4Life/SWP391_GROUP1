@@ -21,6 +21,7 @@ public class SmtpOtpDeliveryAdapter implements OtpDeliveryPort {
         this(mailSender, fromAddress, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public SmtpOtpDeliveryAdapter(JavaMailSender mailSender,
                                   @Value("${app.auth.otp.from-address}") String fromAddress,
                                   MessageService messageService) {

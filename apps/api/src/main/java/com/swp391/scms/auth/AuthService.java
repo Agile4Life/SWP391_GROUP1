@@ -44,6 +44,7 @@ public class AuthService {
         this(userRepository, roleRepository, passwordEncoder, jwtService, otpService, otpDeliveryPort, clock, debugOtpEnabled, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public AuthService(UserRepository userRepository, RoleRepository roleRepository,
                        PasswordEncoder passwordEncoder, JwtService jwtService,
                        OtpService otpService, OtpDeliveryPort otpDeliveryPort, Clock clock,

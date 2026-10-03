@@ -15,6 +15,12 @@ public interface OtpChallengeRepository extends JpaRepository<OtpChallenge, Long
     @Query("select challenge from OtpChallenge challenge where lower(challenge.target) = lower(:target)")
     Optional<OtpChallenge> findByTargetForUpdate(@Param("target") String target);
 
-    void deleteByTargetIgnoreCase(String target);
-    void deleteByExpiresAtBefore(java.time.LocalDateTime cutoff);
+    // Bulk deletes run immediately so a following insert of the same unique target cannot collide
+    @org.springframework.data.jpa.repository.Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("delete from OtpChallenge challenge where lower(challenge.target) = lower(:target)")
+    void deleteByTargetIgnoreCase(@Param("target") String target);
+
+    @org.springframework.data.jpa.repository.Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("delete from OtpChallenge challenge where challenge.expiresAt < :cutoff")
+    void deleteByExpiresAtBefore(@Param("cutoff") java.time.LocalDateTime cutoff);
 }

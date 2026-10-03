@@ -24,6 +24,7 @@ public class HealthMetricController {
         this(healthMetricService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public HealthMetricController(HealthMetricService healthMetricService, MessageService messageService) {
         this.healthMetricService = healthMetricService;
         this.messageService = messageService;

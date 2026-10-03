@@ -22,6 +22,7 @@ public class ProfileController {
         this(profileService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public ProfileController(ProfileService profileService, MessageService messageService) {
         this.profileService = profileService;
         this.messageService = messageService;

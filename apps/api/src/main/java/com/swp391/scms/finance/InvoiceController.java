@@ -24,6 +24,7 @@ public class InvoiceController {
         this(invoiceService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public InvoiceController(InvoiceService invoiceService, MessageService messageService) {
         this.invoiceService = invoiceService;
         this.messageService = messageService;

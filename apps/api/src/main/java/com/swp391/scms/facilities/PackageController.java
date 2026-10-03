@@ -26,6 +26,7 @@ public class PackageController {
         this(service, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public PackageController(PackageService service, MessageService messageService) {
         this.service = service;
         this.messageService = messageService;

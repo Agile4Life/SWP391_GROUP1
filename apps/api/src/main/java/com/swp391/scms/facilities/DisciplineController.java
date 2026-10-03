@@ -25,6 +25,7 @@ public class DisciplineController {
         this(service, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public DisciplineController(DisciplineService service, MessageService messageService) {
         this.service = service;
         this.messageService = messageService;

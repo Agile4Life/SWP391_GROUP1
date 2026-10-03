@@ -23,6 +23,7 @@ public class RoleController {
         this(roleService, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public RoleController(RoleService roleService, MessageService messageService) {
         this.roleService = roleService;
         this.messageService = messageService;

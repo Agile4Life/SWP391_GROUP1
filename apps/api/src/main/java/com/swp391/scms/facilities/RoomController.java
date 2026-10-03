@@ -25,6 +25,7 @@ public class RoomController {
         this(service, null);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
     public RoomController(RoomService service, MessageService messageService) {
         this.service = service;
         this.messageService = messageService;
