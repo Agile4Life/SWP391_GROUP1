@@ -1,5 +1,8 @@
 package com.swp391.scms.users;
 
+import com.swp391.scms.common.ApiResponse;
+import com.swp391.scms.common.i18n.MessageService;
+import com.swp391.scms.users.dto.PermissionDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +17,31 @@ public class RoleController {
 
     private final RoleService roleService;
 
+    private final MessageService messageService;
+
     public RoleController(RoleService roleService) {
+        this(roleService, null);
+    }
+
+    public RoleController(RoleService roleService, MessageService messageService) {
         this.roleService = roleService;
+        this.messageService = messageService;
+    }
+
+    private String msg(String key, String fallback) {
+        return messageService != null ? messageService.getMessageOrDefault(key, fallback) : fallback;
+    }
+
+    @Operation(summary = "Grant a permission to a role")
+    @PutMapping("/{id}/permissions/{permissionId}")
+    public ApiResponse<PermissionDto> grantPermission(@PathVariable Long id, @PathVariable Long permissionId) {
+        return ApiResponse.ok(msg("rbac.permission.granted", "Permission granted"), roleService.grantPermission(id, permissionId));
+    }
+
+    @Operation(summary = "Revoke a permission from a role")
+    @DeleteMapping("/{id}/permissions/{permissionId}")
+    public ApiResponse<PermissionDto> revokePermission(@PathVariable Long id, @PathVariable Long permissionId) {
+        return ApiResponse.ok(msg("rbac.permission.revoked", "Permission revoked"), roleService.revokePermission(id, permissionId));
     }
 
     @Operation(summary = "Lấy danh sách vai trò", description = "Danh sách tất cả vai trò (Role) trong hệ thống")
