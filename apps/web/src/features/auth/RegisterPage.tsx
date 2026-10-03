@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { apiFetch } from '../../shared/api/client';
+import { register, sendOtp as requestOtp, verifyOtp } from './authApi';
 
 type Step = 'register' | 'otp';
 
@@ -29,10 +29,7 @@ export function RegisterPage() {
   };
 
   const sendOtp = async () => {
-    const res = await apiFetch<{ debugOtp?: string }>('/auth/send-otp', {
-      method: 'POST',
-      body: JSON.stringify({ email: form.email.trim() }),
-    });
+    const res = await requestOtp(form.email.trim());
     setDebugOtp(res.debugOtp ?? '');
     setInfo(`Mã OTP đã được gửi tới ${form.email.trim()}. Mã có hiệu lực 5 phút.`);
   };
@@ -43,10 +40,7 @@ export function RegisterPage() {
     if (!EMAIL_RE.test(form.email.trim())) return setError('Email không đúng định dạng.');
     if (form.password.length < 6) return setError('Mật khẩu tối thiểu 6 ký tự.');
     void run(async () => {
-      await apiFetch('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({ username: form.username.trim(), email: form.email.trim(), password: form.password }),
-      });
+      await register({ username: form.username.trim(), email: form.email.trim(), password: form.password });
       await sendOtp();
       setStep('otp');
     });
@@ -56,10 +50,7 @@ export function RegisterPage() {
     e.preventDefault();
     if (!/^\d{6}$/.test(otp)) return setError('Mã OTP gồm đúng 6 chữ số.');
     void run(async () => {
-      await apiFetch('/auth/verify-otp', {
-        method: 'POST',
-        body: JSON.stringify({ target: form.email.trim(), otpCode: otp }),
-      });
+      await verifyOtp(form.email.trim(), otp);
       navigate('/login', { replace: true });
     });
   };

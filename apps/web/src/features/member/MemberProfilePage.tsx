@@ -1,30 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { apiFetch } from '../../shared/api/client';
-
-interface Profile {
-  userId: number;
-  fullName: string;
-  email: string | null;
-  phone: string | null;
-  dob: string | null;
-  gender: string | null;
-  avatarUrl: string | null;
-  address: string | null;
-  membershipCode: string | null;
-  healthNotes: string | null;
-  fitnessGoal: string | null;
-  fitnessLevel: string | null;
-  emergencyContactName: string | null;
-  emergencyContactPhone: string | null;
-}
-
-interface HealthMetric {
-  id: number;
-  metricName: string;
-  metricValue: number;
-  unit: string | null;
-  recordedAt: string;
-}
+import {
+  addHealthMetric,
+  getProfile,
+  listHealthMetrics,
+  updateProfile,
+  type HealthMetric,
+  type Profile,
+} from './profileApi';
 
 const EMPTY_METRIC = { metricName: '', metricValue: '', unit: '' };
 
@@ -40,9 +22,9 @@ export function MemberProfilePage() {
     setLoading(true);
     setError('');
     try {
-      const p = await apiFetch<Profile>('/profile');
+      const p = await getProfile();
       setProfile(p);
-      setMetrics(await apiFetch<HealthMetric[]>(`/members/${p.userId}/health-metrics`).catch(() => []));
+      setMetrics(await listHealthMetrics(p.userId).catch(() => []));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Không thể tải hồ sơ.');
     } finally {
@@ -61,7 +43,7 @@ export function MemberProfilePage() {
     if (!profile) return;
     setError('');
     try {
-      setProfile(await apiFetch<Profile>('/profile', { method: 'PUT', body: JSON.stringify(profile) }));
+      setProfile(await updateProfile(profile));
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (err) {
@@ -74,16 +56,13 @@ export function MemberProfilePage() {
     if (!profile) return;
     setError('');
     try {
-      await apiFetch(`/members/${profile.userId}/health-metrics`, {
-        method: 'POST',
-        body: JSON.stringify({
-          metricName: metric.metricName.trim(),
-          metricValue: Number(metric.metricValue),
-          unit: metric.unit.trim() || null,
-        }),
+      await addHealthMetric(profile.userId, {
+        metricName: metric.metricName.trim(),
+        metricValue: Number(metric.metricValue),
+        unit: metric.unit.trim() || null,
       });
       setMetric(EMPTY_METRIC);
-      setMetrics(await apiFetch<HealthMetric[]>(`/members/${profile.userId}/health-metrics`));
+      setMetrics(await listHealthMetrics(profile.userId));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Không thể ghi chỉ số.');
     }
