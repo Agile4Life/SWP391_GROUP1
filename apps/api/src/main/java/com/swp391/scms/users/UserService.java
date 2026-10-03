@@ -9,11 +9,13 @@ import com.swp391.scms.users.dto.UserDto;
 import com.swp391.scms.users.dto.UserUpdateDto;
 import com.swp391.scms.users.mapper.UserMapper;
 import com.swp391.scms.users.entity.Role;
+import com.swp391.scms.users.entity.Member;
 import com.swp391.scms.users.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +70,17 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
-        return userMapper.toDto(userRepository.save(user));
+        User saved = userRepository.saveAndFlush(user);
+        if ("MEMBER".equalsIgnoreCase(role.getCode())) {
+            Member member = new Member();
+            member.setUser(saved);
+            member.setMembershipCode("MEM-" + saved.getId());
+            member.setJoinDate(LocalDate.now());
+            member.setFitnessLevel("beginner");
+            saved.setMember(member);
+            userRepository.save(saved);
+        }
+        return userMapper.toDto(saved);
     }
 
     @Transactional
