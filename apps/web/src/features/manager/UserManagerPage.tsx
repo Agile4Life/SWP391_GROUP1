@@ -4,7 +4,7 @@ import {
   UserAccount,
   SystemRole,
   CORE_ROLES,
-  SYSTEM_PERMISSIONS,
+  Permission,
 } from "./userApi";
 
 export function UserManagerPage() {
@@ -23,6 +23,7 @@ export function UserManagerPage() {
     name: "",
     email: "",
     phone: "",
+    password: "",
     role: "COACH" as SystemRole,
   });
 
@@ -31,9 +32,12 @@ export function UserManagerPage() {
     name?: string;
     email?: string;
     phone?: string;
+    password?: string;
   }>({});
 
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [permissions, setPermissions] = useState<Permission[]>([]);
 
   useEffect(() => {
     loadData();
@@ -42,12 +46,17 @@ export function UserManagerPage() {
   async function loadData() {
     setLoading(true);
     try {
-      const [u, r] = await Promise.all([
+      setLoadError("");
+      const [u, r, p] = await Promise.all([
         userApi.getUsers(),
         userApi.getRolePermissions(),
+        userApi.getPermissions(),
       ]);
       setUsers(u);
       setRolePerms(r);
+      setPermissions(p);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Không thể tải dữ liệu.");
     } finally {
       setLoading(false);
     }
@@ -77,8 +86,8 @@ export function UserManagerPage() {
     try {
       const updated = await userApi.toggleLockUser(user.id);
       setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
-    } catch (err: any) {
-      alert(err.message || "Thao tác thất bại.");
+    } catch (err) {
+      alert((err as Error).message || "Thao tác thất bại.");
     }
   }
 
@@ -89,7 +98,7 @@ export function UserManagerPage() {
     const cleanEmail = formData.email.trim();
     const cleanPhone = formData.phone.trim();
 
-    const errors: { name?: string; email?: string; phone?: string } = {};
+    const errors: { name?: string; email?: string; phone?: string; password?: string } = {};
 
     // 1. Kiểm tra Họ và tên
     if (!cleanName) {
@@ -117,6 +126,10 @@ export function UserManagerPage() {
     }
 
     // Nếu có lỗi ở trường nào, set lỗi vào state để hiển thị ngay bên dưới
+    if (formData.password.length < 6 || formData.password.length > 50) {
+      errors.password = "Mật khẩu phải từ 6 đến 50 ký tự.";
+    }
+
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -128,13 +141,14 @@ export function UserManagerPage() {
         name: cleanName,
         email: cleanEmail,
         phone: cleanPhone,
+        password: formData.password,
         role: formData.role,
       });
       setUsers((prev) => [created, ...prev]);
       setIsModalOpen(false);
-      setFormData({ name: "", email: "", phone: "", role: "COACH" });
-    } catch (err: any) {
-      alert(err.message || "Không thể tạo người dùng.");
+      setFormData({ name: "", email: "", phone: "", password: "", role: "COACH" });
+    } catch (err) {
+      alert((err as Error).message || "Không thể tạo người dùng.");
     }
   }
 
@@ -228,6 +242,17 @@ export function UserManagerPage() {
           </button>
         </div>
       </div>
+
+      {loading && <div role="status">{"\u0110ang t\u1ea3i d\u1eef li\u1ec7u..."}</div>}
+
+      {loadError && (
+        <div role="alert" style={{ color: "#B91C1C", marginBottom: 12 }}>
+          {loadError}{" "}
+          <button type="button" onClick={() => void loadData()}>
+            Thử lại
+          </button>
+        </div>
+      )}
 
       {activeTab === "USERS" ? (
         <div>
@@ -372,7 +397,7 @@ export function UserManagerPage() {
               </tr>
             </thead>
             <tbody>
-              {SYSTEM_PERMISSIONS.map((perm) => (
+              {permissions.map((perm) => (
                 <tr key={perm.id} style={styles.tr}>
                   <td style={styles.td}>
                     <div style={{ fontWeight: 600, color: "#1E293B" }}>
@@ -516,6 +541,29 @@ export function UserManagerPage() {
                 />
                 {fieldErrors.phone && (
                   <p style={styles.fieldErrorText}>{fieldErrors.phone}</p>
+                )}
+              </div>
+
+              <div>
+                <label style={styles.label}>Mật khẩu ban đầu</label>
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder="Tối thiểu 6 ký tự"
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                    if (fieldErrors.password) {
+                      setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                    }
+                  }}
+                  style={{
+                    ...styles.modalInput,
+                    borderColor: fieldErrors.password ? "#DC2626" : "#CBD5E1",
+                  }}
+                />
+                {fieldErrors.password && (
+                  <p style={styles.fieldErrorText}>{fieldErrors.password}</p>
                 )}
               </div>
 
