@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { homePath, loginApi } from '../../shared/api/client';
+import { StatusMark } from '../../shared/ui/StatusMark';
 
 interface LuxuryLoginFormProps {
   onSuccess?: () => void;
@@ -14,15 +15,22 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState('');
+  const [shaking, setShaking] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const fail = (msg: string) => {
+    setFormError(msg);
+    setShaking(true);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier.trim()) {
-      setFormError('Vui lòng nhập tên đăng nhập hoặc email.');
+      fail('Vui lòng nhập tên đăng nhập hoặc email.');
       return;
     }
     if (!password) {
-      setFormError('Vui lòng nhập mật khẩu.');
+      fail('Vui lòng nhập mật khẩu.');
       return;
     }
 
@@ -33,10 +41,11 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
       const res = await loginApi(identifier, password);
       if (onSuccess) onSuccess();
 
-      navigate(homePath(res.user.role));
+      setSuccess(true);
+      window.setTimeout(() => navigate(homePath(res.user.role), { viewTransition: true }), 700);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Đăng nhập không thành công.';
-      setFormError(msg);
+      fail(msg);
     } finally {
       setIsLoading(false);
     }
@@ -44,6 +53,8 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
   return (
     <div
+      className={shaking ? 'anim-shake' : undefined}
+      onAnimationEnd={(e) => e.target === e.currentTarget && setShaking(false)}
       style={{
         background: '#FFFFFF',
         borderRadius: '8px',
@@ -90,6 +101,8 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
 
       {formError && (
         <div
+          role="alert"
+          className="anim-fade-up"
           style={{
             backgroundColor: '#FEF2F2',
             border: '1px solid #FCA5A5',
@@ -113,6 +126,7 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
             placeholder="Tên đăng nhập hoặc email"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
+            aria-invalid={!!formError && !identifier.trim() ? true : undefined}
           />
         </div>
 
@@ -142,21 +156,31 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
             placeholder="Nhập mật khẩu"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            aria-invalid={!!formError && (!password || !!identifier.trim()) ? true : undefined}
           />
         </div>
 
         <button
           type="submit"
           className="luxury-login-submit-btn"
-          disabled={isLoading}
+          disabled={isLoading || success}
         >
-          <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL'}</span>
-          <span className="submit-arrow" aria-hidden="true">→</span>
+          {success ? (
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+              <StatusMark size={22} />
+              ĐÃ XÁC THỰC
+            </span>
+          ) : (
+            <>
+              <span>{isLoading ? 'ĐANG XÁC THỰC...' : 'TRUY CẬP HỆ THỐNG PORTAL'}</span>
+              <span className="submit-arrow" aria-hidden="true">→</span>
+            </>
+          )}
         </button>
       </form>
 
       <p style={{ marginTop: '20px', fontSize: '0.85rem', textAlign: 'center' }}>
-        Chưa có tài khoản? <Link to="/register">Đăng ký hội viên</Link>
+        Chưa có tài khoản? <Link to="/register" viewTransition>Đăng ký hội viên</Link>
       </p>
     </div>
   );

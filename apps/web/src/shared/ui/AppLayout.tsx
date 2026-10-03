@@ -57,7 +57,7 @@ export function AppLayout() {
 
   const logout = () => {
     clearAuthSession();
-    navigate('/login', { replace: true });
+    navigate('/login', { replace: true, viewTransition: true });
   };
 
   return (
@@ -74,7 +74,7 @@ export function AppLayout() {
       >
         <div>
           <div style={{ marginBottom: '24px' }}>
-            <NavLink to="/" style={{ color: 'inherit' }}>
+            <NavLink to="/" viewTransition style={{ color: 'inherit' }}>
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', letterSpacing: '0.15em', fontWeight: 600 }}>
                 SÖL SANCTUARY
               </div>
@@ -112,7 +112,7 @@ export function AppLayout() {
         </div>
 
         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '16px', fontSize: '0.75rem' }}>
-          <NavLink to="/" style={{ color: '#B8AFA6', display: 'block', marginBottom: '8px' }}>
+          <NavLink to="/" viewTransition style={{ color: '#B8AFA6', display: 'block', marginBottom: '8px' }}>
             ← Quay lại Trang Chủ
           </NavLink>
         </div>

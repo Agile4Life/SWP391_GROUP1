@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router';
 import './styles.css';
+import { installClickRipple } from './shared/ui/clickRipple';
 
 try {
   localStorage.removeItem('scms_theme');
@@ -11,6 +12,8 @@ try {
 } catch {
   // Ignore in environments without localStorage
 }
+
+installClickRipple();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><RouterProvider router={router} /></StrictMode>,

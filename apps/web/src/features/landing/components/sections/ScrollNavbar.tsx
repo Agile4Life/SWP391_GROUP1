@@ -83,6 +83,7 @@ export function ScrollNavbar({ activeScreen = 0, onNavigate }: ScrollNavbarProps
 
       <Link
         to="/login"
+        viewTransition
         className="aura-portal-btn"
         title="Đăng nhập Cổng Quản Trị & Hội Viên SCMS"
       >

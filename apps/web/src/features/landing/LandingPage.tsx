@@ -9,6 +9,9 @@ import { PackagesSection } from './components/sections/PackagesSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { FullpageScrollManager } from './components/FullpageScrollManager';
 import { LiquidGlassChatbot } from '../../shared/liquid-glass';
+import { IntroCurtain } from './components/IntroCurtain';
+import { shouldPlayIntro } from './introSession';
+import { CustomCursor } from './components/CustomCursor';
 
 const HASH_TO_SCREEN: Record<string, number> = {
   '#hero': 0,
@@ -27,6 +30,7 @@ export function LandingPage() {
     return 0;
   });
   const [selectedPlan, setSelectedPlan] = useState<string>('THE SANCTUARY');
+  const [intro, setIntro] = useState<'playing' | 'revealing' | 'done'>(() => (shouldPlayIntro() ? 'playing' : 'done'));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,7 +53,15 @@ export function LandingPage() {
   };
 
   return (
-    <div className="sol-page-root" style={{ width: '100vw', height: '100dvh', overflow: 'hidden' }}>
+    <div
+      className="sol-page-root"
+      data-intro={intro}
+      style={{ width: '100vw', height: '100dvh', overflow: 'hidden' }}
+    >
+      {intro !== 'done' && (
+        <IntroCurtain onReveal={() => setIntro('revealing')} onFinish={() => setIntro('done')} />
+      )}
+      <CustomCursor />
       {/* Dynamic Glassmorphic Navigation Bar */}
       <ScrollNavbar activeScreen={activeScreen} onNavigate={setActiveScreen} />
 

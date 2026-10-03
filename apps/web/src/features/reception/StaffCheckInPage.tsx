@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StatusMark } from '../../shared/ui/StatusMark';
 
 interface CheckInRecord {
   id: string;
@@ -139,6 +140,9 @@ export function StaffCheckInPage() {
           {/* Visual Door Gate Feedback */}
           {currentResult && (
             <div
+              key={currentResult.id}
+              role="status"
+              className={`gate-result gate-result--${currentResult.status === 'GRANTED' ? 'granted' : 'denied'}`}
               style={{
                 borderRadius: '8px',
                 padding: '24px',
@@ -147,8 +151,8 @@ export function StaffCheckInPage() {
                 border: `2px solid ${currentResult.status === 'GRANTED' ? '#86EFAC' : '#FCA5A5'}`,
               }}
             >
-              <div style={{ fontSize: '3rem', marginBottom: '8px' }}>
-                {currentResult.status === 'GRANTED' ? '🟢' : '🔴'}
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
+                <StatusMark type={currentResult.status === 'GRANTED' ? 'success' : 'error'} size={64} />
               </div>
 
               <h3
@@ -193,8 +197,8 @@ export function StaffCheckInPage() {
                 </tr>
               </thead>
               <tbody>
-                {recentCheckins.map((rec) => (
-                  <tr key={rec.id}>
+                {recentCheckins.map((rec, i) => (
+                  <tr key={rec.id} className="row-in" style={{ '--i': i } as React.CSSProperties}>
                     <td style={{ fontWeight: 600 }}>{rec.time}</td>
                     <td>
                       <div>{rec.name}</div>

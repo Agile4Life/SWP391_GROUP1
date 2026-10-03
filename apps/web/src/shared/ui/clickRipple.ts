@@ -1,0 +1,19 @@
+const TARGETS = 'a, button, [role="button"], .btn-primary, .btn-secondary, .btn-danger';
+
+/** Gắn một lần: vòng sóng vàng cát lan ra tại điểm click trên phần tử tương tác. */
+export function installClickRipple(): void {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    const el = (e.target as Element | null)?.closest?.(TARGETS);
+    if (!el || (el as HTMLButtonElement).disabled) return;
+
+    const ripple = document.createElement('span');
+    ripple.className = 'click-ripple';
+    ripple.style.left = `${e.clientX}px`;
+    ripple.style.top = `${e.clientY}px`;
+    ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+    document.body.appendChild(ripple);
+  });
+}

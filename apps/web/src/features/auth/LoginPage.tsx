@@ -18,7 +18,7 @@ export function LoginPage() {
           padding: '0 56px',
         }}
       >
-        <Link to="/" className="aura-brand-mark">
+        <Link to="/" className="aura-brand-mark" viewTransition>
           SÖL WELLNESS SANCTUARY
         </Link>
 
@@ -39,6 +39,7 @@ export function LoginPage() {
 
         <Link
           to="/"
+          viewTransition
           className="aura-portal-btn"
         >
           ← VỀ TRANG CHỦ

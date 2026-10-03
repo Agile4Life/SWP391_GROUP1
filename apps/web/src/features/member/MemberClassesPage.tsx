@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { StatusMark } from '../../shared/ui/StatusMark';
 
 interface ClassSessionItem {
   id: number;
@@ -17,6 +18,15 @@ interface ClassSessionItem {
 export function MemberClassesPage() {
   const [activeTab, setActiveTab] = useState<'schedule' | 'my-bookings'>('schedule');
   const [selectedDiscipline, setSelectedDiscipline] = useState('ALL');
+  const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(null), 3200);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  const showToast = (message: string) => setToast((prev) => ({ id: (prev?.id ?? 0) + 1, message }));
 
   const [classes, setClasses] = useState<ClassSessionItem[]>([
     {
@@ -90,12 +100,12 @@ export function MemberClassesPage() {
     setClasses((prev) =>
       prev.map((c) => (c.id === id ? { ...c, isBooked: true, enrolled: c.enrolled + 1 } : c))
     );
-    alert('Đặt chỗ thành công! Mã QR buổi tập đã sẵn sàng.');
+    showToast('Đặt chỗ thành công! Mã QR buổi tập đã sẵn sàng.');
   };
 
   const handleWaitlist = (id: number) => {
     setClasses((prev) => prev.map((c) => (c.id === id ? { ...c, isWaitlist: true } : c)));
-    alert('Bạn đã tham gia hàng chờ (Class Waitlist). Khi có học viên hủy chỗ, hệ thống sẽ tự động gửi thông báo!');
+    showToast('Đã vào hàng chờ. Khi có học viên hủy chỗ, hệ thống sẽ tự động thông báo!');
   };
 
   const handleCancelBooking = (id: number) => {
@@ -117,6 +127,12 @@ export function MemberClassesPage() {
 
   return (
     <div className="portal-container">
+      {toast && (
+        <div key={toast.id} className="sol-toast" role="status">
+          <StatusMark size={30} />
+          <span>{toast.message}</span>
+        </div>
+      )}
       <div className="portal-header">
         <div>
           <h1 className="portal-title">Thời Khóa Biểu &amp; Đặt Chỗ Lớp Học</h1>
@@ -229,7 +245,7 @@ export function MemberClassesPage() {
                   <div>
                     {item.isBooked ? (
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                        <span className="badge badge-success">✓ ĐÃ ĐẶT CHỖ</span>
+                        <span className="badge badge-success anim-pop">✓ ĐÃ ĐẶT CHỖ</span>
                         <button
                           type="button"
                           className="btn-danger btn-sm"
@@ -239,7 +255,7 @@ export function MemberClassesPage() {
                         </button>
                       </div>
                     ) : item.isWaitlist ? (
-                      <span className="badge badge-warning">ĐANG Ở HÀNG CHỜ</span>
+                      <span className="badge badge-warning anim-pop">ĐANG Ở HÀNG CHỜ</span>
                     ) : isFull ? (
                       <button
                         type="button"
