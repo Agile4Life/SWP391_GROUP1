@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginApi } from '../../shared/api/client';
 
 interface LuxuryLoginFormProps {
@@ -227,6 +227,10 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
           <span className="submit-arrow" aria-hidden="true">→</span>
         </button>
       </form>
+
+      <p style={{ marginTop: '20px', fontSize: '0.85rem', textAlign: 'center' }}>
+        Chưa có tài khoản? <Link to="/register">Đăng ký hội viên</Link>
+      </p>
     </div>
   );
 }
