@@ -39,7 +39,7 @@ public class RoleService {
     @Transactional(readOnly = true)
     public List<PermissionDto> getPermissionsByRoleId(Long roleId) {
         Role role = roleRepository.findById(roleId)
-                .orElseThrow(() -> new ResourceNotFoundException("vai trò", roleId));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.role", roleId));
         return role.getPermissions().stream().map(roleMapper::toDto).toList();
     }
 

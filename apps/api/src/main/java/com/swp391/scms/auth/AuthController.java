@@ -1,5 +1,8 @@
 package com.swp391.scms.auth;
 
+import com.swp391.scms.auth.dto.AuthTokenResponse;
+import com.swp391.scms.auth.dto.RegistrationResponse;
+import com.swp391.scms.common.ApiResponse;
 import com.swp391.scms.common.exception.BadRequestException;
 import com.swp391.scms.common.i18n.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,51 +38,44 @@ public class AuthController {
         this.messageService = messageService;
     }
 
-    private String msg(String key, String fallback, Object... args) {
-        if (messageService != null) {
-            return messageService.getMessageOrDefault(key, fallback, args);
-        }
-        return fallback;
+    private String msg(String key) {
+        return messageService != null ? messageService.getMessage(key) : key;
     }
 
     @Operation(summary = "Đăng nhập hệ thống", description = "Xác thực tài khoản và trả về JWT Token cùng vai trò người dùng")
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ApiResponse<AuthTokenResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ApiResponse.ok(msg("auth.login.success"), authService.login(request));
     }
 
     @Operation(summary = "Đăng ký tài khoản", description = "Tạo tài khoản hội viên mới và gửi mã kích hoạt")
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(request));
+    public ResponseEntity<ApiResponse<RegistrationResponse>> register(@Valid @RequestBody RegisterRequest request) {
+        RegistrationResponse registered = authService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.created(registered.message(), registered));
     }
 
     @Operation(summary = "Gửi mã OTP", description = "Gửi mã OTP 6 chữ số đến email hoặc số điện thoại")
     @PostMapping("/send-otp")
-    public ResponseEntity<Object> sendOtp(@Valid @RequestBody OtpRequest request) {
+    public ApiResponse<Map<String, Object>> sendOtp(@Valid @RequestBody OtpRequest request) {
         String target = request.target();
         if (target == null || target.isBlank()) {
-            throw new BadRequestException("MISSING_TARGET", "auth.otp.missing_target", null,
-                    "Cần cung cấp Email hoặc Số điện thoại");
+            throw new BadRequestException("MISSING_TARGET", "auth.otp.missing_target", null, null);
         }
         String code = authService.generateOtp(target);
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("message", msg("auth.otp.sent", "Mã OTP đã được tạo thành công"));
-        response.put("destination", target);
-        response.put("expiresInMinutes", 5);
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("destination", target);
+        data.put("expiresInMinutes", 5);
         if (debugOtpEnabled) {
-            response.put("debugOtp", code);
+            data.put("debugOtp", code);
         }
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(msg("auth.otp.sent"), data);
     }
 
     @Operation(summary = "Xác thực mã OTP", description = "Xác thực mã OTP và kích hoạt tài khoản hội viên")
     @PostMapping("/verify-otp")
-    public ResponseEntity<Object> verifyOtp(@Valid @RequestBody VerifyOtpRequest request) {
+    public ApiResponse<Map<String, Object>> verifyOtp(@Valid @RequestBody VerifyOtpRequest request) {
         authService.verifyOtp(request);
-        return ResponseEntity.ok(Map.of(
-                "message", msg("auth.otp.verified", "Xác thực OTP thành công. Tài khoản đã được kích hoạt."),
-                "target", request.target(),
-                "isVerified", true));
+        return ApiResponse.ok(msg("auth.otp.verified"), Map.of("target", request.target(), "isVerified", true));
     }
 }

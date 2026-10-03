@@ -29,24 +29,20 @@ public class SmtpOtpDeliveryAdapter implements OtpDeliveryPort {
         this.messageService = messageService;
     }
 
-    private String msg(String key, String fallback, Object... args) {
-        if (messageService != null) {
-            return messageService.getMessageOrDefault(key, fallback, args);
-        }
-        return fallback;
+    private String msg(String key, Object... args) {
+        return messageService != null ? messageService.getMessage(key, args) : key;
     }
 
     @Override
     public void send(String destination, String code) {
         if (!destination.contains("@")) {
-            throw new ServiceUnavailableException("SMS_DELIVERY_DISABLED", "auth.otp.sms_not_supported", null,
-                    "Chưa cấu hình kênh gửi OTP qua SMS.");
+            throw new ServiceUnavailableException("SMS_DELIVERY_DISABLED", "auth.otp.sms_not_supported", null, null);
         }
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromAddress);
         message.setTo(destination);
-        message.setSubject(msg("auth.otp.subject", "Mã xác thực SCMS"));
-        message.setText(msg("auth.otp.email_body", "Mã OTP của bạn là " + code + ". Mã hết hạn sau 5 phút.", code));
+        message.setSubject(msg("auth.otp.subject"));
+        message.setText(msg("auth.otp.email_body", code));
         mailSender.send(message);
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 public class UnavailableOtpDeliveryAdapter implements OtpDeliveryPort {
     @Override
     public void send(String destination, String code) {
-        throw new ServiceUnavailableException("OTP_DELIVERY_DISABLED", "auth.otp.delivery_not_configured", null,
-                "Kênh gửi OTP chưa được cấu hình.");
+        throw new ServiceUnavailableException("OTP_DELIVERY_DISABLED", "auth.otp.delivery_not_configured", null, null);
     }
 }

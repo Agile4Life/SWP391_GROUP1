@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 public record HealthMetricDto(
     Long id,
-    @NotBlank(message = "Tên chỉ số không được để trống")
+    @NotBlank(message = "{validation.health.metric_name.not_blank}")
     String metricName,
-    @NotNull(message = "Giá trị chỉ số không được để trống")
-    @DecimalMin(value = "0.01", message = "Giá trị phải lớn hơn 0")
+    @NotNull(message = "{validation.health.metric_value.not_null}")
+    @DecimalMin(value = "0.01", message = "{validation.health.metric_value.min}")
     BigDecimal metricValue,
     String unit,
     Long recordedBy,

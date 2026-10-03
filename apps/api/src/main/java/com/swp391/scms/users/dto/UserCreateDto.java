@@ -6,23 +6,23 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UserCreateDto {
-    @NotBlank(message = "Họ tên không được để trống")
-    @Size(max = 150, message = "Họ tên tối đa 150 ký tự")
+    @NotBlank(message = "{validation.users.full_name.not_blank}")
+    @Size(max = 150, message = "{validation.users.full_name.size}")
     private String fullName;
 
-    @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email không đúng định dạng")
-    @Size(max = 150, message = "Email tối đa 150 ký tự")
+    @NotBlank(message = "{validation.users.email.not_blank}")
+    @Email(message = "{validation.users.email.invalid}")
+    @Size(max = 150, message = "{validation.users.email.size}")
     private String email;
 
-    @Size(max = 20, message = "Số điện thoại tối đa 20 ký tự")
+    @Size(max = 20, message = "{validation.users.phone.size}")
     private String phone;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, max = 50, message = "Mật khẩu phải từ 6-50 ký tự")
+    @NotBlank(message = "{validation.users.password.not_blank}")
+    @Size(min = 6, max = 50, message = "{validation.users.password.size}")
     private String password;
 
-    @NotNull(message = "Phải cung cấp roleId")
+    @NotNull(message = "{validation.users.role_id.not_null}")
     private Long roleId;
 
     // Getters and Setters

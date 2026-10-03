@@ -50,14 +50,13 @@ public class UserService {
     @Audited(action = "USER_CREATE", entity = "users")
     public UserDto createUser(UserCreateDto dto) {
         if (userRepository.findByEmailIgnoreCase(dto.getEmail().trim()).isPresent()) {
-            throw new ConflictException("EMAIL_EXISTS", "Email đã tồn tại");
+            throw new ConflictException("EMAIL_EXISTS", "users.email_exists", null, null);
         }
         if (dto.getPhone() != null && userRepository.findByPhone(dto.getPhone().trim()).isPresent()) {
-            throw new ConflictException("PHONE_EXISTS", "Số điện thoại đã tồn tại");
+            throw new ConflictException("PHONE_EXISTS", "users.phone_exists", null, null);
         }
 
-        Role role = roleRepository.findById(dto.getRoleId())
-                .orElseThrow(() -> new ResourceNotFoundException("vai trò", dto.getRoleId()));
+        Role role = findRole(dto.getRoleId());
 
         User user = new User();
         user.setRole(role);
@@ -85,13 +84,12 @@ public class UserService {
             if (phone != null) {
                 userRepository.findByPhone(phone)
                         .filter(existing -> !existing.getId().equals(id))
-                        .ifPresent(existing -> { throw new ConflictException("PHONE_EXISTS", "Số điện thoại đã tồn tại"); });
+                        .ifPresent(existing -> { throw new ConflictException("PHONE_EXISTS", "users.phone_exists", null, null); });
             }
             user.setPhone(phone);
         }
         if (dto.getRoleId() != null) {
-            user.setRole(roleRepository.findById(dto.getRoleId())
-                    .orElseThrow(() -> new ResourceNotFoundException("vai trò", dto.getRoleId())));
+            user.setRole(findRole(dto.getRoleId()));
         }
         user.setUpdatedAt(LocalDateTime.now());
         return userMapper.toDto(userRepository.save(user));
@@ -111,7 +109,7 @@ public class UserService {
     @Audited(action = "USER_STATUS_CHANGE", entity = "users")
     public UserDto setStatus(Long id, String status) {
         if (!"active".equals(status) && !"locked".equals(status)) {
-            throw new BadRequestException("INVALID_USER_STATUS", "Trạng thái chỉ được là 'active' hoặc 'locked'");
+            throw new BadRequestException("INVALID_USER_STATUS", "users.invalid_status", null, null);
         }
         User user = findActiveUser(id);
         user.setStatus(status);
@@ -119,8 +117,13 @@ public class UserService {
         return userMapper.toDto(userRepository.save(user));
     }
 
+    private Role findRole(Long roleId) {
+        return roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("resource.role", roleId));
+    }
+
     private User findActiveUser(Long id) {
         return userRepository.findByIdAndDeletedAtIsNull(id)
-                .orElseThrow(() -> new ResourceNotFoundException("người dùng", id));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.user", id));
     }
 }

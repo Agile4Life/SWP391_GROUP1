@@ -50,7 +50,7 @@ public class ProfileService {
 
     private User findActiveUser(Long userId) {
         return userRepository.findByIdAndDeletedAtIsNull(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("người dùng", userId));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.user", userId));
     }
 
     private ProfileDto toDto(User user, Member member) {

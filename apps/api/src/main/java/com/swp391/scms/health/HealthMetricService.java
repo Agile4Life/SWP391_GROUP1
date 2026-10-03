@@ -36,10 +36,10 @@ public class HealthMetricService {
     @Transactional(readOnly = true)
     public List<HealthMetricDto> getMetrics(Long memberId, Long currentUserId, String currentUserRole) {
         if (!memberId.equals(currentUserId) && !isManager(currentUserRole) && !isCoach(currentUserRole)) {
-            throw new ForbiddenException("Bạn không có quyền truy cập dữ liệu sức khỏe của người này");
+            throw new ForbiddenException("FORBIDDEN", "health.metrics.forbidden", null, null);
         }
         if (!memberRepository.existsById(memberId)) {
-            throw new ResourceNotFoundException("hội viên", memberId);
+            throw new ResourceNotFoundException("resource.member", memberId);
         }
         return progressLogRepository.findByMemberUserIdOrderByRecordedAtDesc(memberId).stream()
                 .map(this::toDto)
@@ -49,17 +49,17 @@ public class HealthMetricService {
     @Transactional
     public HealthMetricDto addMetric(Long memberId, HealthMetricDto request, Long currentUserId, String currentUserRole) {
         if (!memberId.equals(currentUserId) && !isCoach(currentUserRole)) {
-            throw new ForbiddenException("Bạn không có quyền cập nhật dữ liệu sức khỏe của người này");
+            throw new ForbiddenException("FORBIDDEN", "health.metrics.forbidden_update", null, null);
         }
         String metricName = request.metricName().toLowerCase(Locale.ROOT);
         if (!ALLOWED_METRICS.contains(metricName)) {
-            throw new BadRequestException("INVALID_METRIC", "Tên chỉ số không hợp lệ. Chỉ chấp nhận: weight, height, bmi, body_fat, muscle_mass");
+            throw new BadRequestException("INVALID_METRIC", "health.metrics.invalid_metric", null, null);
         }
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new ResourceNotFoundException("hội viên", memberId));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.member", memberId));
         User recordedBy = userRepository.findByIdAndDeletedAtIsNull(currentUserId)
-                .orElseThrow(() -> new ResourceNotFoundException("người ghi nhận", currentUserId));
+                .orElseThrow(() -> new ResourceNotFoundException("resource.health_recorder", currentUserId));
 
         MemberProgressLog log = new MemberProgressLog();
         log.setMember(member);

@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 public record ProfileDto(
     Long userId,
-    @NotBlank(message = "Họ tên không được để trống")
+    @NotBlank(message = "{validation.users.full_name.not_blank}")
     String fullName,
-    @Email(message = "Email không hợp lệ")
+    @Email(message = "{validation.users.email.invalid}")
     String email,
     String phone,
     LocalDate dob,

@@ -3,10 +3,10 @@ package com.swp391.scms.users.dto;
 import jakarta.validation.constraints.Size;
 
 public class UserUpdateDto {
-    @Size(max = 150, message = "Họ tên tối đa 150 ký tự")
+    @Size(max = 150, message = "{validation.users.full_name.size}")
     private String fullName;
 
-    @Size(max = 20, message = "Số điện thoại tối đa 20 ký tự")
+    @Size(max = 20, message = "{validation.users.phone.size}")
     private String phone;
 
     private Long roleId;
