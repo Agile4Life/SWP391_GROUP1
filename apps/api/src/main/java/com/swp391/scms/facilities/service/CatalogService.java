@@ -1,5 +1,6 @@
 package com.swp391.scms.facilities.service;
 
+import com.swp391.scms.audit.Audited;
 import com.swp391.scms.common.exception.ConflictException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
 import com.swp391.scms.facilities.dto.CatalogRequests.*;
@@ -104,6 +105,7 @@ public class CatalogService {
     }
 
     @Transactional
+    @Audited(action = "PACKAGE_CREATE", entity = "membership_packages")
     public PackageDto createPackage(PackageRequest request) {
         MembershipPackage pkg = new MembershipPackage();
         applyPackage(pkg, request);
@@ -111,6 +113,7 @@ public class CatalogService {
     }
 
     @Transactional
+    @Audited(action = "PACKAGE_UPDATE", entity = "membership_packages")
     public PackageDto updatePackage(Long id, PackageRequest request) {
         MembershipPackage pkg = findPackage(id);
         applyPackage(pkg, request);
@@ -118,6 +121,7 @@ public class CatalogService {
     }
 
     @Transactional
+    @Audited(action = "PACKAGE_STATUS_CHANGE", entity = "membership_packages")
     public PackageDto updatePackageStatus(Long id, String status) {
         MembershipPackage pkg = findPackage(id);
         pkg.setStatus(status);

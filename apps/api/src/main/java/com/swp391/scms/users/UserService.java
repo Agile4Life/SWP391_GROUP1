@@ -1,5 +1,6 @@
 package com.swp391.scms.users;
 
+import com.swp391.scms.audit.Audited;
 import com.swp391.scms.common.exception.BadRequestException;
 import com.swp391.scms.common.exception.ConflictException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
@@ -46,6 +47,7 @@ public class UserService {
     }
 
     @Transactional
+    @Audited(action = "USER_CREATE", entity = "users")
     public UserDto createUser(UserCreateDto dto) {
         if (userRepository.findByEmailIgnoreCase(dto.getEmail().trim()).isPresent()) {
             throw new ConflictException("EMAIL_EXISTS", "Email đã tồn tại");
@@ -71,6 +73,7 @@ public class UserService {
     }
 
     @Transactional
+    @Audited(action = "USER_UPDATE", entity = "users")
     public UserDto updateUser(Long id, UserUpdateDto dto) {
         User user = findActiveUser(id);
 
@@ -95,6 +98,7 @@ public class UserService {
     }
 
     @Transactional
+    @Audited(action = "USER_DELETE", entity = "users")
     public void deleteUser(Long id) {
         User user = findActiveUser(id);
         LocalDateTime now = LocalDateTime.now();
@@ -104,6 +108,7 @@ public class UserService {
     }
 
     @Transactional
+    @Audited(action = "USER_STATUS_CHANGE", entity = "users")
     public UserDto setStatus(Long id, String status) {
         if (!"active".equals(status) && !"locked".equals(status)) {
             throw new BadRequestException("INVALID_USER_STATUS", "Trạng thái chỉ được là 'active' hoặc 'locked'");
