@@ -1,6 +1,7 @@
 package com.swp391.scms.facilities.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.Length;
 import java.time.LocalDateTime;
 
 /** Entity mapping table disciplines (Module B: Master Facilities). */
@@ -15,7 +16,7 @@ public class Discipline {
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(length = 2000)
+    @Column(length = Length.LONG32)
     private String description;
 
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -53,9 +54,8 @@ public class DatabaseTriggerInitializer implements ApplicationRunner {
             if (!providerFound) {
                 log.info("Database {} does not require vendor-specific invariant triggers.", dbProduct);
             }
-        } catch (Exception e) {
-            log.warn("Could not complete database trigger initialization: {}. " +
-                    "Application continues normally.", e.getMessage());
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot inspect database to install invariant triggers", e);
         }
     }
 }

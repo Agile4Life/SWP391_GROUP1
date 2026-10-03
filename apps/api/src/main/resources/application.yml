@@ -18,6 +18,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        # Unicode (nvarchar) columns on SQL Server so Vietnamese text is stored correctly
+        use_nationalized_character_data: true
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:587}

@@ -1,6 +1,7 @@
 package com.swp391.scms.facilities.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.Length;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ public class MembershipPackage {
     @Column(nullable = false, length = 150)
     private String name;
 
-    @Column(length = 2000)
+    @Column(length = Length.LONG32)
     private String description;
 
     @Column(nullable = false, precision = 12, scale = 2)
