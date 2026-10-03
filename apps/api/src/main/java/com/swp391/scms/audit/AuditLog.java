@@ -17,6 +17,11 @@ public class AuditLog {
     @Column(name = "user_id")
     private Long userId;
 
+    /** Read-only mapping so the schema generator emits fk_audit_user; writes go through userId. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private com.swp391.scms.users.entity.User user;
+
     @Column(nullable = false, length = 100)
     private String action;
 

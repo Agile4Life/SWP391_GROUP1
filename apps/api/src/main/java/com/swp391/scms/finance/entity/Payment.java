@@ -1,5 +1,7 @@
 package com.swp391.scms.finance.entity;
 
+import com.swp391.scms.membership.entity.MembershipSubscription;
+import com.swp391.scms.scheduling.entity.ClassEnrollment;
 import com.swp391.scms.users.entity.Member;
 import com.swp391.scms.users.entity.User;
 import jakarta.persistence.*;
@@ -27,8 +29,18 @@ public class Payment {
     @Column(name = "subscription_id")
     private Long subscriptionId;
 
+    /** Read-only mapping so the schema generator emits fk_payments_subscription; writes go through subscriptionId. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subscription_id", insertable = false, updatable = false)
+    private MembershipSubscription subscription;
+
     @Column(name = "class_enrollment_id")
     private Long classEnrollmentId;
+
+    /** Read-only mapping so the schema generator emits fk_payments_enrollment; writes go through classEnrollmentId. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_enrollment_id", insertable = false, updatable = false)
+    private ClassEnrollment classEnrollment;
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;

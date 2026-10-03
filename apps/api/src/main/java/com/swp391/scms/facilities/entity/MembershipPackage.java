@@ -1,6 +1,7 @@
 package com.swp391.scms.facilities.entity;
 
 import jakarta.persistence.*;
+import com.swp391.scms.users.entity.User;
 import org.hibernate.Length;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,6 +33,10 @@ public class MembershipPackage {
     @Column(nullable = false, length = 20)
     private String status = "active"; // active, inactive
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -61,4 +66,6 @@ public class MembershipPackage {
     public void setClassCreditLimit(Integer classCreditLimit) { this.classCreditLimit = classCreditLimit; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public User getCreatedBy() { return createdBy; }
+    public void setCreatedBy(User createdBy) { this.createdBy = createdBy; }
 }

@@ -156,3 +156,8 @@ DROP TRIGGER IF EXISTS trg_checkins_check_membership ON center_checkins;
 CREATE TRIGGER trg_checkins_check_membership
 BEFORE INSERT ON center_checkins
 FOR EACH ROW EXECUTE FUNCTION scms_require_active_membership_for_checkin();
+
+-- Filtered unique indexes (cannot be expressed portably in JPA)
+CREATE UNIQUE INDEX IF NOT EXISTS uq_users_username ON users (username);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_enrollment_active ON class_enrollments (class_id, member_id) WHERE status = 'booked';
+CREATE UNIQUE INDEX IF NOT EXISTS uq_waitlist_active ON class_waitlists (class_id, member_id) WHERE status = 'waiting';

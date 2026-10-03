@@ -120,3 +120,13 @@ BEGIN
         RETURN;
     END
 END;
+
+---SPLIT---
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'uq_users_username')
+    CREATE UNIQUE INDEX uq_users_username ON dbo.users (username) WHERE username IS NOT NULL;
+---SPLIT---
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'uq_enrollment_active')
+    CREATE UNIQUE INDEX uq_enrollment_active ON dbo.class_enrollments (class_id, member_id) WHERE status = 'booked';
+---SPLIT---
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'uq_waitlist_active')
+    CREATE UNIQUE INDEX uq_waitlist_active ON dbo.class_waitlists (class_id, member_id) WHERE status = 'waiting';

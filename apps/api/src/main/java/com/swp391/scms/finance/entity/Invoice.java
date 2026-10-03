@@ -1,9 +1,7 @@
 package com.swp391.scms.finance.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GeneratedColumn;
-import org.hibernate.generator.EventType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,7 +41,6 @@ public class Invoice {
      * computed/generated column DDL across any relational database (SQL Server, PostgreSQL, etc.).
      * @Generated informs Hibernate to fetch the database-computed value upon INSERT and UPDATE.
      */
-    @Generated(event = {EventType.INSERT, EventType.UPDATE})
     @GeneratedColumn("subtotal_amount + tax_amount")
     @Column(name = "total_amount", insertable = false, updatable = false, precision = 12, scale = 2)
     private BigDecimal totalAmount;
