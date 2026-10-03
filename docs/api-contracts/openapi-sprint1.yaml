@@ -1,0 +1,132 @@
+openapi: 3.0.3
+info:
+  title: SCMS API - Sprint 1 contract
+  version: 1.0.0
+  description: >
+    Endpoint contract for Sprint 1 (auth, users/RBAC, profile, health, catalog, reception lookup).
+    All responses use the ApiResponse envelope. Messages are localized via the Accept-Language header (default vi).
+servers:
+  - url: /api/v1
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        status: { type: integer }
+        message: { type: string, description: Localized message }
+        code: { type: string, description: Error code, present on errors }
+        data: { description: Payload }
+        details: { description: Field errors for validation failures }
+        timestamp: { type: string, format: date-time }
+    Discipline:
+      type: object
+      properties: { id: { type: integer }, name: { type: string }, description: { type: string } }
+    Room:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        location: { type: string }
+        capacity: { type: integer, minimum: 1 }
+        status: { type: string, enum: [available, maintenance, closed] }
+    MembershipPackage:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        price: { type: number, minimum: 0 }
+        durationDays: { type: integer, minimum: 1 }
+        classCreditLimit: { type: integer, minimum: 0 }
+        status: { type: string, enum: [active, inactive] }
+    MemberLookupItem:
+      type: object
+      properties:
+        userId: { type: integer }
+        membershipCode: { type: string }
+        fullName: { type: string }
+        email: { type: string }
+        phone: { type: string }
+security:
+  - bearerAuth: []
+paths:
+  /auth/login:
+    post:
+      summary: Login (public). data = { token, username, role }
+      security: []
+      responses: { '200': { description: OK }, '401': { description: INVALID_CREDENTIALS }, '403': { description: ACCOUNT_INACTIVE } }
+  /auth/register:
+    post:
+      summary: Register a MEMBER account (public). data = { message, userId, username }
+      security: []
+      responses: { '201': { description: Created }, '409': { description: USERNAME_EXISTS / EMAIL_EXISTS } }
+  /auth/send-otp:
+    post:
+      summary: Send OTP (public). data = { destination, expiresInMinutes, debugOtp? (debug only) }
+      security: []
+      responses: { '200': { description: OK }, '503': { description: Delivery channel not configured } }
+  /auth/verify-otp:
+    post:
+      summary: Verify OTP and activate account (public). data = { target, isVerified }
+      security: []
+      responses: { '200': { description: OK }, '400': { description: OTP_EXPIRED / INVALID_OTP }, '429': { description: MAX_ATTEMPTS } }
+  /users:
+    get: { summary: List users (non deleted), responses: { '200': { description: OK } } }
+    post: { summary: Create user, responses: { '201': { description: Created }, '409': { description: EMAIL_EXISTS / PHONE_EXISTS } } }
+  /users/{id}:
+    parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ]
+    get: { summary: User detail, responses: { '200': { description: OK }, '404': { description: NOT_FOUND } } }
+    put: { summary: Update user, responses: { '200': { description: OK } } }
+    delete: { summary: Soft delete user, responses: { '200': { description: OK } } }
+  /users/{id}/lock:
+    patch: { summary: Lock account, parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /users/{id}/unlock:
+    patch: { summary: Unlock account, parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /roles:
+    get: { summary: List roles, responses: { '200': { description: OK } } }
+  /roles/permissions:
+    get: { summary: List permissions, responses: { '200': { description: OK } } }
+  /roles/{id}/permissions:
+    get: { summary: Permissions of a role, parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /roles/{id}/permissions/{permissionId}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: integer } }
+      - { name: permissionId, in: path, required: true, schema: { type: integer } }
+    put: { summary: Grant permission to role (audited; CENTER_MANAGER), responses: { '200': { description: OK }, '404': { description: NOT_FOUND } } }
+    delete: { summary: Revoke permission from role (audited; CENTER_MANAGER), responses: { '200': { description: OK } } }
+  /profile:
+    get: { summary: Current user profile, responses: { '200': { description: OK } } }
+    put: { summary: Update current user profile, responses: { '200': { description: OK } } }
+  /members/{memberId}/health-metrics:
+    parameters: [ { name: memberId, in: path, required: true, schema: { type: integer } } ]
+    get: { summary: Health metric history (owner, coach or manager), responses: { '200': { description: OK }, '403': { description: FORBIDDEN } } }
+    post: { summary: Record a health metric, responses: { '200': { description: OK }, '400': { description: INVALID_METRIC } } }
+  /members/lookup:
+    get:
+      summary: Reception member lookup (CENTER_MANAGER, RECEPTIONIST)
+      parameters: [ { name: q, in: query, required: true, schema: { type: string, minLength: 2 } } ]
+      responses:
+        '200': { description: data = MemberLookupItem[] }
+        '400': { description: Keyword too short }
+  /disciplines:
+    get: { summary: List disciplines (any authenticated user), responses: { '200': { description: data = Discipline[] } } }
+    post: { summary: Create discipline (CENTER_MANAGER), responses: { '201': { description: Created }, '409': { description: Name exists } } }
+  /disciplines/{id}:
+    put: { summary: Update discipline (CENTER_MANAGER), parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /rooms:
+    get: { summary: List rooms, responses: { '200': { description: data = Room[] } } }
+    post: { summary: Create room (CENTER_MANAGER), responses: { '201': { description: Created } } }
+  /rooms/{id}:
+    put: { summary: Update room incl. status (CENTER_MANAGER), parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /packages:
+    get: { summary: List membership packages, responses: { '200': { description: data = MembershipPackage[] } } }
+    post: { summary: Create package (audited; CENTER_MANAGER), responses: { '201': { description: Created } } }
+  /packages/{id}:
+    put: { summary: Update package (audited; CENTER_MANAGER), parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /packages/{id}/status:
+    patch:
+      summary: Activate/deactivate package (audited; CENTER_MANAGER). Body { status }
+      parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ]
+      responses: { '200': { description: OK } }
