@@ -27,9 +27,16 @@ export function CustomCursor() {
       x = e.clientX;
       y = e.clientY;
       dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      dot.classList.add('is-visible');
-      ring.classList.add('is-visible');
-      ring.classList.toggle('is-hover', !!(e.target as Element | null)?.closest?.(INTERACTIVE));
+
+      const inDialog = !!(e.target as Element | null)?.closest?.('dialog');
+      if (inDialog) {
+        dot.classList.remove('is-visible');
+        ring.classList.remove('is-visible');
+      } else {
+        dot.classList.add('is-visible');
+        ring.classList.add('is-visible');
+        ring.classList.toggle('is-hover', !!(e.target as Element | null)?.closest?.(INTERACTIVE));
+      }
     };
     const down = () => ring.classList.add('is-down');
     const up = () => ring.classList.remove('is-down');
