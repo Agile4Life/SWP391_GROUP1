@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from '../../shared/ui/Modal';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 interface ClassItem {
   id: number;
@@ -106,17 +107,20 @@ export function StaffClassesPage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Quản Lý Lớp Học</h1>
-        </div>
-        <button type="button" className="btn-primary" onClick={() => setShowModal(true)}>
-          + Tạo Lớp Học Mới
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="Huấn luyện · Lịch dạy & lớp học"
+        title="Quản Lý"
+        flourish="Lớp Học"
+        subtitle="Tạo lớp, phân công huấn luyện viên và theo dõi lịch học định kỳ."
+        actions={
+          <button type="button" className="btn-primary" onClick={() => setShowModal(true)}>
+            + Tạo Lớp Học Mới
+          </button>
+        }
+      />
 
       {/* Classes Table */}
-      <div className="portal-card">
+      <div className="portal-card portal-card--flush">
         <div className="portal-table-wrapper">
           <table className="portal-table">
             <thead>
@@ -136,7 +140,7 @@ export function StaffClassesPage() {
                 <tr key={cls.id}>
                   <td>
                     <strong>{cls.name}</strong>
-                    <div style={{ fontSize: '0.72rem', color: '#8C847C' }}>ID: CLS-{cls.id}</div>
+                    <div className="muted" style={{ marginTop: 2 }}>ID: CLS-{cls.id}</div>
                   </td>
                   <td>
                     <span className="badge badge-info">{cls.discipline}</span>

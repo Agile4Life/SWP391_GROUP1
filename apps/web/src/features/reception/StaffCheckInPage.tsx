@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StatusMark } from '../../shared/ui/StatusMark';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 interface CheckInRecord {
   id: string;
@@ -76,11 +77,12 @@ export function StaffCheckInPage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Check-in</h1>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Nhân viên · Cổng quét QR"
+        title="Check"
+        flourish="in"
+        subtitle="Quét mã QR hội viên tại turnstile và theo dõi lượt ra vào theo thời gian thực."
+      />
 
       <div className="grid-2">
         {/* Scanner Simulation Panel */}
@@ -106,9 +108,9 @@ export function StaffCheckInPage() {
           </form>
 
           {/* Quick Simulation Buttons */}
-          <div style={{ padding: '16px', background: '#F8F6F2', borderRadius: '6px', marginBottom: '24px' }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#6A635D', marginBottom: '8px' }}>
-              Quét thử:
+          <div style={{ padding: '16px', background: 'var(--color-bg-warm)', borderRadius: '3px', marginBottom: '24px' }}>
+            <div className="meta-label" style={{ marginBottom: '10px' }}>
+              Quét thử
             </div>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
@@ -136,7 +138,7 @@ export function StaffCheckInPage() {
               role="status"
               className={`gate-result gate-result--${currentResult.status === 'GRANTED' ? 'granted' : 'denied'}`}
               style={{
-                borderRadius: '8px',
+                borderRadius: '3px',
                 padding: '24px',
                 textAlign: 'center',
                 backgroundColor: currentResult.status === 'GRANTED' ? '#F0FDF4' : '#FEF2F2',

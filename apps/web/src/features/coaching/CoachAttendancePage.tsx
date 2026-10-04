@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 interface AttendanceStudent {
   id: number;
@@ -57,26 +58,27 @@ export function CoachAttendancePage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Điểm Danh</h1>
-        </div>
-        <button type="button" className="btn-primary" onClick={handleSaveAttendance}>
-          Lưu Bảng Điểm Danh
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="Huấn luyện · Điểm danh học viên"
+        title="Điểm"
+        flourish="Danh"
+        subtitle="Ghi nhận chuyên cần và đánh giá thể trạng, kỹ thuật từng học viên sau mỗi buổi."
+        actions={
+          <button type="button" className="btn-primary" onClick={handleSaveAttendance}>
+            Lưu Bảng Điểm Danh
+          </button>
+        }
+      />
 
       {/* Session Header Selector */}
       <div className="portal-card" style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <div style={{ fontSize: '0.75rem', letterSpacing: '0.12em', color: '#8C847C', textTransform: 'uppercase' }}>
-              BUỔI HỌC ĐANG CHỌN:
-            </div>
-            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', margin: '4px 0 0 0' }}>
+            <div className="meta-label">BUỔI HỌC ĐANG CHỌN</div>
+            <h3 className="row-card__title" style={{ fontSize: '1.5rem', margin: '8px 0 6px' }}>
               Reformer Core Architecture • 17:30 - 18:30 Hôm nay
             </h3>
-            <div style={{ fontSize: '0.82rem', color: '#6A635D', marginTop: '4px' }}>
+            <div className="row-card__meta">
               📍 Studio 01 (Level 2) • Sĩ số: <strong>4 học viên đăng ký</strong>
             </div>
           </div>
@@ -103,78 +105,38 @@ export function CoachAttendancePage() {
             <h2 className="portal-card-title">Danh Sách Học Viên Điểm Danh</h2>
           </div>
 
-          <div style={{ display: 'grid', gap: '18px' }}>
-            {students.map((stu) => (
+          <div className="stack" style={{ gap: '18px' }}>
+            {students.map((stu, index) => (
               <div
                 key={stu.id}
-                style={{
-                  padding: '16px 20px',
-                  backgroundColor: '#FAF8F5',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(33, 28, 24, 0.08)',
-                }}
+                className="row-card row-in"
+                style={{ ['--i' as string]: index, display: 'block' } as React.CSSProperties}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: '12px' }}>
                   <div>
-                    <strong style={{ fontSize: '1rem', color: '#1A1614' }}>{stu.name}</strong>
-                    <span style={{ fontSize: '0.75rem', color: '#8C847C', marginLeft: '10px', fontFamily: 'monospace' }}>
+                    <strong style={{ fontSize: '1rem' }}>{stu.name}</strong>
+                    <span className="meta-label" style={{ marginLeft: '10px', fontFamily: 'monospace' }}>
                       {stu.code}
                     </span>
                   </div>
 
-                  {/* Attendance Radio Buttons */}
-                  <div style={{ display: 'flex', gap: '6px' }}>
-                    <button
-                      type="button"
-                      onClick={() => updateStatus(stu.id, 'PRESENT')}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '4px',
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        border: '1px solid',
-                        cursor: 'pointer',
-                        backgroundColor: stu.status === 'PRESENT' ? '#15803d' : '#FFFFFF',
-                        color: stu.status === 'PRESENT' ? '#FFFFFF' : '#15803d',
-                        borderColor: '#15803d',
-                      }}
-                    >
-                      Có Mặt
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => updateStatus(stu.id, 'LATE')}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '4px',
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        border: '1px solid',
-                        cursor: 'pointer',
-                        backgroundColor: stu.status === 'LATE' ? '#b45309' : '#FFFFFF',
-                        color: stu.status === 'LATE' ? '#FFFFFF' : '#b45309',
-                        borderColor: '#b45309',
-                      }}
-                    >
-                      Trễ
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => updateStatus(stu.id, 'ABSENT')}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '4px',
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        border: '1px solid',
-                        cursor: 'pointer',
-                        backgroundColor: stu.status === 'ABSENT' ? '#b91c1c' : '#FFFFFF',
-                        color: stu.status === 'ABSENT' ? '#FFFFFF' : '#b91c1c',
-                        borderColor: '#b91c1c',
-                      }}
-                    >
-                      Vắng
-                    </button>
+                  {/* Attendance segmented pills */}
+                  <div className="seg-group" role="group" aria-label={`Điểm danh ${stu.name}`}>
+                    {([
+                      ['PRESENT', 'Có Mặt', 'seg-btn--ok'],
+                      ['LATE', 'Trễ', 'seg-btn--warn'],
+                      ['ABSENT', 'Vắng', 'seg-btn--bad'],
+                    ] as const).map(([value, label, tone]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        aria-pressed={stu.status === value}
+                        className={`seg-btn ${tone} ${stu.status === value ? 'is-active' : ''}`}
+                        onClick={() => updateStatus(stu.id, value)}
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -194,7 +156,7 @@ export function CoachAttendancePage() {
         </div>
 
         {/* AI Coaching Assistant Panel */}
-        <div className="portal-card" style={{ background: '#FAF7F2', border: '1px solid #E5DED5' }}>
+        <div className="portal-card portal-card--feature">
           <div className="portal-card-header">
             <h2 className="portal-card-title">✨ Trợ Lý AI Gợi Ý Giáo Án</h2>
           </div>

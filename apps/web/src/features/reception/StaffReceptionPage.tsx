@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 export function StaffReceptionPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -58,11 +59,12 @@ export function StaffReceptionPage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Lễ Tân</h1>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Nhân viên · Quầy lễ tân & POS"
+        title="Lễ"
+        flourish="Tân"
+        subtitle="Tra cứu hội viên, thu phí gói tập và xuất hóa đơn tại quầy."
+      />
 
       {/* Member Lookup Bar */}
       <div className="portal-card" style={{ marginBottom: '24px' }}>
@@ -96,29 +98,29 @@ export function StaffReceptionPage() {
 
           {foundMember ? (
             <div>
-              <div style={{ display: 'grid', gap: '12px', fontSize: '0.9rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid #F0ECE6' }}>
-                  <span style={{ color: '#7E7771' }}>Họ và tên:</span>
+              <div className="kv-list">
+                <div className="kv-row">
+                  <span>Họ và tên</span>
                   <strong>{foundMember.name}</strong>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid #F0ECE6' }}>
-                  <span style={{ color: '#7E7771' }}>Mã hội viên:</span>
+                <div className="kv-row">
+                  <span>Mã hội viên</span>
                   <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>{foundMember.code}</span>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid #F0ECE6' }}>
-                  <span style={{ color: '#7E7771' }}>Số điện thoại:</span>
+                <div className="kv-row">
+                  <span>Số điện thoại</span>
                   <strong>{foundMember.phone}</strong>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid #F0ECE6' }}>
-                  <span style={{ color: '#7E7771' }}>Gói tập hiện tại:</span>
+                <div className="kv-row">
+                  <span>Gói tập hiện tại</span>
                   <span>{foundMember.currentPackage}</span>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid #F0ECE6' }}>
-                  <span style={{ color: '#7E7771' }}>Ngày hết hạn:</span>
+                <div className="kv-row">
+                  <span>Ngày hết hạn</span>
                   <span style={{ color: foundMember.status === 'ACTIVE' ? '#15803d' : '#b91c1c', fontWeight: 600 }}>
                     {foundMember.endDate}
                   </span>
@@ -143,8 +145,9 @@ export function StaffReceptionPage() {
               </div>
             </div>
           ) : (
-            <div style={{ color: '#7E7771', textAlign: 'center', padding: '40px 0' }}>
-              Nhập từ khóa tìm kiếm để tra cứu thông tin khách hàng.
+            <div className="portal-empty">
+              <h3>Chưa có hội viên</h3>
+              <p>Nhập từ khóa tìm kiếm để tra cứu thông tin khách hàng.</p>
             </div>
           )}
         </div>
@@ -160,7 +163,7 @@ export function StaffReceptionPage() {
               style={{
                 backgroundColor: '#F0FDF4',
                 border: '1px solid #86EFAC',
-                borderRadius: '8px',
+                borderRadius: '3px',
                 padding: '28px',
                 textAlign: 'center',
               }}
