@@ -1,6 +1,7 @@
 import { useState, useRef, useLayoutEffect, type CSSProperties } from 'react';
 import { Navigate, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { clearAuthSession, getCurrentUser, UserSession } from '../api/client';
+import { CustomCursor } from '../../features/landing/components/CustomCursor';
 import './portal.css';
 
 const ROLE_LABELS: Record<UserSession['role'], string> = {
@@ -83,12 +84,14 @@ export function AppLayout() {
 
   return (
     <div className="app-shell">
+      <CustomCursor />
       <a href="#portal-main" className="skip-link">Bỏ qua tới nội dung chính</a>
 
       <aside className="app-sidebar">
         <div>
           <NavLink to="/" viewTransition className="app-brand">
-            SÖL SANCTUARY
+            SÖL
+            <span className="app-brand__sub">Wellness Sanctuary</span>
           </NavLink>
 
           <div className="app-role-card">
@@ -118,9 +121,15 @@ export function AppLayout() {
 
       <div className="app-main">
         <header className="app-topbar">
-          <p className="app-topbar__title">{pageTitle}</p>
+          <p className="app-topbar__title">
+            <span>Portal</span>
+            {pageTitle && <span className="app-topbar__crumb">{pageTitle}</span>}
+          </p>
 
           <div className="app-user">
+            <span className="app-user__avatar" aria-hidden="true">
+              {currentUser.name.trim().charAt(0).toUpperCase() || 'S'}
+            </span>
             <div>
               <div className="app-user__name">{currentUser.name}</div>
               <div className="app-user__role">{ROLE_LABELS[currentUser.role]}</div>

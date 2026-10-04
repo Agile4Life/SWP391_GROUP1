@@ -462,6 +462,23 @@ button:not(:disabled):active,
   cursor: text !important;
 }
 
+/* <dialog> nằm ở top layer, che mất con trỏ tuỳ biến → dùng con trỏ gốc bên trong */
+.has-custom-cursor dialog,
+.has-custom-cursor dialog * {
+  cursor: auto !important;
+}
+
+.has-custom-cursor dialog button,
+.has-custom-cursor dialog a,
+.has-custom-cursor dialog select {
+  cursor: pointer !important;
+}
+
+.has-custom-cursor dialog input,
+.has-custom-cursor dialog textarea {
+  cursor: text !important;
+}
+
 .cursor-dot,
 .cursor-ring {
   position: fixed;

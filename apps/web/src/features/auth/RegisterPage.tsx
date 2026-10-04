@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { register, sendOtp as requestOtp, verifyOtp } from './authApi';
 import { LANDING_IMAGES } from '../landing/assets/images';
 import { SiteFooter } from '../landing/components/SiteFooter';
+import { CustomCursor } from '../landing/components/CustomCursor';
 import { StatusMark } from '../../shared/ui/StatusMark';
 import { toast } from '../../shared/ui/toast';
 
@@ -110,6 +111,7 @@ export function RegisterPage() {
 
   return (
     <div className="sol-page-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <CustomCursor />
       {/* Top Header Matching Login Page Navbar */}
       <header
         className="sol-fixed-navbar scrolled"

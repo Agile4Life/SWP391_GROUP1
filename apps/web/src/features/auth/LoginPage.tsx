@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { LuxuryLoginForm } from './LuxuryLoginForm';
 import { LANDING_IMAGES } from '../landing/assets/images';
 import { SiteFooter } from '../landing/components/SiteFooter';
+import { CustomCursor } from '../landing/components/CustomCursor';
 
 export function LoginPage() {
   return (
     <div className="sol-page-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <CustomCursor />
       {/* Top Header Matching Main Website Navbar */}
       <header
         className="sol-fixed-navbar scrolled"
