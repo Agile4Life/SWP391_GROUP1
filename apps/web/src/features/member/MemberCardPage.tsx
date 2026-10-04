@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCurrentUser } from '../../shared/api/client';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 export function MemberCardPage() {
   const currentUser = getCurrentUser();
@@ -29,19 +30,21 @@ export function MemberCardPage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Thẻ Thành Viên</h1>
-        </div>
-        <span className="badge badge-success">GÓI TẬP ĐANG HOẠT ĐỘNG</span>
-      </div>
+      <PageHeader
+        eyebrow="Hội viên · Thẻ & hóa đơn"
+        title="Thẻ"
+        flourish="Thành Viên"
+        subtitle="Mã QR vào cổng, chi tiết hợp đồng và lịch sử thanh toán của bạn."
+        actions={<span className="badge badge-success">GÓI TẬP ĐANG HOẠT ĐỘNG</span>}
+      />
 
       <div className="grid-2">
         {/* Luxury Gold Virtual Member Card */}
         <div
+          className="pass-card"
           style={{
             background: 'linear-gradient(135deg, #2B2420 0%, #1A1614 60%, #3A322C 100%)',
-            borderRadius: '16px',
+            borderRadius: '4px',
             padding: '36px',
             color: '#FAF8F5',
             boxShadow: '0 20px 45px rgba(0, 0, 0, 0.25)',
@@ -160,29 +163,29 @@ export function MemberCardPage() {
             <h2 className="portal-card-title">Chi Tiết Hợp Đồng Hội Viên</h2>
           </div>
 
-          <div style={{ display: 'grid', gap: '14px', fontSize: '0.88rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #F0ECE6' }}>
-              <span style={{ color: '#7E7771' }}>Tên gói tập:</span>
+          <div className="kv-list">
+            <div className="kv-row">
+              <span>Tên gói tập</span>
               <strong>The Sanctuary Residency</strong>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #F0ECE6' }}>
-              <span style={{ color: '#7E7771' }}>Ngày kích hoạt (Start Date):</span>
+            <div className="kv-row">
+              <span>Ngày kích hoạt</span>
               <span>15/09/2026</span>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #F0ECE6' }}>
-              <span style={{ color: '#7E7771' }}>Ngày hết hạn (End Date):</span>
+            <div className="kv-row">
+              <span>Ngày hết hạn</span>
               <strong style={{ color: '#15803d' }}>26/12/2026 (Còn 42 ngày)</strong>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #F0ECE6' }}>
-              <span style={{ color: '#7E7771' }}>Số buổi học nhóm kèm theo:</span>
-              <span>Không giới hạn (Unlimited classes)</span>
+            <div className="kv-row">
+              <span>Lớp nhóm kèm theo</span>
+              <span>Không giới hạn</span>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #F0ECE6' }}>
-              <span style={{ color: '#7E7771' }}>Số buổi HLV cá nhân 1-1 còn lại:</span>
+            <div className="kv-row">
+              <span>HLV cá nhân 1-1 còn lại</span>
               <strong>3 / 4 buổi</strong>
             </div>
           </div>

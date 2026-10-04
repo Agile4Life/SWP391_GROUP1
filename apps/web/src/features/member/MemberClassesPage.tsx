@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StatusMark } from '../../shared/ui/StatusMark';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 interface ClassSessionItem {
   id: number;
@@ -133,35 +134,27 @@ export function MemberClassesPage() {
           <span>{toast.message}</span>
         </div>
       )}
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Lớp Học</h1>
-        </div>
-
-        {/* Filter Discipline */}
-        <div style={{ display: 'flex', gap: '8px' }}>
-          {['ALL', 'Pilates', 'Strength', 'Yoga', 'Boxing', 'Aquatics'].map((d) => (
-            <button
-              key={d}
-              type="button"
-              onClick={() => setSelectedDiscipline(d)}
-              style={{
-                background: selectedDiscipline === d ? '#1A1614' : '#FFFFFF',
-                color: selectedDiscipline === d ? '#FAF8F5' : '#7E7771',
-                border: '1px solid rgba(33, 28, 24, 0.15)',
-                padding: '6px 14px',
-                borderRadius: '4px',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.76rem',
-                cursor: 'pointer',
-                fontWeight: 500,
-              }}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Hội viên · Lịch học"
+        title="Lớp"
+        flourish="Học"
+        subtitle="Chọn bộ môn yêu thích, đặt chỗ hoặc vào hàng chờ cho các buổi học trong tuần."
+        actions={
+          <div className="filter-chips" role="group" aria-label="Lọc theo bộ môn">
+            {['ALL', 'Pilates', 'Strength', 'Yoga', 'Boxing', 'Aquatics'].map((d) => (
+              <button
+                key={d}
+                type="button"
+                aria-pressed={selectedDiscipline === d}
+                className={`filter-chip ${selectedDiscipline === d ? 'is-active' : ''}`}
+                onClick={() => setSelectedDiscipline(d)}
+              >
+                {d === 'ALL' ? 'Tất cả' : d}
+              </button>
+            ))}
+          </div>
+        }
+      />
 
       {/* Tabs */}
       <div className="portal-tabs">
@@ -183,37 +176,29 @@ export function MemberClassesPage() {
 
       {/* Content based on Tab */}
       {activeTab === 'schedule' ? (
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {filteredClasses.map((item) => {
+        <div className="stack">
+          {filteredClasses.length === 0 && (
+            <div className="portal-card portal-empty">
+              <h3>Chưa có lớp phù hợp</h3>
+              <p>Thử chọn bộ môn khác để xem thêm buổi học.</p>
+            </div>
+          )}
+          {filteredClasses.map((item, index) => {
             const isFull = item.enrolled >= item.capacity;
 
             return (
               <div
                 key={item.id}
-                className="portal-card"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 0,
-                  padding: '22px 28px',
-                }}
+                className="portal-card portal-card--list row-in"
+                style={{ ['--i' as string]: index } as React.CSSProperties}
               >
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                     <span className="badge badge-info">{item.discipline}</span>
-                    <span style={{ fontSize: '0.8rem', color: '#7E7771' }}>{item.date}</span>
+                    <span className="meta-label">{item.date}</span>
                   </div>
 
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '1.4rem',
-                      fontWeight: 600,
-                      margin: '0 0 6px 0',
-                      color: '#1A1614',
-                    }}
-                  >
+                  <h3 className="row-card__title" style={{ fontSize: '1.5rem' }}>
                     {item.className}
                   </h3>
 
@@ -225,7 +210,7 @@ export function MemberClassesPage() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                   {/* Capacity Meter */}
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '0.75rem', color: '#8C847C', letterSpacing: '0.1em' }}>SỨC CHỨA</div>
+                    <div className="meta-label">SỨC CHỨA</div>
                     <div
                       style={{
                         fontFamily: 'var(--font-serif)',
@@ -278,29 +263,19 @@ export function MemberClassesPage() {
         </div>
       ) : (
         /* My Bookings Tab */
-        <div style={{ display: 'grid', gap: '16px' }}>
+        <div className="stack">
           {myBookings.length === 0 ? (
-            <div className="portal-card" style={{ textAlign: 'center', padding: '60px 20px' }}>
+            <div className="portal-card portal-empty">
               <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📅</div>
               <h3>Bạn chưa có buổi học nào được đặt trước</h3>
-              <p style={{ color: '#7E7771' }}>Hãy chuyển sang tab "Lịch Lớp Trong Tuần" để chọn buổi học ưng ý.</p>
+              <p>Hãy chuyển sang tab "Lịch Lớp Trong Tuần" để chọn buổi học ưng ý.</p>
             </div>
           ) : (
             myBookings.map((item) => (
-              <div
-                key={item.id}
-                className="portal-card"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 0,
-                  padding: '20px 28px',
-                }}
-              >
+              <div key={item.id} className="portal-card portal-card--list">
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '1.1rem', marginBottom: '4px' }}>{item.className}</div>
-                  <div style={{ fontSize: '0.82rem', color: '#7E7771' }}>
+                  <h3 className="row-card__title">{item.className}</h3>
+                  <div className="row-card__meta">
                     {item.date} • {item.time} • {item.room}
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CountUp } from '../../shared/ui/CountUp';
 import { getCurrentUser } from '../../shared/api/client';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 export function MemberDashboardPage() {
   const currentUser = getCurrentUser();
@@ -36,20 +37,22 @@ export function MemberDashboardPage() {
 
   return (
     <div className="portal-container">
-      {/* Header Welcome */}
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Xin chào, {userName}</h1>
-        </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <Link to="/member/classes" className="btn-primary">
-            + Đặt Lớp Mới
-          </Link>
-          <Link to="/member/card" className="btn-secondary">
-            Xem Thẻ QR Cổng
-          </Link>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Hội viên · Tổng quan"
+        title="Xin chào,"
+        flourish={userName}
+        subtitle="Theo dõi gói tập, lịch học và chỉ số thể chất của bạn trong một không gian duy nhất."
+        actions={
+          <>
+            <Link to="/member/classes" className="btn-primary">
+              + Đặt Lớp Mới
+            </Link>
+            <Link to="/member/card" className="btn-secondary">
+              Xem Thẻ QR Cổng
+            </Link>
+          </>
+        }
+      />
 
       {/* Metric Cards Row */}
       <div className="metrics-grid">
@@ -97,30 +100,18 @@ export function MemberDashboardPage() {
             </Link>
           </div>
 
-          <div style={{ display: 'grid', gap: '14px' }}>
+          <div className="stack" style={{ gap: '14px' }}>
             {upcomingClasses.map((cls, index) => (
               <div
                 key={cls.id}
-                className="row-in"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '14px 18px',
-                  backgroundColor: '#FAF8F5',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(33, 28, 24, 0.06)',
-                  ['--i' as string]: index,
-                } as React.CSSProperties}
+                className="row-card row-in"
+                style={{ ['--i' as string]: index } as React.CSSProperties}
               >
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#1A1614', marginBottom: '4px' }}>
-                    {cls.name}
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: '#7E7771' }}>
+                  <h3 className="row-card__title">{cls.name}</h3>
+                  <div className="row-card__meta">
                     🕒 {cls.time} • 📍 {cls.room}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: '#8C847C', marginTop: '2px' }}>
+                    <br />
                     HLV phụ trách: {cls.coach}
                   </div>
                 </div>
@@ -138,7 +129,7 @@ export function MemberDashboardPage() {
         </div>
 
         {/* AI Biometric Coach Recommendation Card */}
-        <div className="portal-card" style={{ background: '#FAF7F2', border: '1px solid #E5DED5' }}>
+        <div className="portal-card portal-card--feature">
           <div className="portal-card-header">
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span style={{ fontSize: '1.2rem' }}>✨</span>

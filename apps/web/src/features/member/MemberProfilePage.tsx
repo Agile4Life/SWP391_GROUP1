@@ -8,6 +8,7 @@ import {
   type Profile,
 } from './profileApi';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 // Mã chỉ số hợp lệ theo backend (HealthMetricService.ALLOWED_METRICS)
 const METRIC_LABELS: Record<string, string> = {
@@ -126,12 +127,12 @@ export function MemberProfilePage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Hồ Sơ Hội Viên</h1>
-          <p className="portal-subtitle">Cập nhật thông tin thể chất, mục tiêu và theo dõi chỉ số sức khỏe cá nhân</p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Tài khoản · Hồ sơ & sức khỏe"
+        title="Hồ Sơ"
+        flourish="Cá Nhân"
+        subtitle="Cập nhật thông tin thể chất, mục tiêu và theo dõi chỉ số sức khỏe cá nhân"
+      />
 
       {error && (
         <div role="alert" className="portal-alert">
