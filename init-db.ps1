@@ -70,11 +70,11 @@ if (-not $sqlcmdPath) {
 
 Write-Host "-> Kiem tra ket noi SQL Server tai: $Server ..." -ForegroundColor Yellow
 
-$authArgs = @()
+$authArgs = @("-C")
 if ($UseWindowsAuth) {
-    $authArgs = @("-E")
+    $authArgs += @("-E")
 } else {
-    $authArgs = @("-U", $User, "-P", $Password)
+    $authArgs += @("-U", $User, "-P", $Password)
 }
 
 # Kiem tra ket noi thu
