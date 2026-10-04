@@ -8,6 +8,7 @@ import {
 } from './userApi';
 import { Modal } from '../../shared/ui/Modal';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 export function UserManagerPage() {
   const [users, setUsers] = useState<UserAccount[]>([]);
@@ -197,13 +198,12 @@ export function UserManagerPage() {
 
   return (
     <div className="portal-container">
-      {/* Header */}
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Tài Khoản & Phân Quyền</h1>
-          <p className="portal-subtitle">Quản lý nhân sự, hội viên và ma trận phân quyền vai trò (RBAC)</p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Quản lý · Tài khoản & phân quyền"
+        title="Tài Khoản"
+        flourish="& Phân Quyền"
+        subtitle="Quản lý nhân sự, hội viên và ma trận phân quyền vai trò (RBAC)"
+      />
 
       {/* Tabs */}
       <div className="portal-tabs">
@@ -277,7 +277,7 @@ export function UserManagerPage() {
           <div className="portal-card portal-card--flush">
             {filteredUsers.length === 0 ? (
               <div className="portal-state" style={{ minHeight: '180px' }}>
-                <p style={{ color: '#7E7771', margin: 0 }}>
+                <p style={{ margin: 0 }}>
                   Không tìm thấy tài khoản nào phù hợp với bộ lọc hiện tại.
                 </p>
                 {(searchTerm || roleFilter !== 'ALL') && (

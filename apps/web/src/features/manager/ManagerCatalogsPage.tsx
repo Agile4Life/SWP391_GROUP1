@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { catalogApi, type Discipline, type MembershipPackage, type Room } from './catalogApi';
 import { Modal } from '../../shared/ui/Modal';
 import { toast } from '../../shared/ui/toast';
+import { PageHeader } from '../../shared/ui/PageHeader';
 
 type Tab = 'disciplines' | 'rooms' | 'packages';
 type Form = Record<string, string>;
@@ -105,19 +106,21 @@ export function ManagerCatalogsPage() {
 
   return (
     <div className="portal-container">
-      <div className="portal-header">
-        <div>
-          <h1 className="portal-title">Danh Mục Vận Hành</h1>
-          <p className="portal-subtitle">Quản lý bộ môn rèn luyện, cơ sở phòng tập và các gói hội viên</p>
-        </div>
-        <button
-          type="button"
-          className="btn-primary"
-          onClick={() => setEditing({ id: null, form: emptyForm() })}
-        >
-          + Thêm Mục Mới
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="Quản lý · Danh mục vận hành"
+        title="Danh Mục"
+        flourish="Vận Hành"
+        subtitle="Quản lý bộ môn rèn luyện, cơ sở phòng tập và các gói hội viên"
+        actions={
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => setEditing({ id: null, form: emptyForm() })}
+          >
+            + Thêm Mục Mới
+          </button>
+        }
+      />
 
       <div className="portal-tabs">
         {(
