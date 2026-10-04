@@ -826,6 +826,11 @@
     "ast_hash": "cdf53422eec7052923476bf3c2748246",
     "semantic_hash": ""
   },
+  "apps/web/src/features/manager/ManagerUsersPage.tsx": {
+    "mtime": 1791014912.392742,
+    "ast_hash": "b2ed808181c8bb89998992255361dba7",
+    "semantic_hash": ""
+  },
   "apps/web/src/features/member/MemberCardPage.tsx": {
     "mtime": 1791082354.2693124,
     "ast_hash": "3d1b853a417d2f185f3fedd3fee8dc3d",
@@ -3222,8 +3227,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/CustomCursor.tsx": {
-    "mtime": 1791083973.3404524,
-    "ast_hash": "a745ff039479e5eb85c5eee8ae46b1e5",
+    "mtime": 1791014016.1262195,
+    "ast_hash": "5f7169f153c8fa6bd708d4afc22e6d7f",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/IntroCurtain.tsx": {
