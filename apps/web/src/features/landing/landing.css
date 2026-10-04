@@ -329,6 +329,42 @@ html {
   box-shadow: 0 8px 22px rgba(26, 22, 20, 0.22), 0 0 14px rgba(194, 166, 132, 0.22);
 }
 
+/* Active logged-in portal button */
+.aura-portal-btn--active {
+  border-color: rgba(194, 166, 132, 0.6);
+  background: rgba(194, 166, 132, 0.18);
+  color: #FAF8F5;
+  box-shadow: 0 4px 18px rgba(194, 166, 132, 0.2);
+}
+
+.sol-fixed-navbar.scrolled .aura-portal-btn--active {
+  background: #241D19;
+  border-color: var(--color-accent-gold, #C2A684);
+  color: #FAF8F5;
+}
+
+.aura-portal-btn--logout {
+  padding: 8px 14px;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  background: transparent;
+}
+
+.sol-fixed-navbar.scrolled .aura-portal-btn--logout {
+  border-color: rgba(26, 22, 20, 0.28);
+  color: #211C18;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.sol-fixed-navbar.scrolled .aura-portal-btn--logout:hover {
+  background: rgba(217, 4, 41, 0.08);
+  border-color: #d90429;
+  color: #d90429;
+}
+
+
 /* Typography Classes */
 .editorial-category {
   font-family: var(--font-sans);

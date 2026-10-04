@@ -471,9 +471,9 @@
     "semantic_hash": "c738e08713ad5761f2556e2b5508a650"
   },
   "apps/web/package.json": {
-    "mtime": 1790405834.1185436,
-    "ast_hash": "00f60a13b2b991b5a61d6db6ac19769d",
-    "semantic_hash": "00f60a13b2b991b5a61d6db6ac19769d"
+    "mtime": 1791086990.7678118,
+    "ast_hash": "8d3cc9756f0aac03940ec58282535f72",
+    "semantic_hash": ""
   },
   "apps/web/src/app/router.tsx": {
     "mtime": 1791012255.1892047,
@@ -526,8 +526,8 @@
     "semantic_hash": ""
   },
   "apps/web/vite.config.ts": {
-    "mtime": 1790695503.1697006,
-    "ast_hash": "de6091af11077cb9cc21b5c5134e367b",
+    "mtime": 1791088086.8358884,
+    "ast_hash": "4e38cf89c0057d9ef36a2086065ac5f7",
     "semantic_hash": ""
   },
   "build_state_diagrams.js": {
@@ -682,8 +682,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LuxuryLoginForm.tsx": {
-    "mtime": 1791045102.675863,
-    "ast_hash": "00d2003b6d056c2edd7e208654dd119b",
+    "mtime": 1791087952.3461034,
+    "ast_hash": "b4f17ccf3fd8f5301ce6d5f8c3f6cedc",
     "semantic_hash": ""
   },
   "apps/web/src/features/classes/StaffClassesPage.tsx": {
@@ -722,9 +722,9 @@
     "semantic_hash": "2ec93c374553f89d650a44277e4db88d"
   },
   "apps/web/src/features/landing/components/Navbar.tsx": {
-    "mtime": 1790405834.1305902,
-    "ast_hash": "c232f169e699e7dea3a54ebf0310a072",
-    "semantic_hash": "c232f169e699e7dea3a54ebf0310a072"
+    "mtime": 1791088036.3966234,
+    "ast_hash": "288498e4fdbf4da588d2e41bd4702161",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/RevealImage.tsx": {
     "mtime": 1790695503.1567008,
@@ -747,8 +747,8 @@
     "semantic_hash": "45924a9bfbd5c2e17f2ba6d63ca14d1c"
   },
   "apps/web/src/features/landing/components/sections/ContactSection.tsx": {
-    "mtime": 1791045102.6798687,
-    "ast_hash": "0768c78167858f7507c937239c1590b5",
+    "mtime": 1791088013.1240244,
+    "ast_hash": "1d5c0b05a90d7997f26867924def0c6c",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/DisciplinesSection.tsx": {
@@ -782,8 +782,8 @@
     "semantic_hash": "48ed45d911dda6928bd2715d7297cad2"
   },
   "apps/web/src/features/landing/components/sections/ScrollNavbar.tsx": {
-    "mtime": 1791014134.4107606,
-    "ast_hash": "3b9fd382f716c4f12a6c9b4ba0cb9956",
+    "mtime": 1791087937.4243202,
+    "ast_hash": "c610657b6b6cc72710d4979d934dcf85",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/AboutSlide.tsx": {
@@ -792,8 +792,8 @@
     "semantic_hash": "3df2d229ebb6ad459fc2b2bb2b169be2"
   },
   "apps/web/src/features/landing/components/slides/ContactSlide.tsx": {
-    "mtime": 1791045102.6808681,
-    "ast_hash": "1777cfd01444f6316bef5058e7504254",
+    "mtime": 1791088060.981498,
+    "ast_hash": "57db86ed264dd0e5b407bbdc43621cbf",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/DisciplinesSlide.tsx": {
@@ -907,8 +907,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790695503.229362,
-    "ast_hash": "ee57d7a156f6cf88f379c9f9d4a4b53e",
+    "mtime": 1791086959.8940332,
+    "ast_hash": "8bfa90a4b22d0e451169c8690920146e",
     "semantic_hash": ""
   },
   "run-local.ps1": {
@@ -3247,8 +3247,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/SiteFooter.tsx": {
-    "mtime": 1791015181.056672,
-    "ast_hash": "b9975f2481c94f509b84451bdc7ecfa4",
+    "mtime": 1791087974.4165933,
+    "ast_hash": "b9b0c224039531d391ea65bdac75fe07",
     "semantic_hash": ""
   },
   "apps/web/src/shared/ui/Modal.tsx": {
@@ -3264,6 +3264,56 @@
   "apps/web/src/shared/ui/PageHeader.tsx": {
     "mtime": 1791082254.5652683,
     "ast_hash": "07880dc5ba68c8781ccf69e9aec4cef7",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/auth/AuthControllerTest.java": {
+    "mtime": 1791087201.2036352,
+    "ast_hash": "1033f94c7a14a40f223bfda8b9e74e34",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/health/HealthMetricControllerTest.java": {
+    "mtime": 1791087103.2896523,
+    "ast_hash": "97a6629ff371073b928499e03cfd3fba",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/users/ProfileControllerTest.java": {
+    "mtime": 1791087176.8384054,
+    "ast_hash": "578857ae2d5663fc3be505b6e6c357ab",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/users/RoleControllerTest.java": {
+    "mtime": 1791087170.1979432,
+    "ast_hash": "1292da958782966e79ef04eb7b55829d",
+    "semantic_hash": ""
+  },
+  "apps/api/src/test/java/com/swp391/scms/users/UserControllerTest.java": {
+    "mtime": 1791087162.6413012,
+    "ast_hash": "f2e775a371515b6900354639390dcaf1",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/auth/authApi.test.ts": {
+    "mtime": 1791087018.8282375,
+    "ast_hash": "c51a70cad59af0c1a21e04075712b46e",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/manager/catalogApi.test.ts": {
+    "mtime": 1791087035.5334544,
+    "ast_hash": "a29c3ba9397d6bfe218fa5db169356df",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/manager/userApi.test.ts": {
+    "mtime": 1791087027.5884662,
+    "ast_hash": "ee6c6ea91d5de3f131765523de23dc8e",
+    "semantic_hash": ""
+  },
+  "apps/web/src/features/member/profileApi.test.ts": {
+    "mtime": 1791088110.6087513,
+    "ast_hash": "437726c69472d29366ced2e71ad902b9",
+    "semantic_hash": ""
+  },
+  "apps/web/src/shared/api/client.test.ts": {
+    "mtime": 1791086968.8352833,
+    "ast_hash": "c546f5cdd8bfd0ecff1c3b88ec86b4d7",
     "semantic_hash": ""
   }
 }

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowButton } from '../ArrowButton';
 import { SiteFooter } from '../SiteFooter';
 import { toast } from '../../../../shared/ui/toast';
+import { getCurrentUser, homePath } from '../../../../shared/api/client';
 
 interface ContactSectionProps {
   initialPlan?: string;
 }
 
 export function ContactSection({ initialPlan }: ContactSectionProps) {
+  const currentUser = getCurrentUser();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -192,7 +194,13 @@ export function ContactSection({ initialPlan }: ContactSectionProps) {
       {/* Mobile-only compact footer bar */}
       <div className="contact-mobile-footer">
         <div><strong>SÖL WELLNESS</strong> · 1900 6868</div>
-        <Link to="/login" viewTransition style={{ color: 'var(--color-text-main)', textDecoration: 'none', fontWeight: 600 }}>ĐĂNG NHẬP →</Link>
+        <Link
+          to={currentUser ? homePath(currentUser.role) : '/login'}
+          viewTransition
+          style={{ color: 'var(--color-text-main)', textDecoration: 'none', fontWeight: 600 }}
+        >
+          {currentUser ? `VÀO HỆ THỐNG (${currentUser.name}) →` : 'ĐĂNG NHẬP →'}
+        </Link>
       </div>
     </section>
   );

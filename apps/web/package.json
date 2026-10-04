@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --max-warnings=0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -24,8 +25,10 @@
     "eslint-plugin-react-hooks": "latest",
     "eslint-plugin-react-refresh": "latest",
     "globals": "latest",
+    "happy-dom": "^20.14.5",
     "typescript": "~5.7.2",
     "typescript-eslint": "latest",
-    "vite": "latest"
+    "vite": "latest",
+    "vitest": "^5.0.3"
   }
 }

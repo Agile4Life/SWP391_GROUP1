@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowButton } from '../ArrowButton';
 import { InfiniteMarquee } from '../InfiniteMarquee';
 import { toast } from '../../../../shared/ui/toast';
+import { getCurrentUser } from '../../../../shared/api/client';
 
 export function ContactSlide() {
+  const currentUser = getCurrentUser();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -219,16 +221,16 @@ export function ContactSlide() {
             <div className="footer-col-title">CỔNG TRUY CẬP (PORTAL)</div>
             <ul className="footer-nav-list">
               <li className="footer-nav-item">
-                <Link to="/login" title="Đăng nhập Hội viên">Cổng Hội Viên (Member)</Link>
+                <Link to={currentUser ? '/member/dashboard' : '/login'} title="Cổng Hội viên">Cổng Hội Viên (Member)</Link>
               </li>
               <li className="footer-nav-item">
-                <Link to="/login" title="Đăng nhập Huấn luyện viên">Cổng Coach &amp; Điểm danh</Link>
+                <Link to={currentUser ? '/staff/attendance' : '/login'} title="Cổng Huấn luyện viên">Cổng Coach &amp; Điểm danh</Link>
               </li>
               <li className="footer-nav-item">
-                <Link to="/login" title="Đăng nhập Lễ tân">Cổng Lễ Tân &amp; Check-in</Link>
+                <Link to={currentUser ? '/staff/reception' : '/login'} title="Cổng Lễ tân">Cổng Lễ Tân &amp; Check-in</Link>
               </li>
               <li className="footer-nav-item">
-                <Link to="/login" title="Đăng nhập Quản lý">Cổng Quản Trị Trung Tâm</Link>
+                <Link to={currentUser ? '/manager/users' : '/login'} title="Cổng Quản lý">Cổng Quản Trị Trung Tâm</Link>
               </li>
             </ul>
           </div>

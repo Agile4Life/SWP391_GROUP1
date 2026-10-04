@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { homePath, loginApi } from '../../shared/api/client';
+import { clearAuthSession, getCurrentUser, homePath, loginApi, type UserSession } from '../../shared/api/client';
 import { StatusMark } from '../../shared/ui/StatusMark';
 
 interface LuxuryLoginFormProps {
   onSuccess?: () => void;
 }
 
+const ROLE_NAMES: Record<UserSession['role'], string> = {
+  MEMBER: 'Hội viên',
+  STAFF: 'Lễ tân / Thu ngân',
+  COACH: 'Huấn luyện viên',
+  MANAGER: 'Quản trị viên Trung tâm',
+};
+
 export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
   const navigate = useNavigate();
 
+  const [currentUser, setCurrentUser] = useState<UserSession | null>(() => getCurrentUser());
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +64,102 @@ export function LuxuryLoginForm({ onSuccess }: LuxuryLoginFormProps) {
       setIsLoading(false);
     }
   };
+
+  if (currentUser && !isExpired) {
+    return (
+      <div
+        style={{
+          background: '#FFFFFF',
+          borderRadius: '8px',
+          padding: '48px 40px',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(33, 28, 24, 0.06)',
+          maxWidth: '520px',
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ marginBottom: '20px' }}>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '54px',
+              height: '54px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(82, 183, 136, 0.15)',
+              color: '#2d6a4f',
+              fontSize: '1.6rem',
+              fontWeight: 700,
+            }}
+          >
+            ✓
+          </span>
+        </div>
+
+        <h2
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '1.6rem',
+            color: 'var(--color-text-main)',
+            marginBottom: '10px',
+          }}
+        >
+          Phiên Đăng Nhập Đang Hoạt Động
+        </h2>
+
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            fontSize: '0.92rem',
+            lineHeight: 1.6,
+            marginBottom: '28px',
+          }}
+        >
+          Bạn đang đăng nhập với tài khoản{' '}
+          <strong style={{ color: 'var(--color-text-main)' }}>{currentUser.name}</strong>{' '}
+          <span
+            style={{
+              display: 'inline-block',
+              padding: '2px 8px',
+              borderRadius: '4px',
+              backgroundColor: '#F3EFEA',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              marginLeft: '4px',
+            }}
+          >
+            {ROLE_NAMES[currentUser.role] ?? currentUser.role}
+          </span>
+          .<br />
+          Không cần đăng nhập lại từ đầu.
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <button
+            type="button"
+            className="btn-primary"
+            style={{ width: '100%', justifyContent: 'center', padding: '14px 20px' }}
+            onClick={() => navigate(homePath(currentUser.role), { viewTransition: true })}
+          >
+            TIẾP TỤC VÀO HỆ THỐNG →
+          </button>
+
+          <button
+            type="button"
+            className="btn-secondary"
+            style={{ width: '100%', justifyContent: 'center', padding: '12px 20px' }}
+            onClick={() => {
+              clearAuthSession();
+              setCurrentUser(null);
+            }}
+          >
+            Đăng Xuất / Đổi Tài Khoản Khác
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

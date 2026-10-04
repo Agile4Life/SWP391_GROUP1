@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { getCurrentUser, homePath } from '../../../shared/api/client';
 
 const NAV_LINKS = [
   { hash: '#about', label: 'Triết lý' },
@@ -11,6 +12,7 @@ const NAV_LINKS = [
 /** Footer dùng chung cho landing (anchor trong trang) và login (điều hướng về landing). */
 export function SiteFooter() {
   const onLanding = useLocation().pathname === '/';
+  const currentUser = getCurrentUser();
 
   return (
     <footer className={`sol-footer ${onLanding ? 'sol-footer--landing' : ''}`}>
@@ -45,8 +47,8 @@ export function SiteFooter() {
         <span>© 2026 Söl Wellness Sanctuary</span>
         <span>06:00 – 22:00 hằng ngày</span>
         {onLanding && (
-          <Link to="/login" viewTransition>
-            Đăng nhập →
+          <Link to={currentUser ? homePath(currentUser.role) : '/login'} viewTransition>
+            {currentUser ? `Vào Hệ Thống (${currentUser.name}) →` : 'Đăng nhập →'}
           </Link>
         )}
       </div>
