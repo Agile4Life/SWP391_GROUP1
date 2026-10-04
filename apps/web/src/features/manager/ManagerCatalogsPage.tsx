@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import { useCallback, useEffect, useState } from 'react';
 import { catalogApi, type Discipline, type MembershipPackage, type Room } from './catalogApi';
 import { Modal } from '../../shared/ui/Modal';
@@ -97,9 +98,9 @@ export function ManagerCatalogsPage() {
   const modalTitle = () => {
     if (!editing) return '';
     const isNew = editing.id == null;
-    if (tab === 'disciplines') return isNew ? 'Thêm Bộ Môn Mới' : 'Chỉnh Sửa Bộ Môn';
-    if (tab === 'rooms') return isNew ? 'Thêm Phòng Tập / Không Gian' : 'Chỉnh Sửa Phòng Tập';
-    return isNew ? 'Thêm Gói Hội Viên Mới' : 'Chỉnh Sửa Gói Hội Viên';
+    if (tab === 'disciplines') return isNew ? 'Thêm bộ môn' : 'Chỉnh sửa bộ môn';
+    if (tab === 'rooms') return isNew ? 'Thêm phòng tập' : 'Chỉnh sửa phòng tập';
+    return isNew ? 'Thêm gói tập' : 'Chỉnh sửa gói tập';
   };
 
   const rowCount = tab === 'disciplines' ? disciplines.length : tab === 'rooms' ? rooms.length : packages.length;
@@ -107,17 +108,15 @@ export function ManagerCatalogsPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Quản lý · Danh mục vận hành"
-        title="Danh Mục"
-        flourish="Vận Hành"
-        subtitle="Quản lý bộ môn rèn luyện, cơ sở phòng tập và các gói hội viên"
+        eyebrow="Quản lý"
+        title="Danh mục vận hành"
         actions={
           <button
             type="button"
             className="btn-primary"
             onClick={() => setEditing({ id: null, form: emptyForm() })}
           >
-            + Thêm Mục Mới
+            + Thêm mới
           </button>
         }
       />
@@ -125,9 +124,9 @@ export function ManagerCatalogsPage() {
       <div className="portal-tabs">
         {(
           [
-            ['disciplines', `Danh Mục Bộ Môn (${disciplines.length})`],
-            ['rooms', `Phòng Tập & Cơ Sở (${rooms.length})`],
-            ['packages', `Gói Dịch Vụ Thành Viên (${packages.length})`],
+            ['disciplines', `Bộ môn (${disciplines.length})`],
+            ['rooms', `Phòng tập (${rooms.length})`],
+            ['packages', `Gói tập (${packages.length})`],
           ] as const
         ).map(([key, label]) => (
           <button
@@ -266,7 +265,7 @@ export function ManagerCatalogsPage() {
             {tab !== 'disciplines' && (
               <div className="portal-form-group">
                 <label className="portal-label" htmlFor="cat-status">Trạng thái vận hành</label>
-                <select
+                <Select
                   id="cat-status"
                   className="portal-select"
                   value={editing.form.status}
@@ -284,7 +283,7 @@ export function ManagerCatalogsPage() {
                       <option value="inactive">Ngừng bán</option>
                     </>
                   )}
-                </select>
+                </Select>
               </div>
             )}
 
@@ -304,7 +303,7 @@ export function ManagerCatalogsPage() {
                     <span>Đang lưu...</span>
                   </>
                 ) : (
-                  'Lưu Thông Tin'
+                  'Lưu thay đổi'
                 )}
               </button>
             </div>
@@ -335,7 +334,7 @@ export function ManagerCatalogsPage() {
               className="btn-primary"
               onClick={() => setEditing({ id: null, form: emptyForm() })}
             >
-              + Thêm Mục Mới
+              + Thêm mới
             </button>
           </div>
         </div>
@@ -347,9 +346,9 @@ export function ManagerCatalogsPage() {
                 <>
                   <thead>
                     <tr>
-                      <th style={{ width: '25%' }}>Tên Bộ Môn</th>
-                      <th>Mô Tả Chi Tiết</th>
-                      <th className="actions" style={{ width: '120px' }}>Thao Tác</th>
+                      <th style={{ width: '25%' }}>Tên bộ môn</th>
+                      <th>Mô tả</th>
+                      <th className="actions" style={{ width: '120px' }}>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -376,11 +375,11 @@ export function ManagerCatalogsPage() {
                 <>
                   <thead>
                     <tr>
-                      <th>Tên Không Gian / Phòng</th>
-                      <th>Vị Trí</th>
-                      <th>Sức Chứa Tối Đa</th>
-                      <th>Tình Trạng</th>
-                      <th className="actions">Thao Tác</th>
+                      <th>Phòng tập</th>
+                      <th>Vị trí</th>
+                      <th>Sức chứa</th>
+                      <th>Trạng thái</th>
+                      <th className="actions">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -418,12 +417,12 @@ export function ManagerCatalogsPage() {
                 <>
                   <thead>
                     <tr>
-                      <th>Tên Gói</th>
-                      <th>Đơn Giá</th>
-                      <th>Thời Hạn</th>
-                      <th>Số Buổi Lớp</th>
-                      <th>Trạng Thái</th>
-                      <th className="actions">Thao Tác</th>
+                      <th>Tên gói</th>
+                      <th>Giá gói</th>
+                      <th>Thời hạn</th>
+                      <th>Số buổi</th>
+                      <th>Trạng thái</th>
+                      <th className="actions">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>

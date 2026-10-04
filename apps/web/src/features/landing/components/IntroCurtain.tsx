@@ -69,7 +69,7 @@ export function IntroCurtain({ onReveal, onFinish }: IntroCurtainProps) {
         </svg>
 
         <div className="intro-meta">
-          <span>Discipline · Movement · Mastery</span>
+          <span>DISCIPLINE · MOVEMENT · MASTERY</span>
           <span className="intro-count">{String(count).padStart(3, '0')}</span>
         </div>
       </div>

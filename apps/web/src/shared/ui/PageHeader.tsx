@@ -14,10 +14,10 @@ export function PageHeader({ eyebrow, title, flourish, subtitle, actions }: Page
   return (
     <div className="portal-header">
       <div>
-        <p className="portal-eyebrow">{eyebrow}</p>
+        {eyebrow && <p className="portal-eyebrow">{eyebrow}</p>}
         <h1 className="portal-title">
           {title}
-          {flourish && <> <em>{flourish}</em></>}
+          {flourish && <> {flourish}</>}
         </h1>
         {subtitle && <p className="portal-subtitle">{subtitle}</p>}
       </div>

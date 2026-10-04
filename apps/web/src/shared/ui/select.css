@@ -1,0 +1,236 @@
+/* ==========================================================================
+   UI SELECT (custom dropdown) — quiet luxury: gold accent, sharp corners
+   ========================================================================== */
+
+.ui-select {
+  position: relative;
+  width: 100%;
+}
+
+.portal-toolbar .ui-select {
+  flex: 0 1 220px;
+  width: auto;
+}
+
+.ui-select .ui-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Vạch vàng quét từ trái khi mở */
+.ui-select .ui-select__trigger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--color-accent-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-luxury);
+}
+
+.ui-select.is-open .ui-select__trigger {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(194, 166, 132, 0.18);
+}
+
+.ui-select.is-open .ui-select__trigger::after {
+  transform: scaleX(1);
+}
+
+.ui-select__trigger:focus-visible {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(194, 166, 132, 0.18);
+}
+
+.ui-select__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-select__value.is-placeholder {
+  color: var(--color-text-light);
+}
+
+.ui-select__chevron {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--color-text-muted);
+  transition: transform var(--dur-base) var(--ease-luxury), color var(--dur-fast);
+}
+
+.ui-select__trigger:hover .ui-select__chevron {
+  color: var(--color-accent-gold);
+}
+
+.ui-select.is-open .ui-select__chevron {
+  transform: rotate(180deg);
+  color: var(--color-accent-gold);
+}
+
+.ui-select.is-disabled .ui-select__trigger {
+  cursor: not-allowed;
+}
+
+/* Input ẩn phục vụ validation `required` của form */
+.ui-select__native {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ui-select__menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border-medium);
+  border-top: 2px solid var(--color-accent-gold);
+  border-radius: 2px;
+  box-shadow: 0 24px 48px -12px rgba(26, 22, 20, 0.22), 0 4px 12px rgba(26, 22, 20, 0.06);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-sand) transparent;
+  will-change: transform, opacity;
+}
+
+.ui-select__menu--down {
+  top: calc(100% + 6px);
+  transform-origin: top center;
+}
+
+.ui-select__menu--up {
+  bottom: calc(100% + 6px);
+  transform-origin: bottom center;
+  border-top-width: 1px;
+  border-bottom: 2px solid var(--color-accent-gold);
+}
+
+.ui-select__menu.is-open { animation: ui-select-in var(--dur-base) var(--ease-luxury) both; }
+.ui-select__menu.is-closing { animation: ui-select-out 160ms ease-in both; pointer-events: none; }
+.ui-select__menu--up.is-open { animation-name: ui-select-in-up; }
+.ui-select__menu--up.is-closing { animation-name: ui-select-out-up; }
+
+@keyframes ui-select-in {
+  from { opacity: 0; transform: translateY(-8px) scaleY(0.94); clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes ui-select-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-6px) scaleY(0.96); }
+}
+
+@keyframes ui-select-in-up {
+  from { opacity: 0; transform: translateY(8px) scaleY(0.94); clip-path: inset(100% 0 0 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes ui-select-out-up {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(6px) scaleY(0.96); }
+}
+
+.ui-select__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px 10px 16px;
+  border-radius: 2px;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: var(--color-text-main);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--dur-fast) var(--ease-luxury), color var(--dur-fast),
+    padding-left var(--dur-base) var(--ease-luxury);
+}
+
+.ui-select__menu.is-open .ui-select__option {
+  animation: ui-select-option var(--dur-base) var(--ease-luxury) both;
+  animation-delay: calc(var(--i, 0) * 28ms + 40ms);
+}
+
+@keyframes ui-select-option {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Thanh vàng bên trái trượt vào khi hover / active */
+.ui-select__option::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  background: var(--color-accent-gold);
+  transform: scaleY(0);
+  transition: transform var(--dur-base) var(--ease-luxury);
+}
+
+.ui-select__option.is-active {
+  background: #FAF6F0;
+  padding-left: 20px;
+}
+
+.ui-select__option.is-active::before { transform: scaleY(1); }
+
+.ui-select__option.is-selected {
+  font-weight: 600;
+  color: #1A1614;
+}
+
+.ui-select__check {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--color-accent-gold);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--dur-fast), transform var(--dur-base) var(--ease-luxury);
+}
+
+.ui-select__option.is-selected .ui-select__check {
+  opacity: 1;
+  transform: none;
+}
+
+.ui-select__option.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-select__menu,
+  .ui-select__option,
+  .ui-select__chevron,
+  .ui-select .ui-select__trigger::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

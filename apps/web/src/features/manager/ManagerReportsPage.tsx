@@ -16,17 +16,15 @@ export function ManagerReportsPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Quản lý · Báo cáo & doanh thu"
-        title="Báo Cáo"
-        flourish="Trung Tâm"
-        subtitle="Thống kê doanh thu, lưu lượng check-in và nhật ký kiểm toán hệ thống"
+        eyebrow="Quản lý"
+        title="Báo cáo & thống kê"
         actions={
           <button
             type="button"
             className="btn-secondary"
             onClick={() => toast('Đang tạo và tải xuống bản báo cáo tài chính PDF...', 'success')}
           >
-            Xuất Báo Cáo Doanh Thu
+            Xuất báo cáo
           </button>
         }
       />

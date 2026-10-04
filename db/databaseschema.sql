@@ -72,7 +72,7 @@ CREATE TABLE dbo.users (
     full_name       NVARCHAR(150) NOT NULL,
     email           NVARCHAR(150) NOT NULL UNIQUE,
     username        NVARCHAR(50) NULL,
-    phone           NVARCHAR(20)  NULL UNIQUE,
+    phone           NVARCHAR(20)  NULL,
     password_hash   NVARCHAR(255) NOT NULL,
     dob             DATE NULL,
     gender          NVARCHAR(10) NULL
@@ -90,6 +90,7 @@ CREATE TABLE dbo.users (
 GO
 CREATE INDEX ix_users_role ON dbo.users (role_id);
 CREATE UNIQUE INDEX uq_users_username ON dbo.users (username) WHERE username IS NOT NULL;
+CREATE UNIQUE INDEX uq_users_phone ON dbo.users (phone) WHERE phone IS NOT NULL;
 GO
 
 CREATE TRIGGER dbo.trg_users_updated_at

@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import React, { useState } from 'react';
 import { Modal } from '../../shared/ui/Modal';
 import { toast } from '../../shared/ui/toast';
@@ -108,13 +109,11 @@ export function StaffClassesPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Huấn luyện · Lịch dạy & lớp học"
-        title="Quản Lý"
-        flourish="Lớp Học"
-        subtitle="Tạo lớp, phân công huấn luyện viên và theo dõi lịch học định kỳ."
+        eyebrow="Huấn luyện"
+        title="Quản lý lớp học"
         actions={
           <button type="button" className="btn-primary" onClick={() => setShowModal(true)}>
-            + Tạo Lớp Học Mới
+            + Tạo lớp học
           </button>
         }
       />
@@ -190,7 +189,7 @@ export function StaffClassesPage() {
             <div className="grid-2">
               <div className="portal-form-group">
                 <label className="portal-label">Bộ Môn</label>
-                <select
+                <Select
                   className="portal-select"
                   value={newClass.discipline}
                   onChange={(e) => setNewClass({ ...newClass, discipline: e.target.value })}
@@ -200,7 +199,7 @@ export function StaffClassesPage() {
                   <option value="Yoga">Yoga</option>
                   <option value="Boxing">Boxing</option>
                   <option value="Aquatics">Aquatics</option>
-                </select>
+                </Select>
               </div>
 
               <div className="portal-form-group">
@@ -218,7 +217,7 @@ export function StaffClassesPage() {
 
             <div className="portal-form-group">
               <label className="portal-label">Huấn Luyện Viên Phụ Trách</label>
-              <select
+              <Select
                 className="portal-select"
                 value={newClass.coach}
                 onChange={(e) => setNewClass({ ...newClass, coach: e.target.value })}
@@ -227,12 +226,12 @@ export function StaffClassesPage() {
                 <option value="Coach Minh Trí">Coach Minh Trí (CSCS Strength Coach)</option>
                 <option value="Master An Nhiên">Master An Nhiên (Senior Yoga Teacher)</option>
                 <option value="Coach Alex Dương">Coach Alex Dương (Boxing Specialist)</option>
-              </select>
+              </Select>
             </div>
 
             <div className="portal-form-group">
               <label className="portal-label">Phòng Tập</label>
-              <select
+              <Select
                 className="portal-select"
                 value={newClass.room}
                 onChange={(e) => setNewClass({ ...newClass, room: e.target.value })}
@@ -241,7 +240,7 @@ export function StaffClassesPage() {
                 <option value="Arena 02 (Level 1)">Arena 02 (Level 1 - Barbell Rack)</option>
                 <option value="Zen Garden Studio">Zen Garden Studio (Tầng Thượng)</option>
                 <option value="Ring Arena 01">Ring Arena 01 (Khu Boxing)</option>
-              </select>
+              </Select>
             </div>
 
             <div className="portal-form-group">

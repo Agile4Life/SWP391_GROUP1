@@ -10,12 +10,13 @@ import { toast } from '../../shared/ui/toast';
 type Step = 'register' | 'otp';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/;
 const RESEND_COOLDOWN = 30;
 
 export function RegisterPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>('register');
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [form, setForm] = useState({ username: '', email: '', phone: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState('');
   const [debugOtp, setDebugOtp] = useState('');
@@ -44,6 +45,7 @@ export function RegisterPage() {
     e.preventDefault();
     const cleanUser = form.username.trim();
     const cleanEmail = form.email.trim();
+    const cleanPhone = form.phone.trim();
 
     if (cleanUser.length < 3) {
       setError('Tên đăng nhập cần tối thiểu 3 ký tự.');
@@ -51,6 +53,10 @@ export function RegisterPage() {
     }
     if (!EMAIL_RE.test(cleanEmail)) {
       setError('Email không đúng định dạng (vd: user@example.com).');
+      return;
+    }
+    if (cleanPhone && !PHONE_RE.test(cleanPhone)) {
+      setError('Số điện thoại không hợp lệ (Phải là 10 số, vd: 0912345678).');
       return;
     }
     if (form.password.length < 6) {
@@ -62,7 +68,7 @@ export function RegisterPage() {
     setError('');
 
     try {
-      await register({ username: cleanUser, email: cleanEmail, password: form.password });
+      await register({ username: cleanUser, email: cleanEmail, phone: cleanPhone || undefined, password: form.password });
       await sendOtp();
       setStep('otp');
     } catch (err) {
@@ -249,6 +255,21 @@ export function RegisterPage() {
                       required
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="portal-form-group">
+                    <label className="portal-label" htmlFor="reg-phone">
+                      Số điện thoại <span style={{ fontWeight: 400, color: '#8C847C', fontSize: '0.72rem' }}>(Tùy chọn)</span>
+                    </label>
+                    <input
+                      id="reg-phone"
+                      type="tel"
+                      className="portal-input"
+                      placeholder="vd: 0912345678"
+                      autoComplete="tel"
+                      value={form.phone}
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     />
                   </div>
 

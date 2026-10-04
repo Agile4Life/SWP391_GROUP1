@@ -93,6 +93,13 @@ public class AuthService {
         if (userRepository.findByEmailIgnoreCase(email).isPresent()) {
             throw new ConflictException("EMAIL_EXISTS", "auth.register.email_exists", null, null);
         }
+        String phone = null;
+        if (request.phone() != null && !request.phone().isBlank()) {
+            phone = request.phone().trim();
+            if (userRepository.findByPhone(phone).isPresent()) {
+                throw new ConflictException("PHONE_EXISTS", "users.phone_exists", null, null);
+            }
+        }
 
         Role memberRole = roleRepository.findByCodeIgnoreCase("MEMBER")
                 .orElseThrow(() -> new ResourceNotFoundException("resource.role_member", "MEMBER"));
@@ -102,6 +109,7 @@ public class AuthService {
         user.setRole(memberRole);
         user.setFullName(username);
         user.setEmail(email);
+        user.setPhone(phone);
         user.setPasswordHash(passwordEncoder.encode(request.password()));
         user.setStatus("inactive");
         LocalDateTime now = LocalDateTime.now(clock);

@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import React, { useState } from 'react';
 import { toast } from '../../shared/ui/toast';
 import { PageHeader } from '../../shared/ui/PageHeader';
@@ -60,10 +61,8 @@ export function StaffReceptionPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Nhân viên · Quầy lễ tân & POS"
-        title="Lễ"
-        flourish="Tân"
-        subtitle="Tra cứu hội viên, thu phí gói tập và xuất hóa đơn tại quầy."
+        eyebrow="Lễ tân"
+        title="Quầy lễ tân & thu ngân"
       />
 
       {/* Member Lookup Bar */}
@@ -187,7 +186,7 @@ export function StaffReceptionPage() {
             <form onSubmit={handlePayment}>
               <div className="portal-form-group">
                 <label className="portal-label">Chọn Gói Dịch Vụ Mua / Gia Hạn</label>
-                <select
+                <Select
                   className="portal-select"
                   value={paymentForm.packageId}
                   onChange={(e) => {
@@ -199,7 +198,7 @@ export function StaffReceptionPage() {
                   <option value="essential">The Essential (1 Tháng — 2.800.000 VNĐ)</option>
                   <option value="sanctuary">The Sanctuary (3 Tháng — 7.500.000 VNĐ)</option>
                   <option value="sovereign">The Sovereign (1 Năm VIP — 26.000.000 VNĐ)</option>
-                </select>
+                </Select>
               </div>
 
               <div className="grid-2">
@@ -217,7 +216,7 @@ export function StaffReceptionPage() {
 
                 <div className="portal-form-group">
                   <label className="portal-label">Phương Thức Thanh Toán</label>
-                  <select
+                  <Select
                     className="portal-select"
                     value={paymentForm.method}
                     onChange={(e) => setPaymentForm({ ...paymentForm, method: e.target.value })}
@@ -226,7 +225,7 @@ export function StaffReceptionPage() {
                     <option value="VIETQR">Chuyển khoản VietQR tức thì</option>
                     <option value="CASH">Tiền mặt tại quầy</option>
                     <option value="E_WALLET">Ví điện tử MoMo / ZaloPay</option>
-                  </select>
+                  </Select>
                 </div>
               </div>
 

@@ -78,17 +78,15 @@ export function StaffCheckInPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Nhân viên · Cổng quét QR"
-        title="Check"
-        flourish="in"
-        subtitle="Quét mã QR hội viên tại turnstile và theo dõi lượt ra vào theo thời gian thực."
+        eyebrow="Lễ tân"
+        title="Check-in cổng"
       />
 
       <div className="grid-2">
         {/* Scanner Simulation Panel */}
         <div className="portal-card">
           <div className="portal-card-header">
-            <h2 className="portal-card-title">Mắt Đọc Mã QR Cổng Turnstile</h2>
+            <h2 className="portal-card-title">Mắt đọc mã QR cổng turnstile</h2>
           </div>
 
           <form onSubmit={handleSubmit} style={{ marginBottom: '24px' }}>

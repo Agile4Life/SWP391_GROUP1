@@ -108,6 +108,59 @@ describe('userApi.ts (User Management & RBAC)', () => {
     );
   });
 
+  it('updateUser sends PUT to /users/:id with updated fields', async () => {
+    const rolesList = [
+      { id: 1, code: 'CENTER_MANAGER' },
+      { id: 2, code: 'COACH' },
+    ];
+    const updatedUser = {
+      id: 1,
+      roleCode: 'CENTER_MANAGER',
+      fullName: 'Admin Updated',
+      email: 'admin@test.com',
+      phone: '0987654321',
+      status: 'active',
+      createdAt: '2026-09-20T10:00:00',
+    };
+
+    const mockFetch = vi.fn().mockImplementation((url: string) => {
+      if (url.endsWith('/roles')) {
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json: async () => ({ success: true, data: rolesList }),
+        });
+      }
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ success: true, data: updatedUser }),
+      });
+    });
+    vi.stubGlobal('fetch', mockFetch);
+
+    const result = await userApi.updateUser('1', {
+      name: 'Admin Updated',
+      phone: '0987654321',
+      role: 'CENTER_MANAGER',
+    });
+
+    expect(result.id).toBe('1');
+    expect(result.name).toBe('Admin Updated');
+    expect(result.phone).toBe('0987654321');
+    expect(mockFetch).toHaveBeenCalledWith(
+      '/api/v1/users/1',
+      expect.objectContaining({
+        method: 'PUT',
+        body: JSON.stringify({
+          fullName: 'Admin Updated',
+          phone: '0987654321',
+          roleId: 1,
+        }),
+      }),
+    );
+  });
+
   it('toggleLockUser checks current status and invokes lock/unlock accordingly', async () => {
     const mockFetch = vi
       .fn()

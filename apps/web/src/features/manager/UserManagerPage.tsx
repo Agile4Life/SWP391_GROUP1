@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   userApi,
@@ -36,6 +37,18 @@ export function UserManagerPage() {
     email?: string;
     phone?: string;
     password?: string;
+  }>({});
+
+  const [editingUser, setEditingUser] = useState<UserAccount | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    phone: '',
+    role: 'COACH' as SystemRole,
+  });
+  const [editFieldErrors, setEditFieldErrors] = useState<{
+    name?: string;
+    phone?: string;
   }>({});
 
   const [loading, setLoading] = useState(false);
@@ -160,6 +173,61 @@ export function UserManagerPage() {
     }
   }
 
+  function handleOpenEdit(user: UserAccount) {
+    setEditingUser(user);
+    setEditFormData({
+      name: user.name,
+      phone: user.phone || '',
+      role: user.role,
+    });
+    setEditFieldErrors({});
+  }
+
+  async function handleUpdateUser(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    const cleanName = editFormData.name.trim();
+    const cleanPhone = editFormData.phone.trim();
+
+    const errors: { name?: string; phone?: string } = {};
+
+    if (!cleanName) {
+      errors.name = 'Vui lòng nhập họ và tên.';
+    } else if (cleanName.length < 2) {
+      errors.name = 'Họ và tên quá ngắn (tối thiểu 2 ký tự).';
+    }
+
+    const phoneRegex = /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/;
+    if (cleanPhone && !phoneRegex.test(cleanPhone)) {
+      errors.phone = 'Số điện thoại không hợp lệ (Phải là 10 số, vd: 0912345678).';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setEditFieldErrors(errors);
+      return;
+    }
+
+    setEditFieldErrors({});
+    setIsUpdating(true);
+
+    try {
+      const updated = await userApi.updateUser(editingUser.id, {
+        name: cleanName,
+        phone: cleanPhone || undefined,
+        role: editFormData.role,
+      });
+      setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+      setEditingUser(null);
+      toast(`Đã cập nhật tài khoản "${updated.name}" thành công!`, 'success');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Không thể cập nhật tài khoản.';
+      toast(msg, 'error');
+    } finally {
+      setIsUpdating(false);
+    }
+  }
+
   async function handleTogglePermission(role: SystemRole, permId: string) {
     if (role === 'CENTER_MANAGER') return;
 
@@ -199,10 +267,8 @@ export function UserManagerPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Quản lý · Tài khoản & phân quyền"
-        title="Tài Khoản"
-        flourish="& Phân Quyền"
-        subtitle="Quản lý nhân sự, hội viên và ma trận phân quyền vai trò (RBAC)"
+        eyebrow="Quản lý"
+        title="Tài khoản & phân quyền"
       />
 
       {/* Tabs */}
@@ -212,14 +278,14 @@ export function UserManagerPage() {
           className={`portal-tab ${activeTab === 'USERS' ? 'active' : ''}`}
           onClick={() => setActiveTab('USERS')}
         >
-          Danh Sách Tài Khoản ({users.length})
+          Danh sách tài khoản ({users.length})
         </button>
         <button
           type="button"
           className={`portal-tab ${activeTab === 'ROLES' ? 'active' : ''}`}
           onClick={() => setActiveTab('ROLES')}
         >
-          Ma Trận Phân Quyền Vai Trò
+          Phân Quyền
         </button>
       </div>
 
@@ -250,7 +316,7 @@ export function UserManagerPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <select
+            <Select
               className="portal-select"
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
@@ -260,7 +326,7 @@ export function UserManagerPage() {
               <option value="COACH">Huấn luyện viên</option>
               <option value="RECEPTIONIST">Lễ tân</option>
               <option value="MEMBER">Hội viên</option>
-            </select>
+            </Select>
             <button
               type="button"
               className="btn-primary"
@@ -269,7 +335,7 @@ export function UserManagerPage() {
                 setIsModalOpen(true);
               }}
             >
-              + Thêm Tài Khoản Mới
+              + Thêm tài khoản
             </button>
           </div>
 
@@ -299,12 +365,12 @@ export function UserManagerPage() {
                 <table className="portal-table">
                   <thead>
                     <tr>
-                      <th>Họ và Tên</th>
-                      <th>Thông Tin Liên Hệ</th>
-                      <th>Vai Trò</th>
-                      <th>Trạng Thái</th>
-                      <th>Ngày Tạo</th>
-                      <th className="actions">Thao Tác</th>
+                      <th>Họ và tên</th>
+                      <th>Liên hệ</th>
+                      <th>Vai trò</th>
+                      <th>Trạng thái</th>
+                      <th>Ngày tạo</th>
+                      <th className="actions">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -328,21 +394,31 @@ export function UserManagerPage() {
                         </td>
                         <td>{u.created_at || '—'}</td>
                         <td className="actions">
-                          <button
-                            type="button"
-                            className={u.status === 'ACTIVE' ? 'btn-secondary btn-sm' : 'btn-primary btn-sm'}
-                            disabled={u.role === 'CENTER_MANAGER'}
-                            title={
-                              u.role === 'CENTER_MANAGER'
-                                ? 'Không thể khóa tài khoản Quản lý trung tâm'
-                                : u.status === 'ACTIVE'
-                                  ? 'Khóa tài khoản'
-                                  : 'Mở khóa tài khoản'
-                            }
-                            onClick={() => handleToggleLock(u)}
-                          >
-                            {u.status === 'ACTIVE' ? 'Khóa' : 'Kích hoạt'}
-                          </button>
+                          <div style={{ display: 'inline-flex', gap: '6px' }}>
+                            <button
+                              type="button"
+                              className="btn-secondary btn-sm"
+                              title="Chỉnh sửa thông tin tài khoản"
+                              onClick={() => handleOpenEdit(u)}
+                            >
+                              Sửa
+                            </button>
+                            <button
+                              type="button"
+                              className={u.status === 'ACTIVE' ? 'btn-secondary btn-sm' : 'btn-primary btn-sm'}
+                              disabled={u.role === 'CENTER_MANAGER'}
+                              title={
+                                u.role === 'CENTER_MANAGER'
+                                  ? 'Không thể khóa tài khoản Quản lý trung tâm'
+                                  : u.status === 'ACTIVE'
+                                    ? 'Khóa tài khoản'
+                                    : 'Mở khóa tài khoản'
+                              }
+                              onClick={() => handleToggleLock(u)}
+                            >
+                              {u.status === 'ACTIVE' ? 'Khóa' : 'Kích hoạt'}
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -355,18 +431,15 @@ export function UserManagerPage() {
       ) : (
         /* Matrix Phân quyền RBAC */
         <div className="portal-card portal-card--flush">
-          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(33, 28, 24, 0.08)' }}>
-            <h2 className="portal-card-title">Ma Trận Phân Quyền &amp; Vai Trò (RBAC)</h2>
-            <p className="portal-card-subtitle" style={{ margin: '4px 0 0' }}>
-              4 vai trò hệ thống cốt lõi. Quản lý trung tâm mặc định giữ toàn quyền bảo mật. Click vào các ô vuông để gán hoặc thu hồi quyền cho từng vai trò.
-            </p>
+          <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(33, 28, 24, 0.08)' }}>
+            <h2 className="portal-card-title">Phân quyền vai trò</h2>
           </div>
 
           <div className="portal-table-wrapper">
             <table className="portal-table">
               <thead>
                 <tr>
-                  <th style={{ width: '42%' }}>Chức Năng / Phân Hệ</th>
+                  <th style={{ width: '42%' }}>Chức năng</th>
                   {CORE_ROLES.map((r) => (
                     <th key={r.id} style={{ textAlign: 'center' }}>
                       {r.name}
@@ -379,9 +452,6 @@ export function UserManagerPage() {
                   <tr key={perm.id}>
                     <td>
                       <strong>{perm.name}</strong>
-                      <div className="muted">
-                        Mã: <code>{perm.code}</code> • Phân hệ: {perm.module}
-                      </div>
                     </td>
                     {CORE_ROLES.map((role) => {
                       const isManager = role.id === 'CENTER_MANAGER';
@@ -421,7 +491,7 @@ export function UserManagerPage() {
       {/* Modal Thêm tài khoản mới */}
       {isModalOpen && (
         <Modal
-          title="Thêm Tài Khoản Mới"
+          title="Thêm tài khoản"
           onClose={() => {
             if (!isCreating) {
               setIsModalOpen(false);
@@ -452,7 +522,7 @@ export function UserManagerPage() {
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="user-email">Địa chỉ Email *</label>
+              <label className="portal-label" htmlFor="user-email">Email *</label>
               <input
                 id="user-email"
                 type="email"
@@ -515,8 +585,8 @@ export function UserManagerPage() {
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="user-role">Gán vai trò (Role) *</label>
-              <select
+              <label className="portal-label" htmlFor="user-role">Vai trò *</label>
+              <Select
                 id="user-role"
                 className="portal-select"
                 value={formData.role}
@@ -528,7 +598,7 @@ export function UserManagerPage() {
                 <option value="RECEPTIONIST">Lễ tân (Receptionist)</option>
                 <option value="MEMBER">Hội viên (Member)</option>
                 <option value="CENTER_MANAGER">Quản lý trung tâm (Center Manager)</option>
-              </select>
+              </Select>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 14 }}>
@@ -551,6 +621,116 @@ export function UserManagerPage() {
                   </>
                 ) : (
                   'Tạo Tài Khoản'
+                )}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+
+      {editingUser && (
+        <Modal
+          title={`Chỉnh sửa tài khoản — ${editingUser.name}`}
+          onClose={() => {
+            if (!isUpdating) {
+              setEditingUser(null);
+              setEditFieldErrors({});
+            }
+          }}
+        >
+          <form onSubmit={handleUpdateUser} style={{ display: 'grid', gap: 14 }} noValidate>
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="edit-user-email">Email (Không thể thay đổi)</label>
+              <input
+                id="edit-user-email"
+                type="email"
+                className="portal-input"
+                disabled
+                readOnly
+                value={editingUser.email}
+              />
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="edit-user-name">Họ và tên *</label>
+              <input
+                id="edit-user-name"
+                type="text"
+                className="portal-input"
+                autoFocus
+                placeholder="Vd: Nguyễn Thị Mai"
+                value={editFormData.name}
+                onChange={(e) => {
+                  setEditFormData({ ...editFormData, name: e.target.value });
+                  if (editFieldErrors.name) setEditFieldErrors((prev) => ({ ...prev, name: undefined }));
+                }}
+              />
+              {editFieldErrors.name && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {editFieldErrors.name}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="edit-user-phone">Số điện thoại</label>
+              <input
+                id="edit-user-phone"
+                type="tel"
+                className="portal-input"
+                placeholder="0912345678"
+                maxLength={11}
+                value={editFormData.phone}
+                onChange={(e) => {
+                  const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+                  setEditFormData({ ...editFormData, phone: onlyNums });
+                  if (editFieldErrors.phone) setEditFieldErrors((prev) => ({ ...prev, phone: undefined }));
+                }}
+              />
+              {editFieldErrors.phone && (
+                <div style={{ color: '#B91C1C', fontSize: '0.78rem', marginTop: 4 }}>
+                  {editFieldErrors.phone}
+                </div>
+              )}
+            </div>
+
+            <div className="portal-form-group">
+              <label className="portal-label" htmlFor="edit-user-role">Vai trò *</label>
+              <Select
+                id="edit-user-role"
+                className="portal-select"
+                value={editFormData.role}
+                onChange={(e) =>
+                  setEditFormData({ ...editFormData, role: e.target.value as SystemRole })
+                }
+              >
+                <option value="COACH">Huấn luyện viên (Coach)</option>
+                <option value="RECEPTIONIST">Lễ tân (Receptionist)</option>
+                <option value="MEMBER">Hội viên (Member)</option>
+                <option value="CENTER_MANAGER">Quản lý trung tâm (Center Manager)</option>
+              </Select>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 14 }}>
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={isUpdating}
+                onClick={() => {
+                  setEditingUser(null);
+                  setEditFieldErrors({});
+                }}
+              >
+                Hủy
+              </button>
+              <button type="submit" className="btn-primary" disabled={isUpdating}>
+                {isUpdating ? (
+                  <>
+                    <span className="spinner" />
+                    <span>Đang lưu...</span>
+                  </>
+                ) : (
+                  'Lưu Thay Đổi'
                 )}
               </button>
             </div>

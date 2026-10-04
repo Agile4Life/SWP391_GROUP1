@@ -31,11 +31,9 @@ export function MemberCardPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Hội viên · Thẻ & hóa đơn"
-        title="Thẻ"
-        flourish="Thành Viên"
-        subtitle="Mã QR vào cổng, chi tiết hợp đồng và lịch sử thanh toán của bạn."
-        actions={<span className="badge badge-success">GÓI TẬP ĐANG HOẠT ĐỘNG</span>}
+        eyebrow="Hội viên"
+        title="Thẻ thành viên"
+        actions={<span className="badge badge-success">Gói tập đang hoạt động</span>}
       />
 
       <div className="grid-2">

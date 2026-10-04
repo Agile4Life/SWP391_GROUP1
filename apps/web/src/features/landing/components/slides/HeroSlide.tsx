@@ -63,7 +63,7 @@ export function HeroSlide({ onExplore }: HeroSlideProps) {
           DISCIPLINE.
           <br />
           <span className="editorial-flourish" style={{ fontStyle: 'italic', fontWeight: 300, letterSpacing: '0.06em' }}>
-            Movement.
+            MOVEMENT.
           </span>
           <br />
           MASTERY.

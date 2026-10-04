@@ -1,5 +1,6 @@
 package com.swp391.scms.users;
 
+import com.swp391.scms.common.exception.ConflictException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
 import com.swp391.scms.users.dto.ProfileDto;
 import com.swp391.scms.users.entity.Member;
@@ -29,6 +30,15 @@ public class ProfileService {
     public ProfileDto updateProfile(Long userId, ProfileDto request) {
         User user = findActiveUser(userId);
         user.setFullName(request.fullName());
+        if (request.phone() != null) {
+            String phone = request.phone().isBlank() ? null : request.phone().trim();
+            if (phone != null) {
+                userRepository.findByPhone(phone)
+                        .filter(existing -> !existing.getId().equals(userId))
+                        .ifPresent(existing -> { throw new ConflictException("PHONE_EXISTS", "users.phone_exists", null, null); });
+            }
+            user.setPhone(phone);
+        }
         user.setDob(request.dob());
         user.setGender(request.gender());
         user.setAvatarUrl(request.avatarUrl());

@@ -72,6 +72,12 @@ export interface CreateUserPayload {
   role: SystemRole;
 }
 
+export interface UpdateUserPayload {
+  name: string;
+  phone?: string;
+  role?: SystemRole;
+}
+
 export const userApi = {
   async getUsers(): Promise<UserAccount[]> {
     return (await apiFetch<UserDto[]>('/users')).map(toAccount);
@@ -90,6 +96,19 @@ export const userApi = {
       }),
     });
     return toAccount(created);
+  },
+
+  async updateUser(userId: string, payload: UpdateUserPayload): Promise<UserAccount> {
+    const roleId = payload.role ? (await roleIds())[payload.role] : undefined;
+    const updated = await apiFetch<UserDto>(`/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        fullName: payload.name,
+        phone: payload.phone,
+        roleId,
+      }),
+    });
+    return toAccount(updated);
   },
 
   // Khóa / mở khóa tài khoản theo trạng thái hiện tại trên server

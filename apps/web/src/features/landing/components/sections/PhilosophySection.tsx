@@ -56,7 +56,7 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
           <div className="philosophy-visual-col">
             <RevealImage
               src={LANDING_IMAGES.aboutPrimary}
-              alt="Organic wood movement sanctuary studio"
+              alt="High-performance athletic training floor and sports gym"
               direction="right"
               delay={0.1}
               isActive={isActive}
@@ -70,7 +70,7 @@ export function PhilosophySection({ isActive, onNavigate }: PhilosophySectionPro
 
             <RevealImage
               src={LANDING_IMAGES.aboutSecondary}
-              alt="Thermal recovery lounge and fireplace"
+              alt="Athletic cold plunge and sports recovery room"
               direction="up"
               delay={0.25}
               isActive={isActive}

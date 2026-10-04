@@ -135,10 +135,8 @@ export function MemberClassesPage() {
         </div>
       )}
       <PageHeader
-        eyebrow="Hội viên · Lịch học"
-        title="Lớp"
-        flourish="Học"
-        subtitle="Chọn bộ môn yêu thích, đặt chỗ hoặc vào hàng chờ cho các buổi học trong tuần."
+        eyebrow="Hội viên"
+        title="Lịch học & đặt chỗ"
         actions={
           <div className="filter-chips" role="group" aria-label="Lọc theo bộ môn">
             {['ALL', 'Pilates', 'Strength', 'Yoga', 'Boxing', 'Aquatics'].map((d) => (

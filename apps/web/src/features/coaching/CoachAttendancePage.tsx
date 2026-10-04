@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import { useState } from 'react';
 import { toast } from '../../shared/ui/toast';
 import { PageHeader } from '../../shared/ui/PageHeader';
@@ -59,13 +60,11 @@ export function CoachAttendancePage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Huấn luyện · Điểm danh học viên"
-        title="Điểm"
-        flourish="Danh"
-        subtitle="Ghi nhận chuyên cần và đánh giá thể trạng, kỹ thuật từng học viên sau mỗi buổi."
+        eyebrow="Huấn luyện"
+        title="Điểm danh buổi học"
         actions={
           <button type="button" className="btn-primary" onClick={handleSaveAttendance}>
-            Lưu Bảng Điểm Danh
+            Lưu điểm danh
           </button>
         }
       />
@@ -84,7 +83,7 @@ export function CoachAttendancePage() {
           </div>
 
           <div style={{ display: 'flex', gap: '10px' }}>
-            <select
+            <Select
               className="portal-select"
               value={selectedSession}
               onChange={(e) => setSelectedSession(e.target.value)}
@@ -93,7 +92,7 @@ export function CoachAttendancePage() {
               <option value="session-1">Lớp 17:30 (Reformer Core) - Hôm nay</option>
               <option value="session-2">Lớp 19:00 (Yin Yoga Deep) - Hôm nay</option>
               <option value="session-3">Lớp 08:00 (Olympic Barbell) - Ngày mai</option>
-            </select>
+            </Select>
           </div>
         </div>
       </div>

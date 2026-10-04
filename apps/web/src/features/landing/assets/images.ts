@@ -1,15 +1,15 @@
 // Curated high-resolution imagery tailored for Quiet Luxury / Organic Modernism Sports Sanctuary
 export const LANDING_IMAGES = {
-  // Hero slide background - Architectural athletic & sports performance sanctuary
-  heroBg: '/images/hero-sports-sanctuary.jpg',
+  // Hero slide background - Architectural Atrium Sanctuary with custom SÖL Reception
+  heroBg: '/images/hero-options/opt9-athletic-sanctuary.jpg',
   
-  // About slide - Organic curved wood studio & recovery fireplace lounge
-  aboutPrimary: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85',
-  aboutSecondary: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=85',
+  // About slide - Architectural movement studio & thermal recovery sanctuary
+  aboutPrimary: '/images/about-movement-studio.jpg',
+  aboutSecondary: '/images/about-thermal-recovery.jpg',
 
   // Discipline 1 - Zenith Pilates & Mindful Yoga Sanctuary
-  pilatesPrimary: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=85',
-  pilatesSecondary: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=85',
+  pilatesPrimary: '/images/pilates-reformer-studio.jpg',
+  pilatesSecondary: '/images/yoga-aerial-silk-studio.jpg',
 
   // Discipline 2 - Olympus Functional & Boxing Arena
   boxingPrimary: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85',

@@ -1,3 +1,4 @@
+import { Select } from '../../shared/ui/Select';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   addHealthMetric,
@@ -128,10 +129,8 @@ export function MemberProfilePage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Tài khoản · Hồ sơ & sức khỏe"
-        title="Hồ Sơ"
-        flourish="Cá Nhân"
-        subtitle="Cập nhật thông tin thể chất, mục tiêu và theo dõi chỉ số sức khỏe cá nhân"
+        eyebrow="Tài khoản"
+        title="Hồ sơ cá nhân"
       />
 
       {error && (
@@ -147,13 +146,13 @@ export function MemberProfilePage() {
         {/* Cột 1: Thông tin cá nhân & Mục tiêu */}
         <div className="portal-card">
           <div className="portal-card-header">
-            <h2 className="portal-card-title">Thông Tin Cá Nhân &amp; Thể Chất</h2>
+            <h2 className="portal-card-title">Thông tin cá nhân</h2>
           </div>
 
           <form onSubmit={handleSave}>
             <div className="grid-2">
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="fullName">Họ và Tên</label>
+                <label className="portal-label" htmlFor="fullName">Họ và tên</label>
                 <input
                   id="fullName"
                   type="text"
@@ -164,7 +163,7 @@ export function MemberProfilePage() {
                 />
               </div>
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="membershipCode">Mã Hội Viên</label>
+                <label className="portal-label" htmlFor="membershipCode">Mã hội viên</label>
                 <input
                   id="membershipCode"
                   type="text"
@@ -178,7 +177,7 @@ export function MemberProfilePage() {
 
             <div className="grid-2">
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="email">Địa Chỉ Email</label>
+                <label className="portal-label" htmlFor="email">Email</label>
                 <input
                   id="email"
                   type="email"
@@ -189,21 +188,21 @@ export function MemberProfilePage() {
                 />
               </div>
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="phone">Số Điện Thoại</label>
+                <label className="portal-label" htmlFor="phone">Số điện thoại</label>
                 <input
                   id="phone"
                   type="tel"
                   className="portal-input"
+                  placeholder="Vd: 0912345678"
                   value={profile.phone ?? ''}
-                  disabled
-                  readOnly
+                  onChange={(e) => patch({ phone: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="grid-2">
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="dob">Ngày Sinh</label>
+                <label className="portal-label" htmlFor="dob">Ngày sinh</label>
                 <input
                   id="dob"
                   type="date"
@@ -213,8 +212,8 @@ export function MemberProfilePage() {
                 />
               </div>
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="gender">Giới Tính</label>
-                <select
+                <label className="portal-label" htmlFor="gender">Giới tính</label>
+                <Select
                   id="gender"
                   className="portal-select"
                   value={profile.gender ?? ''}
@@ -224,12 +223,12 @@ export function MemberProfilePage() {
                   <option value="male">Nam</option>
                   <option value="female">Nữ</option>
                   <option value="other">Khác</option>
-                </select>
+                </Select>
               </div>
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="address">Địa Chỉ Thường Trú</label>
+              <label className="portal-label" htmlFor="address">Địa chỉ</label>
               <input
                 id="address"
                 type="text"
@@ -242,8 +241,8 @@ export function MemberProfilePage() {
 
             <div className="grid-2">
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="fitnessLevel">Trình Độ Thể Lực</label>
-                <select
+                <label className="portal-label" htmlFor="fitnessLevel">Trình độ thể lực</label>
+                <Select
                   id="fitnessLevel"
                   className="portal-select"
                   value={profile.fitnessLevel ?? 'beginner'}
@@ -252,10 +251,10 @@ export function MemberProfilePage() {
                   <option value="beginner">Beginner (Mới bắt đầu)</option>
                   <option value="intermediate">Intermediate (Trung cấp)</option>
                   <option value="advanced">Advanced (Nâng cao / Chuyên nghiệp)</option>
-                </select>
+                </Select>
               </div>
               <div className="portal-form-group">
-                <label className="portal-label" htmlFor="emergencyName">Người Liên Hệ Khẩn Cấp</label>
+                <label className="portal-label" htmlFor="emergencyName">Người liên hệ khẩn cấp</label>
                 <input
                   id="emergencyName"
                   type="text"
@@ -268,7 +267,7 @@ export function MemberProfilePage() {
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="emergencyPhone">SĐT Liên Hệ Khẩn Cấp</label>
+              <label className="portal-label" htmlFor="emergencyPhone">Số điện thoại khẩn cấp</label>
               <input
                 id="emergencyPhone"
                 type="tel"
@@ -280,7 +279,7 @@ export function MemberProfilePage() {
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="fitnessGoal">Mục Tiêu Thể Lực (Fitness Goal)</label>
+              <label className="portal-label" htmlFor="fitnessGoal">Mục tiêu thể lực</label>
               <textarea
                 id="fitnessGoal"
                 rows={2}
@@ -292,7 +291,7 @@ export function MemberProfilePage() {
             </div>
 
             <div className="portal-form-group">
-              <label className="portal-label" htmlFor="healthNotes">Ghi Chú Y Tế &amp; Tiền Sử Chấn Thương (Health Notes)</label>
+              <label className="portal-label" htmlFor="healthNotes">Ghi chú sức khỏe &amp; chấn thương</label>
               <textarea
                 id="healthNotes"
                 rows={2}
@@ -310,7 +309,7 @@ export function MemberProfilePage() {
                   <span>Đang lưu...</span>
                 </>
               ) : (
-                'Lưu Cập Nhật Hồ Sơ'
+                'Lưu hồ sơ'
               )}
             </button>
           </form>
@@ -320,14 +319,13 @@ export function MemberProfilePage() {
         <div className="portal-card">
           <div className="portal-card-header">
             <div>
-              <h2 className="portal-card-title">Chỉ Số Sức Khỏe</h2>
-              <p className="portal-card-subtitle">Theo dõi diễn biến các chỉ số sinh trắc học</p>
+              <h2 className="portal-card-title">Chỉ số sức khỏe</h2>
             </div>
-            <span className="badge badge-info">{metrics.length} BẢN GHI</span>
+            <span className="badge badge-info">{metrics.length} bản ghi</span>
           </div>
 
           <form onSubmit={handleAddMetric} style={{ display: 'grid', gridTemplateColumns: '2fr 1.2fr 1fr auto', gap: 8, marginBottom: 16 }}>
-            <select
+            <Select
               className="portal-select"
               required
               value={metric.metricName}
@@ -347,7 +345,7 @@ export function MemberProfilePage() {
                   {label}
                 </option>
               ))}
-            </select>
+            </Select>
             <input
               className="portal-input"
               required

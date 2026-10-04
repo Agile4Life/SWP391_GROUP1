@@ -44,7 +44,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
 
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '880px', margin: '0 auto' }}>
         <h1
-          aria-label="DISCIPLINE. Movement. MASTERY."
+          aria-label="DISCIPLINE. MOVEMENT. MASTERY."
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: 'clamp(2.8rem, 6.5vw, 5.8rem)',
@@ -78,7 +78,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                 animationDelay: '90ms',
               }}
             >
-              Movement.
+              MOVEMENT.
             </span>
           </span>
           <span style={{ display: 'block', overflow: 'hidden' }}>

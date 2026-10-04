@@ -65,6 +65,17 @@ class AuthServiceTest {
     }
 
     @Test
+    void registerRejectsDuplicatePhone() {
+        when(userRepository.findByUsernameIgnoreCase("newuser")).thenReturn(Optional.empty());
+        when(userRepository.findByEmailIgnoreCase("a@b.com")).thenReturn(Optional.empty());
+        when(userRepository.findByPhone("0912345678")).thenReturn(Optional.of(new User()));
+
+        assertThrows(ConflictException.class,
+                () -> service.register(new RegisterRequest("newuser", "secret1", "a@b.com", "0912345678", null)));
+        verify(userRepository, org.mockito.Mockito.never()).saveAndFlush(any());
+    }
+
+    @Test
     void verifyOtpActivatesPendingAccount() {
         User user = pendingUser();
         when(otpService.verifyOtp("a@b.com", "123456"))

@@ -421,8 +421,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/auth/RegisterRequest.java": {
-    "mtime": 1790851549.843643,
-    "ast_hash": "b3ca7da082968c32d518876ddd8657e1",
+    "mtime": 1791133458.434796,
+    "ast_hash": "c3ffaff85399815e9dcd2f1538914d57",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/auth/VerifyOtpRequest.java": {
@@ -576,8 +576,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/ProfileService.java": {
-    "mtime": 1791009851.1571271,
-    "ast_hash": "58b090d04cd59ab0abefef9549ee455c",
+    "mtime": 1791133484.0048091,
+    "ast_hash": "c4b7076b9d51caee5df6e2019fdacee0",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/users/RoleController.java": {
@@ -656,8 +656,8 @@
     "semantic_hash": "00d5bd86cc05dad4a56c206fd0298de8"
   },
   "apps/api/src/main/java/com/swp391/scms/users/entity/User.java": {
-    "mtime": 1790851549.8885248,
-    "ast_hash": "63c14724923ea61e4aa7ac17e8f4e798",
+    "mtime": 1791128923.9648638,
+    "ast_hash": "9f48b9879d4aea0cf9b54c3273a3dfbe",
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LuxuryLoginForm.tsx": {
@@ -666,13 +666,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/classes/StaffClassesPage.tsx": {
-    "mtime": 1791082426.9456775,
-    "ast_hash": "f8527773d1c80feee85cb16f6f5a4e6a",
+    "mtime": 1791133987.9211154,
+    "ast_hash": "a3ba3e74c25e0e5ef68448f237d5a4f7",
     "semantic_hash": ""
   },
   "apps/web/src/features/coaching/CoachAttendancePage.tsx": {
-    "mtime": 1791082452.2306876,
-    "ast_hash": "e20d9246b69bc1d06ac6227b3e584fd6",
+    "mtime": 1791133987.917194,
+    "ast_hash": "64c4042d620045b78d84ce49eff2cbef",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/LandingPage.tsx": {
@@ -681,9 +681,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/assets/images.ts": {
-    "mtime": 1790405834.1285532,
-    "ast_hash": "6d743d7c83b89f65dc9657eee11d38ed",
-    "semantic_hash": "6d743d7c83b89f65dc9657eee11d38ed"
+    "mtime": 1791133373.2968533,
+    "ast_hash": "4fe4606e2fc24d3e9e895aa068ff83ec",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/ArrowButton.tsx": {
     "mtime": 1790695985.658383,
@@ -726,8 +726,8 @@
     "semantic_hash": "45924a9bfbd5c2e17f2ba6d63ca14d1c"
   },
   "apps/web/src/features/landing/components/sections/ContactSection.tsx": {
-    "mtime": 1791088013.1240244,
-    "ast_hash": "1d5c0b05a90d7997f26867924def0c6c",
+    "mtime": 1791133437.1204388,
+    "ast_hash": "427ff9597f83e31c8b79e43220b3a726",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/DisciplinesSection.tsx": {
@@ -736,8 +736,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/HeroSection.tsx": {
-    "mtime": 1791014711.7637408,
-    "ast_hash": "25d23d1e903c5f517cddc13f9da4cded",
+    "mtime": 1791130694.8514228,
+    "ast_hash": "90b6649cad36d9294df22d3eede4269b",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/IntelligenceSection.tsx": {
@@ -751,8 +751,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/PhilosophySection.tsx": {
-    "mtime": 1791014731.306441,
-    "ast_hash": "45daa459e051352b5ecb58621a9c67a4",
+    "mtime": 1791131087.2223043,
+    "ast_hash": "a7410b790bb911d1a7ab874a8fd14797",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/PortalLoginSection.tsx": {
@@ -766,9 +766,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/AboutSlide.tsx": {
-    "mtime": 1790405834.1380923,
-    "ast_hash": "3df2d229ebb6ad459fc2b2bb2b169be2",
-    "semantic_hash": "3df2d229ebb6ad459fc2b2bb2b169be2"
+    "mtime": 1791131097.968544,
+    "ast_hash": "fb6de6614a71d0445b07cf038175f4c7",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/ContactSlide.tsx": {
     "mtime": 1791088060.981498,
@@ -781,9 +781,9 @@
     "semantic_hash": "02dc0efeb6171bf4e2d97c36696e693c"
   },
   "apps/web/src/features/landing/components/slides/HeroSlide.tsx": {
-    "mtime": 1790405834.1401308,
-    "ast_hash": "56dbe6b274680d032d5c186186eeb103",
-    "semantic_hash": "56dbe6b274680d032d5c186186eeb103"
+    "mtime": 1791130652.18188,
+    "ast_hash": "cd41bcc56f7411e6c6d6e6c61dcbbc83",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/hooks/useSlideController.ts": {
     "mtime": 1790405834.1401308,
@@ -796,43 +796,43 @@
     "semantic_hash": "e547d5e445f42efdca2e3572d6c59ef9"
   },
   "apps/web/src/features/manager/ManagerCatalogsPage.tsx": {
-    "mtime": 1791082529.9710853,
-    "ast_hash": "cb2431d339e6087bd9e2e6811034151a",
+    "mtime": 1791133987.9144852,
+    "ast_hash": "7af33bef8cb78e81bd99ca28a41fc894",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/ManagerReportsPage.tsx": {
-    "mtime": 1791082515.392563,
-    "ast_hash": "cdf53422eec7052923476bf3c2748246",
+    "mtime": 1791130300.4591174,
+    "ast_hash": "8352892d934a0d9d83d9708c0b5b7f8c",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberCardPage.tsx": {
-    "mtime": 1791082354.2693124,
-    "ast_hash": "3d1b853a417d2f185f3fedd3fee8dc3d",
+    "mtime": 1791130315.395701,
+    "ast_hash": "f0c5e132cd92784da0a70521c1796f06",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberClassesPage.tsx": {
-    "mtime": 1791082352.9428687,
-    "ast_hash": "76876cd8892d39bace330d3bcf7d7e78",
+    "mtime": 1791130307.4807453,
+    "ast_hash": "5294571ec5dfbae36a65bb1091c37ab3",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberDashboardPage.tsx": {
-    "mtime": 1791082307.0140545,
-    "ast_hash": "290dd4d2f59d46d4efaa99953d51fa90",
+    "mtime": 1791130189.0509026,
+    "ast_hash": "07b8e5731a35ce5c6835cec5af834a31",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/MemberProfilePage.tsx": {
-    "mtime": 1791082368.7567754,
-    "ast_hash": "b762dce8b3cae93ad4ab8ea26f984f57",
+    "mtime": 1791133987.9089696,
+    "ast_hash": "c8753c58aa398a4fd999ec9af3ad0905",
     "semantic_hash": ""
   },
   "apps/web/src/features/reception/StaffCheckInPage.tsx": {
-    "mtime": 1791082406.9013922,
-    "ast_hash": "eff6e16ae279d8af7f98a46f6d2197ec",
+    "mtime": 1791130274.0767398,
+    "ast_hash": "0173e46ac2e50ce4ccf119cd5157b087",
     "semantic_hash": ""
   },
   "apps/web/src/features/reception/StaffReceptionPage.tsx": {
-    "mtime": 1791082404.852925,
-    "ast_hash": "2c0c7918cf2b50e1a8b8cac0631e9148",
+    "mtime": 1791133987.891194,
+    "ast_hash": "b24159918cea67bfc34bd5e346459bd4",
     "semantic_hash": ""
   },
   "apps/web/src/shared/liquid-glass/LiquidGlassButton.tsx": {
@@ -1186,8 +1186,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/auth/AuthService.java": {
-    "mtime": 1791012700.5146148,
-    "ast_hash": "42f74d10c5d36239dd9996ef7eb7754b",
+    "mtime": 1791133528.2306337,
+    "ast_hash": "c067bed0eca6a835e504ad1e1c879a22",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/auth/OtpDeliveryPort.java": {
@@ -1506,8 +1506,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/UserManagerPage.tsx": {
-    "mtime": 1791082538.6470191,
-    "ast_hash": "1543669cb1b5236e5e3ae695960e0e1b",
+    "mtime": 1791133987.9122677,
+    "ast_hash": "1ae94804ffa269938acf2ed2473dd2c1",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/catalogApi.ts": {
@@ -1516,8 +1516,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/userApi.ts": {
-    "mtime": 1791008986.2359955,
-    "ast_hash": "faa44d64b649aec52d7f4260d7f83578",
+    "mtime": 1791133616.2903051,
+    "ast_hash": "54f705cfc3e2bc59c5b88ededbaa48de",
     "semantic_hash": ""
   },
   "apps/web/src/hooks/index.ts": {
@@ -2861,8 +2861,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/test/java/com/swp391/scms/auth/AuthServiceTest.java": {
-    "mtime": 1791008834.2155805,
-    "ast_hash": "edc66a16a53ddf0f0bce7ff2dd2c4c2a",
+    "mtime": 1791133495.253091,
+    "ast_hash": "6f88a1bcec1b5b14ff647779fa70d9ba",
     "semantic_hash": ""
   },
   "apps/api/src/test/java/com/swp391/scms/auth/OtpServiceTest.java": {
@@ -2886,8 +2886,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/RegisterPage.tsx": {
-    "mtime": 1791082243.7220805,
-    "ast_hash": "8a312aa3d4135f8ec79029246dd4239b",
+    "mtime": 1791133584.714419,
+    "ast_hash": "a48bb3962d8fbd0f79a4db958a0d4ab8",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/facilities/DisciplineController.java": {
@@ -2951,8 +2951,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/authApi.ts": {
-    "mtime": 1791010149.23562,
-    "ast_hash": "9bca7327a00c5bd8c9895348f541860e",
+    "mtime": 1791133547.295053,
+    "ast_hash": "2716a63d74228846fa88cf7c32744e23",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/profileApi.ts": {
@@ -3096,8 +3096,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/IntroCurtain.tsx": {
-    "mtime": 1791014182.0278664,
-    "ast_hash": "f4366ba067a15dc538c6dc6e575bef4e",
+    "mtime": 1791130748.913501,
+    "ast_hash": "675c7a822ee09676d6274f72d8472f8d",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/introSession.ts": {
@@ -3131,8 +3131,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/shared/ui/PageHeader.tsx": {
-    "mtime": 1791082254.5652683,
-    "ast_hash": "07880dc5ba68c8781ccf69e9aec4cef7",
+    "mtime": 1791130029.3788128,
+    "ast_hash": "36f003f7bd12a1717cf75441edb82993",
     "semantic_hash": ""
   },
   "apps/api/src/test/java/com/swp391/scms/auth/AuthControllerTest.java": {
@@ -3161,8 +3161,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/authApi.test.ts": {
-    "mtime": 1791087018.8282375,
-    "ast_hash": "c51a70cad59af0c1a21e04075712b46e",
+    "mtime": 1791133593.7387516,
+    "ast_hash": "082a2b772edfb5bcc62fd705b2e3d3e7",
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/catalogApi.test.ts": {
@@ -3171,8 +3171,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/manager/userApi.test.ts": {
-    "mtime": 1791087027.5884662,
-    "ast_hash": "ee6c6ea91d5de3f131765523de23dc8e",
+    "mtime": 1791133627.154031,
+    "ast_hash": "11491e43a69ab2672e784998c360844c",
     "semantic_hash": ""
   },
   "apps/web/src/features/member/profileApi.test.ts": {
@@ -3328,6 +3328,81 @@
   "scripts/README.md": {
     "mtime": 1791090007.4695852,
     "ast_hash": "50b29258d752afb0549d43b54681c832",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/about-movement-studio.jpg": {
+    "mtime": 1791131031.5828776,
+    "ast_hash": "dafa6686e31df2f1d6d742ccf2d433fe",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/about-thermal-recovery.jpg": {
+    "mtime": 1791131054.9286592,
+    "ast_hash": "be672fec128b39e04c45f9a2f8f9dddc",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt1-atrium.jpg": {
+    "mtime": 1791132703.3899858,
+    "ast_hash": "dbb953b672bd118d045c982fa3d42170",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt10-apex-gym.jpg": {
+    "mtime": 1791131031.5828776,
+    "ast_hash": "dafa6686e31df2f1d6d742ccf2d433fe",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt2-strength.jpg": {
+    "mtime": 1791131521.4070854,
+    "ast_hash": "0f56dc4ecc8f53cfd21e78b9de77da9e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt3-aquatics.jpg": {
+    "mtime": 1791131533.78224,
+    "ast_hash": "0f319a7993ab82b69fd0f437fe9774c8",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt4-turf.jpg": {
+    "mtime": 1791131545.7240322,
+    "ast_hash": "b0184a9cc53f9e72c4d122acad78f0e7",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt5-boxing.jpg": {
+    "mtime": 1791131578.8672616,
+    "ast_hash": "f991e7445e0aee35f9605869d7a54740",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt6-skyline.jpg": {
+    "mtime": 1791131590.845094,
+    "ast_hash": "848b14ee3a710a07a856a5983b1dc4f7",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt7-biometric.jpg": {
+    "mtime": 1791131602.140129,
+    "ast_hash": "a0a1fdb8b5b2545ba896872da8fc83ed",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt8-japandi.jpg": {
+    "mtime": 1791131637.959199,
+    "ast_hash": "3babd163f0aaba08583111ee719d4abc",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/hero-options/opt9-athletic-sanctuary.jpg": {
+    "mtime": 1790405834.1235507,
+    "ast_hash": "c72c52dcb3445eb271adee8d595db84d",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/pilates-reformer-studio.jpg": {
+    "mtime": 1791131232.030902,
+    "ast_hash": "0ed732a81bbbb565eb55f0ccdc25bcdd",
+    "semantic_hash": ""
+  },
+  "apps/web/public/images/yoga-aerial-silk-studio.jpg": {
+    "mtime": 1791131253.007502,
+    "ast_hash": "c6143485bce858045e1a38d097ba8da7",
+    "semantic_hash": ""
+  },
+  "apps/web/src/shared/ui/Select.tsx": {
+    "mtime": 1791133968.720756,
+    "ast_hash": "d64bbb4003bb4ab085851bab2496972e",
     "semantic_hash": ""
   }
 }

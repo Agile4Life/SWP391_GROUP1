@@ -36,6 +36,37 @@ describe('authApi.ts (Register and OTP flow)', () => {
     expect(res).toEqual({ userId: 1, email: 'member@test.com' });
   });
 
+  it('register calls /auth/register with optional phone', async () => {
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 201,
+      json: async () => ({
+        success: true,
+        message: 'Tài khoản đã tạo thành công',
+        data: { userId: 2, email: 'phone@test.com' },
+      }),
+    });
+    vi.stubGlobal('fetch', mockFetch);
+
+    const input = {
+      username: 'phonemember',
+      email: 'phone@test.com',
+      password: 'Password@123',
+      phone: '0912345678',
+    };
+
+    const res = await register(input);
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      '/api/v1/auth/register',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify(input),
+      }),
+    );
+    expect(res).toEqual({ userId: 2, email: 'phone@test.com' });
+  });
+
   it('sendOtp calls /auth/send-otp with email target', async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,

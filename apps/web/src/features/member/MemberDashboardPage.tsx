@@ -38,17 +38,15 @@ export function MemberDashboardPage() {
   return (
     <div className="portal-container">
       <PageHeader
-        eyebrow="Hội viên · Tổng quan"
-        title="Xin chào,"
-        flourish={userName}
-        subtitle="Theo dõi gói tập, lịch học và chỉ số thể chất của bạn trong một không gian duy nhất."
+        eyebrow="Hội viên"
+        title={`Xin chào, ${userName}`}
         actions={
           <>
             <Link to="/member/classes" className="btn-primary">
-              + Đặt Lớp Mới
+              + Đặt lớp mới
             </Link>
             <Link to="/member/card" className="btn-secondary">
-              Xem Thẻ QR Cổng
+              Thẻ thành viên
             </Link>
           </>
         }
@@ -57,7 +55,7 @@ export function MemberDashboardPage() {
       {/* Metric Cards Row */}
       <div className="metrics-grid">
         <div className="metric-card">
-          <div className="metric-label">TRẠNG THÁI GÓI TẬP</div>
+          <div className="metric-label">Trạng thái gói tập</div>
           <div className="metric-value" style={{ fontSize: '1.7rem', color: '#15803d' }}>
             <CountUp value="ACTIVE" />
           </div>
@@ -65,7 +63,7 @@ export function MemberDashboardPage() {
         </div>
 
         <div className="metric-card">
-          <div className="metric-label">BUỔI TẬP TRONG THÁNG</div>
+          <div className="metric-label">Buổi tập trong tháng</div>
           <div className="metric-value">
             <CountUp value={18} />
           </div>
@@ -73,7 +71,7 @@ export function MemberDashboardPage() {
         </div>
 
         <div className="metric-card">
-          <div className="metric-label">CHỈ SỐ THỂ CHẤT (BMI)</div>
+          <div className="metric-label">Chỉ số thể chất (BMI)</div>
           <div className="metric-value">
             <CountUp value={21.8} format={(v) => v.toFixed(1)} />
           </div>
@@ -81,7 +79,7 @@ export function MemberDashboardPage() {
         </div>
 
         <div className="metric-card">
-          <div className="metric-label">ĐIỂM TÍCH LŨY</div>
+          <div className="metric-label">Điểm tích lũy</div>
           <div className="metric-value">
             <CountUp value={1450} format={(v) => Math.round(v).toLocaleString('vi-VN')} />
           </div>
@@ -94,7 +92,7 @@ export function MemberDashboardPage() {
         {/* Upcoming Classes */}
         <div className="portal-card">
           <div className="portal-card-header">
-            <h2 className="portal-card-title">Lịch Tập Sắp Tới</h2>
+            <h2 className="portal-card-title">Lịch tập sắp tới</h2>
             <Link to="/member/classes" style={{ fontSize: '0.8rem', color: '#8C7765', fontWeight: 600 }}>
               Xem toàn bộ lịch →
             </Link>

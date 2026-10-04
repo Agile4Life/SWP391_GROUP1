@@ -82,7 +82,7 @@ export function AboutSlide({ onLearnMore }: AboutSlideProps) {
           >
             <img
               src={LANDING_IMAGES.aboutPrimary}
-              alt="Organic wood movement sanctuary studio"
+              alt="High-performance athletic training floor and sports gym"
               loading="lazy"
             />
           </div>
@@ -98,7 +98,7 @@ export function AboutSlide({ onLearnMore }: AboutSlideProps) {
           >
             <img
               src={LANDING_IMAGES.aboutSecondary}
-              alt="Thermal recovery lounge and fireplace"
+              alt="Athletic cold plunge and sports recovery room"
               loading="lazy"
             />
           </div>
