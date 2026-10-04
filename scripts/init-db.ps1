@@ -15,7 +15,11 @@ Write-Host "    SCMS - KHOI TAO CO SO DU LIEU SQL SERVER               " -Foregr
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$sqlFile = Join-Path $scriptDir "databaseschema.sql"
+$rootDir = Split-Path -Parent $scriptDir
+$sqlFile = Join-Path $rootDir "db\databaseschema.sql"
+if (-not (Test-Path $sqlFile)) {
+    $sqlFile = Join-Path $scriptDir "databaseschema.sql"
+}
 
 if (-not (Test-Path $sqlFile)) {
     Write-Host "[LOI] Khong tim thay file databaseschema.sql tai $sqlFile" -ForegroundColor Red
@@ -23,7 +27,7 @@ if (-not (Test-Path $sqlFile)) {
 }
 
 # Doc cau hinh tu .env neu co
-$envFile = Join-Path $scriptDir ".env"
+$envFile = Join-Path $rootDir ".env"
 if (Test-Path $envFile) {
     Get-Content $envFile | ForEach-Object {
         $line = $_.Trim()

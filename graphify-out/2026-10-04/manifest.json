@@ -526,13 +526,8 @@
     "semantic_hash": ""
   },
   "apps/web/vite.config.ts": {
-    "mtime": 1791087006.5003924,
-    "ast_hash": "f14fbdff8b58cd458830af087f4f08b2",
-    "semantic_hash": ""
-  },
-  "build_state_diagrams.js": {
-    "mtime": 1789573445.5772233,
-    "ast_hash": "85d1fefa5873ab94bc47752e6f9fbcf4",
+    "mtime": 1791088086.8358884,
+    "ast_hash": "4e38cf89c0057d9ef36a2086065ac5f7",
     "semantic_hash": ""
   },
   "databaseschema.sql": {
@@ -540,16 +535,6 @@
     "seen": 1790645397.3399951,
     "ast_hash": "",
     "semantic_hash": ""
-  },
-  "diagram_screenshots/page_7.png": {
-    "mtime": 1789573445.624725,
-    "ast_hash": "37bb21c777c58f804a051bf7c87ce047",
-    "semantic_hash": "37bb21c777c58f804a051bf7c87ce047"
-  },
-  "diagram_screenshots/page_8.png": {
-    "mtime": 1789573445.6287363,
-    "ast_hash": "1c2e874af9047347e130b08e89c3d320",
-    "semantic_hash": "1c2e874af9047347e130b08e89c3d320"
   },
   "apps/api/mvnw": {
     "mtime": 1790695503.1075494,
@@ -682,8 +667,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/auth/LuxuryLoginForm.tsx": {
-    "mtime": 1791045102.675863,
-    "ast_hash": "00d2003b6d056c2edd7e208654dd119b",
+    "mtime": 1791087952.3461034,
+    "ast_hash": "b4f17ccf3fd8f5301ce6d5f8c3f6cedc",
     "semantic_hash": ""
   },
   "apps/web/src/features/classes/StaffClassesPage.tsx": {
@@ -722,9 +707,9 @@
     "semantic_hash": "2ec93c374553f89d650a44277e4db88d"
   },
   "apps/web/src/features/landing/components/Navbar.tsx": {
-    "mtime": 1790405834.1305902,
-    "ast_hash": "c232f169e699e7dea3a54ebf0310a072",
-    "semantic_hash": "c232f169e699e7dea3a54ebf0310a072"
+    "mtime": 1791088036.3966234,
+    "ast_hash": "288498e4fdbf4da588d2e41bd4702161",
+    "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/RevealImage.tsx": {
     "mtime": 1790695503.1567008,
@@ -747,8 +732,8 @@
     "semantic_hash": "45924a9bfbd5c2e17f2ba6d63ca14d1c"
   },
   "apps/web/src/features/landing/components/sections/ContactSection.tsx": {
-    "mtime": 1791045102.6798687,
-    "ast_hash": "0768c78167858f7507c937239c1590b5",
+    "mtime": 1791088013.1240244,
+    "ast_hash": "1d5c0b05a90d7997f26867924def0c6c",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/sections/DisciplinesSection.tsx": {
@@ -782,8 +767,8 @@
     "semantic_hash": "48ed45d911dda6928bd2715d7297cad2"
   },
   "apps/web/src/features/landing/components/sections/ScrollNavbar.tsx": {
-    "mtime": 1791014134.4107606,
-    "ast_hash": "3b9fd382f716c4f12a6c9b4ba0cb9956",
+    "mtime": 1791087937.4243202,
+    "ast_hash": "c610657b6b6cc72710d4979d934dcf85",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/AboutSlide.tsx": {
@@ -792,8 +777,8 @@
     "semantic_hash": "3df2d229ebb6ad459fc2b2bb2b169be2"
   },
   "apps/web/src/features/landing/components/slides/ContactSlide.tsx": {
-    "mtime": 1791045102.6808681,
-    "ast_hash": "1777cfd01444f6316bef5058e7504254",
+    "mtime": 1791088060.981498,
+    "ast_hash": "57db86ed264dd0e5b407bbdc43621cbf",
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/slides/DisciplinesSlide.tsx": {
@@ -1922,8 +1907,8 @@
     "semantic_hash": ""
   },
   ".agents/rules/mandatory-rules.md": {
-    "mtime": 1790851549.8244207,
-    "ast_hash": "ed53e158c6a27494d289adf4d472f4b6",
+    "mtime": 1791089717.0509539,
+    "ast_hash": "84cbc009c6d0d7c0f795d46c1dd63066",
     "semantic_hash": ""
   },
   ".agents/rules/ponytail.md": {
@@ -2412,8 +2397,8 @@
     "semantic_hash": ""
   },
   ".agents/skills/scms-development/SKILL.md": {
-    "mtime": 1790851549.83042,
-    "ast_hash": "07681a7719d073904c5aea8037276951",
+    "mtime": 1791089728.8528743,
+    "ast_hash": "16b01313d6da5187f4e771f61dbfd933",
     "semantic_hash": ""
   },
   ".agents/skills/slides/SKILL.md": {
@@ -2712,8 +2697,8 @@
     "semantic_hash": ""
   },
   ".agents/workflows/scms-development.md": {
-    "mtime": 1790851549.8319952,
-    "ast_hash": "92c4e90874e9c47f2dabc2c570ed6141",
+    "mtime": 1791089742.5721986,
+    "ast_hash": "d3357c295bade0018bddee2a7ca42f01",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -2722,13 +2707,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1790851549.8339639,
-    "ast_hash": "68b43ceb96fb9354db0edf3caf183801",
-    "semantic_hash": ""
-  },
-  "AGILE_SCRUM_JIRA_PLAN.md": {
-    "mtime": 1790405834.101548,
-    "ast_hash": "aa11f0420bb63cd30bd2fd25b55040f3",
+    "mtime": 1791089646.3440478,
+    "ast_hash": "c26577f57d12e6142a5f51f969d9b1b1",
     "semantic_hash": ""
   },
   "LOCAL_DEV_GUIDE.md": {
@@ -2737,13 +2717,13 @@
     "semantic_hash": ""
   },
   "PROJECT_MASTER_GUIDE.md": {
-    "mtime": 1789741769.0094798,
-    "ast_hash": "f8d1128828ad29d25ba181c6d7e07b56",
+    "mtime": 1791089690.8958743,
+    "ast_hash": "85706e6923c92f9724adfe64c3af3f16",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790695503.1055343,
-    "ast_hash": "b3e6641a6b4c6cd5d1dbda0c7b153dc5",
+    "mtime": 1791089661.473419,
+    "ast_hash": "d9b1ae6a89a655edc6858a0044b22535",
     "semantic_hash": ""
   },
   "apps/api/README.md": {
@@ -2794,31 +2774,6 @@
   "docs/api-contracts/README.md": {
     "mtime": 1789741769.0622551,
     "ast_hash": "05da65566366e5c15cd7f4e74e473974",
-    "semantic_hash": ""
-  },
-  "docs/plans/2026-09-26-scms-luxury-editorial-frontend.md": {
-    "mtime": 1790405834.1632247,
-    "ast_hash": "6cb2cbcdc0cb5f3af7e0f6fa76c1a0dc",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/plans/2026-10-01-backend-layered-jpa.md": {
-    "mtime": 1790851549.912154,
-    "ast_hash": "d8818a44aa41e86b8f112349548198bc",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-10-01-backend-layered-jpa-design.md": {
-    "mtime": 1790851549.9131546,
-    "ast_hash": "3436a35ac383f9b16bea71b64e99644f",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-10-01-backend-postgresql-amendment.md": {
-    "mtime": 1790851549.9131546,
-    "ast_hash": "b1855343d58834d7a4b78c25a42a348f",
-    "semantic_hash": ""
-  },
-  "rules/backend-architecture.md": {
-    "mtime": 1790851549.9141247,
-    "ast_hash": "726b57392d7f59a4a010fb125775bb9c",
     "semantic_hash": ""
   },
   ".agents/plugins/ponytail/assets/benchmark-3model.svg": {
@@ -2894,61 +2849,6 @@
   "apps/web/public/images/hero-sports-sanctuary.jpg": {
     "mtime": 1790405834.1235507,
     "ast_hash": "c72c52dcb3445eb271adee8d595db84d",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_1.png": {
-    "mtime": 1789573445.5822139,
-    "ast_hash": "eddb3d47b8afe4d4b637556db0f38feb",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_10.png": {
-    "mtime": 1789573445.5867128,
-    "ast_hash": "b863f6377414236bac8b0a7f0559cb8e",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_11.png": {
-    "mtime": 1789573445.5917125,
-    "ast_hash": "9b7cadc7116e67a28a86a2dc512916c9",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_12.png": {
-    "mtime": 1789573445.595326,
-    "ast_hash": "31ec665172119b6d8015105b993b4f4c",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_1_user_account.png": {
-    "mtime": 1789573445.599099,
-    "ast_hash": "0ea0dcab6fe57870c352e6507af88fe1",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_2.png": {
-    "mtime": 1789573445.6030698,
-    "ast_hash": "494b438af630e5d7a762f60eb53b97eb",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_3.png": {
-    "mtime": 1789573445.608613,
-    "ast_hash": "d30ed573e1280021d1769b0e61990f35",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_4.png": {
-    "mtime": 1789573445.6115868,
-    "ast_hash": "f9166ca06f8041f4dcf1360bbf2fcce2",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_5.png": {
-    "mtime": 1789573445.6160376,
-    "ast_hash": "d9feec9c8239dfa9e55a3e6a7d9b739e",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_6.png": {
-    "mtime": 1789573445.6201673,
-    "ast_hash": "5fbf4509debc98f56d5177c0a7c3cc76",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_9.png": {
-    "mtime": 1789573445.6327362,
-    "ast_hash": "9fd5fae317820e16766c0cfb7e114244",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/audit/AuditAspect.java": {
@@ -3247,8 +3147,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/landing/components/SiteFooter.tsx": {
-    "mtime": 1791015181.056672,
-    "ast_hash": "b9975f2481c94f509b84451bdc7ecfa4",
+    "mtime": 1791087974.4165933,
+    "ast_hash": "b9b0c224039531d391ea65bdac75fe07",
     "semantic_hash": ""
   },
   "apps/web/src/shared/ui/Modal.tsx": {
@@ -3307,13 +3207,128 @@
     "semantic_hash": ""
   },
   "apps/web/src/features/member/profileApi.test.ts": {
-    "mtime": 1791087043.3576055,
-    "ast_hash": "34e63bde001cb8f6eb895c69a235bbab",
+    "mtime": 1791088110.6087513,
+    "ast_hash": "437726c69472d29366ced2e71ad902b9",
     "semantic_hash": ""
   },
   "apps/web/src/shared/api/client.test.ts": {
     "mtime": 1791086968.8352833,
     "ast_hash": "c546f5cdd8bfd0ecff1c3b88ec86b4d7",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/build_state_diagrams.js": {
+    "mtime": 1791089242.9671295,
+    "ast_hash": "8aa03ec084abe4bfd70e0edaf1ff7466",
+    "semantic_hash": ""
+  },
+  "docs/README.md": {
+    "mtime": 1791089622.0695453,
+    "ast_hash": "db678f86847163ba77621279cea108c6",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/README.md": {
+    "mtime": 1791089252.6919968,
+    "ast_hash": "0c6b41ccd5da44b0818b047409106c54",
+    "semantic_hash": ""
+  },
+  "docs/plans/2026-09-26-scms-luxury-editorial-frontend.md": {
+    "mtime": 1790405834.1632247,
+    "ast_hash": "6cb2cbcdc0cb5f3af7e0f6fa76c1a0dc",
+    "semantic_hash": ""
+  },
+  "docs/plans/2026-10-01-backend-layered-jpa.md": {
+    "mtime": 1790851549.912154,
+    "ast_hash": "d8818a44aa41e86b8f112349548198bc",
+    "semantic_hash": ""
+  },
+  "docs/plans/AGILE_SCRUM_JIRA_PLAN.md": {
+    "mtime": 1790405834.101548,
+    "ast_hash": "aa11f0420bb63cd30bd2fd25b55040f3",
+    "semantic_hash": ""
+  },
+  "docs/plans/README.md": {
+    "mtime": 1791089633.3538382,
+    "ast_hash": "71517448c1f746083a9056ac1326eb35",
+    "semantic_hash": ""
+  },
+  "docs/rules/backend-architecture.md": {
+    "mtime": 1791089704.025557,
+    "ast_hash": "c96ecd76001f5b6eb2d5e8d8d4c87fe4",
+    "semantic_hash": ""
+  },
+  "docs/specs/2026-10-01-backend-layered-jpa-design.md": {
+    "mtime": 1790851549.9131546,
+    "ast_hash": "3436a35ac383f9b16bea71b64e99644f",
+    "semantic_hash": ""
+  },
+  "docs/specs/2026-10-01-backend-postgresql-amendment.md": {
+    "mtime": 1790851549.9131546,
+    "ast_hash": "b1855343d58834d7a4b78c25a42a348f",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_1.png": {
+    "mtime": 1789573445.5822139,
+    "ast_hash": "eddb3d47b8afe4d4b637556db0f38feb",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_10.png": {
+    "mtime": 1789573445.5867128,
+    "ast_hash": "b863f6377414236bac8b0a7f0559cb8e",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_11.png": {
+    "mtime": 1789573445.5917125,
+    "ast_hash": "9b7cadc7116e67a28a86a2dc512916c9",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_12.png": {
+    "mtime": 1789573445.595326,
+    "ast_hash": "31ec665172119b6d8015105b993b4f4c",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_1_user_account.png": {
+    "mtime": 1789573445.599099,
+    "ast_hash": "0ea0dcab6fe57870c352e6507af88fe1",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_2.png": {
+    "mtime": 1789573445.6030698,
+    "ast_hash": "494b438af630e5d7a762f60eb53b97eb",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_3.png": {
+    "mtime": 1789573445.608613,
+    "ast_hash": "d30ed573e1280021d1769b0e61990f35",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_4.png": {
+    "mtime": 1789573445.6115868,
+    "ast_hash": "f9166ca06f8041f4dcf1360bbf2fcce2",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_5.png": {
+    "mtime": 1789573445.6160376,
+    "ast_hash": "d9feec9c8239dfa9e55a3e6a7d9b739e",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_6.png": {
+    "mtime": 1789573445.6201673,
+    "ast_hash": "5fbf4509debc98f56d5177c0a7c3cc76",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_7.png": {
+    "mtime": 1789573445.624725,
+    "ast_hash": "37bb21c777c58f804a051bf7c87ce047",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_8.png": {
+    "mtime": 1789573445.6287363,
+    "ast_hash": "1c2e874af9047347e130b08e89c3d320",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_9.png": {
+    "mtime": 1789573445.6327362,
+    "ast_hash": "9fd5fae317820e16766c0cfb7e114244",
     "semantic_hash": ""
   }
 }

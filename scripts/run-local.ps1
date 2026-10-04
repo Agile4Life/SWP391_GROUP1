@@ -35,7 +35,8 @@ function Write-Header {
 
 Write-Header
 
-$rootDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$rootDir = Split-Path -Parent $scriptDir
 $apiDir = Join-Path $rootDir "apps\api"
 $webDir = Join-Path $rootDir "apps\web"
 
@@ -124,7 +125,7 @@ if ($Only -in @("all", "api")) {
 # 4. Pre-flight check: SQL Server & Khoi tao DB
 if (-not $SkipDbCheck -and ($Only -in @("all", "api", "db"))) {
     Write-Host "-> Dang kiem tra ket noi SQL Server..." -ForegroundColor Yellow
-    $initScript = Join-Path $rootDir "init-db.ps1"
+    $initScript = Join-Path $scriptDir "init-db.ps1"
     if (Test-Path $initScript) {
         & powershell -NoProfile -ExecutionPolicy Bypass -File $initScript
         if ($LASTEXITCODE -ne 0) {

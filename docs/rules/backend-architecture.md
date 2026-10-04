@@ -55,7 +55,7 @@ Use a strict three-layer flow:
 
 Before opening or completing a backend change:
 
-- Identify the feature owner, acceptance criteria, and relevant invariants in `AGILE_SCRUM_JIRA_PLAN.md`, `PROJECT_MASTER_GUIDE.md`, and `databaseschema.sql`.
+- Identify the feature owner, acceptance criteria, and relevant invariants in `docs/plans/AGILE_SCRUM_JIRA_PLAN.md`, `docs/PROJECT_MASTER_GUIDE.md`, and `db/databaseschema.sql`.
 - Keep controller, service, repository, entity, and DTO responsibilities separated; inject dependencies through constructors.
 - Keep transaction boundaries in service/use-case code and persistence logic in JPA repositories.
 - Check both PostgreSQL and SQL Server implications for entity mappings, migrations, generated columns, and constraint errors.

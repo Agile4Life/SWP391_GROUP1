@@ -8,10 +8,10 @@ description: Implement or review a Sports Center Management System ticket using 
 ## 1. Bắt buộc đọc Rules & Tài liệu trước khi làm việc
 Trước khi sửa hoặc thêm bất kỳ dòng code nào, Agent PHẢI đọc:
 1. `AGENTS.md` (root): Quy tắc bất biến dữ liệu, trigger, bảo mật và phạm vi MVP.
-2. `rules/backend-architecture.md`: Kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, và chuẩn i18n.
+2. `docs/rules/backend-architecture.md`: Kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, và chuẩn i18n.
 3. `.agents/rules/mandatory-rules.md`: Bảng quy tắc bắt buộc về phân định squad và cấm hard-code.
 4. `.agents/workflows/scms-development.md`: Quy trình 6 bước chuẩn mực để triển khai ticket.
-5. `AGILE_SCRUM_JIRA_PLAN.md` & `PROJECT_MASTER_GUIDE.md`: Xem Jira key, Acceptance Criteria và luồng nghiệp vụ.
+5. `docs/plans/AGILE_SCRUM_JIRA_PLAN.md` & `docs/PROJECT_MASTER_GUIDE.md`: Xem Jira key, Acceptance Criteria và luồng nghiệp vụ.
 
 ## 2. Squad Boundaries (Ranh giới trách nhiệm)
 - **Phong**: Backend Core Architecture, Hạ tầng Trigger Strategy, Global Exception, i18n, Phân hệ Finance (`payments`, `invoices`, computed columns), AI Services.

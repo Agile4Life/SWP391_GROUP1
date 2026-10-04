@@ -4,9 +4,9 @@ Mọi Agent hoặc lập trình viên khi tham gia phát triển trong dự án 
 
 ## 1. Nguồn chân lý & Tài liệu bắt buộc phải đọc trước khi làm việc
 1. `AGENTS.md` (tại thư mục gốc): Nguồn chân lý về quy tắc nghiệp vụ, schema, phân vai và kiến trúc tổng quan.
-2. `rules/backend-architecture.md`: Hướng dẫn chi tiết về kiến trúc 3 lớp, SOLID, IoC, Spring Boot 3, JPA Entity và xử lý lỗi.
-3. `PROJECT_MASTER_GUIDE.md`: Đặc tả chi tiết từng tính năng, luồng nghiệp vụ và quy tắc vận hành.
-4. `AGILE_SCRUM_JIRA_PLAN.md`: Kế hoạch Sprint, danh sách tickets, Jira keys và người phụ trách màn hình/tính năng.
+2. `docs/rules/backend-architecture.md`: Hướng dẫn chi tiết về kiến trúc 3 lớp, SOLID, IoC, Spring Boot 3, JPA Entity và xử lý lỗi.
+3. `docs/PROJECT_MASTER_GUIDE.md`: Đặc tả chi tiết từng tính năng, luồng nghiệp vụ và quy tắc vận hành.
+4. `docs/plans/AGILE_SCRUM_JIRA_PLAN.md`: Kế hoạch Sprint, danh sách tickets, Jira keys và người phụ trách màn hình/tính năng.
 
 ## 2. Phân định quyền hạn & Ranh giới trách nhiệm (Squad Boundaries)
 Tuyệt đối KHÔNG can thiệp, tự ý sửa đổi hoặc code vào phân hệ của thành viên khác nếu không được giao rõ ràng:

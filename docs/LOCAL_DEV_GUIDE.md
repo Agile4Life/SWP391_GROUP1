@@ -19,7 +19,7 @@ Bộ công cụ này giúp bạn khởi động toàn bộ hệ thống gồm **
 ## 2. Cách Chạy Nhanh Nhất (1-Click)
 
 ### Cách 1: Click đúp chuột (Khuyên dùng trên Windows)
-- Click đúp vào file [run-local.bat](file:///d:/SWP391_PROJECT/SWP391/run-local.bat).
+- Bấm đúp vào file [`scripts/run-local.bat`](../scripts/run-local.bat).
 - File sẽ tự động:
   1. Kiểm tra môi trường (Node, Java, SQL Server).
   2. Tạo file `.env` nếu chưa có.
@@ -29,21 +29,21 @@ Bộ công cụ này giúp bạn khởi động toàn bộ hệ thống gồm **
 
 ### Cách 2: Chạy từ Terminal / PowerShell
 ```powershell
-# Chạy toàn bộ hệ thống (Web + API + DB Check)
-.\run-local.ps1
-
-# Hoặc dùng npm từ thư mục gốc
+# Chạy qua npm từ thư mục gốc
 npm start
 # hoặc
 npm run dev
+
+# Hoặc gọi trực tiếp script
+.\scripts\run-local.ps1
 ```
 
 ### Cách 3: Dừng toàn bộ hệ thống khi không dùng nữa
-- Click đúp vào [stop-local.bat](file:///d:/SWP391_PROJECT/SWP391/stop-local.bat) hoặc chạy:
+- Bấm đúp vào [`scripts/stop-local.bat`](../scripts/stop-local.bat) hoặc chạy:
 ```powershell
-.\stop-local.ps1
-# hoặc
 npm run stop
+# hoặc
+.\scripts\stop-local.ps1
 ```
 *Lệnh này sẽ tự động giải phóng cổng 8080 và 5173, tránh lỗi "Port already in use".*
 
@@ -51,27 +51,27 @@ npm run stop
 
 ## 3. Các Lựa Chọn Chạy Nâng Cao
 
-File [run-local.ps1](file:///d:/SWP391_PROJECT/SWP391/run-local.ps1) hỗ trợ các tham số linh hoạt:
+File [`scripts/run-local.ps1`](../scripts/run-local.ps1) hỗ trợ các tham số linh hoạt:
 
 ```powershell
 # 1. Chỉ chạy Frontend React Web (Port 5173)
-.\run-local.ps1 -Only web
+.\scripts\run-local.ps1 -Only web
 # hoặc: npm run dev:web
 
 # 2. Chỉ chạy Backend API (Port 8080)
-.\run-local.ps1 -Only api
+.\scripts\run-local.ps1 -Only api
 # hoặc: npm run dev:api
 
 # 3. Chỉ kiểm tra và khởi tạo lại Database
-.\run-local.ps1 -Only db
-# hoặc: .\init-db.ps1
+.\scripts\run-local.ps1 -Only db
+# hoặc: npm run db:init
 
 # 4. Tạo lại Database từ đầu (Xóa cũ tạo mới theo schema)
-.\init-db.ps1 -Force
-# hoặc: npm run db:init:force
+npm run db:init:force
+# hoặc: .\scripts\init-db.ps1 -Force
 
 # 5. Chạy nhưng không tự động mở trình duyệt
-.\run-local.ps1 -NoBrowser
+.\scripts\run-local.ps1 -NoBrowser
 ```
 
 ---

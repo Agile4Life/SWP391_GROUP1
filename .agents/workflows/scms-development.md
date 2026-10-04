@@ -12,11 +12,11 @@ Tất cả AI Agent hoặc lập trình viên khi bắt đầu một tác vụ m
 ## Bước 1: Đọc và nắm vững bộ Rules dự án (BẮT BUỘC)
 Trước khi đọc hay sửa bất kỳ dòng code nào, Agent PHẢI dùng công cụ `view_file` để đọc tối thiểu các tài liệu sau:
 1. `AGENTS.md` (tại thư mục gốc): Nguồn chân lý về kiến trúc chung, bất biến dữ liệu, và phạm vi MVP.
-2. `rules/backend-architecture.md`: Quy định kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, Trigger Strategy, và quy tắc đa ngôn ngữ (i18n).
+2. `docs/rules/backend-architecture.md`: Quy định kiến trúc 3 lớp, SOLID, IoC, Code-First & ORM Polymorphism, Trigger Strategy, và quy tắc đa ngôn ngữ (i18n).
 3. `.agents/rules/mandatory-rules.md`: Bảng quy tắc bắt buộc về phân quyền squad và cấm hard-code chuỗi.
 4. `.agents/rules/ponytail.md`: Quy tắc tối giản hóa mã nguồn (Ponytail - Lazy Senior Dev Mode), chống over-engineering.
-5. `PROJECT_MASTER_GUIDE.md`: Xem phần nghiệp vụ tương ứng với ticket cần làm.
-6. `AGILE_SCRUM_JIRA_PLAN.md`: Tra cứu Jira key, acceptance criteria, và người phụ trách.
+5. `docs/PROJECT_MASTER_GUIDE.md`: Xem phần nghiệp vụ tương ứng với ticket cần làm.
+6. `docs/plans/AGILE_SCRUM_JIRA_PLAN.md`: Tra cứu Jira key, acceptance criteria, và người phụ trách.
 
 ---
 

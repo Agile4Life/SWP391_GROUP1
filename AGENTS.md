@@ -1,10 +1,10 @@
 # Hướng dẫn cho contributor và coding agent
 
-Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và hỗ trợ PostgreSQL/SQL Server nằm tại `rules/backend-architecture.md`; mọi contributor và agent làm backend phải tuân theo cả hai tài liệu.
+Quy tắc chi tiết về kiến trúc backend, ba lớp, SOLID, IoC, JPA và hỗ trợ PostgreSQL/SQL Server nằm tại `docs/rules/backend-architecture.md`; mọi contributor và agent làm backend phải tuân theo cả hai tài liệu.
 
 ## Bối cảnh
 
-- Nguồn nghiệp vụ: `PROJECT_MASTER_GUIDE.md`; schema nguồn chân lý: `databaseschema.sql`; backlog: `AGILE_SCRUM_JIRA_PLAN.md`.
+- Nguồn nghiệp vụ: `docs/PROJECT_MASTER_GUIDE.md`; schema nguồn chân lý: `db/databaseschema.sql`; backlog: `docs/plans/AGILE_SCRUM_JIRA_PLAN.md`.
 - Stack cố định: React + TypeScript ở `apps/web`, Java 21 + Spring Boot 3 ở `apps/api`, Microsoft SQL Server.
 
 ## Cách làm một ticket

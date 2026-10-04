@@ -530,27 +530,6 @@
     "ast_hash": "4e38cf89c0057d9ef36a2086065ac5f7",
     "semantic_hash": ""
   },
-  "build_state_diagrams.js": {
-    "mtime": 1789573445.5772233,
-    "ast_hash": "85d1fefa5873ab94bc47752e6f9fbcf4",
-    "semantic_hash": ""
-  },
-  "databaseschema.sql": {
-    "mtime": 1790644276.2591274,
-    "seen": 1790645397.3399951,
-    "ast_hash": "",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_7.png": {
-    "mtime": 1789573445.624725,
-    "ast_hash": "37bb21c777c58f804a051bf7c87ce047",
-    "semantic_hash": "37bb21c777c58f804a051bf7c87ce047"
-  },
-  "diagram_screenshots/page_8.png": {
-    "mtime": 1789573445.6287363,
-    "ast_hash": "1c2e874af9047347e130b08e89c3d320",
-    "semantic_hash": "1c2e874af9047347e130b08e89c3d320"
-  },
   "apps/api/mvnw": {
     "mtime": 1790695503.1075494,
     "ast_hash": "a2a96102e44344e62ceb287667ebf497",
@@ -901,24 +880,9 @@
     "ast_hash": "0d0efa1c7a523e65c5b34485326e3f9f",
     "semantic_hash": ""
   },
-  "init-db.ps1": {
-    "mtime": 1791085191.9908743,
-    "ast_hash": "c8a1b145cd09f05cfaaf7c8a33908405",
-    "semantic_hash": ""
-  },
   "package.json": {
-    "mtime": 1791086959.8940332,
-    "ast_hash": "8bfa90a4b22d0e451169c8690920146e",
-    "semantic_hash": ""
-  },
-  "run-local.ps1": {
-    "mtime": 1790851549.9158323,
-    "ast_hash": "6b44d2e5b66cb5ed50e9768fc04ebbcf",
-    "semantic_hash": ""
-  },
-  "stop-local.ps1": {
-    "mtime": 1790695503.2333274,
-    "ast_hash": "5b7760f53bf43f9f8248b3a86ef6c3b0",
+    "mtime": 1791089983.3908863,
+    "ast_hash": "ab45bd57640d9ee9301d7501d59255c3",
     "semantic_hash": ""
   },
   ".agents/plugins/ponytail/.claude-plugin/marketplace.json": {
@@ -1922,8 +1886,8 @@
     "semantic_hash": ""
   },
   ".agents/rules/mandatory-rules.md": {
-    "mtime": 1790851549.8244207,
-    "ast_hash": "ed53e158c6a27494d289adf4d472f4b6",
+    "mtime": 1791090147.9260912,
+    "ast_hash": "c1d5b411a542099d845285cc1c0b838c",
     "semantic_hash": ""
   },
   ".agents/rules/ponytail.md": {
@@ -2412,8 +2376,8 @@
     "semantic_hash": ""
   },
   ".agents/skills/scms-development/SKILL.md": {
-    "mtime": 1790851549.83042,
-    "ast_hash": "07681a7719d073904c5aea8037276951",
+    "mtime": 1791090160.47899,
+    "ast_hash": "a63efea272656976a027c7aef07a5cc6",
     "semantic_hash": ""
   },
   ".agents/skills/slides/SKILL.md": {
@@ -2712,8 +2676,8 @@
     "semantic_hash": ""
   },
   ".agents/workflows/scms-development.md": {
-    "mtime": 1790851549.8319952,
-    "ast_hash": "92c4e90874e9c47f2dabc2c570ed6141",
+    "mtime": 1791090173.1716425,
+    "ast_hash": "d132d231beac855f8c8ca30c43ebeddc",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -2722,28 +2686,13 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1790851549.8339639,
-    "ast_hash": "68b43ceb96fb9354db0edf3caf183801",
-    "semantic_hash": ""
-  },
-  "AGILE_SCRUM_JIRA_PLAN.md": {
-    "mtime": 1790405834.101548,
-    "ast_hash": "aa11f0420bb63cd30bd2fd25b55040f3",
-    "semantic_hash": ""
-  },
-  "LOCAL_DEV_GUIDE.md": {
-    "mtime": 1790695503.1045346,
-    "ast_hash": "b43ba2915f20bdbd372fcf795279f47b",
-    "semantic_hash": ""
-  },
-  "PROJECT_MASTER_GUIDE.md": {
-    "mtime": 1789741769.0094798,
-    "ast_hash": "f8d1128828ad29d25ba181c6d7e07b56",
+    "mtime": 1791090020.7073696,
+    "ast_hash": "8a80d2acc66d586b5ed79355148b2224",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790695503.1055343,
-    "ast_hash": "b3e6641a6b4c6cd5d1dbda0c7b153dc5",
+    "mtime": 1791090035.7869282,
+    "ast_hash": "e7961862f3bcd201c75849bc20c004b8",
     "semantic_hash": ""
   },
   "apps/api/README.md": {
@@ -2794,31 +2743,6 @@
   "docs/api-contracts/README.md": {
     "mtime": 1789741769.0622551,
     "ast_hash": "05da65566366e5c15cd7f4e74e473974",
-    "semantic_hash": ""
-  },
-  "docs/plans/2026-09-26-scms-luxury-editorial-frontend.md": {
-    "mtime": 1790405834.1632247,
-    "ast_hash": "6cb2cbcdc0cb5f3af7e0f6fa76c1a0dc",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/plans/2026-10-01-backend-layered-jpa.md": {
-    "mtime": 1790851549.912154,
-    "ast_hash": "d8818a44aa41e86b8f112349548198bc",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-10-01-backend-layered-jpa-design.md": {
-    "mtime": 1790851549.9131546,
-    "ast_hash": "3436a35ac383f9b16bea71b64e99644f",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-10-01-backend-postgresql-amendment.md": {
-    "mtime": 1790851549.9131546,
-    "ast_hash": "b1855343d58834d7a4b78c25a42a348f",
-    "semantic_hash": ""
-  },
-  "rules/backend-architecture.md": {
-    "mtime": 1790851549.9141247,
-    "ast_hash": "726b57392d7f59a4a010fb125775bb9c",
     "semantic_hash": ""
   },
   ".agents/plugins/ponytail/assets/benchmark-3model.svg": {
@@ -2894,61 +2818,6 @@
   "apps/web/public/images/hero-sports-sanctuary.jpg": {
     "mtime": 1790405834.1235507,
     "ast_hash": "c72c52dcb3445eb271adee8d595db84d",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_1.png": {
-    "mtime": 1789573445.5822139,
-    "ast_hash": "eddb3d47b8afe4d4b637556db0f38feb",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_10.png": {
-    "mtime": 1789573445.5867128,
-    "ast_hash": "b863f6377414236bac8b0a7f0559cb8e",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_11.png": {
-    "mtime": 1789573445.5917125,
-    "ast_hash": "9b7cadc7116e67a28a86a2dc512916c9",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_12.png": {
-    "mtime": 1789573445.595326,
-    "ast_hash": "31ec665172119b6d8015105b993b4f4c",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_1_user_account.png": {
-    "mtime": 1789573445.599099,
-    "ast_hash": "0ea0dcab6fe57870c352e6507af88fe1",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_2.png": {
-    "mtime": 1789573445.6030698,
-    "ast_hash": "494b438af630e5d7a762f60eb53b97eb",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_3.png": {
-    "mtime": 1789573445.608613,
-    "ast_hash": "d30ed573e1280021d1769b0e61990f35",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_4.png": {
-    "mtime": 1789573445.6115868,
-    "ast_hash": "f9166ca06f8041f4dcf1360bbf2fcce2",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_5.png": {
-    "mtime": 1789573445.6160376,
-    "ast_hash": "d9feec9c8239dfa9e55a3e6a7d9b739e",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_6.png": {
-    "mtime": 1789573445.6201673,
-    "ast_hash": "5fbf4509debc98f56d5177c0a7c3cc76",
-    "semantic_hash": ""
-  },
-  "diagram_screenshots/page_9.png": {
-    "mtime": 1789573445.6327362,
-    "ast_hash": "9fd5fae317820e16766c0cfb7e114244",
     "semantic_hash": ""
   },
   "apps/api/src/main/java/com/swp391/scms/audit/AuditAspect.java": {
@@ -3314,6 +3183,151 @@
   "apps/web/src/shared/api/client.test.ts": {
     "mtime": 1791086968.8352833,
     "ast_hash": "c546f5cdd8bfd0ecff1c3b88ec86b4d7",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/build_state_diagrams.js": {
+    "mtime": 1791089242.9671295,
+    "ast_hash": "8aa03ec084abe4bfd70e0edaf1ff7466",
+    "semantic_hash": ""
+  },
+  "docs/README.md": {
+    "mtime": 1791090054.4274304,
+    "ast_hash": "571cb73124ebb7fa6a3bf99357d3c380",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/README.md": {
+    "mtime": 1791089252.6919968,
+    "ast_hash": "0c6b41ccd5da44b0818b047409106c54",
+    "semantic_hash": ""
+  },
+  "docs/plans/2026-09-26-scms-luxury-editorial-frontend.md": {
+    "mtime": 1790405834.1632247,
+    "ast_hash": "6cb2cbcdc0cb5f3af7e0f6fa76c1a0dc",
+    "semantic_hash": ""
+  },
+  "docs/plans/2026-10-01-backend-layered-jpa.md": {
+    "mtime": 1790851549.912154,
+    "ast_hash": "d8818a44aa41e86b8f112349548198bc",
+    "semantic_hash": ""
+  },
+  "docs/plans/AGILE_SCRUM_JIRA_PLAN.md": {
+    "mtime": 1790405834.101548,
+    "ast_hash": "aa11f0420bb63cd30bd2fd25b55040f3",
+    "semantic_hash": ""
+  },
+  "docs/plans/README.md": {
+    "mtime": 1791089633.3538382,
+    "ast_hash": "71517448c1f746083a9056ac1326eb35",
+    "semantic_hash": ""
+  },
+  "docs/rules/backend-architecture.md": {
+    "mtime": 1791090129.5194798,
+    "ast_hash": "303aee83c619a7eddef3931ddbc51ce1",
+    "semantic_hash": ""
+  },
+  "docs/specs/2026-10-01-backend-layered-jpa-design.md": {
+    "mtime": 1790851549.9131546,
+    "ast_hash": "3436a35ac383f9b16bea71b64e99644f",
+    "semantic_hash": ""
+  },
+  "docs/specs/2026-10-01-backend-postgresql-amendment.md": {
+    "mtime": 1790851549.9131546,
+    "ast_hash": "b1855343d58834d7a4b78c25a42a348f",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_1.png": {
+    "mtime": 1789573445.5822139,
+    "ast_hash": "eddb3d47b8afe4d4b637556db0f38feb",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_10.png": {
+    "mtime": 1789573445.5867128,
+    "ast_hash": "b863f6377414236bac8b0a7f0559cb8e",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_11.png": {
+    "mtime": 1789573445.5917125,
+    "ast_hash": "9b7cadc7116e67a28a86a2dc512916c9",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_12.png": {
+    "mtime": 1789573445.595326,
+    "ast_hash": "31ec665172119b6d8015105b993b4f4c",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_1_user_account.png": {
+    "mtime": 1789573445.599099,
+    "ast_hash": "0ea0dcab6fe57870c352e6507af88fe1",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_2.png": {
+    "mtime": 1789573445.6030698,
+    "ast_hash": "494b438af630e5d7a762f60eb53b97eb",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_3.png": {
+    "mtime": 1789573445.608613,
+    "ast_hash": "d30ed573e1280021d1769b0e61990f35",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_4.png": {
+    "mtime": 1789573445.6115868,
+    "ast_hash": "f9166ca06f8041f4dcf1360bbf2fcce2",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_5.png": {
+    "mtime": 1789573445.6160376,
+    "ast_hash": "d9feec9c8239dfa9e55a3e6a7d9b739e",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_6.png": {
+    "mtime": 1789573445.6201673,
+    "ast_hash": "5fbf4509debc98f56d5177c0a7c3cc76",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_7.png": {
+    "mtime": 1789573445.624725,
+    "ast_hash": "37bb21c777c58f804a051bf7c87ce047",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_8.png": {
+    "mtime": 1789573445.6287363,
+    "ast_hash": "1c2e874af9047347e130b08e89c3d320",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/screenshots/page_9.png": {
+    "mtime": 1789573445.6327362,
+    "ast_hash": "9fd5fae317820e16766c0cfb7e114244",
+    "semantic_hash": ""
+  },
+  "scripts/init-db.ps1": {
+    "mtime": 1791089960.5439963,
+    "ast_hash": "9fba2b1ca48175ba426d2e117889e26a",
+    "semantic_hash": ""
+  },
+  "scripts/run-local.ps1": {
+    "mtime": 1791089949.2366679,
+    "ast_hash": "5d50e2f9008ac644cd7873b79811ebdf",
+    "semantic_hash": ""
+  },
+  "scripts/stop-local.ps1": {
+    "mtime": 1790695503.2333274,
+    "ast_hash": "5b7760f53bf43f9f8248b3a86ef6c3b0",
+    "semantic_hash": ""
+  },
+  "docs/LOCAL_DEV_GUIDE.md": {
+    "mtime": 1791090115.9387662,
+    "ast_hash": "71aea73884fd6154b90473b2c5ec0b6e",
+    "semantic_hash": ""
+  },
+  "docs/PROJECT_MASTER_GUIDE.md": {
+    "mtime": 1791090091.1014848,
+    "ast_hash": "46f2984965d0069e5cd297f6aaa82092",
+    "semantic_hash": ""
+  },
+  "scripts/README.md": {
+    "mtime": 1791090007.4695852,
+    "ast_hash": "50b29258d752afb0549d43b54681c832",
     "semantic_hash": ""
   }
 }

@@ -740,7 +740,7 @@ function buildDiagrams() {
 
   // Tự động kết xuất ảnh chụp màn hình PNG bằng draw.io Desktop CLI
   const drawio = 'C:\\Program Files\\draw.io\\draw.io.exe';
-  const outDir = path.join(__dirname, 'diagram_screenshots');
+  const outDir = path.join(__dirname, 'screenshots');
   if (fs.existsSync(drawio)) {
     if (!fs.existsSync(outDir)) {
       fs.mkdirSync(outDir, { recursive: true });

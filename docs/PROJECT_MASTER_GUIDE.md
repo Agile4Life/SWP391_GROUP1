@@ -53,39 +53,48 @@ Hệ thống giải quyết các bài toán lớn:
 
 ```
 SWP391/
-├── databaseschema.sql               # Toàn bộ DDL CSDL T-SQL (33 bảng, Triggers, Constraints, Seed Data)
-├── PROJECT_MASTER_GUIDE.md          # File cẩm nang hướng dẫn toàn tập này
+├── README.md                        # Hướng dẫn tổng quan kho lưu trữ
+├── AGENTS.md                        # Quy ước làm việc cho contributor và coding agent
+├── compose.yaml                     # Cấu hình Docker Compose môi trường local
+├── package.json                     # Monorepo scripts (dev, build, test, db:init)
 │
-├── [Bộ Công Cụ Scripts Tự Động Hóa]
-├── build_state_diagrams.js          # Script Node.js tự động sinh 12 trang State Diagram ra XML Draw.io
-├── build_clean_swimlane.js          # Script Node.js tự động sinh Master Swimlane & 6 Flow Swimlanes (Zero Overlap)
-├── sync_drawio_with_md.js           # Script đồng bộ dữ liệu đồ thị giữa Markdown và Draw.io
-├── verify_diagrams.js               # Script kiểm thử tĩnh tính hợp lệ (XML tags, ID, Dangling edges, Overlaps)
+├── apps/                            # Mã nguồn phần mềm (Codebase)
+│   ├── web/                         # Giao diện Frontend React + TypeScript (Vite)
+│   └── api/                         # Dịch vụ Backend Java 21 + Spring Boot 3
 │
-├── [Tài Liệu Sơ Đồ Kiến Trúc (Draw.io Diagrams)]
-├── erd_sports_center.drawio         # ERD tổng thể 33 bảng chia thành 6 tabs màu sắc phân hệ
-├── erd_complete_all_relationships.drawio # ERD chi tiết thể hiện đầy đủ 54 đường quan hệ và thuộc tính
-├── erd_chen_notation.drawio         # ERD theo ký pháp Chen (Entities, Attributes, Relationships)
-├── erd_logical_crowsfoot.drawio     # Mô hình logic quan hệ Crow's Foot
-├── erd_logical_noAttribute.drawio   # Mô hình logic rút gọn chỉ hiển thị thực thể và quan hệ
-├── sports_center_all_flows_swimlane.drawio # Sơ đồ Swimlane phân làn hoàn chỉnh (7 tabs: Master + 6 Flows)
-├── sports_center_flow.drawio        # File quy trình nghiệp vụ nguyên bản (Combined User Flows)
-├── state_diagrams.drawio            # Sơ đồ trạng thái UML chuẩn (12 tabs độc lập)
-├── StateDiagram.drawio              # Bản phác thảo trạng thái mở rộng
+├── db/                              # CSDL, triggers đa hình & schema nguồn
+│   ├── README.md                    # Hướng dẫn khởi tạo CSDL
+│   ├── databaseschema.sql           # Toàn bộ DDL CSDL T-SQL (33 bảng, Triggers, Seed Data)
+│   └── migrations/                  # Các bản migration CSDL
 │
-└── diagram_screenshots/             # Bộ ảnh chụp minh chứng kết xuất trực tiếp từ các sơ đồ
-    ├── page_1.png                   # Trạng thái: Tài khoản người dùng (users)
-    ├── page_2.png                   # Trạng thái: Gói hội viên (membership_subscriptions)
-    ├── page_3.png                   # Trạng thái: Đăng ký lớp học (class_enrollments)
-    ├── page_4.png                   # Trạng thái: Buổi học (class_sessions)
-    ├── page_5.png                   # Trạng thái: Giao dịch thanh toán (payments)
-    ├── page_6.png                   # Trạng thái: Yêu cầu hỗ trợ (support_requests)
-    ├── page_7.png                   # Trạng thái: Kế hoạch tập luyện (training_plans)
-    ├── page_8.png                   # Trạng thái: Check-in trung tâm (center_checkins)
-    ├── page_9.png                   # Trạng thái: Điểm danh buổi học (session_attendance)
-    ├── page_10.png                  # Trạng thái: Thông báo hệ thống (notifications)
-    ├── page_11.png                  # Trạng thái: Phiên trò chuyện AI (ai_chat_sessions)
-    └── page_12.png                  # Trạng thái: Hàng chờ lớp học (class_waitlists)
+├── docs/                            # Trung tâm lưu trữ toàn bộ tài liệu & thiết kế
+│   ├── README.md                    # Mục lục tra cứu tài liệu tổng thể
+│   ├── PROJECT_MASTER_GUIDE.md      # Cẩm nang kiến trúc và nghiệp vụ toàn diện
+│   ├── LOCAL_DEV_GUIDE.md           # Hướng dẫn cài đặt và chạy môi trường local
+│   ├── plans/                       # Kế hoạch dự án, phân chia Sprint & Jira Backlog
+│   │   ├── README.md
+│   │   ├── AGILE_SCRUM_JIRA_PLAN.md # Kế hoạch Agile/Scrum & User Stories phân hệ
+│   │   ├── 2026-09-26-scms-luxury-editorial-frontend.md
+│   │   └── 2026-10-01-backend-layered-jpa.md
+│   ├── diagrams/                    # Tài liệu sơ đồ hệ thống & ảnh minh chứng
+│   │   ├── README.md                # Bảng tổng hợp thuyết minh chi tiết các sơ đồ
+│   │   ├── build_state_diagrams.js  # Script tự động sinh State Diagram ra XML Draw.io & PNG
+│   │   ├── erd_sports_center.drawio # ERD tổng thể 33 bảng chia 6 tabs phân hệ
+│   │   ├── erd_complete_all_relationships.drawio # ERD chi tiết 54 quan hệ
+│   │   ├── sports_center_all_flows_swimlane.drawio # Swimlane phân làn hoàn chỉnh (7 tabs)
+│   │   ├── state_diagrams.drawio    # 12 Biểu đồ trạng thái UML chuẩn
+│   │   └── screenshots/             # Bộ ảnh chụp minh chứng kết xuất trực tiếp từ các sơ đồ
+│   ├── rules/                       # Quy tắc kiến trúc mã nguồn & tiêu chuẩn kỹ thuật
+│   │   └── backend-architecture.md  # Chuẩn 3 lớp, SOLID, IoC, JPA & i18n
+│   ├── api-contracts/               # Hợp đồng giao tiếp API (OpenAPI YAML)
+│   ├── adr/                         # Bản ghi quyết định kiến trúc (Modular Monolith)
+│   └── specs/                       # Đặc tả thiết kế kỹ thuật chi tiết
+│
+└── scripts/                         # Bộ công cụ tự động hóa chạy local
+    ├── README.md                    # Hướng dẫn sử dụng các script
+    ├── run-local.bat / run-local.ps1 # Khởi chạy hệ thống 1-click
+    ├── stop-local.bat / stop-local.ps1 # Dừng các server local
+    └── init-db.bat / init-db.ps1    # Khởi tạo CSDL tự động
 ```
 
 ---
@@ -567,7 +576,7 @@ MODULE                      METHOD   ENDPOINT                                  M
 
 > [!CAUTION]
 > **1. KHÔNG tự ý sửa đổi Schema DDL cơ sở dữ liệu nếu không chạy lại công cụ kiểm thử:**
-> Mọi thay đổi về tên cột, enum giá trị hoặc ràng buộc trong `databaseschema.sql` phải được đồng bộ tương ứng sang `build_state_diagrams.js` và `build_clean_swimlane.js`. Sau đó bắt buộc phải chạy `node verify_diagrams.js` để đảm bảo không bị rách đồ thị.
+> Mọi thay đổi về tên cột, enum giá trị hoặc ràng buộc trong `db/databaseschema.sql` phải được đồng bộ tương ứng sang `docs/diagrams/build_state_diagrams.js` và `docs/diagrams/build_clean_swimlane.js`. Sau đó bắt buộc phải chạy `node docs/diagrams/verify_diagrams.js` để đảm bảo không bị rách đồ thị.
 
 > [!IMPORTANT]
 > **2. Tôn trọng tầng bảo vệ Trigger của SQL Server:**

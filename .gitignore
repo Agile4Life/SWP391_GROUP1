@@ -4,13 +4,14 @@ sync_drawio_with_md.js
 verify_diagrams.js
 inspect_original.js
 *.ps1
-!run-local.ps1
-!init-db.ps1
-!stop-local.ps1
+!scripts/*.ps1
 
 # Logs & temp
 *.log
 *.tmp
+*.drawio.bkp
+.$*.drawio.bkp
+.$*.bkp
 
 # Operating System & IDE
 .DS_Store
