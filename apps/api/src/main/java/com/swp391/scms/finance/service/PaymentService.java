@@ -1,10 +1,12 @@
 package com.swp391.scms.finance.service;
 
+import com.swp391.scms.audit.Audited;
 import com.swp391.scms.common.exception.BadRequestException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
 import com.swp391.scms.finance.dto.PaymentCreateDto;
 import com.swp391.scms.finance.dto.PaymentDto;
 import com.swp391.scms.finance.dto.PaymentProcessDto;
+import com.swp391.scms.finance.dto.PaymentRefundRequest;
 import com.swp391.scms.finance.entity.Payment;
 import com.swp391.scms.finance.mapper.PaymentMapper;
 import com.swp391.scms.finance.repository.PaymentRepository;
@@ -198,6 +200,54 @@ public class PaymentService {
         payment.setPaidAt(LocalDateTime.now(clock));
         payment.setReceivedBy(receiver);
         payment.setNote(dto.getNote());
+
+        Payment saved = paymentRepository.save(payment);
+        return paymentMapper.toDto(saved);
+    }
+
+    @Audited(action = "PAYMENT_REFUND", entity = "payments")
+    public PaymentDto refundPayment(Long paymentId, PaymentRefundRequest request) {
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new ResourceNotFoundException("resource.payment", paymentId));
+
+        String currentStatus = payment.getStatus() != null ? payment.getStatus().toLowerCase(Locale.ROOT) : "";
+        if (!"success".equals(currentStatus)) {
+            throw new BadRequestException("CANNOT_REFUND_PAYMENT", "finance.payment.cannot_refund",
+                    new Object[]{currentStatus}, "Only successful payments can be refunded");
+        }
+
+        BigDecimal refundAmount = request.getRefundAmount() != null ? request.getRefundAmount() : payment.getAmount();
+        if (refundAmount.compareTo(BigDecimal.ZERO) <= 0 || refundAmount.compareTo(payment.getAmount()) > 0) {
+            throw new BadRequestException("INVALID_REFUND_AMOUNT", "finance.payment.invalid_refund_amount",
+                    new Object[]{refundAmount, payment.getAmount()}, "Invalid refund amount");
+        }
+
+        payment.setStatus("refunded");
+        String refundNote = "[HOÀN TIỀN: " + refundAmount + " VNĐ] Lý do: " + request.getReason();
+        if (payment.getNote() != null && !payment.getNote().isBlank()) {
+            payment.setNote(payment.getNote() + " | " + refundNote);
+        } else {
+            payment.setNote(refundNote);
+        }
+
+        // Cancel associated subscription
+        if (payment.getSubscriptionId() != null && membershipSubscriptionRepository != null) {
+            membershipSubscriptionRepository.findById(payment.getSubscriptionId()).ifPresent(sub -> {
+                sub.setStatus("cancelled");
+                sub.setUpdatedAt(LocalDateTime.now(clock));
+                membershipSubscriptionRepository.save(sub);
+            });
+        }
+
+        // Cancel associated class enrollment
+        if (payment.getClassEnrollmentId() != null && classEnrollmentRepository != null) {
+            classEnrollmentRepository.findById(payment.getClassEnrollmentId()).ifPresent(enrollment -> {
+                enrollment.setStatus("cancelled");
+                enrollment.setCancelReason(request.getReason());
+                enrollment.setCancelledAt(LocalDateTime.now(clock));
+                classEnrollmentRepository.save(enrollment);
+            });
+        }
 
         Payment saved = paymentRepository.save(payment);
         return paymentMapper.toDto(saved);

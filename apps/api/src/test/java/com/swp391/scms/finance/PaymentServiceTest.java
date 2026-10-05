@@ -281,4 +281,57 @@ class PaymentServiceTest {
         PaymentProcessDto dto = new PaymentProcessDto(2L, null, null, new BigDecimal("1000000.00"), "pos", null, null);
         assertThrows(BadRequestException.class, () -> paymentService.processPayment(dto));
     }
+
+    @Test
+    @DisplayName("Should refund payment successfully and cancel associated subscription")
+    void shouldRefundPaymentSuccessfullyAndCancelSubscription() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("success");
+        payment.setAmount(new BigDecimal("1500000.00"));
+        payment.setSubscriptionId(5L);
+
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setId(5L);
+        sub.setStatus("active");
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+        when(membershipSubscriptionRepository.findById(5L)).thenReturn(Optional.of(sub));
+        when(paymentRepository.save(payment)).thenReturn(payment);
+        when(paymentMapper.toDto(payment)).thenReturn(new PaymentDto());
+
+        PaymentDto result = paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Chuyển nhà", new BigDecimal("1500000.00")));
+        assertNotNull(result);
+        assertEquals("refunded", payment.getStatus());
+        assertEquals("cancelled", sub.getStatus());
+        assertTrue(payment.getNote().contains("HOÀN TIỀN"));
+        verify(membershipSubscriptionRepository).save(sub);
+        verify(paymentRepository).save(payment);
+    }
+
+    @Test
+    @DisplayName("Should reject refund when payment is not in success status")
+    void shouldRejectRefundWhenPaymentNotSuccess() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("pending");
+        payment.setAmount(new BigDecimal("1500000.00"));
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+
+        assertThrows(BadRequestException.class, () -> paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Lỗi thu ngân")));
+    }
+
+    @Test
+    @DisplayName("Should reject refund when refund amount is invalid or exceeds payment amount")
+    void shouldRejectRefundWhenAmountExceedsPayment() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("success");
+        payment.setAmount(new BigDecimal("1500000.00"));
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+
+        assertThrows(BadRequestException.class, () -> paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Nhầm", new BigDecimal("2000000.00"))));
+    }
 }

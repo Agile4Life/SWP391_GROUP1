@@ -76,4 +76,13 @@ public class PaymentController {
         PaymentDto updated = paymentService.updatePaymentStatus(id, request.status());
         return ResponseEntity.ok(ApiResponse.ok(msg("finance.payment.status_updated"), updated));
     }
+
+    @Operation(summary = "Hoàn tiền và hủy giao dịch", description = "Ghi nhận hoàn tiền, chuyển trạng thái payment sang refunded, hủy gói tập/ghi danh liên quan và ghi audit log")
+    @PostMapping("/{id}/refund")
+    public ResponseEntity<ApiResponse<PaymentDto>> refundPayment(
+            @PathVariable Long id,
+            @Valid @RequestBody com.swp391.scms.finance.dto.PaymentRefundRequest request) {
+        PaymentDto refunded = paymentService.refundPayment(id, request);
+        return ResponseEntity.ok(ApiResponse.ok(msg("finance.payment.refunded"), refunded));
+    }
 }
