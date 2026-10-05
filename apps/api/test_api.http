@@ -3,8 +3,8 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "member1",
-  "password": "123456"
+  "username": "receptionist@scms.local",
+  "password": "Admin@123456"
 }
 
 > {%
@@ -151,3 +151,26 @@ Content-Type: application/json
 ### 20. Tra cứu Hóa đơn theo ID (Giả sử ID = 1)
 GET http://localhost:8080/api/v1/invoices/1
 
+
+
+### 21: Cập nhật hồ sơ Coach (Chỉ Coach được phép)
+PUT http://localhost:8080/api/v1/profile/coach
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "userId": 2,
+  "specialization": "Yoga and Pilates",
+  "bio": "10 years of experience",
+  "certification": "Certified Yoga Instructor"
+}
+
+### 22: Cập nhật ca làm việc Lễ tân (Receptionist hoặc Manager)
+PUT http://localhost:8080/api/v1/profile/receptionist
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "userId": 3,
+  "shift": "Morning Shift (06:00 - 14:00)"
+}

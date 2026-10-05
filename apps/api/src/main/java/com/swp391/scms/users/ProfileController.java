@@ -44,4 +44,20 @@ public class ProfileController {
                                                    @Valid @RequestBody ProfileDto request) {
         return ApiResponse.ok(msg("users.profile.update.success"), profileService.updateProfile(principal.id(), request));
     }
+
+    @Operation(summary = "Cập nhật hồ sơ Coach", description = "Dành riêng cho HLV cập nhật chuyên môn")
+    @PutMapping("/coach")
+    public ApiResponse<Void> updateCoachProfile(@AuthenticationPrincipal AuthenticatedPrincipal principal,
+                                                @Valid @RequestBody com.swp391.scms.users.dto.CoachProfileUpdateDto request) {
+        profileService.updateCoachProfile(principal.id(), principal.role(), request);
+        return ApiResponse.ok(msg("users.profile.coach.update.success"), null);
+    }
+
+    @Operation(summary = "Cập nhật hồ sơ Lễ tân", description = "Dành cho Lễ tân hoặc Quản lý cập nhật ca làm việc")
+    @PutMapping("/receptionist")
+    public ApiResponse<Void> updateReceptionistProfile(@AuthenticationPrincipal AuthenticatedPrincipal principal,
+                                                       @Valid @RequestBody com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request) {
+        profileService.updateReceptionistProfile(principal.id(), principal.role(), request);
+        return ApiResponse.ok(msg("users.profile.receptionist.update.success"), null);
+    }
 }
