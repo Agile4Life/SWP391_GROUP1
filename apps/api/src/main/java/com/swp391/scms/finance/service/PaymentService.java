@@ -18,6 +18,7 @@ import com.swp391.scms.users.UserRepository;
 import com.swp391.scms.users.MemberRepository;
 import com.swp391.scms.users.entity.Member;
 import com.swp391.scms.users.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +54,7 @@ public class PaymentService {
         this(paymentRepository, memberRepository, userRepository, null, null, paymentMapper, clock);
     }
 
+    @Autowired
     public PaymentService(PaymentRepository paymentRepository,
                           MemberRepository memberRepository,
                           UserRepository userRepository,
