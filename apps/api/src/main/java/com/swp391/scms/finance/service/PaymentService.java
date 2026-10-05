@@ -4,9 +4,14 @@ import com.swp391.scms.common.exception.BadRequestException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
 import com.swp391.scms.finance.dto.PaymentCreateDto;
 import com.swp391.scms.finance.dto.PaymentDto;
+import com.swp391.scms.finance.dto.PaymentProcessDto;
 import com.swp391.scms.finance.entity.Payment;
 import com.swp391.scms.finance.mapper.PaymentMapper;
 import com.swp391.scms.finance.repository.PaymentRepository;
+import com.swp391.scms.membership.entity.MembershipSubscription;
+import com.swp391.scms.membership.repository.MembershipSubscriptionRepository;
+import com.swp391.scms.scheduling.entity.ClassEnrollment;
+import com.swp391.scms.scheduling.repository.ClassEnrollmentRepository;
 import com.swp391.scms.users.UserRepository;
 import com.swp391.scms.users.MemberRepository;
 import com.swp391.scms.users.entity.Member;
@@ -14,11 +19,13 @@ import com.swp391.scms.users.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Service managing Payments transactions.
@@ -32,6 +39,8 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
+    private final MembershipSubscriptionRepository membershipSubscriptionRepository;
+    private final ClassEnrollmentRepository classEnrollmentRepository;
     private final PaymentMapper paymentMapper;
     private final Clock clock;
 
@@ -39,9 +48,20 @@ public class PaymentService {
                           MemberRepository memberRepository,
                           UserRepository userRepository,
                           PaymentMapper paymentMapper, Clock clock) {
+        this(paymentRepository, memberRepository, userRepository, null, null, paymentMapper, clock);
+    }
+
+    public PaymentService(PaymentRepository paymentRepository,
+                          MemberRepository memberRepository,
+                          UserRepository userRepository,
+                          MembershipSubscriptionRepository membershipSubscriptionRepository,
+                          ClassEnrollmentRepository classEnrollmentRepository,
+                          PaymentMapper paymentMapper, Clock clock) {
         this.paymentRepository = paymentRepository;
         this.memberRepository = memberRepository;
         this.userRepository = userRepository;
+        this.membershipSubscriptionRepository = membershipSubscriptionRepository;
+        this.classEnrollmentRepository = classEnrollmentRepository;
         this.paymentMapper = paymentMapper;
         this.clock = clock;
     }
@@ -113,6 +133,74 @@ public class PaymentService {
         }
 
         return paymentMapper.toDto(payment);
+    }
+
+    public PaymentDto processPayment(PaymentProcessDto dto) {
+        if (dto.getSubscriptionId() == null && dto.getClassEnrollmentId() == null) {
+            throw new BadRequestException("PAYMENT_TARGET_REQUIRED", "finance.payment.target_required", null,
+                    "Target subscription or enrollment is required");
+        }
+
+        Member member = memberRepository.findById(dto.getMemberId())
+                .orElseThrow(() -> new ResourceNotFoundException("resource.member", dto.getMemberId()));
+
+        User receiver = null;
+        if (dto.getReceivedById() != null) {
+            receiver = userRepository.findByIdAndDeletedAtIsNull(dto.getReceivedById())
+                    .orElseThrow(() -> new ResourceNotFoundException("resource.cashier", dto.getReceivedById()));
+        }
+
+        if (dto.getSubscriptionId() != null && membershipSubscriptionRepository != null) {
+            MembershipSubscription subscription = membershipSubscriptionRepository.findById(dto.getSubscriptionId())
+                    .orElseThrow(() -> new ResourceNotFoundException("resource.subscription", dto.getSubscriptionId()));
+
+            if (!subscription.getMember().getUserId().equals(member.getUserId())) {
+                throw new BadRequestException("PAYMENT_MEMBER_MISMATCH", "finance.payment.member_mismatch", null,
+                        "Subscription does not belong to member");
+            }
+
+            if (subscription.getMembershipPackage() != null && subscription.getMembershipPackage().getPrice() != null) {
+                BigDecimal expectedPrice = subscription.getMembershipPackage().getPrice();
+                if (dto.getAmount().compareTo(expectedPrice) != 0) {
+                    throw new BadRequestException("PAYMENT_AMOUNT_MISMATCH", "finance.payment.amount_mismatch",
+                            new Object[]{dto.getAmount(), expectedPrice}, "Payment amount mismatch");
+                }
+            }
+
+            subscription.setStatus("active");
+            if (subscription.getQrCode() == null || subscription.getQrCode().isBlank()) {
+                subscription.setQrCode("SUB-" + subscription.getId() + "-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+            }
+            subscription.setUpdatedAt(LocalDateTime.now(clock));
+            membershipSubscriptionRepository.save(subscription);
+        }
+
+        if (dto.getClassEnrollmentId() != null && classEnrollmentRepository != null) {
+            ClassEnrollment enrollment = classEnrollmentRepository.findById(dto.getClassEnrollmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("resource.class_enrollment", dto.getClassEnrollmentId()));
+
+            if (!enrollment.getMember().getUserId().equals(member.getUserId())) {
+                throw new BadRequestException("PAYMENT_MEMBER_MISMATCH", "finance.payment.member_mismatch", null,
+                        "Enrollment does not belong to member");
+            }
+
+            enrollment.setStatus("booked");
+            classEnrollmentRepository.save(enrollment);
+        }
+
+        Payment payment = new Payment();
+        payment.setMember(member);
+        payment.setSubscriptionId(dto.getSubscriptionId());
+        payment.setClassEnrollmentId(dto.getClassEnrollmentId());
+        payment.setAmount(dto.getAmount());
+        payment.setMethod(dto.getMethod() != null ? dto.getMethod().toLowerCase(Locale.ROOT) : "cash");
+        payment.setStatus("success");
+        payment.setPaidAt(LocalDateTime.now(clock));
+        payment.setReceivedBy(receiver);
+        payment.setNote(dto.getNote());
+
+        Payment saved = paymentRepository.save(payment);
+        return paymentMapper.toDto(saved);
     }
 
     private void markPaidIfSuccess(Payment payment, String status) {

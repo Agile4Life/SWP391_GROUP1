@@ -139,4 +139,26 @@ class PaymentControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
     }
+
+    @Test
+    @DisplayName("POST /api/v1/payments/process should return 201 Created when process request is valid")
+    void shouldProcessPaymentSuccessfully() throws Exception {
+        com.swp391.scms.finance.dto.PaymentProcessDto request =
+                new com.swp391.scms.finance.dto.PaymentProcessDto(2L, 10L, null, new BigDecimal("1500000.00"), "pos", null, "Thanh toan");
+
+        PaymentDto responseDto = new PaymentDto();
+        responseDto.setId(100L);
+        responseDto.setAmount(new BigDecimal("1500000.00"));
+        responseDto.setStatus("success");
+
+        when(paymentService.processPayment(any(com.swp391.scms.finance.dto.PaymentProcessDto.class))).thenReturn(responseDto);
+
+        mockMvc.perform(post("/api/v1/payments/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.id").value(100L))
+                .andExpect(jsonPath("$.data.status").value("success"));
+    }
 }

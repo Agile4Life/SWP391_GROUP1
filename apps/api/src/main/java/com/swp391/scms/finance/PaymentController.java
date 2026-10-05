@@ -3,6 +3,7 @@ package com.swp391.scms.finance;
 import com.swp391.scms.common.ApiResponse;
 import com.swp391.scms.finance.dto.PaymentCreateDto;
 import com.swp391.scms.finance.dto.PaymentDto;
+import com.swp391.scms.finance.dto.PaymentProcessDto;
 import com.swp391.scms.finance.dto.PaymentStatusUpdateRequest;
 import com.swp391.scms.finance.service.PaymentService;
 import com.swp391.scms.common.i18n.MessageService;
@@ -35,6 +36,14 @@ public class PaymentController {
 
     private String msg(String key) {
         return messageService != null ? messageService.getMessage(key) : key;
+    }
+
+    @Operation(summary = "Xử lý thanh toán mua gói hoặc ghi danh", description = "Tiếp nhận thanh toán và tự động kích hoạt gói tập / ghi danh lớp học kèm sinh mã QR")
+    @PostMapping("/process")
+    public ResponseEntity<ApiResponse<PaymentDto>> processPayment(@Valid @RequestBody PaymentProcessDto dto) {
+        PaymentDto processed = paymentService.processPayment(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.created(msg("finance.payment.processed"), processed));
     }
 
     @Operation(summary = "Tạo mới giao dịch thanh toán", description = "Tạo phiếu thu tiền học phí, gói tập qua POS, Tiền mặt, Chuyển khoản")
