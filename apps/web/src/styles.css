@@ -707,3 +707,10 @@ button:not(:disabled):active,
   }
 }
 
+
+/* Ô nhập đã có viền/ring focus riêng: bỏ outline mặc định để không bị viền đôi */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+}
