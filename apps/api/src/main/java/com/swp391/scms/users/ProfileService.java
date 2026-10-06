@@ -73,36 +73,35 @@ public class ProfileService {
         if (!"COACH".equals(currentUserRole)) {
             throw new ForbiddenException("Chỉ HLV mới được phép cập nhật hồ sơ chuyên môn", "users.forbidden.not_coach");
         }
-        if (!currentUserId.equals(request.userId())) {
-            throw new ForbiddenException("Không được phép sửa hồ sơ người khác", "users.forbidden.edit_others");
-        }
         
-        Coach coach = coachRepository.findById(request.userId())
-                .orElseThrow(() -> new ResourceNotFoundException("resource.coach", request.userId()));
+        User user = findActiveUser(currentUserId);
+        Coach coach = coachRepository.findById(currentUserId).orElseGet(() -> {
+            Coach newCoach = new Coach();
+            newCoach.setUser(user);
+            return newCoach;
+        });
         
         coach.setSpecialization(request.specialization());
         coach.setBio(request.bio());
         coach.setCertification(request.certification());
+        coachRepository.save(coach);
     }
 
     @Transactional
     public void updateReceptionistProfile(Long currentUserId, String currentUserRole, ReceptionistProfileUpdateDto request) {
-        boolean isSelf = currentUserId.equals(request.userId());
-        boolean isManager = "CENTER_MANAGER".equals(currentUserRole);
-        boolean isReceptionist = "RECEPTIONIST".equals(currentUserRole);
-
-        if (!isSelf && !isManager) {
-            throw new ForbiddenException("Không được phép sửa hồ sơ người khác", "users.forbidden.edit_others");
-        }
-        
-        if (!isReceptionist && !isManager) {
+        if (!"RECEPTIONIST".equals(currentUserRole)) {
             throw new ForbiddenException("Vai trò không hợp lệ", "users.forbidden.invalid_role");
         }
         
-        Receptionist receptionist = receptionistRepository.findById(request.userId())
-                .orElseThrow(() -> new ResourceNotFoundException("resource.receptionist", request.userId()));
+        User user = findActiveUser(currentUserId);
+        Receptionist receptionist = receptionistRepository.findById(currentUserId).orElseGet(() -> {
+            Receptionist newReceptionist = new Receptionist();
+            newReceptionist.setUser(user);
+            return newReceptionist;
+        });
         
         receptionist.setShift(request.shift());
+        receptionistRepository.save(receptionist);
     }
 
     private User findActiveUser(Long userId) {

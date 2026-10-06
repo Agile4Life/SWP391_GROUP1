@@ -159,7 +159,6 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "userId": 2,
   "specialization": "Yoga and Pilates",
   "bio": "10 years of experience",
   "certification": "Certified Yoga Instructor"
@@ -171,6 +170,5 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "userId": 3,
   "shift": "Morning Shift (06:00 - 14:00)"
 }

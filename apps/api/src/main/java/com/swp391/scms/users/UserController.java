@@ -79,4 +79,13 @@ public class UserController {
     public ApiResponse<UserDto> unlockUser(@PathVariable Long id) {
         return ApiResponse.ok(msg("users.unlocked.success"), userService.setStatus(id, "active"));
     }
+
+    @Operation(summary = "Cập nhật hồ sơ Lễ tân", description = "Quản lý cập nhật ca làm việc cho Lễ tân")
+    @PutMapping("/{id}/receptionist")
+    public ApiResponse<Void> updateReceptionistProfile(
+            @PathVariable Long id,
+            @Valid @RequestBody com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request) {
+        userService.updateReceptionistShift(id, request);
+        return ApiResponse.ok(msg("users.profile.receptionist.update.success"), null);
+    }
 }

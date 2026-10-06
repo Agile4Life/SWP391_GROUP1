@@ -27,13 +27,16 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final ReceptionistRepository receptionistRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
-                       PasswordEncoder passwordEncoder, UserMapper userMapper) {
+                       PasswordEncoder passwordEncoder, UserMapper userMapper,
+                       ReceptionistRepository receptionistRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.receptionistRepository = receptionistRepository;
     }
 
     @Transactional(readOnly = true)
@@ -137,5 +140,20 @@ public class UserService {
     private User findActiveUser(Long id) {
         return userRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new ResourceNotFoundException("resource.user", id));
+    }
+
+    @Transactional
+    public void updateReceptionistShift(Long userId, com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request) {
+        User user = findActiveUser(userId);
+        if (!"RECEPTIONIST".equalsIgnoreCase(user.getRole().getCode())) {
+            throw new com.swp391.scms.common.exception.BadRequestException("INVALID_ROLE", "Người dùng không phải là lễ tân");
+        }
+        com.swp391.scms.users.entity.Receptionist receptionist = receptionistRepository.findById(userId).orElseGet(() -> {
+            com.swp391.scms.users.entity.Receptionist newReceptionist = new com.swp391.scms.users.entity.Receptionist();
+            newReceptionist.setUser(user);
+            return newReceptionist;
+        });
+        receptionist.setShift(request.shift());
+        receptionistRepository.save(receptionist);
     }
 }

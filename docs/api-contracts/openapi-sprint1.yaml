@@ -84,6 +84,8 @@ paths:
     patch: { summary: Lock account, parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
   /users/{id}/unlock:
     patch: { summary: Unlock account, parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
+  /users/{id}/receptionist:
+    put: { summary: Update receptionist profile (CENTER_MANAGER), parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ], responses: { '200': { description: OK } } }
   /roles:
     get: { summary: List roles, responses: { '200': { description: OK } } }
   /roles/permissions:
@@ -99,6 +101,10 @@ paths:
   /profile:
     get: { summary: Current user profile, responses: { '200': { description: OK } } }
     put: { summary: Update current user profile, responses: { '200': { description: OK } } }
+  /profile/coach:
+    put: { summary: Update coach profile (COACH), responses: { '200': { description: OK }, '403': { description: FORBIDDEN } } }
+  /profile/receptionist:
+    put: { summary: Update receptionist profile (RECEPTIONIST), responses: { '200': { description: OK }, '403': { description: FORBIDDEN } } }
   /members/{memberId}/health-metrics:
     parameters: [ { name: memberId, in: path, required: true, schema: { type: integer } } ]
     get: { summary: Health metric history (owner, coach or manager), responses: { '200': { description: OK }, '403': { description: FORBIDDEN } } }
@@ -130,3 +136,5 @@ paths:
       summary: Activate/deactivate package (audited; CENTER_MANAGER). Body { status }
       parameters: [ { name: id, in: path, required: true, schema: { type: integer } } ]
       responses: { '200': { description: OK } }
+
+

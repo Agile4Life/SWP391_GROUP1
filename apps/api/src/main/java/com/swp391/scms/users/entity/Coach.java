@@ -19,7 +19,7 @@ public class Coach {
     @Column(name = "specialization", length = 150)
     private String specialization;
 
-    @Column(name = "bio", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "bio", length = org.hibernate.Length.LONG32)
     private String bio;
 
     @Column(name = "certification", length = 255)
