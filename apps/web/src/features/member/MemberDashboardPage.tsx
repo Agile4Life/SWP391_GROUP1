@@ -1,175 +1,160 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CountUp } from '../../shared/ui/CountUp';
 import { getCurrentUser } from '../../shared/api/client';
-import { toast } from '../../shared/ui/toast';
 import { PageHeader } from '../../shared/ui/PageHeader';
+import {
+  getCurrentMembership,
+  getUpcomingBookings,
+  type MemberSubscription,
+  type BookedClass,
+} from './memberDashboardApi';
+
+const DAY_MS = 86_400_000;
+
+function localDate(value: string): Date {
+  const [year, month, day] = value.slice(0, 10).split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function dayNumber(date: Date): number {
+  return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / DAY_MS);
+}
+
+function remainingDays(endDate: string, today: Date): number {
+  return Math.max(0, dayNumber(localDate(endDate)) - dayNumber(today));
+}
+
+function membershipProgress(subscription: MemberSubscription, today: Date): number {
+  if (subscription.durationDays <= 0) return 0;
+  const used = dayNumber(today) - dayNumber(localDate(subscription.startDate));
+  return Math.min(100, Math.max(0, (used / subscription.durationDays) * 100));
+}
+
+function upcomingBookedClasses(classes: BookedClass[], today: Date): BookedClass[] {
+  const start = dayNumber(today);
+  const currentTime = `${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}`;
+  return classes
+    .filter((item) => {
+      const day = dayNumber(localDate(item.sessionDate));
+      return item.status.toLowerCase() === 'booked'
+        && day >= start && day < start + 7
+        && (day !== start || item.startTime.slice(0, 5) >= currentTime);
+    })
+    .sort((a, b) =>
+      `${a.sessionDate}T${a.startTime}`.localeCompare(`${b.sessionDate}T${b.startTime}`),
+    );
+}
+
+function formatDate(value: string): string {
+  return localDate(value).toLocaleDateString('vi-VN');
+}
+
+type DashboardState =
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'success'; membership: MemberSubscription | null; classes: BookedClass[] };
 
 export function MemberDashboardPage() {
-  const currentUser = getCurrentUser();
-  const userName = currentUser?.name || 'Hội viên';
+  const userName = getCurrentUser()?.name || 'Hội viên';
+  const [state, setState] = useState<DashboardState>({ status: 'loading' });
 
-  const upcomingClasses = [
-    {
-      id: 1,
-      name: 'Zenith Reformer Pilates',
-      time: '17:30 - 18:30 Hôm nay',
-      coach: 'Master Elena Vũ',
-      room: 'Studio 01 (Level 2)',
-      status: 'BOOKED',
-    },
-    {
-      id: 2,
-      name: 'Olympus Strength Conditioning',
-      time: '08:00 - 09:30 Ngày mai',
-      coach: 'Coach Minh Trí',
-      room: 'Arena 02 (Level 1)',
-      status: 'BOOKED',
-    },
-    {
-      id: 3,
-      name: 'Mindful Yin Yoga & Breathwork',
-      time: '19:00 - 20:00 Thứ Sáu',
-      coach: 'Master An Nhiên',
-      room: 'Zen Garden Studio',
-      status: 'WAITLIST #1',
-    },
-  ];
+  const load = useCallback(async () => {
+    setState({ status: 'loading' });
+    try {
+      const [membership, classes] = await Promise.all([getCurrentMembership(), getUpcomingBookings()]);
+      setState({ status: 'success', membership, classes });
+    } catch (error) {
+      setState({
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Không thể tải trang tổng quan.',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const today = new Date();
+  const membership = state.status === 'success' && state.membership?.status.toLowerCase() === 'active'
+    && dayNumber(localDate(state.membership.endDate)) >= dayNumber(today)
+    ? state.membership : null;
+  const classes = state.status === 'success' ? upcomingBookedClasses(state.classes, today) : [];
 
   return (
     <div className="portal-container">
-      <PageHeader
-        eyebrow="Hội viên"
-        title={`Xin chào, ${userName}`}
-        actions={
-          <>
-            <Link to="/member/classes" className="btn-primary">
-              + Đặt lớp mới
-            </Link>
-            <Link to="/member/card" className="btn-secondary">
-              Thẻ thành viên
-            </Link>
-          </>
-        }
-      />
+      <PageHeader eyebrow="Hội viên" title={`Xin chào, ${userName}`} />
 
-      {/* Metric Cards Row */}
-      <div className="metrics-grid">
-        <div className="metric-card">
-          <div className="metric-label">Trạng thái gói tập</div>
-          <div className="metric-value" style={{ fontSize: '1.7rem', color: '#15803d' }}>
-            <CountUp value="ACTIVE" />
-          </div>
-          <div className="metric-trend">Hạn dùng: 26/12/2026 (còn 42 ngày)</div>
-        </div>
+      {state.status === 'loading' && (
+        <div className="portal-card" role="status">Đang tải trang tổng quan…</div>
+      )}
 
-        <div className="metric-card">
-          <div className="metric-label">Buổi tập trong tháng</div>
-          <div className="metric-value">
-            <CountUp value={18} />
-          </div>
-          <div className="metric-trend">↑ +4 buổi so với tháng trước</div>
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-label">Chỉ số thể chất (BMI)</div>
-          <div className="metric-value">
-            <CountUp value={21.8} format={(v) => v.toFixed(1)} />
-          </div>
-          <div className="metric-trend">Cân nặng: 68.5 kg • Mỡ: 14.2%</div>
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-label">Điểm tích lũy</div>
-          <div className="metric-value">
-            <CountUp value={1450} format={(v) => Math.round(v).toLocaleString('vi-VN')} />
-          </div>
-          <div className="metric-trend">Đủ đổi 2 buổi Hydrotherapy</div>
-        </div>
-      </div>
-
-      {/* Grid: Upcoming Classes & AI Biometric Coach Card */}
-      <div className="grid-2">
-        {/* Upcoming Classes */}
-        <div className="portal-card">
-          <div className="portal-card-header">
-            <h2 className="portal-card-title">Lịch tập sắp tới</h2>
-            <Link to="/member/classes" style={{ fontSize: '0.8rem', color: '#8C7765', fontWeight: 600 }}>
-              Xem toàn bộ lịch →
-            </Link>
-          </div>
-
-          <div className="stack" style={{ gap: '14px' }}>
-            {upcomingClasses.map((cls, index) => (
-              <div
-                key={cls.id}
-                className="row-card row-in"
-                style={{ ['--i' as string]: index } as React.CSSProperties}
-              >
-                <div>
-                  <h3 className="row-card__title">{cls.name}</h3>
-                  <div className="row-card__meta">
-                    🕒 {cls.time} • 📍 {cls.room}
-                    <br />
-                    HLV phụ trách: {cls.coach}
-                  </div>
-                </div>
-
-                <div>
-                  {cls.status === 'BOOKED' ? (
-                    <span className="badge badge-success">Đã Đặt Chỗ</span>
-                  ) : (
-                    <span className="badge badge-warning">Hàng Chờ #1</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* AI Biometric Coach Recommendation Card */}
-        <div className="portal-card portal-card--feature">
-          <div className="portal-card-header">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '1.2rem' }}>✨</span>
-              <h2 className="portal-card-title">Gợi Ý Từ Trợ Lý AI Coaching</h2>
-            </div>
-          </div>
-
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: '#4A433D', lineHeight: 1.65 }}>
-            Dựa trên chỉ số hồi phục HRV (78ms) và lịch sử tập tạ cường độ cao hôm qua, cơ thể bạn đang ở trạng thái lý tưởng
-            cho bài tập kéo giãn cơ sâu và ổn định trục cột sống.
-          </p>
-
-          <div
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: '6px',
-              padding: '16px',
-              border: '1px solid rgba(33, 28, 24, 0.08)',
-              marginTop: '16px',
-              marginBottom: '18px',
-            }}
-          >
-            <div style={{ fontWeight: 600, fontSize: '0.85rem', marginBottom: '8px' }}>
-              🎯 Giáo án gợi ý cho buổi tập hôm nay:
-            </div>
-            <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.8rem', color: '#6A635D', lineHeight: 1.7 }}>
-              <li>15 phút Reformer Footwork &amp; Pelvic Curl phục hồi cơ đùi sau</li>
-              <li>20 phút Foam Rolling cơ lưng trên &amp; giải phóng màng cơ bả vai</li>
-              <li>10 phút xông hơi đá muối Himalaya tại tầng Mezzanine</li>
-            </ul>
-          </div>
-
-          <button
-            type="button"
-            className="btn-primary"
-            style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => toast('Đã đồng bộ giáo án sang Huấn luyện viên phụ trách của bạn!', 'success')}
-          >
-            Gửi Giáo Án Cho HLV Elena Phê Duyệt
+      {state.status === 'error' && (
+        <div className="portal-card portal-empty" role="alert">
+          <h2 className="portal-card-title">Không thể tải dữ liệu</h2>
+          <p>Không thể tải thông tin tổng quan của bạn. Vui lòng thử lại.</p>
+          <button type="button" className="btn-secondary" style={{ marginTop: 20 }} onClick={() => void load()}>
+            Thử lại
           </button>
         </div>
-      </div>
+      )}
+
+      {state.status === 'success' && (
+        <>
+          {membership ? (
+            <section className="portal-card" aria-labelledby="membership-title">
+              <div className="meta-label">Gói tập hiện tại</div>
+              <h2 id="membership-title" className="portal-card-title" style={{ marginTop: 12 }}>
+                {membership.packageName}
+              </h2>
+              <p className="row-card__meta">
+                {formatDate(membership.startDate)} – {formatDate(membership.endDate)} · Còn {remainingDays(membership.endDate, today)} ngày
+              </p>
+              <div
+                role="progressbar"
+                aria-label="Thời hạn gói tập đã sử dụng"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(membershipProgress(membership, today))}
+                style={{ height: 5, background: 'var(--color-border-subtle)', marginTop: 24 }}
+              >
+                <div style={{ width: `${membershipProgress(membership, today)}%`, height: '100%', background: 'var(--color-accent-gold)' }} />
+              </div>
+            </section>
+          ) : (
+            <section className="portal-card portal-card--feature portal-empty" aria-labelledby="membership-empty-title">
+              <div className="meta-label">SÖL WELLNESS</div>
+              <h2 id="membership-empty-title" className="portal-card-title" style={{ margin: '16px 0 10px' }}>
+                Hành trình của bạn bắt đầu tại đây
+              </h2>
+              <p>Chọn gói tập phù hợp với nhịp sống của bạn.</p>
+              <Link to="/#packages" className="btn-primary" style={{ marginTop: 24 }}>
+                Khám phá các gói tập ngay
+              </Link>
+            </section>
+          )}
+
+          <section className="portal-card" aria-labelledby="upcoming-title">
+            <div className="portal-card-header">
+              <h2 id="upcoming-title" className="portal-card-title">Lịch học 7 ngày tới</h2>
+            </div>
+            {classes.length === 0 ? (
+              <p className="row-card__meta">Bạn chưa có buổi học đã đặt trong 7 ngày tới.</p>
+            ) : (
+              <div className="stack">
+                {classes.map((item) => (
+                  <div key={item.id} className="row-card">
+                    <h3 className="row-card__title">{item.className}</h3>
+                    <div className="row-card__meta">
+                      {formatDate(item.sessionDate)} · {item.startTime.slice(0, 5)}–{item.endTime.slice(0, 5)} · {item.roomName}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </>
+      )}
     </div>
   );
 }
