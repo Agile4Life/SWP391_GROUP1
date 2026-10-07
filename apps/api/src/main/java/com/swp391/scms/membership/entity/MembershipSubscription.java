@@ -56,6 +56,7 @@ public class MembershipSubscription {
     }
 
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Member getMember() { return member; }
     public void setMember(Member member) { this.member = member; }
     public MembershipPackage getMembershipPackage() { return membershipPackage; }

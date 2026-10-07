@@ -133,4 +133,18 @@ class UserControllerTest {
 
         verify(userService).deleteUser(4L);
     }
+
+    @Test
+    @DisplayName("PUT /api/v1/users/{id}/receptionist updates receptionist shift")
+    void updateReceptionistProfileSuccess() throws Exception {
+        com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request = new com.swp391.scms.users.dto.ReceptionistProfileUpdateDto("Morning");
+
+        mockMvc.perform(put("/api/v1/users/5/receptionist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
+
+        verify(userService).updateReceptionistShift(eq(5L), any());
+    }
 }

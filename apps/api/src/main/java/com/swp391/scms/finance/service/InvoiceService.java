@@ -103,6 +103,40 @@ public class InvoiceService {
         return invoiceMapper.toDto(invoice);
     }
 
+    /**
+     * Automatically generates and issues an electronic invoice for a successful payment.
+     */
+    public InvoiceDto autoIssueInvoiceForPayment(Long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new ResourceNotFoundException("resource.payment", paymentId));
+
+        if (!"success".equalsIgnoreCase(payment.getStatus())) {
+            throw new BadRequestException("INVALID_PAYMENT_STATE", "finance.invoice.invalid_payment_state",
+                    new Object[]{payment.getStatus()}, null);
+        }
+
+        return invoiceRepository.findByPaymentId(paymentId)
+                .map(invoiceMapper::toDto)
+                .orElseGet(() -> {
+                    Invoice invoice = new Invoice();
+                    invoice.setPayment(payment);
+                    payment.setInvoice(invoice);
+                    invoice.setInvoiceNumber(generateInvoiceNumber());
+                    invoice.setIssuedAt(LocalDateTime.now(clock));
+                    invoice.setSubtotalAmount(payment.getAmount());
+                    invoice.setTaxAmount(java.math.BigDecimal.ZERO);
+
+                    InvoiceItem item = new InvoiceItem();
+                    item.setDescription("Dịch vụ thể thao / Gói tập - Thanh toán #" + payment.getId());
+                    item.setQuantity(1);
+                    item.setUnitPrice(payment.getAmount());
+                    invoice.addItem(item);
+
+                    Invoice saved = invoiceRepository.save(invoice);
+                    return invoiceMapper.toDto(saved);
+                });
+    }
+
     private String generateInvoiceNumber() {
         String dateStr = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String suffix = UUID.randomUUID().toString().substring(0, 6).toUpperCase();

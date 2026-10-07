@@ -276,4 +276,33 @@ class InvoiceServiceTest {
         when(invoiceRepository.findByPaymentId(999L)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class, () -> invoiceService.getInvoiceByPaymentId(999L));
     }
+
+    @Test
+    @DisplayName("Should automatically issue invoice for successful payment")
+    void shouldAutoIssueInvoiceForSuccessfulPayment() {
+        Payment payment = new Payment();
+        payment.setId(50L);
+        payment.setStatus("success");
+        payment.setAmount(new BigDecimal("2000000.00"));
+
+        when(paymentRepository.findById(50L)).thenReturn(Optional.of(payment));
+        when(invoiceRepository.findByPaymentId(50L)).thenReturn(Optional.empty());
+        when(invoiceRepository.save(any(Invoice.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(invoiceMapper.toDto(any(Invoice.class))).thenReturn(new InvoiceDto());
+
+        InvoiceDto result = invoiceService.autoIssueInvoiceForPayment(50L);
+        assertNotNull(result);
+        verify(invoiceRepository).save(any(Invoice.class));
+    }
+
+    @Test
+    @DisplayName("Should throw BadRequestException when auto-issuing invoice for non-success payment")
+    void shouldRejectAutoIssueForPendingPayment() {
+        Payment payment = new Payment();
+        payment.setId(50L);
+        payment.setStatus("pending");
+
+        when(paymentRepository.findById(50L)).thenReturn(Optional.of(payment));
+        assertThrows(BadRequestException.class, () -> invoiceService.autoIssueInvoiceForPayment(50L));
+    }
 }

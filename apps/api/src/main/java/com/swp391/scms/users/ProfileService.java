@@ -1,9 +1,14 @@
 package com.swp391.scms.users;
 
 import com.swp391.scms.common.exception.ConflictException;
+import com.swp391.scms.common.exception.ForbiddenException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
+import com.swp391.scms.users.dto.CoachProfileUpdateDto;
 import com.swp391.scms.users.dto.ProfileDto;
+import com.swp391.scms.users.dto.ReceptionistProfileUpdateDto;
+import com.swp391.scms.users.entity.Coach;
 import com.swp391.scms.users.entity.Member;
+import com.swp391.scms.users.entity.Receptionist;
 import com.swp391.scms.users.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +18,15 @@ public class ProfileService {
 
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
+    private final CoachRepository coachRepository;
+    private final ReceptionistRepository receptionistRepository;
 
-    public ProfileService(UserRepository userRepository, MemberRepository memberRepository) {
+    public ProfileService(UserRepository userRepository, MemberRepository memberRepository,
+                          CoachRepository coachRepository, ReceptionistRepository receptionistRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.coachRepository = coachRepository;
+        this.receptionistRepository = receptionistRepository;
     }
 
     @Transactional(readOnly = true)
@@ -56,6 +66,42 @@ public class ProfileService {
         }
 
         return toDto(user, member);
+    }
+
+    @Transactional
+    public void updateCoachProfile(Long currentUserId, String currentUserRole, CoachProfileUpdateDto request) {
+        if (!"COACH".equals(currentUserRole)) {
+            throw new ForbiddenException("Chỉ HLV mới được phép cập nhật hồ sơ chuyên môn", "users.forbidden.not_coach");
+        }
+        
+        User user = findActiveUser(currentUserId);
+        Coach coach = coachRepository.findById(currentUserId).orElseGet(() -> {
+            Coach newCoach = new Coach();
+            newCoach.setUser(user);
+            return newCoach;
+        });
+        
+        coach.setSpecialization(request.specialization());
+        coach.setBio(request.bio());
+        coach.setCertification(request.certification());
+        coachRepository.save(coach);
+    }
+
+    @Transactional
+    public void updateReceptionistProfile(Long currentUserId, String currentUserRole, ReceptionistProfileUpdateDto request) {
+        if (!"RECEPTIONIST".equals(currentUserRole)) {
+            throw new ForbiddenException("Vai trò không hợp lệ", "users.forbidden.invalid_role");
+        }
+        
+        User user = findActiveUser(currentUserId);
+        Receptionist receptionist = receptionistRepository.findById(currentUserId).orElseGet(() -> {
+            Receptionist newReceptionist = new Receptionist();
+            newReceptionist.setUser(user);
+            return newReceptionist;
+        });
+        
+        receptionist.setShift(request.shift());
+        receptionistRepository.save(receptionist);
     }
 
     private User findActiveUser(Long userId) {

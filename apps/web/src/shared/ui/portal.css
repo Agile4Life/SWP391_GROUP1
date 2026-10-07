@@ -1359,3 +1359,250 @@
   background: var(--tone);
   color: #FFFFFF;
 }
+
+/* ==========================================================================
+   VISUAL LIFT: tăng chiều sâu và điểm nhấn vàng, giữ nguyên ngôn ngữ Quiet Luxury
+   ========================================================================== */
+.app-shell {
+  background:
+    radial-gradient(900px 420px at 85% -80px, rgba(194, 166, 132, 0.22), transparent 70%),
+    radial-gradient(700px 500px at 0% 100%, rgba(214, 199, 184, 0.30), transparent 70%),
+    #F6F2EC;
+}
+
+/* Sidebar: ánh vàng ở góc + đường sáng cạnh phải */
+.app-sidebar {
+  background:
+    radial-gradient(420px 260px at 0% 0%, rgba(194, 166, 132, 0.22), transparent 70%),
+    radial-gradient(ellipse at 30% 0%, #2E2621 0%, #14110F 72%);
+  box-shadow: 6px 0 30px -12px rgba(20, 17, 15, 0.45);
+}
+
+.app-role-card {
+  background: linear-gradient(135deg, rgba(194, 166, 132, 0.18), rgba(255, 255, 255, 0.03));
+  border-color: rgba(194, 166, 132, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.app-nav a {
+  color: rgba(250, 248, 245, 0.78);
+}
+
+.app-nav a.active {
+  background: linear-gradient(90deg, rgba(194, 166, 132, 0.30), rgba(194, 166, 132, 0.04));
+  color: #FFFFFF;
+}
+
+.nav-indicator {
+  width: 3px;
+  background: linear-gradient(180deg, #E3CFB0, #C2A684);
+  box-shadow: 0 0 12px rgba(194, 166, 132, 0.8);
+}
+
+/* Topbar: viền vàng mảnh phía dưới */
+.app-topbar {
+  background: rgba(252, 250, 246, 0.85);
+  border-bottom: 1px solid rgba(194, 166, 132, 0.28);
+}
+
+.app-user__avatar {
+  background: linear-gradient(135deg, #2D2521, #14110F);
+  box-shadow: 0 0 0 3px rgba(194, 166, 132, 0.18);
+}
+
+/* Header trang: đường vàng dài và rõ hơn, tiêu đề có nhấn */
+.portal-header {
+  border-bottom-color: rgba(194, 166, 132, 0.3);
+}
+
+.portal-header::after {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-gold), transparent);
+}
+
+.portal-title {
+  font-weight: 500;
+  color: #1A1614;
+}
+
+.portal-title em {
+  color: var(--color-accent-gold);
+  font-style: italic;
+}
+
+/* Card: nổi lên khỏi nền, có vạch vàng trên cùng */
+.portal-card {
+  position: relative;
+  border-color: rgba(33, 28, 24, 0.07);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(33, 28, 24, 0.04), 0 12px 32px -16px rgba(33, 28, 24, 0.14);
+}
+
+.portal-card:not(.portal-card--list):not(.portal-card--flush)::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 28px;
+  width: 48px;
+  height: 2px;
+  background: var(--color-accent-gold);
+  transition: width 0.5s var(--ease-luxury);
+}
+
+.portal-card:hover::before {
+  width: 96px;
+}
+
+.portal-card:hover {
+  box-shadow: 0 2px 4px rgba(33, 28, 24, 0.05), 0 22px 44px -18px rgba(33, 28, 24, 0.2);
+}
+
+.portal-card--feature {
+  background: linear-gradient(135deg, #F8F1E7 0%, #EFE5D6 100%);
+  border-color: rgba(194, 166, 132, 0.6);
+}
+
+/* KPI: số lớn ánh vàng, thẻ có chiều sâu */
+.metric-card {
+  border-radius: 6px;
+  background: linear-gradient(160deg, #FFFFFF 0%, #FBF8F3 100%);
+  box-shadow: 0 1px 2px rgba(33, 28, 24, 0.04), 0 14px 30px -18px rgba(33, 28, 24, 0.18);
+  overflow: hidden;
+}
+
+.metric-card::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(194, 166, 132, 0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.metric-card::before {
+  width: 36px;
+}
+
+.metric-card:hover::before {
+  width: 100%;
+}
+
+.metric-value {
+  font-weight: 500;
+  background: linear-gradient(135deg, #1A1614 30%, #8A6F4D 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Bảng: tiêu đề đậm hơn, hover có vạch vàng */
+.portal-table th {
+  background: linear-gradient(180deg, #F6F0E8, #F1EADF);
+  color: #5E564E;
+  border-bottom: 1px solid rgba(194, 166, 132, 0.4);
+}
+
+.portal-table tbody tr:hover td {
+  background: #FBF7F1;
+}
+
+/* Tab + chip */
+.portal-tab.active {
+  color: #1A1614;
+  background: linear-gradient(180deg, transparent, rgba(194, 166, 132, 0.12));
+}
+
+.filter-chip.is-active {
+  background: linear-gradient(180deg, #2D2521, #1A1614);
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 6px 16px -6px rgba(26, 22, 20, 0.45);
+}
+
+/* Nút chính: viền vàng, ánh sáng quét qua khi hover */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(194, 166, 132, 0.55);
+  box-shadow: 0 4px 14px rgba(26, 22, 20, 0.2);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.btn-primary:hover:not(:disabled)::before {
+  left: 140%;
+}
+
+.btn-secondary {
+  border-color: rgba(33, 28, 24, 0.22);
+}
+
+/* Badge: có chấm trạng thái và viền nhẹ cho dễ đọc */
+.badge {
+  gap: 6px;
+  border: 1px solid transparent;
+}
+
+/* Đường phân cách giữa các hàng của bảng */
+.portal-table tbody td {
+  border-bottom: 1px solid rgba(194, 166, 132, 0.35);
+}
+
+.portal-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.badge-success { border-color: #bbf7d0; }
+.badge-warning { border-color: #fde68a; }
+.badge-danger  { border-color: #fecaca; }
+.badge-info    { border-color: #bae6fd; }
+.badge-neutral { border-color: #e2e8f0; }
+
+/* Dòng danh sách + card dạng list: nổi rõ khi hover */
+.row-card {
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(33, 28, 24, 0.03);
+}
+
+.row-card:hover,
+.portal-card--list:hover {
+  border-color: var(--color-accent-gold);
+}
+
+/* Input: nền ấm nhẹ để tách khỏi card trắng */
+.portal-input, .portal-select, .portal-textarea {
+  background: #FFFEFC;
+  border-radius: 4px;
+}
+
+.portal-dialog {
+  border-radius: 8px;
+}
+
+
+/* Ô nhập: chỉ một viền duy nhất khi hover/focus (bỏ outline mặc định chồng lên border + ring) */
+input.portal-input:focus-visible,
+select.portal-select:focus-visible,
+textarea.portal-textarea:focus-visible,
+.portal-toolbar input:focus-visible {
+  outline: none;
+  outline-offset: 0;
+}
+
+.portal-input:focus, .portal-select:focus, .portal-textarea:focus {
+  box-shadow: 0 0 0 3px rgba(194, 166, 132, 0.2);
+}

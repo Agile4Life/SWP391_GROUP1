@@ -42,6 +42,14 @@ public class InvoiceController {
                 .body(ApiResponse.created(msg("finance.invoice.created"), created));
     }
 
+    @Operation(summary = "Tự động phát hành hóa đơn cho giao dịch thanh toán", description = "Tự động tạo hóa đơn điện tử cho giao dịch đã thanh toán thành công")
+    @PostMapping("/auto-issue/{paymentId}")
+    public ResponseEntity<ApiResponse<InvoiceDto>> autoIssueInvoice(@PathVariable Long paymentId) {
+        InvoiceDto invoice = invoiceService.autoIssueInvoiceForPayment(paymentId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.created(msg("finance.invoice.auto_issued"), invoice));
+    }
+
     @Operation(summary = "Xem chi tiết hóa đơn theo ID", description = "Tra cứu hóa đơn điện tử và các dòng sản phẩm/dịch vụ")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<InvoiceDto>> getInvoiceById(@PathVariable Long id) {

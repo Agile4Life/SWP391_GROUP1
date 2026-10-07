@@ -3,7 +3,6 @@ package com.swp391.scms.users.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/** Entity mapping table receptionists (schema is generated code-first by Hibernate). */
 @Entity
 @Table(name = "receptionists")
 public class Receptionist {
@@ -28,12 +27,16 @@ public class Receptionist {
 
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
+
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
     public LocalDate getHireDate() { return hireDate; }
     public void setHireDate(LocalDate hireDate) { this.hireDate = hireDate; }
+
     public String getShift() { return shift; }
     public void setShift(String shift) { this.shift = shift; }
+
     public String getEmploymentStatus() { return employmentStatus; }
     public void setEmploymentStatus(String employmentStatus) { this.employmentStatus = employmentStatus; }
 }

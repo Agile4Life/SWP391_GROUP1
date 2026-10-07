@@ -27,6 +27,13 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
+import com.swp391.scms.finance.dto.PaymentProcessDto;
+import com.swp391.scms.facilities.entity.MembershipPackage;
+import com.swp391.scms.membership.entity.MembershipSubscription;
+import com.swp391.scms.membership.repository.MembershipSubscriptionRepository;
+import com.swp391.scms.scheduling.entity.ClassEnrollment;
+import com.swp391.scms.scheduling.repository.ClassEnrollmentRepository;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -44,6 +51,12 @@ class PaymentServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private MembershipSubscriptionRepository membershipSubscriptionRepository;
+
+    @Mock
+    private ClassEnrollmentRepository classEnrollmentRepository;
+
+    @Mock
     private PaymentMapper paymentMapper;
 
     private Clock clock;
@@ -52,7 +65,8 @@ class PaymentServiceTest {
     @BeforeEach
     void setUp() {
         clock = Clock.fixed(Instant.parse("2026-10-01T10:00:00Z"), ZoneOffset.UTC);
-        paymentService = new PaymentService(paymentRepository, memberRepository, userRepository, paymentMapper, clock);
+        paymentService = new PaymentService(paymentRepository, memberRepository, userRepository,
+                membershipSubscriptionRepository, classEnrollmentRepository, paymentMapper, clock);
     }
 
     @Test
@@ -207,5 +221,117 @@ class PaymentServiceTest {
         when(paymentRepository.findById(1L)).thenReturn(Optional.of(payment));
 
         assertThrows(BadRequestException.class, () -> paymentService.updatePaymentStatus(1L, "invalid_status"));
+    }
+
+    @Test
+    @DisplayName("Should process payment and activate subscription with QR code generation")
+    void shouldProcessPaymentAndActivateSubscription() {
+        Member member = new Member();
+        member.setUserId(2L);
+
+        MembershipPackage pkg = new MembershipPackage();
+        pkg.setPrice(new BigDecimal("1500000.00"));
+
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setId(10L);
+        sub.setMember(member);
+        sub.setMembershipPackage(pkg);
+        sub.setStatus("pending_payment");
+
+        when(memberRepository.findById(2L)).thenReturn(Optional.of(member));
+        when(membershipSubscriptionRepository.findById(10L)).thenReturn(Optional.of(sub));
+        when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(paymentMapper.toDto(any(Payment.class))).thenReturn(new PaymentDto());
+
+        PaymentProcessDto dto = new PaymentProcessDto(2L, 10L, null, new BigDecimal("1500000.00"), "pos", null, "Ghi chú");
+        PaymentDto result = paymentService.processPayment(dto);
+
+        assertNotNull(result);
+        assertEquals("active", sub.getStatus());
+        assertNotNull(sub.getQrCode());
+        assertTrue(sub.getQrCode().startsWith("SUB-10-"));
+        verify(membershipSubscriptionRepository).save(sub);
+        verify(paymentRepository).save(any(Payment.class));
+    }
+
+    @Test
+    @DisplayName("Should reject payment processing when amount does not match package price")
+    void shouldRejectPaymentWhenAmountMismatches() {
+        Member member = new Member();
+        member.setUserId(2L);
+
+        MembershipPackage pkg = new MembershipPackage();
+        pkg.setPrice(new BigDecimal("1500000.00"));
+
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setId(10L);
+        sub.setMember(member);
+        sub.setMembershipPackage(pkg);
+
+        when(memberRepository.findById(2L)).thenReturn(Optional.of(member));
+        when(membershipSubscriptionRepository.findById(10L)).thenReturn(Optional.of(sub));
+
+        PaymentProcessDto dto = new PaymentProcessDto(2L, 10L, null, new BigDecimal("1000000.00"), "pos", null, null);
+        assertThrows(BadRequestException.class, () -> paymentService.processPayment(dto));
+    }
+
+    @Test
+    @DisplayName("Should reject payment processing when target subscription and enrollment are both null")
+    void shouldRejectPaymentWhenTargetIsMissing() {
+        PaymentProcessDto dto = new PaymentProcessDto(2L, null, null, new BigDecimal("1000000.00"), "pos", null, null);
+        assertThrows(BadRequestException.class, () -> paymentService.processPayment(dto));
+    }
+
+    @Test
+    @DisplayName("Should refund payment successfully and cancel associated subscription")
+    void shouldRefundPaymentSuccessfullyAndCancelSubscription() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("success");
+        payment.setAmount(new BigDecimal("1500000.00"));
+        payment.setSubscriptionId(5L);
+
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setId(5L);
+        sub.setStatus("active");
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+        when(membershipSubscriptionRepository.findById(5L)).thenReturn(Optional.of(sub));
+        when(paymentRepository.save(payment)).thenReturn(payment);
+        when(paymentMapper.toDto(payment)).thenReturn(new PaymentDto());
+
+        PaymentDto result = paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Chuyển nhà", new BigDecimal("1500000.00")));
+        assertNotNull(result);
+        assertEquals("refunded", payment.getStatus());
+        assertEquals("cancelled", sub.getStatus());
+        assertTrue(payment.getNote().contains("HOÀN TIỀN"));
+        verify(membershipSubscriptionRepository).save(sub);
+        verify(paymentRepository).save(payment);
+    }
+
+    @Test
+    @DisplayName("Should reject refund when payment is not in success status")
+    void shouldRejectRefundWhenPaymentNotSuccess() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("pending");
+        payment.setAmount(new BigDecimal("1500000.00"));
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+
+        assertThrows(BadRequestException.class, () -> paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Lỗi thu ngân")));
+    }
+
+    @Test
+    @DisplayName("Should reject refund when refund amount is invalid or exceeds payment amount")
+    void shouldRejectRefundWhenAmountExceedsPayment() {
+        Payment payment = new Payment();
+        payment.setId(10L);
+        payment.setStatus("success");
+        payment.setAmount(new BigDecimal("1500000.00"));
+
+        when(paymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+
+        assertThrows(BadRequestException.class, () -> paymentService.refundPayment(10L, new com.swp391.scms.finance.dto.PaymentRefundRequest("Nhầm", new BigDecimal("2000000.00"))));
     }
 }

@@ -60,6 +60,12 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Member member;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Coach coach;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Receptionist receptionist;
+
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
@@ -115,4 +121,10 @@ public class User {
 
     public Member getMember() { return member; }
     public void setMember(Member member) { this.member = member; }
+
+    public Coach getCoach() { return coach; }
+    public void setCoach(Coach coach) { this.coach = coach; }
+
+    public Receptionist getReceptionist() { return receptionist; }
+    public void setReceptionist(Receptionist receptionist) { this.receptionist = receptionist; }
 }

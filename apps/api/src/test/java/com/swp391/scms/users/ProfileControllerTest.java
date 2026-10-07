@@ -108,4 +108,86 @@ class ProfileControllerTest {
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.fitnessGoal").value("Stay healthy"));
     }
+
+    @Test
+    @DisplayName("PUT /api/v1/profile/coach updates coach profile and returns 200")
+    void updateCoachProfileSuccess() throws Exception {
+        com.swp391.scms.users.dto.CoachProfileUpdateDto request = new com.swp391.scms.users.dto.CoachProfileUpdateDto(
+                "Yoga",
+                "10 years experience",
+                "Certified Yoga Instructor"
+        );
+
+        mockMvc.perform(put("/api/v1/profile/coach")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
+    }
+
+    @Test
+    @DisplayName("PUT /api/v1/profile/coach returns 403 when wrong role")
+    void updateCoachProfileForbidden() throws Exception {
+        com.swp391.scms.users.dto.CoachProfileUpdateDto request = new com.swp391.scms.users.dto.CoachProfileUpdateDto(
+                "Yoga",
+                "10 years experience",
+                "Certified Yoga Instructor"
+        );
+        
+        org.mockito.Mockito.doThrow(new com.swp391.scms.common.exception.ForbiddenException("Error", "users.forbidden.not_coach"))
+                .when(profileService).updateCoachProfile(eq(101L), eq("MEMBER"), any());
+
+        mockMvc.perform(put("/api/v1/profile/coach")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.success").value(false));
+    }
+
+    @Test
+    @DisplayName("PUT /api/v1/profile/receptionist updates receptionist profile and returns 200")
+    void updateReceptionistProfileSuccess() throws Exception {
+        com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request = new com.swp391.scms.users.dto.ReceptionistProfileUpdateDto(
+                "Morning"
+        );
+
+        mockMvc.perform(put("/api/v1/profile/receptionist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
+    }
+
+    @Test
+    @DisplayName("PUT /api/v1/profile/receptionist returns 403 when wrong role")
+    void updateReceptionistProfileForbidden() throws Exception {
+        com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request = new com.swp391.scms.users.dto.ReceptionistProfileUpdateDto(
+                "Morning"
+        );
+        
+        org.mockito.Mockito.doThrow(new com.swp391.scms.common.exception.ForbiddenException("Error", "users.forbidden.invalid_role"))
+                .when(profileService).updateReceptionistProfile(eq(101L), eq("MEMBER"), any());
+
+        mockMvc.perform(put("/api/v1/profile/receptionist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.success").value(false));
+    }
+
+    @Test
+    @DisplayName("PUT /api/v1/profile/coach returns 400 when validation fails")
+    void updateCoachProfileValidationFails() throws Exception {
+        com.swp391.scms.users.dto.CoachProfileUpdateDto request = new com.swp391.scms.users.dto.CoachProfileUpdateDto(
+                "Y", // specialization too short maybe, let's just make it extremely long to fail max
+                "10 years experience",
+                "A".repeat(256) // Max certification is 255
+        );
+
+        mockMvc.perform(put("/api/v1/profile/coach")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false));
+    }
 }

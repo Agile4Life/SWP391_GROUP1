@@ -121,4 +121,20 @@ class InvoiceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1));
     }
+
+    @Test
+    @DisplayName("POST /api/v1/invoices/auto-issue/{paymentId} should return 201 Created")
+    void shouldAutoIssueInvoiceSuccessfully() throws Exception {
+        InvoiceDto dto = new InvoiceDto();
+        dto.setId(20L);
+        dto.setInvoiceNumber("INV-20261005-A1B2C3");
+
+        when(invoiceService.autoIssueInvoiceForPayment(15L)).thenReturn(dto);
+
+        mockMvc.perform(post("/api/v1/invoices/auto-issue/15"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.id").value(20L))
+                .andExpect(jsonPath("$.data.invoiceNumber").value("INV-20261005-A1B2C3"));
+    }
 }
