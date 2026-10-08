@@ -53,7 +53,7 @@ public class ProfileController {
         return ApiResponse.ok(msg("users.profile.coach.update.success"), null);
     }
 
-    @Operation(summary = "Cập nhật hồ sơ Lễ tân", description = "Dành cho Lễ tân hoặc Quản lý cập nhật ca làm việc")
+    @Operation(summary = "Cập nhật hồ sơ Lễ tân", description = "Dành cho Lễ tân tự cập nhật ca làm việc của mình. Quản lý dùng endpoint ở UserController.")
     @PutMapping("/receptionist")
     public ApiResponse<Void> updateReceptionistProfile(@AuthenticationPrincipal AuthenticatedPrincipal principal,
                                                        @Valid @RequestBody com.swp391.scms.users.dto.ReceptionistProfileUpdateDto request) {
