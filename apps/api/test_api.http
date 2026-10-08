@@ -13,11 +13,11 @@ Content-Type: application/json
 
 ### 2. Xem Profile (US05-F03)
 GET http://localhost:8080/api/v1/profile
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 
 ### 3. Cập nhật Profile (US05-F03)
 PUT http://localhost:8080/api/v1/profile
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ### 4. Thêm dữ liệu sức khỏe (US05-F04)
 POST http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### 5. Thử Lỗi Validation (US05-F04)
 POST http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -55,11 +55,11 @@ Content-Type: application/json
 
 ### 6. Xem Lịch sử Sức Khỏe
 GET http://localhost:8080/api/v1/members/2/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 
 ### 7. Thử Quyền Truy Cập Sai (Forbidden)
 GET http://localhost:8080/api/v1/members/3/health-metrics
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZW1iZXIxIiwidXNlcklkIjoyLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNzkwNTU4OTI3LCJleHAiOjE3OTA2NDUzMjd9.gcappcdsHGrwKS8sQHexxKkqHJhlh0XAmw5E1bx3jJjMRk5T6STJezIxAvZY1h_39Ve09O6TubB4148LVzghBA
+Authorization: Bearer {{auth_token}}
 
 ### =========================================
 ### TICKET [US04-F02] & [US04-F04] - QUẢN LÝ USER & ROLE (MANAGER)
@@ -167,7 +167,7 @@ Authorization: Bearer {{auth_token}}
 ### 22: Cập nhật ca làm việc Lễ tân (Receptionist hoặc Manager)
 PUT http://localhost:8080/api/v1/profile/receptionist
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZWNlcHRpb25pc3RAc2Ntcy5sb2NhbCIsInVzZXJJZCI6Mywicm9sZSI6IlJFQ0VQVElPTklTVCIsImlhdCI6MTc5MTQyMjM1MCwiZXhwIjoxNzkxNTA4NzUwfQ.KgPFm5umiV2nwo8TviT-6rhTD5Vin5TjHXCzVDIYZaHAizEMmtkTgudiALW2deIEQ39l1OvLxslKM12WqW_RIw
+Authorization: Bearer {{auth_token}}
 
 {
   "shift": "Morning Shift (06:00 - 14:00)"
