@@ -8,6 +8,7 @@ import org.hibernate.Length;
 
 /** Entity mapping table support_requests (schema is generated code-first by Hibernate). */
 @Entity
+@org.hibernate.annotations.Check(name = "ck_support_status", constraints = "status IN ('open','in_progress','resolved','closed')")
 @Table(name = "support_requests")
 public class SupportRequest {
 

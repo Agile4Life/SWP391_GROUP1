@@ -7,6 +7,8 @@ import org.hibernate.Length;
 
 /** Entity mapping table notifications (schema is generated code-first by Hibernate). */
 @Entity
+@org.hibernate.annotations.Check(name = "ck_notifications_type", constraints = "type IN ('schedule_change','package_expiry','class_reminder','system','support_reply','payment')")
+@org.hibernate.annotations.Check(name = "ck_notifications_entity_type", constraints = "related_entity_type IS NULL OR related_entity_type IN ( 'class_session','membership_subscription','payment', 'support_request','class_enrollment','training_plan' )")
 @Table(name = "notifications", indexes = {@Index(name = "ix_notifications_user_read", columnList = "user_id, is_read")})
 public class Notification {
 
