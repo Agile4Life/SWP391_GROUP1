@@ -11,6 +11,7 @@ import { MemberDashboardPage } from '../features/member/MemberDashboardPage';
 import { MemberProfilePage } from '../features/member/MemberProfilePage';
 import { MemberClassesPage } from '../features/member/MemberClassesPage';
 import { MemberCardPage } from '../features/member/MemberCardPage';
+import { MemberPackagesPage } from '../features/member/MemberPackagesPage';
 
 // Staff & Coach Feature Pages
 import { StaffReceptionPage } from '../features/reception/StaffReceptionPage';
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       { path: '/portal', element: <PortalHome /> },
 
       // Group Member Routes (US01, US03, US04, US05)
+      {
+        element: <RoleGuard allowedRoles={['MEMBER']} />,
+        children: [{ path: '/member/packages', element: <MemberPackagesPage /> }],
+      },
       {
         element: <RoleGuard allowedRoles={['MEMBER', 'MANAGER', 'CENTER_MANAGER']} />,
         children: [
