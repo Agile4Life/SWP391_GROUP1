@@ -129,7 +129,8 @@
 - **Mô tả:** Cung cấp endpoint cập nhật thông tin hồ sơ chuyên biệt cho HLV (`coaches`) và Lễ tân (`receptionists`), đảm bảo phân tách theo mô hình Table-per-Type (TPT).
 - **Acceptance Criteria (AC):**
   - [ ] `PUT /api/v1/profile/coach`: HLV cập nhật được `specialization`, `bio`, `certification`.
-  - [ ] `PUT /api/v1/profile/receptionist`: Lễ tân/Quản lý cập nhật được ca làm việc `shift`.
+  - [ ] `PUT /api/v1/profile/receptionist`: Lễ tân tự cập nhật được ca làm việc `shift` của mình.
+    - [ ] `PUT /api/v1/users/{id}/receptionist`: Quản lý cập nhật được ca làm việc `shift` cho một Lễ tân bất kỳ.
   - [ ] Trả về `403 Forbidden` nếu người dùng không đúng vai trò hoặc cố sửa hồ sơ người khác.
   - [ ] Cập nhật đồng thời message keys i18n thông báo thành công và validation.
 - **Kỹ thuật:** Package `users`, Entity `Coach`, `Receptionist`, Service `ProfileService`.
@@ -661,4 +662,6 @@
    - Khi bắt đầu làm ticket: Chuyển trạng thái từ `TO DO` sang `IN PROGRESS`.
    - Tạo branch git theo chuẩn: `git checkout -b <Mã_Jira>/<tên-ngắn-gọn>` (ví dụ: `SCRUM-71/membership-subscriptions`).
    - Kiểm tra `./mvnw test` và `npm test` trước khi tạo Pull Request và chuyển trạng thái sang `IN REVIEW`.
+
+
 

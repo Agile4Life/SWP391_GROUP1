@@ -28,7 +28,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  */
 class CodeFirstSchemaTest {
 
-    private static final Path SCHEMA = Path.of("..", "..", "databaseschema.sql");
+    private static final Path SCHEMA = Path.of("..", "..", "db", "databaseschema.sql");
 
     private static String generateDdl(String dialect) throws Exception {
         Path out = Files.createTempFile("ddl", ".sql");
