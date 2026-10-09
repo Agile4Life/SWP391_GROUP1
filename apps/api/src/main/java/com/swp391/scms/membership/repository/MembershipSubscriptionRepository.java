@@ -17,8 +17,15 @@ public interface MembershipSubscriptionRepository extends JpaRepository<Membersh
 
     List<MembershipSubscription> findByMemberUserIdAndStatus(Long memberId, String status);
 
+<<<<<<< Updated upstream
     List<MembershipSubscription> findByMemberUserIdOrderByIdDesc(Long memberId);
 
     boolean existsByMemberUserIdAndStatusAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
             Long memberId, String status, LocalDate endDate, LocalDate startDate);
+=======
+    boolean existsByMemberUserIdAndStatusAndEndDateGreaterThanEqual(Long memberId, String status, LocalDate date);
+
+    boolean existsByMemberUserIdAndStatusAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            Long memberId, String status, LocalDate startDate, LocalDate endDate);
+>>>>>>> Stashed changes
 }
