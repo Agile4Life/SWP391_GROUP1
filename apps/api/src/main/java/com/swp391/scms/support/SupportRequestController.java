@@ -35,7 +35,7 @@ public class SupportRequestController {
 
     @Operation(summary = "Tạo yêu cầu hỗ trợ mới (Member)")
     @PostMapping
-    @PreAuthorize("hasAuthority('MEMBER')")
+    @PreAuthorize("hasRole('MEMBER')")
     public ApiResponse<SupportRequestDto> createRequest(
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
             @Valid @RequestBody CreateSupportRequestDto request) {
@@ -45,7 +45,7 @@ public class SupportRequestController {
 
     @Operation(summary = "Xem lịch sử yêu cầu của bản thân (Member)")
     @GetMapping("/my")
-    @PreAuthorize("hasAuthority('MEMBER')")
+    @PreAuthorize("hasRole('MEMBER')")
     public ApiResponse<Page<SupportRequestDto>> getMyRequests(
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
             @PageableDefault(size = 20) Pageable pageable) {
@@ -55,7 +55,7 @@ public class SupportRequestController {
 
     @Operation(summary = "Xem toàn bộ yêu cầu, lọc theo status (Manager/Receptionist)")
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('CENTER_MANAGER', 'RECEPTIONIST')")
     public ApiResponse<Page<SupportRequestDto>> getAllRequests(
             @RequestParam(required = false) String status,
             @PageableDefault(size = 20) Pageable pageable) {
@@ -65,7 +65,7 @@ public class SupportRequestController {
 
     @Operation(summary = "Cập nhật trạng thái và người phụ trách yêu cầu (Manager/Receptionist)")
     @PatchMapping("/{id}/status")
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('CENTER_MANAGER', 'RECEPTIONIST')")
     public ApiResponse<SupportRequestDto> updateStatus(
             @PathVariable Long id,
             @Valid @RequestBody UpdateSupportRequestStatusDto request) {
