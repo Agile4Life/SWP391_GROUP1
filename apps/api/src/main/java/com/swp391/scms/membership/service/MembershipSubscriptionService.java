@@ -1,6 +1,7 @@
 package com.swp391.scms.membership.service;
 
 import com.swp391.scms.common.exception.BadRequestException;
+<<<<<<< Updated upstream
 import com.swp391.scms.common.exception.ConflictException;
 import com.swp391.scms.common.exception.ForbiddenException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
@@ -10,10 +11,19 @@ import com.swp391.scms.membership.dto.SubscriptionCreateRequest;
 import com.swp391.scms.membership.dto.SubscriptionDto;
 import com.swp391.scms.membership.entity.MembershipSubscription;
 import com.swp391.scms.membership.mapper.MembershipSubscriptionMapper;
+=======
+import com.swp391.scms.common.exception.ResourceNotFoundException;
+import com.swp391.scms.facilities.entity.MembershipPackage;
+import com.swp391.scms.facilities.repository.MembershipPackageRepository;
+import com.swp391.scms.membership.dto.SubscriptionRequests;
+import com.swp391.scms.membership.dto.SubscriptionResponses.SubscriptionDto;
+import com.swp391.scms.membership.entity.MembershipSubscription;
+>>>>>>> Stashed changes
 import com.swp391.scms.membership.repository.MembershipSubscriptionRepository;
 import com.swp391.scms.security.AuthenticatedPrincipal;
 import com.swp391.scms.users.MemberRepository;
 import com.swp391.scms.users.entity.Member;
+<<<<<<< Updated upstream
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -211,5 +221,90 @@ public class MembershipSubscriptionService {
                     null,
                     "Subscription does not belong to the authenticated member");
         }
+=======
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Clock;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class MembershipSubscriptionService {
+    private final MembershipSubscriptionRepository subscriptions;
+    private final MembershipPackageRepository packages;
+    private final MemberRepository members;
+    private final Clock clock;
+
+    public MembershipSubscriptionService(MembershipSubscriptionRepository subscriptions,
+            MembershipPackageRepository packages, MemberRepository members, Clock clock) {
+        this.subscriptions = subscriptions; this.packages = packages; this.members = members; this.clock = clock;
+    }
+
+    @Transactional
+    public SubscriptionDto create(AuthenticatedPrincipal principal, SubscriptionRequests.Create request) {
+        Member member = findMember(principal.id());
+        MembershipPackage pack = findActivePackage(request.packageId());
+        LocalDate today = LocalDate.now(clock);
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setMember(member); sub.setMembershipPackage(pack);
+        sub.setStartDate(today); sub.setEndDate(today.plusDays(pack.getDurationDays()));
+        sub.setStatus("pending_payment");
+        return toDto(subscriptions.saveAndFlush(sub));
+    }
+
+    @Transactional
+    public SubscriptionDto renew(AuthenticatedPrincipal principal, Long previousId) {
+        MembershipSubscription previous = subscriptions.findById(previousId)
+                .orElseThrow(() -> new ResourceNotFoundException("membership subscription", previousId));
+        if (previous.getMember() == null || !previous.getMember().getUserId().equals(principal.id())) {
+            throw new BadRequestException("MEMBERSHIP_SUBSCRIPTION_NOT_OWNED", "error.membership.subscription_not_found", null, "Subscription not found");
+        }
+        MembershipPackage pack = findActivePackage(previous.getMembershipPackage().getId());
+        LocalDate today = LocalDate.now(clock);
+        MembershipSubscription sub = new MembershipSubscription();
+        sub.setMember(previous.getMember()); sub.setMembershipPackage(pack); sub.setPreviousSubscription(previous);
+        sub.setStartDate(today); sub.setEndDate(today.plusDays(pack.getDurationDays())); sub.setStatus("pending_payment");
+        return toDto(subscriptions.saveAndFlush(sub));
+    }
+
+    @Transactional(readOnly = true)
+    public List<SubscriptionDto> mine(AuthenticatedPrincipal principal) {
+        findMember(principal.id());
+        return subscriptions.findByMemberUserIdOrderByCreatedAtDesc(principal.id()).stream().map(this::toDto).toList();
+    }
+
+    /** Called by the trusted payment-confirmation workflow only; never expose as a member endpoint. */
+    @Transactional
+    public SubscriptionDto activateAfterPayment(Long subscriptionId) {
+        MembershipSubscription sub = subscriptions.findById(subscriptionId)
+                .orElseThrow(() -> new ResourceNotFoundException("membership subscription", subscriptionId));
+        if (!"pending_payment".equals(sub.getStatus())) {
+            throw new BadRequestException("MEMBERSHIP_SUBSCRIPTION_NOT_PENDING", "error.membership.subscription_not_active", null, "Subscription is not pending payment");
+        }
+        LocalDate start = LocalDate.now(clock);
+        sub.setStartDate(start);
+        sub.setEndDate(start.plusDays(sub.getMembershipPackage().getDurationDays()));
+        sub.setQrCode(UUID.randomUUID().toString());
+        sub.setStatus("active");
+        return toDto(subscriptions.saveAndFlush(sub));
+    }
+
+    private Member findMember(Long id) {
+        return members.findById(id).orElseThrow(() -> new ResourceNotFoundException("resource.member", id));
+    }
+    private MembershipPackage findActivePackage(Long id) {
+        MembershipPackage pack = packages.findById(id).orElseThrow(() -> new ResourceNotFoundException("membership package", id));
+        if (!"active".equalsIgnoreCase(pack.getStatus()) || pack.getDurationDays() <= 0) {
+            throw new BadRequestException("MEMBERSHIP_PACKAGE_INACTIVE", "error.membership.package_inactive", null, "Membership package is inactive");
+        }
+        return pack;
+    }
+    private SubscriptionDto toDto(MembershipSubscription s) {
+        return new SubscriptionDto(s.getId(), s.getMember().getUserId(), s.getMembershipPackage().getId(),
+                s.getMembershipPackage().getName(), s.getPreviousSubscription() == null ? null : s.getPreviousSubscription().getId(),
+                s.getStartDate(), s.getEndDate(), s.getStatus(), s.getQrCode(), s.getCreatedAt());
+>>>>>>> Stashed changes
     }
 }

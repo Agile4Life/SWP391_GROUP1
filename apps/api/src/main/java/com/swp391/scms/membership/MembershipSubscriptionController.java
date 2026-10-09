@@ -2,8 +2,13 @@ package com.swp391.scms.membership;
 
 import com.swp391.scms.common.ApiResponse;
 import com.swp391.scms.common.i18n.MessageService;
+<<<<<<< Updated upstream
 import com.swp391.scms.membership.dto.SubscriptionCreateRequest;
 import com.swp391.scms.membership.dto.SubscriptionDto;
+=======
+import com.swp391.scms.membership.dto.SubscriptionRequests;
+import com.swp391.scms.membership.dto.SubscriptionResponses.SubscriptionDto;
+>>>>>>> Stashed changes
 import com.swp391.scms.membership.service.MembershipSubscriptionService;
 import com.swp391.scms.security.AuthenticatedPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< Updated upstream
 
 import java.util.List;
 
@@ -61,5 +67,27 @@ public class MembershipSubscriptionController {
     public ApiResponse<List<SubscriptionDto>> getMy(
             @AuthenticationPrincipal AuthenticatedPrincipal principal) {
         return ApiResponse.ok(msg("membership.subscription.list"), service.getMy(principal));
+=======
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/memberships/subscriptions")
+@Tag(name = "Membership subscriptions", description = "Subscription lifecycle (SCRUM-71)")
+public class MembershipSubscriptionController {
+    private final MembershipSubscriptionService service;
+    private final MessageService messages;
+    public MembershipSubscriptionController(MembershipSubscriptionService service, MessageService messages) { this.service = service; this.messages = messages; }
+    @PostMapping @Operation(summary = "Create a subscription pending payment")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> create(@AuthenticationPrincipal AuthenticatedPrincipal principal, @Valid @RequestBody SubscriptionRequests.Create request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.created(messages.getMessage("success.membership.subscription_created"), service.create(principal, request)));
+    }
+    @PostMapping("/{id}/renew") @Operation(summary = "Create a renewal pending payment")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> renew(@AuthenticationPrincipal AuthenticatedPrincipal principal, @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.created(messages.getMessage("success.membership.subscription_renewed"), service.renew(principal, id)));
+    }
+    @GetMapping("/my") @Operation(summary = "List the authenticated member's subscriptions")
+    public ApiResponse<List<SubscriptionDto>> mine(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
+        return ApiResponse.ok(messages.getMessage("success.membership.subscription_list"), service.mine(principal));
+>>>>>>> Stashed changes
     }
 }
