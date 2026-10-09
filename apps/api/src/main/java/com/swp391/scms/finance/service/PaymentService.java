@@ -12,6 +12,7 @@ import com.swp391.scms.finance.mapper.PaymentMapper;
 import com.swp391.scms.finance.repository.PaymentRepository;
 import com.swp391.scms.membership.entity.MembershipSubscription;
 import com.swp391.scms.membership.repository.MembershipSubscriptionRepository;
+import com.swp391.scms.membership.service.MembershipService;
 import com.swp391.scms.scheduling.entity.ClassEnrollment;
 import com.swp391.scms.scheduling.repository.ClassEnrollmentRepository;
 import com.swp391.scms.users.UserRepository;
@@ -28,7 +29,6 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Service managing Payments transactions.
@@ -43,6 +43,7 @@ public class PaymentService {
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
     private final MembershipSubscriptionRepository membershipSubscriptionRepository;
+    private final MembershipService membershipService;
     private final ClassEnrollmentRepository classEnrollmentRepository;
     private final PaymentMapper paymentMapper;
     private final Clock clock;
@@ -50,21 +51,15 @@ public class PaymentService {
     public PaymentService(PaymentRepository paymentRepository,
                           MemberRepository memberRepository,
                           UserRepository userRepository,
-                          PaymentMapper paymentMapper, Clock clock) {
-        this(paymentRepository, memberRepository, userRepository, null, null, paymentMapper, clock);
-    }
-
-    @Autowired
-    public PaymentService(PaymentRepository paymentRepository,
-                          MemberRepository memberRepository,
-                          UserRepository userRepository,
                           MembershipSubscriptionRepository membershipSubscriptionRepository,
                           ClassEnrollmentRepository classEnrollmentRepository,
+                          MembershipService membershipService,
                           PaymentMapper paymentMapper, Clock clock) {
         this.paymentRepository = paymentRepository;
         this.memberRepository = memberRepository;
         this.userRepository = userRepository;
         this.membershipSubscriptionRepository = membershipSubscriptionRepository;
+        this.membershipService = membershipService;
         this.classEnrollmentRepository = classEnrollmentRepository;
         this.paymentMapper = paymentMapper;
         this.clock = clock;
@@ -92,6 +87,9 @@ public class PaymentService {
         markPaidIfSuccess(payment, initialStatus);
 
         Payment saved = paymentRepository.save(payment);
+        if ("success".equals(initialStatus) && saved.getSubscriptionId() != null) {
+            activateSubscription(saved.getSubscriptionId());
+        }
         return paymentMapper.toDto(saved);
     }
 
@@ -134,6 +132,9 @@ public class PaymentService {
             }
             payment.setStatus(normalizedStatus);
             markPaidIfSuccess(payment, normalizedStatus);
+            if ("success".equals(normalizedStatus) && payment.getSubscriptionId() != null) {
+                activateSubscription(payment.getSubscriptionId());
+            }
         }
 
         return paymentMapper.toDto(payment);
@@ -171,12 +172,7 @@ public class PaymentService {
                 }
             }
 
-            subscription.setStatus("active");
-            if (subscription.getQrCode() == null || subscription.getQrCode().isBlank()) {
-                subscription.setQrCode("SUB-" + subscription.getId() + "-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
-            }
-            subscription.setUpdatedAt(LocalDateTime.now(clock));
-            membershipSubscriptionRepository.save(subscription);
+            membershipService.activateSubscription(subscription);
         }
 
         if (dto.getClassEnrollmentId() != null && classEnrollmentRepository != null) {
@@ -259,5 +255,11 @@ public class PaymentService {
         if ("success".equals(status) && payment.getPaidAt() == null) {
             payment.setPaidAt(LocalDateTime.now(clock));
         }
+    }
+
+    private void activateSubscription(Long subscriptionId) {
+        MembershipSubscription subscription = membershipSubscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new ResourceNotFoundException("resource.subscription", subscriptionId));
+        membershipService.activateSubscription(subscription);
     }
 }
