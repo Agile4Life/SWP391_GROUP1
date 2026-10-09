@@ -131,7 +131,9 @@ public class WaitlistService {
                     "Only a waiting entry can be withdrawn");
         }
 
-        waitlist.setStatus("cancelled");
+        // Schema only permits waiting/notified/expired. Mark withdrawal as expired rather than
+        // writing the unsupported cancelled value (no schema changes are allowed).
+        waitlist.setStatus("expired");
         return toDto(waitlists.saveAndFlush(waitlist));
     }
 
