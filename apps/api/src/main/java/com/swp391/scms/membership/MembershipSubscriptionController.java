@@ -3,8 +3,13 @@ package com.swp391.scms.membership;
 import com.swp391.scms.common.ApiResponse;
 import com.swp391.scms.common.i18n.MessageService;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import com.swp391.scms.membership.dto.SubscriptionCreateRequest;
 import com.swp391.scms.membership.dto.SubscriptionDto;
+=======
+import com.swp391.scms.membership.dto.SubscriptionRequests;
+import com.swp391.scms.membership.dto.SubscriptionResponses.SubscriptionDto;
+>>>>>>> Stashed changes
 =======
 import com.swp391.scms.membership.dto.SubscriptionRequests;
 import com.swp391.scms.membership.dto.SubscriptionResponses.SubscriptionDto;
@@ -14,15 +19,29 @@ import com.swp391.scms.security.AuthenticatedPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+<<<<<<< Updated upstream
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> Stashed changes
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 import java.util.List;
 
 @Tag(name = "Membership Subscriptions", description = "Purchase, renewal and current membership subscription status")
+=======
+
+import java.util.List;
+
+/**
+ * Controller for managing membership subscriptions (SCRUM-71).
+ */
+@Tag(name = "Membership Subscriptions", description = "Purchase, renewal and member subscription status (SCRUM-71)")
+>>>>>>> Stashed changes
 @RestController
 @RequestMapping("/api/v1/memberships/subscriptions")
 public class MembershipSubscriptionController {
@@ -34,7 +53,11 @@ public class MembershipSubscriptionController {
         this(service, null);
     }
 
+<<<<<<< Updated upstream
     @org.springframework.beans.factory.annotation.Autowired
+=======
+    @Autowired
+>>>>>>> Stashed changes
     public MembershipSubscriptionController(MembershipSubscriptionService service, MessageService messageService) {
         this.service = service;
         this.messageService = messageService;
@@ -48,7 +71,11 @@ public class MembershipSubscriptionController {
     @PostMapping
     public ResponseEntity<ApiResponse<SubscriptionDto>> create(
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
+<<<<<<< Updated upstream
             @Valid @RequestBody SubscriptionCreateRequest request) {
+=======
+            @Valid @RequestBody SubscriptionRequests.Create request) {
+>>>>>>> Stashed changes
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.created(msg("membership.subscription.created"), service.create(principal, request)));
     }
@@ -62,6 +89,7 @@ public class MembershipSubscriptionController {
                 .body(ApiResponse.created(msg("membership.subscription.renewed"), service.renew(principal, id)));
     }
 
+<<<<<<< Updated upstream
     @Operation(summary = "Get the authenticated member's subscription history and current status")
     @GetMapping("/my")
     public ApiResponse<List<SubscriptionDto>> getMy(
@@ -88,6 +116,13 @@ public class MembershipSubscriptionController {
     @GetMapping("/my") @Operation(summary = "List the authenticated member's subscriptions")
     public ApiResponse<List<SubscriptionDto>> mine(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
         return ApiResponse.ok(messages.getMessage("success.membership.subscription_list"), service.mine(principal));
+>>>>>>> Stashed changes
+=======
+    @Operation(summary = "Get the authenticated member's subscriptions and current status")
+    @GetMapping("/my")
+    public ApiResponse<List<SubscriptionDto>> getMy(
+            @AuthenticationPrincipal AuthenticatedPrincipal principal) {
+        return ApiResponse.ok(msg("membership.subscription.list"), service.mine(principal));
 >>>>>>> Stashed changes
     }
 }

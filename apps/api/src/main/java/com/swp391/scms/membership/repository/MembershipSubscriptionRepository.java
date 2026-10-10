@@ -15,8 +15,11 @@ public interface MembershipSubscriptionRepository extends JpaRepository<Membersh
 
     Optional<MembershipSubscription> findByQrCode(String qrCode);
 
+    List<MembershipSubscription> findByMemberUserIdOrderByCreatedAtDesc(Long memberId);
+
     List<MembershipSubscription> findByMemberUserIdAndStatus(Long memberId, String status);
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
     List<MembershipSubscription> findByMemberUserIdOrderByIdDesc(Long memberId);
@@ -35,4 +38,15 @@ public interface MembershipSubscriptionRepository extends JpaRepository<Membersh
 
     List<MembershipSubscription> findByMemberUserIdOrderByCreatedAtDesc(Long memberId);
 >>>>>>> Stashed changes
+=======
+    boolean existsByMemberUserIdAndStatus(Long memberId, String status);
+
+    boolean existsByMemberUserIdAndStatusAndEndDateGreaterThanEqual(Long memberId, String status, LocalDate date);
+
+    boolean existsByMemberUserIdAndStatusAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            Long memberId, String status, LocalDate start, LocalDate end);
+
+    Optional<MembershipSubscription> findFirstByMemberUserIdAndStatusOrderByEndDateDesc(Long memberId, String status);
+>>>>>>> Stashed changes
 }
+
