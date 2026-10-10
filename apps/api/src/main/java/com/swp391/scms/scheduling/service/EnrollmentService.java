@@ -4,6 +4,7 @@ import com.swp391.scms.common.exception.BadRequestException;
 import com.swp391.scms.common.exception.ConflictException;
 import com.swp391.scms.common.exception.ForbiddenException;
 import com.swp391.scms.common.exception.ResourceNotFoundException;
+import com.swp391.scms.common.i18n.MessageService;
 import com.swp391.scms.membership.repository.MembershipSubscriptionRepository;
 import com.swp391.scms.notifications.NotificationService;
 import com.swp391.scms.scheduling.dto.EnrollmentResponses.EnrollmentDto;
@@ -50,6 +51,7 @@ public class EnrollmentService {
     private final MembershipSubscriptionRepository subscriptions;
     private final MemberRepository members;
     private final NotificationService notifications;
+    private final MessageService messageService;
     private final Clock clock;
 
     public EnrollmentService(ClassEnrollmentRepository enrollments,
@@ -58,12 +60,27 @@ public class EnrollmentService {
                              MemberRepository members,
                              NotificationService notifications,
                              Clock clock) {
+        this(enrollments, sessions, subscriptions, members, notifications, null, clock);
+    }
+
+    public EnrollmentService(ClassEnrollmentRepository enrollments,
+                             ClassSessionRepository sessions,
+                             MembershipSubscriptionRepository subscriptions,
+                             MemberRepository members,
+                             NotificationService notifications,
+                             MessageService messageService,
+                             Clock clock) {
         this.enrollments = enrollments;
         this.sessions = sessions;
         this.subscriptions = subscriptions;
         this.members = members;
         this.notifications = notifications;
+        this.messageService = messageService;
         this.clock = clock;
+    }
+
+    private String msg(String key, Object... args) {
+        return messageService != null ? messageService.getMessage(key, args) : key;
     }
 
     /**
@@ -106,9 +123,9 @@ public class EnrollmentService {
         ClassEnrollment saved = enrollments.saveAndFlush(enrollment);
 
         notifications.send(member.getUserId(),
-                "Đặt chỗ thành công",
-                "Bạn đã đặt chỗ lớp " + gymClass.getName() + " ngày " + session.getSessionDate() + ".",
-                "BOOKING",
+                msg("notifications.booking.enrolled.title"),
+                msg("notifications.booking.enrolled.body", gymClass.getName(), session.getSessionDate().toString()),
+                "system",
                 String.valueOf(saved.getId()));
 
         return toDto(saved, session);
@@ -149,9 +166,9 @@ public class EnrollmentService {
         ClassEnrollment saved = enrollments.saveAndFlush(enrollment);
 
         notifications.send(enrollment.getMember().getUserId(),
-                "Hủy đặt chỗ thành công",
-                "Lượt đặt chỗ của bạn đã được hủy, chỗ trống đã được giải phóng.",
-                "BOOKING",
+                msg("notifications.booking.cancelled.title"),
+                msg("notifications.booking.cancelled.body"),
+                "system",
                 String.valueOf(saved.getId()));
 
         return toDto(saved, null);
@@ -174,6 +191,14 @@ public class EnrollmentService {
                     "error.scheduling.session_not_bookable",
                     null,
                     "This session is not open for booking");
+        }
+        LocalDate today = LocalDate.now(clock);
+        if (session.getSessionDate().isBefore(today)) {
+            throw new BadRequestException(
+                    "SCHEDULING_PAST_SESSION",
+                    "error.scheduling.past_session",
+                    null,
+                    "Cannot book a session that has already passed");
         }
     }
 
